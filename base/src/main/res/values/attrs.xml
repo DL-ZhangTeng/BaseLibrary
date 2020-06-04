@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonTitleBar">
+        <!-- 标题栏背景 图片或颜色 -->
+        <attr name="titleBarColor" format="color" />
+        <!-- 标题栏高度 -->
+        <attr name="titleBarHeight" format="dimension" />
+        <!-- 显示标题栏分割线 -->
+        <attr name="showBottomLine" format="boolean" />
+        <!-- 标题栏分割线颜色 -->
+        <attr name="bottomLineColor" format="color" />
+        <!-- 底部阴影高度 showBottomLine = false时有效 -->
+        <attr name="bottomShadowHeight" format="dimension" />
+
+        <!-- 左边视图类型 -->
+        <attr name="leftType">
+            <enum name="none" value="0" />
+            <enum name="textView" value="1" />
+            <enum name="imageButton" value="2" />
+            <enum name="customView" value="3" />
+        </attr>
+        <!-- TextView 文字, 对应leftType_TextView -->
+        <attr name="leftText" format="string" />
+        <!-- TextView 颜色, 对应leftType_TextView -->
+        <attr name="leftTextColor" format="color" />
+        <!-- TextView 字体大小, 对应leftType_TextView -->
+        <attr name="leftTextSize" format="dimension" />
+        <!-- TextView 左边图片, 对应leftType_TextView -->
+        <attr name="leftDrawable" format="reference" />
+        <!-- TextView 左边padding, 对应leftType_TextView -->
+        <attr name="leftDrawablePadding" format="dimension" />
+        <!-- ImageView 资源, 对应leftType_ImageBotton -->
+        <attr name="leftImageResource" format="reference" />
+        <!-- 左边自定义布局, 对应leftType_CustomView -->
+        <attr name="leftCustomView" format="reference" />
+
+        <!-- 右边视图类型 -->
+        <attr name="rightType">
+            <enum name="none" value="0" />
+            <enum name="textView" value="1" />
+            <enum name="imageButton" value="2" />
+            <enum name="customView" value="3" />
+        </attr>
+        <!-- TextView 文字, 对应rightType_TextView -->
+        <attr name="rightText" format="string" />
+        <!-- TextView 颜色, 对应rightType_TextView -->
+        <attr name="rightTextColor" format="color" />
+        <!-- TextView 字体大小, 对应rightType_TextView -->
+        <attr name="rightTextSize" format="dimension" />
+        <!-- ImageView 资源, 对应rightType_ImageBotton -->
+        <attr name="rightImageResource" format="reference" />
+        <!-- 右边自定义布局, 对应rightType_CustomView -->
+        <attr name="rightCustomView" format="reference" />
+
+        <!-- 中间视图类型 -->
+        <attr name="centerType">
+            <enum name="none" value="0" />
+            <enum name="textView" value="1" />
+            <enum name="searchView" value="2" />
+            <enum name="customView" value="3" />
+        </attr>
+        <attr name="centerSearchRightType">
+            <enum name="voice" value="0" />
+            <enum name="delete" value="1" />
+        </attr>
+        <!-- TextView 文字, 对应centerType_TextView -->
+        <attr name="centerText" format="string" />
+        <!-- TextView 颜色, 对应centerType_TextView -->
+        <attr name="centerTextColor" format="color" />
+        <!-- TextView 字体大小, 对应centerType_TextView -->
+        <attr name="centerTextSize" format="dimension" />
+        <!-- TextView 跑马灯效果, 默认打开, 对应centerType_TextView -->
+        <attr name="centerTextMarquee" format="boolean" />
+        <!-- 子标题TextView 文字, 对应centerType_TextView -->
+        <attr name="centerSubText" format="string" />
+        <!-- 子标题TextView 颜色, 对应centerType_TextView -->
+        <attr name="centerSubTextColor" format="color" />
+        <!-- 子标题TextView 字体大小, 对应centerType_TextView -->
+        <attr name="centerSubTextSize" format="dimension" />
+        <!-- 搜索输入框是否可输入 -->
+        <attr name="centerSearchEditable" format="boolean" />
+        <!-- 搜索框背景 -->
+        <attr name="centerSearchBg" format="reference" />
+        <!-- 中间自定义布局, 对应centerType_CustomView -->
+        <attr name="centerCustomView" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="NoDataView">
+        <attr name="nodatatext" format="string" />
+        <attr name="nodataimage" format="reference" />
+        <attr name="nodatavisibility" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="MyTabLayout">
+        <attr name="tabMyGravity" format="enum">
+            <enum name="GRAVITY_FILL" value="0" />
+            <enum name="GRAVITY_CENTER" value="1" />
+        </attr>
+        <attr name="tabMyMode" format="enum">
+            <enum name="MODE_SCROLLABLE" value="0" />
+            <enum name="MODE_FIXED" value="1" />
+        </attr>
+        <attr name="tabMyTypeface" format="enum">
+            <enum name="NORMAL" value="0" />
+            <enum name="BOLD" value="1" />
+            <enum name="ITALIC" value="2" />
+            <enum name="BOLD_ITALIC" value="3" />
+        </attr>
+        <attr name="tabMySelectedTypeface" format="enum">
+            <enum name="NORMAL" value="0" />
+            <enum name="BOLD" value="1" />
+            <enum name="ITALIC" value="2" />
+            <enum name="BOLD_ITALIC" value="3" />
+        </attr>
+        <attr name="tabMyIndicatorColor" format="color" />
+        <attr name="tabMyIndicatorHeight" format="dimension" />
+        <attr name="tabMyPaddingStart" format="dimension" />
+        <attr name="tabMyTextColor" format="color" />
+        <attr name="tabMyPaddingEnd" format="dimension" />
+        <attr name="tabMySelectedTextColor" format="color" />
+        <attr name="tabMyMaxWidth" format="dimension" />
+        <attr name="tabMyBackground" format="reference" />
+        <attr name="tabMyTextAppearance" format="reference" />
+        <attr name="tabMyIndicatorPaddingLeft" format="dimension" />
+        <attr name="tabMyIndicatorPaddingRight" format="dimension" />
+        <attr name="tabMyIndicatorMarginBottom" format="dimension" />
+        <attr name="tabMyIndicatorMarginTop" format="dimension" />
+        <attr name="tabMyIndicatorSelfFit" format="boolean" />
+        <attr name="tabMyIndicatorBottomLayer" format="boolean" />
+        <attr name="tabMyIndicatorRoundRadius" format="dimension" />
+        <attr name="tabMyContentStart" format="dimension" />
+        <attr name="tabMyMinWidth" format="dimension" />
+        <attr name="tabMyPaddingBottom" format="dimension" />
+        <attr name="tabMyPaddingTop" format="dimension" />
+        <attr name="tabMyPadding" format="dimension" />
+        <attr name="tabMyTextIconGap" format="dimension" />
+        <attr name="tabMyViewNumber" format="integer" />
+        <attr name="tabMySelectedTextSize" format="dimension" />
+        <attr name="tabMyTextSize" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="MyTabItem">
+        <attr name="myText" format="string" />
+        <attr name="myIcon" format="reference" />
+        <attr name="myLayout" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="ExpandableTextView">
+        <attr name="maxCollapsedLines" format="integer" />
+        <attr name="animDuration" format="integer" />
+        <attr name="expandDrawable" format="reference" />
+        <attr name="collapseDrawable" format="reference" />
+        <attr name="android:textColor" />
+        <attr name="collapseExpandTextColor" format="color" />
+        <attr name="android:textSize" />
+        <attr name="collapseExpandTextSize" format="dimension" />
+        <attr name="textCollapse" format="string" />
+        <attr name="textExpand" format="string" />
+        <attr name="collapseExpandGrarity">
+            <flag name="left" value="3" />
+            <flag name="right" value="5" />
+            <flag name="center" value="1" />
+
+        </attr>
+        <attr name="drawableGrarity">
+            <flag name="left" value="3" />
+            <flag name="right" value="5" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <!-- {@deprecated Use civ_circlebackground_color instead.} -->
+        <attr name="civ_fill_color" format="color" />
+        <attr name="civ_circle_background_color" format="color" />
+    </declare-styleable>
+</resources>

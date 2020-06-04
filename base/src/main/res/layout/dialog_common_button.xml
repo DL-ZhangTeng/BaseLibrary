@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="288dp"
+    android:layout_height="43dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:gravity="center"
+        android:text="@string/dialog_cancel"
+        android:textColor="#ff777777"
+        android:textSize="15sp"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/devider"
+        android:layout_width="@dimen/default_divider_size"
+        android:layout_height="match_parent"
+        android:background="@color/divider_color"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:gravity="center"
+        android:text="@string/dialog_affirm"
+        android:textColor="#fffe5722"
+        android:textSize="15sp" />
+</LinearLayout>

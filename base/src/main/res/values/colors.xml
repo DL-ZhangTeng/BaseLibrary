@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="titlebar_bg">#ffffff</color>
+    <color name="titlebar_text_color">#333333</color>
+    <color name="titlebar_text_light_color">#ffffff</color>
+    <color name="divider_color">#ffe2e2e2</color>
+    <!-- dialog bg -->
+    <color name="dialog_nav_bg">#99000000</color>
+    <color name="default_text_grey_color">#747474</color>
+    <color name="default_text_green_color">#00C7B5</color>
+</resources>

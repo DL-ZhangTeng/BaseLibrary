@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="titlebar_height">50dp</dimen>
+    <dimen name="titlebar_text_size">14sp</dimen>
+    <dimen name="titlebar_text_size_16">16sp</dimen>
+    <dimen name="titlebar_title_size">17sp</dimen>
+    <dimen name="default_divider_size">0.5dp</dimen>
+</resources>

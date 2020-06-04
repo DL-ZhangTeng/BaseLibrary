@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titlebar_search_hint">Search</string>
+    <string name="dialog_tishi" translatable="false">提示</string>
+    <string name="dialog_content" translatable="false">内容</string>
+    <string name="dialog_cancel" translatable="false">取消</string>
+    <string name="dialog_affirm" translatable="false">确定</string>
+    <string name="collapse" translatable="false">折叠</string>
+    <string name="expand" translatable="false">展开</string>
+</resources>
