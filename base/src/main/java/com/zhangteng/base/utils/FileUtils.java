@@ -466,10 +466,11 @@ public class FileUtils {
      * @return 是否是视频文件
      */
     public static boolean isVideoFile(String fileName) {
+        if (TextUtils.isEmpty(fileName)) return false;
         int index = fileName.lastIndexOf(".");
         if (index == -1) return false;
         String mimeType = getMimeType(fileName.substring(index));
-        return !TextUtils.isEmpty(fileName) && mimeType.contains("video/");
+        return mimeType.contains("video/");
     }
 
     public static boolean isVideoFileAsMime(String mimeType) {
