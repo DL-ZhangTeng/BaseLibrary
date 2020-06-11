@@ -172,4 +172,18 @@
         <attr name="civ_fill_color" format="color" />
         <attr name="civ_circle_background_color" format="color" />
     </declare-styleable>
+    <declare-styleable name="ShapeImageView">
+        <attr name="siv_shape" format="enum">
+            <enum name="rect" value="1" />
+            <enum name="circle" value="2" />
+            <enum name="oval" value="3" />
+        </attr>
+        <attr name="siv_corner_radius" format="dimension" />
+        <attr name="siv_round_radius_leftTop" format="dimension" />
+        <attr name="siv_round_radius_leftBottom" format="dimension" />
+        <attr name="siv_round_radius_rightTop" format="dimension" />
+        <attr name="siv_round_radius_rightBottom" format="dimension" />
+        <attr name="siv_border_size" format="dimension" />
+        <attr name="siv_border_color" format="color" />
+    </declare-styleable>
 </resources>
