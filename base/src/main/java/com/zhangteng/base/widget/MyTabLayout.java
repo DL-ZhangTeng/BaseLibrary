@@ -2260,9 +2260,11 @@ public class MyTabLayout extends HorizontalScrollView {
                     int width = getWidth() / getTabCount();
                     mIndicatorPaddingRight = (width - textWidth) / 2;
                     mIndicatorPaddingLeft = (width - textWidth) / 2;
-                    int textHeight = TextUtil.getTextHeight(textView);
-                    int height = getHeight();
-                    mIndicatorMarginBottom = (height - textHeight) / 2 - mSelectedIndicatorHeight / 2;
+                    if (mTabIndicatorBottomLayer) {
+                        int textHeight = TextUtil.getTextHeight(textView);
+                        int height = getHeight();
+                        mIndicatorMarginBottom = (height - textHeight) / 2 - mSelectedIndicatorHeight / 2;
+                    }
                 }
             }
             if (mIndicatorLeft >= 0 && mIndicatorRight > mIndicatorLeft) {
