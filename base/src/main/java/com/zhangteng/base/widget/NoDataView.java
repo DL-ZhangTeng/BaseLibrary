@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import com.zhangteng.base.R;
  */
 
 public class NoDataView extends LinearLayout {
-    private LinearLayout llNoData;
+    private ConstraintLayout llNoData;
     private TextView tvNoData;
     private ImageView ivNoData;
     private Button btnNoData;
@@ -67,9 +68,9 @@ public class NoDataView extends LinearLayout {
 
     private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_no_data_view, this, true);
-        llNoData = (LinearLayout) findViewById(R.id.ll_no_data);
-        tvNoData = (TextView) findViewById(R.id.tv_no_data);
-        ivNoData = (ImageView) findViewById(R.id.iv_no_data);
+        llNoData = findViewById(R.id.ll_no_data);
+        tvNoData = findViewById(R.id.tv_no_data);
+        ivNoData = findViewById(R.id.iv_no_data);
         btnNoData = findViewById(R.id.btn_no_data);
     }
 

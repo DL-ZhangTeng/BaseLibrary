@@ -27,8 +27,8 @@ public class LoadViewHelper {
     private TextView loadView;
     private AgainRequestListener againRequestListener;
     private static ArrayDeque<Dialog> showQueue = new ArrayDeque<>();
-    private final static int NETWORKNO = 0;
-    private final static int CONTENTNODATA = 1;
+    public final static int NETWORKNO = 0;
+    public final static int CONTENTNODATA = 1;
 
     public LoadViewHelper() {
         contentViews = new SparseArray<>();
@@ -58,7 +58,7 @@ public class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    private void showNodataView(int type, View currentView, int drawableRes, String nodataText, String nodataAgainText) {
+    public void showNodataView(int type, View currentView, int drawableRes, String nodataText, String nodataAgainText) {
         if (contentViews.get(type, null) == null) {
             contentViews.put(type, currentView);
         }
@@ -216,7 +216,7 @@ public class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    private void hiddenNodataView(int type, View currentView) {
+    public void hiddenNodataView(int type, View currentView) {
         if (contentViews.get(type, null) == null) {
             contentViews.put(type, currentView);
         }
