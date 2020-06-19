@@ -186,7 +186,7 @@ public class LoadViewHelper {
                 showQueue.getFirst().show();
             }
             final Activity activity = first.getOwnerActivity();
-            if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
+            if (activity == null || activity.isDestroyed()) {
                 return;
             }
             first.dismiss();
