@@ -470,6 +470,7 @@ public class FileUtils {
         int index = fileName.lastIndexOf(".");
         if (index == -1) return false;
         String mimeType = getMimeType(fileName.substring(index));
+        if (TextUtils.isEmpty(mimeType)) return false;
         return mimeType.contains("video/");
     }
 
