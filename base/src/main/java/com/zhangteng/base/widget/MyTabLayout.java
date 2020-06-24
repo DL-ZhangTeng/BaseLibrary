@@ -193,6 +193,8 @@ public class MyTabLayout extends HorizontalScrollView {
                 a.getBoolean(R.styleable.MyTabLayout_tabMyIndicatorBottomLayer, false));
         mTabStrip.setSelectedIndicatorSelfFit(
                 a.getBoolean(R.styleable.MyTabLayout_tabMyIndicatorSelfFit, true));
+        mTabStrip.setSelectedIndicatorMarginBottomSelfFit(
+                a.getBoolean(R.styleable.MyTabLayout_tabMyIndicatorMarginBottomSelfFit, true));
         mTabStrip.setSelectedIndicatorColor(a.getColor(R.styleable.MyTabLayout_tabMyIndicatorColor, 0));
 
         mTabPaddingStart = mTabPaddingTop = mTabPaddingEnd = mTabPaddingBottom = a
@@ -1947,9 +1949,11 @@ public class MyTabLayout extends HorizontalScrollView {
 
         private int mIndicatorRoundRadius = -1;
 
-        boolean mTabIndicatorBottomLayer = true;
+        boolean mTabIndicatorBottomLayer = false;
 
         boolean mTabIndicatorSelfFit = true;
+
+        boolean mTabIndicatorMarginBottomSelfFit = true;
 
         private ValueAnimator mIndicatorAnimator;
 
@@ -2019,6 +2023,13 @@ public class MyTabLayout extends HorizontalScrollView {
         void setSelectedIndicatorSelfFit(boolean selfFit) {
             if (mTabIndicatorSelfFit != selfFit) {
                 mTabIndicatorSelfFit = selfFit;
+                ViewCompat.postInvalidateOnAnimation(this);
+            }
+        }
+
+        void setSelectedIndicatorMarginBottomSelfFit(boolean marginBottomSelfFit) {
+            if (mTabIndicatorMarginBottomSelfFit != marginBottomSelfFit) {
+                mTabIndicatorMarginBottomSelfFit = marginBottomSelfFit;
                 ViewCompat.postInvalidateOnAnimation(this);
             }
         }
@@ -2262,7 +2273,7 @@ public class MyTabLayout extends HorizontalScrollView {
                     int width = getWidth() / getTabCount();
                     mIndicatorPaddingRight = (width - textWidth) / 2;
                     mIndicatorPaddingLeft = (width - textWidth) / 2;
-                    if (mTabIndicatorBottomLayer) {
+                    if (mTabIndicatorMarginBottomSelfFit) {
                         int textHeight = TextUtil.getTextHeight(textView);
                         int height = getHeight();
                         mIndicatorMarginBottom = (height - textHeight) / 2 - mSelectedIndicatorHeight / 2;
