@@ -1947,7 +1947,7 @@ public class MyTabLayout extends HorizontalScrollView {
 
         private int mIndicatorRoundRadius = -1;
 
-        boolean mTabIndicatorBottomLayer = false;
+        boolean mTabIndicatorBottomLayer = true;
 
         boolean mTabIndicatorSelfFit = true;
 
@@ -2248,7 +2248,9 @@ public class MyTabLayout extends HorizontalScrollView {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            drawIndicator(canvas);
+            if (mTabIndicatorBottomLayer) {
+                drawIndicator(canvas);
+            }
         }
 
         private void drawIndicator(Canvas canvas) {
