@@ -26,13 +26,15 @@ public class LoadViewHelper {
     private Dialog mProgressDialog;
     private TextView loadView;
     private AgainRequestListener againRequestListener;
-    private static ArrayDeque<Dialog> showQueue = new ArrayDeque<>();
+    private CancelRequestListener cancelRequestListener;
+    private ArrayDeque<Dialog> showQueue;
     public final static int NETWORKNO = 0;
     public final static int CONTENTNODATA = 1;
 
     public LoadViewHelper() {
         contentViews = new SparseArray<>();
         noDataViews = new SparseArray<>();
+        showQueue = new ArrayDeque<>();
     }
 
     /**
@@ -131,23 +133,25 @@ public class LoadViewHelper {
                 loadView.setText(mLoadingText);
             }
             mProgressDialog.setContentView(view);
-            mProgressDialog.setCancelable(false);
+            mProgressDialog.setCancelable(true);
             mProgressDialog.setCanceledOnTouchOutside(false);
+            mProgressDialog.setOnDismissListener(dialog -> {
+                if (showQueue != null && !showQueue.isEmpty()) {
+                    showQueue.remove(mProgressDialog);
+                }
+                if (cancelRequestListener != null) {
+                    cancelRequestListener.cancel();
+                }
+            });
             final Activity activity = findActivity(mContext);
             if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
+                mProgressDialog = null;
                 return;
             } else {
                 if (mProgressDialog.getOwnerActivity() == null)
                     mProgressDialog.setOwnerActivity(activity);
             }
             showQueue.add(mProgressDialog);
-            if (!showQueue.isEmpty() && !showQueue.getFirst().isShowing()) {
-                final Activity activity1 = showQueue.getFirst().getOwnerActivity();
-                if (activity1 == null || activity1.isDestroyed() || activity1.isFinishing()) {
-                    return;
-                }
-                showQueue.getFirst().show();
-            }
         } else if (!mProgressDialog.isShowing()) {
             if (mLoadingText != null && loadView != null) {
                 loadView.setText(mLoadingText);
@@ -155,6 +159,7 @@ public class LoadViewHelper {
             if (!showQueue.contains(mProgressDialog)) {
                 final Activity activity = findActivity(mContext);
                 if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
+                    mProgressDialog = null;
                     return;
                 } else {
                     if (mProgressDialog.getOwnerActivity() == null)
@@ -162,14 +167,8 @@ public class LoadViewHelper {
                 }
                 showQueue.add(mProgressDialog);
             }
-            if (!showQueue.isEmpty() && !showQueue.getFirst().isShowing()) {
-                final Activity activity = showQueue.getFirst().getOwnerActivity();
-                if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
-                    return;
-                }
-                showQueue.getFirst().show();
-            }
         }
+        alwaysShowProgressDialog();
     }
 
     /**
@@ -178,15 +177,11 @@ public class LoadViewHelper {
     public void dismissProgressDialog() {
         if (!showQueue.isEmpty()) {
             Dialog first = showQueue.pollFirst();
-            if (!showQueue.isEmpty()) {
-                final Activity activity = showQueue.getFirst().getOwnerActivity();
-                if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
-                    return;
-                }
-                showQueue.getFirst().show();
-            }
+            alwaysShowProgressDialog();
             final Activity activity = first.getOwnerActivity();
             if (activity == null || activity.isDestroyed()) {
+                showQueue.remove(mProgressDialog);
+                dismissProgressDialog();
                 return;
             }
             first.dismiss();
@@ -234,6 +229,18 @@ public class LoadViewHelper {
         noDataViews.get(type).setNoDataViewShow(false);
     }
 
+    private void alwaysShowProgressDialog() {
+        if (!showQueue.isEmpty() && !showQueue.getFirst().isShowing()) {
+            final Activity activity1 = showQueue.getFirst().getOwnerActivity();
+            if (activity1 == null || activity1.isDestroyed() || activity1.isFinishing()) {
+                showQueue.remove(mProgressDialog);
+                alwaysShowProgressDialog();
+                return;
+            }
+            showQueue.getFirst().show();
+        }
+    }
+
     private static Activity findActivity(Context context) {
         if (context instanceof Activity) {
             return (Activity) context;
@@ -248,6 +255,14 @@ public class LoadViewHelper {
 
     public void setAgainRequestListener(AgainRequestListener againRequestListener) {
         this.againRequestListener = againRequestListener;
+    }
+
+    public void setCancelRequestListener(CancelRequestListener cancelRequestListener) {
+        this.cancelRequestListener = cancelRequestListener;
+    }
+
+    public interface CancelRequestListener {
+        void cancel();
     }
 
     public interface AgainRequestListener {
