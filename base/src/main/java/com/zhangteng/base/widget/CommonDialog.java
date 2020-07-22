@@ -3,12 +3,13 @@ package com.zhangteng.base.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.zhangteng.base.R;
 import com.zhangteng.base.base.BaseDialog;

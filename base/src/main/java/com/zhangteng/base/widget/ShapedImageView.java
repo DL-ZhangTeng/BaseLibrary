@@ -24,7 +24,7 @@ import com.zhangteng.base.R;
  * Created by Swing on 2019/6/05.
  */
 
-public class ShapedImageView extends android.support.v7.widget.AppCompatImageView {
+public class ShapedImageView extends androidx.appcompat.widget.AppCompatImageView {
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
     private static final int COLORDRAWABLE_DIMENSION = 2;
     public static int SHAPE_REC = 1; // 矩形

@@ -3,9 +3,10 @@ package com.zhangteng.base.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.appcompat.widget.TintTypedArray;
 
 import com.zhangteng.base.R;
 
