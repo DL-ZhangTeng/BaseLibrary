@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 /**
+ * RecyclerView 自定义的适配器
  * Created by swing on 2018/5/7.
  */
 public class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
