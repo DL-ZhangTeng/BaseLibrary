@@ -14,6 +14,7 @@ import com.zhangteng.base.tree.TreeHelper;
 import java.util.List;
 
 /**
+ * 树结构的列表适配器
  * Created by swing on 2018/6/29.
  */
 public abstract class TreeRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

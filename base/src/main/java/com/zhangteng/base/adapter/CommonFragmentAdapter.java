@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 
 /**
+ * 公共的fragmentPagerAdapter
  * Created by Swing on 2017/11/24.
  */
 

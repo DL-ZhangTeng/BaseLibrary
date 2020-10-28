@@ -80,6 +80,10 @@ public abstract class BaseDialog extends Dialog {
         }
     }
 
+    /**
+     * 设置取消按钮点击监听器
+     * 默认左边第一个为取消按钮
+     */
     public void setOnCancelClickListener(OnCancelClickListener onCancelClickListener) {
         this.onCancelClickListener = onCancelClickListener;
         if (clButton.getChildCount() > 0 && clButton.getChildAt(0) instanceof ViewGroup) {
@@ -96,6 +100,10 @@ public abstract class BaseDialog extends Dialog {
         }
     }
 
+    /**
+     * 设置确认按钮点击监听器
+     * 默认右边第一个为确认按钮
+     */
     public void setOnConfirmClickListener(OnConfirmClickListener onConfirmClickListener) {
         this.onConfirmClickListener = onConfirmClickListener;
         if (clButton.getChildCount() > 0 && clButton.getChildAt(0) instanceof ViewGroup) {

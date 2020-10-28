@@ -19,8 +19,22 @@ import java.util.Map;
 
 import static com.zhangteng.base.utils.SPUtils.FILE_NAME;
 
+/**
+ * @ClassName: MemoryActivity
+ * @Description: 带缓存的Activity
+ * @Author: Swing 763263311@qq.com
+ * @Date: 2020/10/28 0028 下午 14:02
+ */
 public abstract class MemoryActivity extends TitlebarActivity {
+    /**
+     * 是否永久缓存页面数据
+     * false 页面不缓存数据
+     * true 页面可能缓存数据（具体是否缓存根据子类重写的isSaveStateForEver()方法判断）
+     */
     private boolean isSaveStateForEver = true;
+    /**
+     * 缓存数据，永久层存储在sp中引用类型转为json存储
+     */
     private Map<String, Object> outState;
 
     @Override
@@ -82,6 +96,12 @@ public abstract class MemoryActivity extends TitlebarActivity {
         }
     }
 
+    /**
+     * 判断是否需要缓存
+     * 子类可以重写本方法增加和业务相关的判断
+     *
+     * @return isSaveStateForEver 是否永久缓存
+     */
     protected boolean isSaveStateForEver() {
         return isSaveStateForEver;
     }
@@ -90,8 +110,21 @@ public abstract class MemoryActivity extends TitlebarActivity {
         isSaveStateForEver = saveStateForEver;
     }
 
+    /**
+     * 子类实现本方法保持页面数据
+     * outState.put();
+     *
+     * @param outState 内存中缓存暂存对象
+     */
     protected abstract void saveStateForEver(Map<String, Object> outState);
 
+    /**
+     * 子类实现本方法读取缓存数据
+     * 页面重新进入后自动读取永久层的缓存到内存中
+     * savedInstanceState.get();
+     *
+     * @param savedInstanceState 内存中缓存暂存对象
+     */
     protected abstract void restoreStateForEver(Map<String, Object> savedInstanceState);
 
     @Override
@@ -128,6 +161,9 @@ public abstract class MemoryActivity extends TitlebarActivity {
         }
     }
 
+    /**
+     * 将json转为Map
+     */
     private HashMap<String, Object> jsonToMap(String jsonStr) {
         HashMap<String, Object> returnMap = new HashMap<>();
         if (TextUtils.isEmpty(jsonStr)) return returnMap;
@@ -147,6 +183,9 @@ public abstract class MemoryActivity extends TitlebarActivity {
         return returnMap;
     }
 
+    /**
+     * 将json转为list
+     */
     private List<Object> jsonToList(String jsonStr) {
         ArrayList<Object> returnList = new ArrayList<>();
         if (TextUtils.isEmpty(jsonStr)) return returnList;
