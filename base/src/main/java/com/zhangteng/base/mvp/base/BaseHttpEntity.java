@@ -14,6 +14,14 @@ public abstract class BaseHttpEntity<T> {
         this.baseView = baseView;
     }
 
+    /**
+     * 请求开始
+     */
+    public void onStart() {
+        if (baseView != null && baseView instanceof BaseLoadingView)
+            ((BaseLoadingView) baseView).showLoadingView();
+    }
+
     public abstract void onSuccess(T data);
 
     /**
@@ -46,5 +54,7 @@ public abstract class BaseHttpEntity<T> {
             ((BaseNoNetworkView) baseView).hideNoNetwork();
         if (baseView != null && baseView instanceof BaseRefreshView)
             ((BaseRefreshView) baseView).finishRefreshOrLoadMore();
+        if (baseView != null && baseView instanceof BaseLoadingView)
+            ((BaseLoadingView) baseView).dismissLoadingView();
     }
 }
