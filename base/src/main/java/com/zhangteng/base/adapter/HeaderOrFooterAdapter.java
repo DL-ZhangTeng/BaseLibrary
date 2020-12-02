@@ -16,35 +16,35 @@ import com.zhangteng.base.base.BaseAdapter;
  * 在已有recyclerview基础上无需修改adapter情况下添加头脚视图
  * Created by swing on 2018/5/4.
  */
-public abstract class HeaderOrFooterAdapter<T> extends BaseAdapter<T> {
+public abstract class HeaderOrFooterAdapter<T> extends BaseAdapter<T, BaseAdapter.DefaultViewHolder> {
 
     public static final int BASE_ITEM_TYPE_HEADER = 100000;
     public static final int BASE_ITEM_TYPE_FOOTER = 200000;
 
-    private SparseArrayCompat<Integer> mHeaderViewInts = new SparseArrayCompat<>();
-    private SparseArrayCompat<Integer> mFootViewInts = new SparseArrayCompat<>();
+    private final SparseArrayCompat<Integer> mHeaderViewInts = new SparseArrayCompat<>();
+    private final SparseArrayCompat<Integer> mFootViewInts = new SparseArrayCompat<>();
 
-    private SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();
-    private SparseArrayCompat<View> mFootViews = new SparseArrayCompat<>();
+    private final SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();
+    private final SparseArrayCompat<View> mFootViews = new SparseArrayCompat<>();
 
-    private RecyclerView.Adapter mInnerAdapter;
+    private final BaseAdapter<T, BaseAdapter.DefaultViewHolder> mInnerAdapter;
 
-    public HeaderOrFooterAdapter(BaseAdapter mInnerAdapter) {
+    public HeaderOrFooterAdapter(BaseAdapter<T, BaseAdapter.DefaultViewHolder> mInnerAdapter) {
         super(mInnerAdapter.data);
         this.mInnerAdapter = mInnerAdapter;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DefaultViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (mHeaderViewInts.get(viewType) != null) {
 
-            RecyclerView.ViewHolder holder = createHeaderOrFooterViewHolder(parent, mHeaderViewInts.get(viewType));
+            DefaultViewHolder holder = createHeaderOrFooterViewHolder(parent, mHeaderViewInts.get(viewType));
             mHeaderViews.put(viewType, holder.itemView);
             return holder;
 
         } else if (mFootViewInts.get(viewType) != null) {
-            RecyclerView.ViewHolder holder = createHeaderOrFooterViewHolder(parent, mFootViewInts.get(viewType));
+            DefaultViewHolder holder = createHeaderOrFooterViewHolder(parent, mFootViewInts.get(viewType));
             mFootViews.put(viewType, holder.itemView);
             return holder;
         }
@@ -52,7 +52,7 @@ public abstract class HeaderOrFooterAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DefaultViewHolder holder, int position) {
         if (isHeaderViewPos(position)) {
             onBindHeaderOrFooterViewHolder(holder, getItemViewType(position));
             return;
@@ -113,7 +113,7 @@ public abstract class HeaderOrFooterAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(DefaultViewHolder holder) {
         mInnerAdapter.onViewAttachedToWindow(holder);
         int position = holder.getLayoutPosition();
         if (isHeaderViewPos(position) || isFooterViewPos(position)) {
@@ -160,9 +160,9 @@ public abstract class HeaderOrFooterAdapter<T> extends BaseAdapter<T> {
         return mInnerAdapter.getItemCount();
     }
 
-    public abstract RecyclerView.ViewHolder createHeaderOrFooterViewHolder(ViewGroup parent, Integer viewInt);
+    public abstract DefaultViewHolder createHeaderOrFooterViewHolder(ViewGroup parent, Integer viewInt);
 
-    public abstract void onBindHeaderOrFooterViewHolder(@NonNull RecyclerView.ViewHolder holder, int viewType);
+    public abstract void onBindHeaderOrFooterViewHolder(@NonNull DefaultViewHolder holder, int viewType);
 
     public View getHeaderViewByType(int viewType) {
         return mHeaderViews.get(viewType);
