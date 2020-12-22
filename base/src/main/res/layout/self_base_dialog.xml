@@ -10,23 +10,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/self_base_dialog_content"
-        app:layout_constraintLeft_toLeftOf="@id/self_base_dialog_content"
-        app:layout_constraintRight_toRightOf="@id/self_base_dialog_content"
+        app:layout_constraintBottom_toTopOf="@+id/self_base_dialog_content"
+        app:layout_constraintLeft_toLeftOf="@+id/self_base_dialog_content"
+        app:layout_constraintRight_toRightOf="@+id/self_base_dialog_content"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/self_base_dialog_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/self_base_dialog_button"
-        app:layout_constraintTop_toBottomOf="@id/self_base_dialog_title">
+        app:layout_constraintBottom_toTopOf="@+id/self_base_dialog_button"
+        app:layout_constraintTop_toBottomOf="@+id/self_base_dialog_title">
 
         <View
-            android:layout_width="match_parent"
+            android:id="@+id/self_base_dialog_content_divider"
+            android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:background="#E6E6E6"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -36,7 +39,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/self_base_dialog_content"
-        app:layout_constraintRight_toRightOf="@id/self_base_dialog_content"
-        app:layout_constraintTop_toBottomOf="@id/self_base_dialog_content" />
+        app:layout_constraintLeft_toLeftOf="@+id/self_base_dialog_content"
+        app:layout_constraintRight_toRightOf="@+id/self_base_dialog_content"
+        app:layout_constraintTop_toBottomOf="@+id/self_base_dialog_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

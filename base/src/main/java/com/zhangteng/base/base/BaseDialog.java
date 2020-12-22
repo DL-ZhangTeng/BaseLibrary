@@ -19,6 +19,7 @@ public abstract class BaseDialog extends Dialog {
     protected LinearLayout clTitle;
     protected ConstraintLayout clContent;
     protected LinearLayout clButton;
+    protected View divider;
 
     protected OnCancelClickListener onCancelClickListener;
     protected OnConfirmClickListener onConfirmClickListener;
@@ -37,16 +38,21 @@ public abstract class BaseDialog extends Dialog {
         clTitle = view.findViewById(R.id.self_base_dialog_title);
         clContent = view.findViewById(R.id.self_base_dialog_content);
         clButton = view.findViewById(R.id.self_base_dialog_button);
+        divider = view.findViewById(R.id.self_base_dialog_content_divider);
         if (getSelfTitleView() != 0) {
             LayoutInflater.from(context).inflate(getSelfTitleView(), clTitle, true);
         }
 
         if (getSelfContentView() != 0) {
             LayoutInflater.from(context).inflate(getSelfContentView(), clContent, true);
+        } else {
+            divider.setVisibility(View.GONE);
         }
 
         if (getSelfButtonView() != 0) {
             LayoutInflater.from(context).inflate(getSelfButtonView(), clButton, true);
+        } else {
+            divider.setVisibility(View.GONE);
         }
         initView(view);
         setContentView(view);
@@ -89,12 +95,9 @@ public abstract class BaseDialog extends Dialog {
         this.onCancelClickListener = onCancelClickListener;
         if (clButton.getChildCount() > 0 && clButton.getChildAt(0) instanceof ViewGroup) {
             if (((ViewGroup) clButton.getChildAt(0)).getChildAt(0) != null) {
-                ((ViewGroup) clButton.getChildAt(0)).getChildAt(0).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (BaseDialog.this.onCancelClickListener != null) {
-                            BaseDialog.this.onCancelClickListener.onCancel(v);
-                        }
+                ((ViewGroup) clButton.getChildAt(0)).getChildAt(0).setOnClickListener(v -> {
+                    if (BaseDialog.this.onCancelClickListener != null) {
+                        BaseDialog.this.onCancelClickListener.onCancel(v);
                     }
                 });
             }
@@ -109,12 +112,9 @@ public abstract class BaseDialog extends Dialog {
         this.onConfirmClickListener = onConfirmClickListener;
         if (clButton.getChildCount() > 0 && clButton.getChildAt(0) instanceof ViewGroup) {
             if (((ViewGroup) clButton.getChildAt(0)).getChildAt(((ViewGroup) clButton.getChildAt(0)).getChildCount() - 1) != null) {
-                ((ViewGroup) clButton.getChildAt(0)).getChildAt(((ViewGroup) clButton.getChildAt(0)).getChildCount() - 1).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (BaseDialog.this.onConfirmClickListener != null) {
-                            BaseDialog.this.onConfirmClickListener.onConfirm(v);
-                        }
+                ((ViewGroup) clButton.getChildAt(0)).getChildAt(((ViewGroup) clButton.getChildAt(0)).getChildCount() - 1).setOnClickListener(v -> {
+                    if (BaseDialog.this.onConfirmClickListener != null) {
+                        BaseDialog.this.onConfirmClickListener.onConfirm(v);
                     }
                 });
             }
