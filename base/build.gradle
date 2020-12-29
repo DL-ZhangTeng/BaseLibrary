@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 android {
@@ -38,6 +39,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.alibaba:fastjson:1.2.70'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 //上传命令：1、gradlew javadocJar 2、gradlew sourcesJar 3、gradlew install 4、gradlew bintrayUpload
 def siteUrl = 'https://github.com/duoluo9/BaseLibrary' //项目在github主页地址
