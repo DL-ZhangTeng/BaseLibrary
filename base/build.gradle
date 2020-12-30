@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'org.jetbrains.dokka'
 
 android {
     compileSdkVersion 30
@@ -24,9 +24,41 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
+    }
+
+    dokkaJavadoc.configure {
+        dokkaSourceSets {
+            named("main") {
+                outputDirectory.set(javadoc.destinationDir)
+                // Used to remove a source set from documentation, test source sets are suppressed by default
+                suppress.set(false)
+
+                // Use to include or exclude non public members
+                includeNonPublic.set(false)
+
+                // Do not output deprecated members. Applies globally, can be overridden by packageOptions
+                skipDeprecated.set(false)
+
+                // Emit warnings about not documented members. Applies globally, also can be overridden by packageOptions
+                reportUndocumented.set(true)
+
+                // Do not create index pages for empty packages
+                skipEmptyPackages.set(true)
+
+                // Disable linking to online kotlin-stdlib documentation
+                noStdlibLink.set(false)
+
+                // Disable linking to online JDK documentation
+                noJdkLink.set(false)
+
+                // Disable linking to online Android documentation (only applicable for Android projects)
+                noAndroidSdkLink.set(false)
+            }
+        }
     }
 }
 
@@ -86,7 +118,6 @@ install {
     }
 }
 
-
 task generateSourcesJar(type: Jar) {
     group = 'jar'
     from android.sourceSets.main.java.srcDirs
@@ -96,11 +127,6 @@ task generateSourcesJar(type: Jar) {
 task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = "javadoc"
-    outputDirectory = javadoc.destinationDir
 }
 
 task generateJavadoc(type: Jar, dependsOn: dokkaJavadoc) {
