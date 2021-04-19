@@ -5,7 +5,7 @@ import java.util.*
 /**
  * Created by swing on 2018/6/29.
  */
-class Node {
+open class Node {
     private var id = 0
     private var name: String? = null
 

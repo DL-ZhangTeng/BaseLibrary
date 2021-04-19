@@ -3,7 +3,7 @@ package com.zhangteng.base.bean
 /**
  * Created by swing on 2018/4/12.
  */
-class GroupInfo {
+open class GroupInfo {
     private var groupNum = 0
     private var title: String? = null
     private var position = 0

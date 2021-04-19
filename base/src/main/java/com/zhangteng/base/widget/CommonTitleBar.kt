@@ -88,7 +88,7 @@ import com.zhangteng.base.utils.DensityUtil
  *
  *
  */
-class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs), View.OnClickListener {
+open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs), View.OnClickListener {
     private var rlMain // 主视图
             : RelativeLayout? = null
     private var tvLeft // 左边TextView

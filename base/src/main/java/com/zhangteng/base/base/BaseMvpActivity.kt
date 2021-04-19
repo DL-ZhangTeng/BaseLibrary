@@ -1,22 +1,25 @@
 package com.zhangteng.base.base
 
-import com.zhangteng.base.mvp.base.BasePresenter
-import com.zhangteng.base.mvp.base.BaseView
+import com.zhangteng.base.mvp.base.IPresenter
+import com.zhangteng.base.mvp.base.IView
 
 /**
  * 使用Mvp模式Activity基类
  * Created by swing on 2017/11/23.
  */
-abstract class BaseMvpActivity<V : BaseView?, P : BasePresenter<V?>?> : BaseActivity() {
+abstract class BaseMvpActivity<V : IView?, P : IPresenter<V?>?> : BaseActivity() {
     protected var mPresenter: P? = null
     override fun initView() {
         mPresenter = createPresenter()
         mPresenter?.attachView(this as V)
+        mPresenter?.onStart()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mPresenter?.detachView()
+        mPresenter?.onDestroy()
+        mPresenter = null
     }
 
     /**

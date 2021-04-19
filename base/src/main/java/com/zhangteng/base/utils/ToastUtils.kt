@@ -6,7 +6,7 @@ import android.widget.Toast
 /**
  * Toast统一管理类
  */
-class ToastUtils private constructor() {
+open class ToastUtils private constructor() {
     companion object {
         var isShow = true
 

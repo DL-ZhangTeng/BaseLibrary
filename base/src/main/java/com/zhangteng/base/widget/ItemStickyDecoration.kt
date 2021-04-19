@@ -15,7 +15,7 @@ import com.zhangteng.base.bean.GroupInfo
 /**
  * Created by swing on 2018/4/12.
  */
-class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterface?) : ItemDecoration() {
+open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterface?) : ItemDecoration() {
     private val mFontMetrics: Paint.FontMetrics?
     private var mStickyHeight = 60
     private var textSize = 16

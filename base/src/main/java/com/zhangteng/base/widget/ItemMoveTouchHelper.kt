@@ -11,7 +11,7 @@ import java.util.*
 /**
  * Created by swing on 2018/5/7.
  */
-class ItemMoveTouchHelper
+open class ItemMoveTouchHelper
 /**
  * Creates an ItemTouchHelper that will work with the given Callback.
  *

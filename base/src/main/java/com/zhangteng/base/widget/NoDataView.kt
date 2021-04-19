@@ -17,7 +17,7 @@ import com.zhangteng.base.R
  * @author swing
  * @date 2018/1/23
  */
-class NoDataView : LinearLayout {
+open class NoDataView : LinearLayout {
     private var llNoData: ConstraintLayout? = null
     private var tvNoData: TextView? = null
     private var ivNoData: ImageView? = null

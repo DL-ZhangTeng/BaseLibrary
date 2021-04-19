@@ -9,7 +9,7 @@ import java.util.*
  * 公共的fragmentPagerAdapter
  * Created by Swing on 2017/11/24.
  */
-class CommonFragmentAdapter : FragmentPagerAdapter {
+open class CommonFragmentAdapter : FragmentPagerAdapter {
     private var titles: Array<String?>?
     private var fragments: ArrayList<Fragment>
 

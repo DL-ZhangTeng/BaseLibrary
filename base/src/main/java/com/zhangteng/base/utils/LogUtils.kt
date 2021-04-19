@@ -5,7 +5,7 @@ import android.util.Log
 /**
  * Log统一管理类
  */
-class LogUtils private constructor() {
+open class LogUtils private constructor() {
     companion object {
         private const val TAG: String = "LogUtils"
 

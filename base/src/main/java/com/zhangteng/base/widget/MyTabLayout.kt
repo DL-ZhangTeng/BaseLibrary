@@ -46,7 +46,7 @@ import kotlin.math.roundToInt
  * Created by swing on 2018/7/19.
  */
 @DecorView
-class MyTabLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : HorizontalScrollView(context, attrs, defStyleAttr) {
+open class MyTabLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : HorizontalScrollView(context, attrs, defStyleAttr) {
     var mTabBackgroundResId = 0
     private val mTabs: ArrayList<Tab?> = ArrayList()
     private val mTabStrip: SlidingTabStrip?

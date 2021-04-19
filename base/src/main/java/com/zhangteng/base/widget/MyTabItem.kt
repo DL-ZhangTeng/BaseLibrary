@@ -11,7 +11,7 @@ import com.zhangteng.base.R
 /**
  * Created by swing on 2018/9/3.
  */
-class MyTabItem @SuppressLint("RestrictedApi") constructor(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+open class MyTabItem @SuppressLint("RestrictedApi") constructor(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     val mText: CharSequence?
     val mIcon: Drawable?
     val mCustomLayout: Int

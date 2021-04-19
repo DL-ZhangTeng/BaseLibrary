@@ -12,7 +12,7 @@ import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseDialog
 import com.zhangteng.base.utils.AntiShakeUtils
 
-class CommonDialog : BaseDialog, View.OnClickListener {
+open class CommonDialog : BaseDialog, View.OnClickListener {
     private var contentTxt: TextView? = null
     private var titleTxt: TextView? = null
     private var submitTxt: TextView? = null

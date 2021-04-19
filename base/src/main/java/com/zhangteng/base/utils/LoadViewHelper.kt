@@ -15,7 +15,7 @@ import java.util.*
  * 将某个视图替换为正在加载、无数据、加载失败等视图
  * Created by swing on 2018/10/8.
  */
-class LoadViewHelper {
+open class LoadViewHelper {
     private val contentViews: SparseArray<View?>?
     private val noDataViews: SparseArray<NoDataView?>?
     private var mProgressDialog: Dialog? = null
@@ -116,7 +116,7 @@ class LoadViewHelper {
             val view = View.inflate(mContext, layoutRes, null)
             loadView = view.findViewById(R.id.loadView)
             val mImageView = view.findViewById<ImageView?>(R.id.progress_bar)
-            (mImageView.drawable as AnimationDrawable).start()
+            (mImageView?.drawable as AnimationDrawable).start()
             if (mLoadingText != null) {
                 loadView?.text = mLoadingText
             }

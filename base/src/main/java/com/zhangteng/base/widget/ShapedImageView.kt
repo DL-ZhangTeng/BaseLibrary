@@ -13,7 +13,7 @@ import com.zhangteng.base.R
 /**
  * Created by Swing on 2019/6/05.
  */
-class ShapedImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyle: Int = 0) : AppCompatImageView(context, attrs, defStyle) {
+open class ShapedImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyle: Int = 0) : AppCompatImageView(context, attrs, defStyle) {
     private val mShaderMatrix: Matrix = Matrix()
     private var mBorderSize = 0f // 边框大小,默认为0，即无边框
     private var mBorderColor = Color.WHITE // 边框颜色，默认为白色

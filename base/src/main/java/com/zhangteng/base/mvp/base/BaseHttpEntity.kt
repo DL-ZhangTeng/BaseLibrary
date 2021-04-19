@@ -5,18 +5,18 @@ package com.zhangteng.base.mvp.base
  * Created by swing on 2019/7/2 0002.
  */
 abstract class BaseHttpEntity<T> {
-    private var baseView: BaseView? = null
+    private var iView: IView? = null
 
     constructor() {}
-    constructor(baseView: BaseView?) {
-        this.baseView = baseView
+    constructor(iView: IView?) {
+        this.iView = iView
     }
 
     /**
      * 请求开始
      */
     fun onStart() {
-        if (baseView != null && baseView is BaseLoadingView<*>) (baseView as BaseLoadingView<*>?)?.showLoadingView()
+        if (iView != null && iView is BaseLoadingView<*>) (iView as BaseLoadingView<*>?)?.showLoadingView()
     }
 
     abstract fun onSuccess(data: T?)
@@ -25,7 +25,7 @@ abstract class BaseHttpEntity<T> {
      * 无网络
      */
     fun onNoNetworkError() {
-        if (baseView != null && baseView is BaseNoNetworkView<*>) (baseView as BaseNoNetworkView<*>?)?.showNoNetwork()
+        if (iView != null && iView is BaseNoNetworkView<*>) (iView as BaseNoNetworkView<*>?)?.showNoNetwork()
     }
 
     /**
@@ -42,8 +42,8 @@ abstract class BaseHttpEntity<T> {
      * 请求完成
      */
     fun onFinish() {
-        if (baseView != null && baseView is BaseNoNetworkView<*>) (baseView as BaseNoNetworkView<*>?)?.hideNoNetwork()
-        if (baseView != null && baseView is BaseRefreshView<*>) (baseView as BaseRefreshView<*>?)?.finishRefreshOrLoadMore()
-        if (baseView != null && baseView is BaseLoadingView<*>) (baseView as BaseLoadingView<*>?)?.dismissLoadingView()
+        if (iView != null && iView is BaseNoNetworkView<*>) (iView as BaseNoNetworkView<*>?)?.hideNoNetwork()
+        if (iView != null && iView is BaseRefreshView<*>) (iView as BaseRefreshView<*>?)?.finishRefreshOrLoadMore()
+        if (iView != null && iView is BaseLoadingView<*>) (iView as BaseLoadingView<*>?)?.dismissLoadingView()
     }
 }

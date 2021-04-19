@@ -21,7 +21,7 @@ import com.zhangteng.base.utils.DensityUtil
  * Created by xsf
  * on 2016.08.24
  */
-class ExpandableTextView : LinearLayout, View.OnClickListener {
+open class ExpandableTextView : LinearLayout, View.OnClickListener {
     /*内容textview*/
     protected var mTvContent: TextView? = null
 

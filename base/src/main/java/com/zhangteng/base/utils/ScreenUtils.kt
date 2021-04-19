@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi
 /**
  * 屏幕相关辅助类
  */
-class ScreenUtils private constructor() {
+open class ScreenUtils private constructor() {
     companion object {
         /**
          * 获得屏幕宽度
@@ -183,7 +183,7 @@ class ScreenUtils private constructor() {
             val conf = context.resources.configuration
             show = if (Configuration.ORIENTATION_LANDSCAPE == conf.orientation) {
                 val contentView = decorView.findViewById<View?>(android.R.id.content)
-                point.x != contentView.width
+                point.x != contentView?.width
             } else {
                 val rect = Rect()
                 decorView.getWindowVisibleDisplayFrame(rect)

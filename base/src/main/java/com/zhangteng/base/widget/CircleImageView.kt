@@ -33,7 +33,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.zhangteng.base.R
 import kotlin.math.min
 
-class CircleImageView : AppCompatImageView {
+open class CircleImageView : AppCompatImageView {
     private val mDrawableRect: RectF = RectF()
     private val mBorderRect: RectF = RectF()
     private val mShaderMatrix: Matrix = Matrix()
