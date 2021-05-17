@@ -5,12 +5,13 @@ import com.zhangteng.base.base.BaseMvpActivity
 import com.zhangteng.base.mvp.base.LoadingPresenterHandler
 import com.zhangteng.base.utils.LogUtils
 import com.zhangteng.base.utils.ToastUtils
+import com.zhangteng.baselibrary.mvp.model.imodel.IMainModel
 import com.zhangteng.baselibrary.mvp.presenter.MainPresenter
 import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IMainPresenter
 import com.zhangteng.baselibrary.mvp.view.IMainView
 import java.lang.reflect.Proxy
 
-class MainActivity : BaseMvpActivity<IMainView, IMainPresenter>(), IMainView {
+class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), IMainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
