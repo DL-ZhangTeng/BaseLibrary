@@ -1,7 +1,7 @@
 package com.zhangteng.base.mvp.base
 
-interface IPresenter<V : IView?> {
-    fun attachView(view: V?)
+interface IPresenter<V : IView, M : IModel> {
+    fun attachView(view: V?) {}
 
     fun onStart() {}
 
@@ -9,5 +9,7 @@ interface IPresenter<V : IView?> {
 
     fun onDestroy() {}
 
-    fun isAttach(): Boolean
+    fun isAttach(): Boolean {
+        return true
+    }
 }

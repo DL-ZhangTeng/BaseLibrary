@@ -1,6 +1,6 @@
 package com.zhangteng.base.mvp.base
 
-open class BaseLoadingPresenter<V : BaseLoadingView<*>?> : BasePresenter<V?>() {
+open class BaseLoadingPresenter<V : BaseLoadingView<*>, M : IModel> : BasePresenter<V, M>() {
     fun getBaseLoadingView(): V? {
         return if (isAttach()) {
             mView?.get()

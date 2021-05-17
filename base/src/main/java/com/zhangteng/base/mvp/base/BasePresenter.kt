@@ -2,9 +2,9 @@ package com.zhangteng.base.mvp.base
 
 import java.lang.ref.WeakReference
 
-open class BasePresenter<V : IView?> : IPresenter<V> {
+open class BasePresenter<V : IView, M : IModel> : IPresenter<V, M> {
     protected var mView: WeakReference<V?>? = null
-    protected var mModel: IModel? = null
+    protected var mModel: M? = null
 
     override fun attachView(view: V?) {
         if (!isAttach()) {

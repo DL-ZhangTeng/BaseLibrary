@@ -7,10 +7,10 @@ import com.zhangteng.base.utils.LogUtils
 import com.zhangteng.base.utils.ToastUtils
 import com.zhangteng.baselibrary.mvp.presenter.MainPresenter
 import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IMainPresenter
-import com.zhangteng.baselibrary.mvp.view.MainView
+import com.zhangteng.baselibrary.mvp.view.IMainView
 import java.lang.reflect.Proxy
 
-class MainActivity : BaseMvpActivity<MainView, IMainPresenter>(), MainView {
+class MainActivity : BaseMvpActivity<IMainView, IMainPresenter>(), IMainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,7 +18,11 @@ class MainActivity : BaseMvpActivity<MainView, IMainPresenter>(), MainView {
 
     override fun createPresenter(): IMainPresenter? {
 //        return MainPresenter()
-        return Proxy.newProxyInstance(MainPresenter::class.java.classLoader, arrayOf(IMainPresenter::class.java), LoadingPresenterHandler(MainPresenter())) as IMainPresenter
+        return Proxy.newProxyInstance(
+            MainPresenter::class.java.classLoader,
+            arrayOf(IMainPresenter::class.java),
+            LoadingPresenterHandler(MainPresenter())
+        ) as IMainPresenter
     }
 
     override fun initData() {
