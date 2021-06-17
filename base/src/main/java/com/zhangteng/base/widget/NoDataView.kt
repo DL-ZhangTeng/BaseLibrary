@@ -33,14 +33,20 @@ open class NoDataView : LinearLayout {
         setAttrs(context, attrs)
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
         initView(context)
         setAttrs(context, attrs)
     }
 
     private fun setAttrs(context: Context, attrs: AttributeSet?) {
-        val a = context.obtainStyledAttributes(attrs,
-                R.styleable.NoDataView)
+        val a = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.NoDataView
+        )
         val indexCount = a.indexCount
         for (i in 0 until indexCount) {
             val attr = a.getIndex(i)
@@ -66,43 +72,43 @@ open class NoDataView : LinearLayout {
         btnNoData = findViewById(R.id.btn_no_data)
     }
 
-    fun setNoDataVisibility(visibility: Int) {
+    open fun setNoDataVisibility(visibility: Int) {
         llNoData?.visibility = visibility
     }
 
-    fun setNoDataText(noDataText: String?) {
+    open fun setNoDataText(noDataText: String?) {
         tvNoData?.text = noDataText
     }
 
-    fun setNoDataText(resourceId: Int) {
+    open fun setNoDataText(resourceId: Int) {
         tvNoData?.setText(resourceId)
     }
 
-    fun setNoDataDrawable(dataDrawable: Drawable?) {
+    open fun setNoDataDrawable(dataDrawable: Drawable?) {
         ivNoData?.setImageDrawable(dataDrawable)
     }
 
-    fun setNoDataImageResource(resourceId: Int) {
+    open fun setNoDataImageResource(resourceId: Int) {
         ivNoData?.setImageResource(resourceId)
     }
 
-    fun isNoDataViewShow(): Boolean {
+    open fun isNoDataViewShow(): Boolean {
         return isNoDataViewShow
     }
 
-    fun setNoDataViewShow(noDataViewShow: Boolean) {
+    open fun setNoDataViewShow(noDataViewShow: Boolean) {
         isNoDataViewShow = noDataViewShow
     }
 
-    fun setNoDataAgainText(noDataAgainText: String?) {
+    open fun setNoDataAgainText(noDataAgainText: String?) {
         btnNoData?.setText(noDataAgainText)
     }
 
-    fun setNoDataAgainVisivility(visivility: Int) {
+    open fun setNoDataAgainVisivility(visivility: Int) {
         btnNoData?.setVisibility(visivility)
     }
 
-    fun setAgainRequestListener(againRequestListener: AgainRequestListener?) {
+    open fun setAgainRequestListener(againRequestListener: AgainRequestListener?) {
         btnNoData?.setOnClickListener { againRequestListener?.request() }
     }
 

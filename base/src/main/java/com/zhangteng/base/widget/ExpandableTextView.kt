@@ -97,7 +97,11 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
         init(attrs)
     }
 
@@ -114,8 +118,10 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
     private fun init(attrs: AttributeSet?) {
         mCollapsedStatus = SparseBooleanArray()
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExpandableTextView)
-        mMaxCollapsedLines = typedArray.getInt(R.styleable.ExpandableTextView_maxCollapsedLines, MAX_COLLAPSED_LINES)
-        mAnimationDuration = typedArray.getInt(R.styleable.ExpandableTextView_animDuration, DEFAULT_ANIM_DURATION)
+        mMaxCollapsedLines =
+            typedArray.getInt(R.styleable.ExpandableTextView_maxCollapsedLines, MAX_COLLAPSED_LINES)
+        mAnimationDuration =
+            typedArray.getInt(R.styleable.ExpandableTextView_animDuration, DEFAULT_ANIM_DURATION)
         mExpandDrawable = typedArray.getDrawable(R.styleable.ExpandableTextView_expandDrawable)
         mCollapseDrawable = typedArray.getDrawable(R.styleable.ExpandableTextView_collapseDrawable)
         textCollapse = typedArray.getString(R.styleable.ExpandableTextView_textCollapse)
@@ -133,12 +139,26 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
         if (TextUtils.isEmpty(textExpand)) {
             textExpand = context.getString(R.string.expand)
         }
-        contentTextColor = typedArray.getColor(R.styleable.ExpandableTextView_android_textColor, ContextCompat.getColor(context, R.color.default_text_grey_color))
-        contentTextSize = typedArray.getDimension(R.styleable.ExpandableTextView_android_textSize, DensityUtil.Companion.sp2px(context, 14f).toFloat())
-        collapseExpandTextColor = typedArray.getColor(R.styleable.ExpandableTextView_collapseExpandTextColor, ContextCompat.getColor(context, R.color.default_text_green_color))
-        collapseExpandTextSize = typedArray.getDimension(R.styleable.ExpandableTextView_collapseExpandTextSize, DensityUtil.Companion.sp2px(context, 14f).toFloat())
-        grarity = typedArray.getInt(R.styleable.ExpandableTextView_collapseExpandGrarity, Gravity.LEFT)
-        drawableGrarity = typedArray.getInt(R.styleable.ExpandableTextView_drawableGrarity, Gravity.RIGHT)
+        contentTextColor = typedArray.getColor(
+            R.styleable.ExpandableTextView_android_textColor,
+            ContextCompat.getColor(context, R.color.default_text_grey_color)
+        )
+        contentTextSize = typedArray.getDimension(
+            R.styleable.ExpandableTextView_android_textSize,
+            DensityUtil.Companion.sp2px(context, 14f).toFloat()
+        )
+        collapseExpandTextColor = typedArray.getColor(
+            R.styleable.ExpandableTextView_collapseExpandTextColor,
+            ContextCompat.getColor(context, R.color.default_text_green_color)
+        )
+        collapseExpandTextSize = typedArray.getDimension(
+            R.styleable.ExpandableTextView_collapseExpandTextSize,
+            DensityUtil.Companion.sp2px(context, 14f).toFloat()
+        )
+        grarity =
+            typedArray.getInt(R.styleable.ExpandableTextView_collapseExpandGrarity, Gravity.LEFT)
+        drawableGrarity =
+            typedArray.getInt(R.styleable.ExpandableTextView_drawableGrarity, Gravity.RIGHT)
         typedArray.recycle()
         // enforces vertical orientation
         orientation = VERTICAL
@@ -159,7 +179,7 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
      */
     private fun findViews() {
         val inflater = context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.item_expand_collapse, this)
         mTvContent = findViewById<View?>(R.id.expandable_text) as TextView
         mTvContent?.setOnClickListener(this)
@@ -196,8 +216,10 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
         val valueAnimator: ValueAnimator? = if (mCollapsed) {
             ValueAnimator.ofInt(height, mCollapsedHeight)
         } else {
-            ValueAnimator.ofInt(height, height +
-                    mTextHeightWithMaxLines - mTvContent!!.height)
+            ValueAnimator.ofInt(
+                height, height +
+                        mTextHeightWithMaxLines - mTvContent!!.height
+            )
         }
         valueAnimator?.addUpdateListener { animator ->
             val animatedValue = animator.animatedValue as Int
@@ -278,11 +300,22 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
      */
     private fun setDrawbleAndText() {
         if (Gravity.START == drawableGrarity) {
-            mTvExpandCollapse?.setCompoundDrawablesWithIntrinsicBounds(if (mCollapsed) mCollapseDrawable else mExpandDrawable, null, null, null)
+            mTvExpandCollapse?.setCompoundDrawablesWithIntrinsicBounds(
+                if (mCollapsed) mCollapseDrawable else mExpandDrawable,
+                null,
+                null,
+                null
+            )
         } else {
-            mTvExpandCollapse?.setCompoundDrawablesWithIntrinsicBounds(null, null, if (mCollapsed) mCollapseDrawable else mExpandDrawable, null)
+            mTvExpandCollapse?.setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                null,
+                if (mCollapsed) mCollapseDrawable else mExpandDrawable,
+                null
+            )
         }
-        mTvExpandCollapse?.text = if (mCollapsed) resources.getString(R.string.expand) else resources.getString(R.string.collapse)
+        mTvExpandCollapse?.text =
+            if (mCollapsed) resources.getString(R.string.expand) else resources.getString(R.string.collapse)
     }
     /*********暴露给外部调用方法 */
     /**
@@ -290,7 +323,7 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
      *
      * @param listener
      */
-    fun setOnExpandStateChangeListener(listener: OnExpandStateChangeListener?) {
+    open fun setOnExpandStateChangeListener(listener: OnExpandStateChangeListener?) {
         mListener = listener
     }
 
@@ -300,14 +333,15 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
      * @param text
      * @param position
      */
-    fun setText(text: CharSequence?, position: Int) {
+    open fun setText(text: CharSequence?, position: Int) {
         mPosition = position
         //获取状态，如无，默认是true:收起
         mCollapsed = mCollapsedStatus?.get(position, true) == true
         clearAnimation()
         //设置收起/展开图标和文字
         setDrawbleAndText()
-        mTvExpandCollapse?.text = if (mCollapsed) resources.getString(R.string.expand) else resources.getString(R.string.collapse)
+        mTvExpandCollapse?.text =
+            if (mCollapsed) resources.getString(R.string.expand) else resources.getString(R.string.collapse)
         setText(text)
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         requestLayout()
@@ -318,7 +352,7 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
      *
      * @return
      */
-    fun getText(): CharSequence? {
+    open fun getText(): CharSequence? {
         return if (mTvContent == null) {
             ""
         } else mTvContent!!.text
@@ -329,7 +363,7 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
      *
      * @param text
      */
-    fun setText(text: CharSequence?) {
+    open fun setText(text: CharSequence?) {
         mRelayout = true
         mTvContent?.text = text
         visibility = if (TextUtils.isEmpty(text)) GONE else VISIBLE

@@ -5,5 +5,5 @@ package com.zhangteng.base.mvp.base
  * Created by swing on 2019/7/25 0025.
  */
 interface BaseRefreshView<T> : BaseNoNetworkView<T?> {
-    open fun finishRefreshOrLoadMore()
+    fun finishRefreshOrLoadMore()
 }

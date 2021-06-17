@@ -36,7 +36,7 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         if (!TextUtils.isEmpty(content)) contentTxt?.text = content
     }
 
-    fun setPositiveButton(name: String?): CommonDialog {
+    open fun setPositiveButton(name: String?): CommonDialog {
         positiveName = name
         if (!TextUtils.isEmpty(positiveName)) {
             submitTxt?.text = positiveName
@@ -44,7 +44,7 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         return this
     }
 
-    fun setNegativeButton(name: String?): CommonDialog {
+    open fun setNegativeButton(name: String?): CommonDialog {
         negativeName = name
         if (!TextUtils.isEmpty(negativeName)) {
             cancelTxt?.text = negativeName
@@ -54,7 +54,7 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         return this
     }
 
-    fun setTitle(title: String?): CommonDialog {
+    open fun setTitle(title: String?): CommonDialog {
         this.title = title
         if (!TextUtils.isEmpty(title)) {
             titleTxt?.text = title
@@ -64,7 +64,7 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         return this
     }
 
-    fun setContent(content: String?): CommonDialog {
+    open fun setContent(content: String?): CommonDialog {
         this.content = content
         if (!TextUtils.isEmpty(content)) {
             contentTxt?.text = content
@@ -72,7 +72,7 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         return this
     }
 
-    fun setContent(content: SpannableString?): CommonDialog {
+    open fun setContent(content: SpannableString?): CommonDialog {
         this.content = content.toString()
         if (!TextUtils.isEmpty(content)) {
             contentTxt?.highlightColor = Color.TRANSPARENT
@@ -82,12 +82,12 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         return this
     }
 
-    fun setDialogCancelable(flag: Boolean): CommonDialog {
+    open fun setDialogCancelable(flag: Boolean): CommonDialog {
         setCancelable(flag)
         return this
     }
 
-    fun setDialogCanceledOnTouchOutside(cancel: Boolean): CommonDialog {
+    open fun setDialogCanceledOnTouchOutside(cancel: Boolean): CommonDialog {
         setCanceledOnTouchOutside(cancel)
         return this
     }
@@ -129,7 +129,7 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         }
     }
 
-    fun setListener(listener: OnCloseListener): CommonDialog {
+    open fun setListener(listener: OnCloseListener): CommonDialog {
         this.listener = listener
         return this
     }

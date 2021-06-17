@@ -5,7 +5,7 @@ import android.graphics.Color
 /**
  * 颜色工具类 包括常用的色值
  */
-open class ColorsUtils private constructor() {
+class ColorsUtils private constructor() {
     companion object {
         /**
          * 白色

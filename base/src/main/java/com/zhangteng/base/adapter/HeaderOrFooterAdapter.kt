@@ -15,7 +15,8 @@ import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
  * 在已有recyclerview基础上无需修改adapter情况下添加头脚视图
  * Created by swing on 2018/5/4.
  */
-abstract class HeaderOrFooterAdapter<T>(private val mInnerAdapter: BaseAdapter<T, DefaultViewHolder>) : BaseAdapter<T, DefaultViewHolder>(mInnerAdapter.data) {
+abstract class HeaderOrFooterAdapter<T>(private val mInnerAdapter: BaseAdapter<T, DefaultViewHolder>) :
+    BaseAdapter<T, DefaultViewHolder>(mInnerAdapter.data) {
     private val mHeaderViewInts: SparseArrayCompat<Int?> = SparseArrayCompat()
     private val mFootViewInts: SparseArrayCompat<Int?> = SparseArrayCompat()
     private val mHeaderViews: SparseArrayCompat<View?> = SparseArrayCompat()
@@ -58,7 +59,7 @@ abstract class HeaderOrFooterAdapter<T>(private val mInnerAdapter: BaseAdapter<T
         return mInnerAdapter.getItemViewType(position - getHeadersCount())
     }
 
-    fun notifyHFAdpterItemChanged(position: Int) {
+    open fun notifyHFAdpterItemChanged(position: Int) {
         notifyItemChanged(position + getHeadersCount())
     }
 
@@ -91,7 +92,8 @@ abstract class HeaderOrFooterAdapter<T>(private val mInnerAdapter: BaseAdapter<T
         if (isHeaderViewPos(position) || isFooterViewPos(position)) {
             val lp = holder.itemView.layoutParams
             if (lp != null
-                    && lp is StaggeredGridLayoutManager.LayoutParams) {
+                && lp is StaggeredGridLayoutManager.LayoutParams
+            ) {
                 lp.isFullSpan = true
             }
         }
@@ -105,21 +107,21 @@ abstract class HeaderOrFooterAdapter<T>(private val mInnerAdapter: BaseAdapter<T
         return position >= getHeadersCount() + getRealItemCount()
     }
 
-    fun addHeaderView(@LayoutRes view: Int) {
+    open fun addHeaderView(@LayoutRes view: Int) {
         hasHeaderOrFooter = true
         mHeaderViewInts.put(mHeaderViewInts.size() + BASE_ITEM_TYPE_HEADER, view)
     }
 
-    fun addFootView(@LayoutRes view: Int) {
+    open fun addFootView(@LayoutRes view: Int) {
         hasHeaderOrFooter = true
         mFootViewInts.put(mFootViewInts.size() + BASE_ITEM_TYPE_FOOTER, view)
     }
 
-    fun getHeadersCount(): Int {
+    open fun getHeadersCount(): Int {
         return mHeaderViewInts.size()
     }
 
-    fun getFootersCount(): Int {
+    open fun getFootersCount(): Int {
         return mFootViewInts.size()
     }
 
@@ -127,21 +129,25 @@ abstract class HeaderOrFooterAdapter<T>(private val mInnerAdapter: BaseAdapter<T
         return mInnerAdapter.getItemCount()
     }
 
-    abstract fun createHeaderOrFooterViewHolder(parent: ViewGroup?, viewInt: Int?): DefaultViewHolder
+    abstract fun createHeaderOrFooterViewHolder(
+        parent: ViewGroup?,
+        viewInt: Int?
+    ): DefaultViewHolder
+
     abstract fun onBindHeaderOrFooterViewHolder(holder: DefaultViewHolder, viewType: Int)
-    fun getHeaderViewByType(viewType: Int): View? {
+    open fun getHeaderViewByType(viewType: Int): View? {
         return mHeaderViews.get(viewType)
     }
 
-    fun getFooterViewByType(viewType: Int): View? {
+    open fun getFooterViewByType(viewType: Int): View? {
         return mFootViews.get(viewType)
     }
 
-    fun getHeaderViewByPos(position: Int): View? {
+    open fun getHeaderViewByPos(position: Int): View? {
         return mHeaderViews.get(getItemViewType(position))
     }
 
-    fun getFooterViewByPos(position: Int): View? {
+    open fun getFooterViewByPos(position: Int): View? {
         return mFootViews.get(getItemViewType(position))
     }
 

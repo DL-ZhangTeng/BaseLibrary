@@ -60,19 +60,32 @@ open class CircleImageView : AppCompatImageView {
     }
 
     @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int = 0) : super(context, attrs, defStyle) {
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int = 0) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
         val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0)
-        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_civ_border_width, DEFAULT_BORDER_WIDTH)
-        mBorderColor = a.getColor(R.styleable.CircleImageView_civ_border_color, DEFAULT_BORDER_COLOR)
-        mBorderOverlay = a.getBoolean(R.styleable.CircleImageView_civ_border_overlay, DEFAULT_BORDER_OVERLAY)
+        mBorderWidth = a.getDimensionPixelSize(
+            R.styleable.CircleImageView_civ_border_width,
+            DEFAULT_BORDER_WIDTH
+        )
+        mBorderColor =
+            a.getColor(R.styleable.CircleImageView_civ_border_color, DEFAULT_BORDER_COLOR)
+        mBorderOverlay =
+            a.getBoolean(R.styleable.CircleImageView_civ_border_overlay, DEFAULT_BORDER_OVERLAY)
 
         // Look for deprecated civ_fill_color if civ_circle_background_color is not set
         if (a.hasValue(R.styleable.CircleImageView_civ_circle_background_color)) {
-            mCircleBackgroundColor = a.getColor(R.styleable.CircleImageView_civ_circle_background_color,
-                    DEFAULT_CIRCLE_BACKGROUND_COLOR)
+            mCircleBackgroundColor = a.getColor(
+                R.styleable.CircleImageView_civ_circle_background_color,
+                DEFAULT_CIRCLE_BACKGROUND_COLOR
+            )
         } else if (a.hasValue(R.styleable.CircleImageView_civ_fill_color)) {
-            mCircleBackgroundColor = a.getColor(R.styleable.CircleImageView_civ_fill_color,
-                    DEFAULT_CIRCLE_BACKGROUND_COLOR)
+            mCircleBackgroundColor = a.getColor(
+                R.styleable.CircleImageView_civ_fill_color,
+                DEFAULT_CIRCLE_BACKGROUND_COLOR
+            )
         }
         a.recycle()
         init()
@@ -111,11 +124,26 @@ open class CircleImageView : AppCompatImageView {
             return
         }
         if (mCircleBackgroundColor != Color.TRANSPARENT) {
-            canvas?.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius, mCircleBackgroundPaint)
+            canvas?.drawCircle(
+                mDrawableRect.centerX(),
+                mDrawableRect.centerY(),
+                mDrawableRadius,
+                mCircleBackgroundPaint
+            )
         }
-        canvas?.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius, mBitmapPaint)
+        canvas?.drawCircle(
+            mDrawableRect.centerX(),
+            mDrawableRect.centerY(),
+            mDrawableRadius,
+            mBitmapPaint
+        )
         if (mBorderWidth > 0) {
-            canvas?.drawCircle(mBorderRect.centerX(), mBorderRect.centerY(), mBorderRadius, mBorderPaint)
+            canvas?.drawCircle(
+                mBorderRect.centerX(),
+                mBorderRect.centerY(),
+                mBorderRadius,
+                mBorderPaint
+            )
         }
     }
 
@@ -134,11 +162,11 @@ open class CircleImageView : AppCompatImageView {
         setup()
     }
 
-    fun getBorderColor(): Int {
+    open fun getBorderColor(): Int {
         return mBorderColor
     }
 
-    fun setBorderColor(@ColorInt borderColor: Int) {
+    open fun setBorderColor(@ColorInt borderColor: Int) {
         if (borderColor == mBorderColor) {
             return
         }
@@ -148,15 +176,15 @@ open class CircleImageView : AppCompatImageView {
     }
 
     @Deprecated("Use {@link #setBorderColor(int)} instead")
-    fun setBorderColorResource(@ColorRes borderColorRes: Int) {
+    open fun setBorderColorResource(@ColorRes borderColorRes: Int) {
         setBorderColor(context.resources.getColor(borderColorRes))
     }
 
-    fun getCircleBackgroundColor(): Int {
+    open fun getCircleBackgroundColor(): Int {
         return mCircleBackgroundColor
     }
 
-    fun setCircleBackgroundColor(@ColorInt circleBackgroundColor: Int) {
+    open fun setCircleBackgroundColor(@ColorInt circleBackgroundColor: Int) {
         if (circleBackgroundColor == mCircleBackgroundColor) {
             return
         }
@@ -165,7 +193,7 @@ open class CircleImageView : AppCompatImageView {
         invalidate()
     }
 
-    fun setCircleBackgroundColorResource(@ColorRes circleBackgroundRes: Int) {
+    open fun setCircleBackgroundColorResource(@ColorRes circleBackgroundRes: Int) {
         setCircleBackgroundColor(context.resources.getColor(circleBackgroundRes))
     }
 
@@ -175,7 +203,7 @@ open class CircleImageView : AppCompatImageView {
      * @return The color drawn behind the drawable
      */
     @Deprecated("Use {@link #getCircleBackgroundColor()} instead.")
-    fun getFillColor(): Int {
+    open fun getFillColor(): Int {
         return getCircleBackgroundColor()
     }
 
@@ -186,7 +214,7 @@ open class CircleImageView : AppCompatImageView {
      * @param fillColor The color to be drawn behind the drawable
      */
     @Deprecated("Use {@link #setCircleBackgroundColor(int)} instead.")
-    fun setFillColor(@ColorInt fillColor: Int) {
+    open fun setFillColor(@ColorInt fillColor: Int) {
         setCircleBackgroundColor(fillColor)
     }
 
@@ -198,15 +226,15 @@ open class CircleImageView : AppCompatImageView {
      * drawn behind the drawable
      */
     @Deprecated("Use {@link #setCircleBackgroundColorResource(int)} instead.")
-    fun setFillColorResource(@ColorRes fillColorRes: Int) {
+    open fun setFillColorResource(@ColorRes fillColorRes: Int) {
         setCircleBackgroundColorResource(fillColorRes)
     }
 
-    fun getBorderWidth(): Int {
+    open fun getBorderWidth(): Int {
         return mBorderWidth
     }
 
-    fun setBorderWidth(borderWidth: Int) {
+    open fun setBorderWidth(borderWidth: Int) {
         if (borderWidth == mBorderWidth) {
             return
         }
@@ -214,11 +242,11 @@ open class CircleImageView : AppCompatImageView {
         setup()
     }
 
-    fun isBorderOverlay(): Boolean {
+    open fun isBorderOverlay(): Boolean {
         return mBorderOverlay
     }
 
-    fun setBorderOverlay(borderOverlay: Boolean) {
+    open fun setBorderOverlay(borderOverlay: Boolean) {
         if (borderOverlay == mBorderOverlay) {
             return
         }
@@ -226,11 +254,11 @@ open class CircleImageView : AppCompatImageView {
         setup()
     }
 
-    fun isDisableCircularTransformation(): Boolean {
+    open fun isDisableCircularTransformation(): Boolean {
         return mDisableCircularTransformation
     }
 
-    fun setDisableCircularTransformation(disableCircularTransformation: Boolean) {
+    open fun setDisableCircularTransformation(disableCircularTransformation: Boolean) {
         if (mDisableCircularTransformation == disableCircularTransformation) {
             return
         }
@@ -288,7 +316,11 @@ open class CircleImageView : AppCompatImageView {
             bitmap = if (drawable is ColorDrawable) {
                 Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG)
             } else {
-                Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, BITMAP_CONFIG)
+                Bitmap.createBitmap(
+                    drawable.intrinsicWidth,
+                    drawable.intrinsicHeight,
+                    BITMAP_CONFIG
+                )
             }
             val canvas = Canvas(bitmap)
             drawable.setBounds(0, 0, canvas.width, canvas.height)
@@ -334,7 +366,10 @@ open class CircleImageView : AppCompatImageView {
         mBitmapHeight = mBitmap!!.height
         mBitmapWidth = mBitmap!!.width
         mBorderRect.set(calculateBounds())
-        mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2.0f, (mBorderRect.width() - mBorderWidth) / 2.0f)
+        mBorderRadius = Math.min(
+            (mBorderRect.height() - mBorderWidth) / 2.0f,
+            (mBorderRect.width() - mBorderWidth) / 2.0f
+        )
         mDrawableRect.set(mBorderRect)
         if (!mBorderOverlay && mBorderWidth > 0) {
             mDrawableRect.inset(mBorderWidth - 1.0f, mBorderWidth - 1.0f)
@@ -367,7 +402,10 @@ open class CircleImageView : AppCompatImageView {
             dy = (mDrawableRect.height() - mBitmapHeight * scale) * 0.5f
         }
         mShaderMatrix.setScale(scale, scale)
-        mShaderMatrix.postTranslate((dx + 0.5f).toInt() + mDrawableRect.left, (dy + 0.5f).toInt() + mDrawableRect.top)
+        mShaderMatrix.postTranslate(
+            (dx + 0.5f).toInt() + mDrawableRect.left,
+            (dy + 0.5f).toInt() + mDrawableRect.top
+        )
         mBitmapShader?.setLocalMatrix(mShaderMatrix)
     }
 

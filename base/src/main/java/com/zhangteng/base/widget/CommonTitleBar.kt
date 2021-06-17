@@ -88,7 +88,8 @@ import com.zhangteng.base.utils.DensityUtil
  *
  *
  */
-open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs), View.OnClickListener {
+open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayout(context, attrs),
+    View.OnClickListener {
     private var rlMain // 主视图
             : RelativeLayout? = null
     private var tvLeft // 左边TextView
@@ -183,8 +184,14 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
         PADDING_10 = DensityUtil.Companion.dp2px(context, 10f)
         PADDING_16 = DensityUtil.Companion.dp2px(context, 16f)
         val array = context.obtainStyledAttributes(attrs, R.styleable.CommonTitleBar)
-        titleBarColor = array.getColor(R.styleable.CommonTitleBar_titleBarColor, resources.getColor(R.color.titlebar_bg))
-        titleBarHeight = array.getDimension(R.styleable.CommonTitleBar_titleBarHeight, resources.getDimensionPixelSize(R.dimen.titlebar_height).toFloat()).toInt()
+        titleBarColor = array.getColor(
+            R.styleable.CommonTitleBar_titleBarColor,
+            resources.getColor(R.color.titlebar_bg)
+        )
+        titleBarHeight = array.getDimension(
+            R.styleable.CommonTitleBar_titleBarHeight,
+            resources.getDimensionPixelSize(R.dimen.titlebar_height).toFloat()
+        ).toInt()
 
 //        showBottomLine = array.getBoolean(R.styleable.CommonTitleBar_showBottomLine, true);
 //        bottomLineColor = array.getColor(R.styleable.CommonTitleBar_bottomLineColor, Color.parseColor("#dddddd"));
@@ -192,40 +199,78 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
         leftType = array.getInt(R.styleable.CommonTitleBar_leftType, TYPE_LEFT_NONE)
         if (leftType == TYPE_LEFT_TEXTVIEW) {
             leftText = array.getString(R.styleable.CommonTitleBar_leftText)
-            leftTextColor = array.getColor(R.styleable.CommonTitleBar_leftTextColor, resources.getColor(R.color.titlebar_text_color))
-            leftTextSize = array.getDimension(R.styleable.CommonTitleBar_leftTextSize, DensityUtil.Companion.dp2px(context, 14f).toFloat())
+            leftTextColor = array.getColor(
+                R.styleable.CommonTitleBar_leftTextColor,
+                resources.getColor(R.color.titlebar_text_color)
+            )
+            leftTextSize = array.getDimension(
+                R.styleable.CommonTitleBar_leftTextSize,
+                DensityUtil.Companion.dp2px(context, 14f).toFloat()
+            )
             leftDrawable = array.getResourceId(R.styleable.CommonTitleBar_leftDrawable, 0)
-            leftDrawablePadding = array.getDimension(R.styleable.CommonTitleBar_leftDrawablePadding, 0f)
+            leftDrawablePadding =
+                array.getDimension(R.styleable.CommonTitleBar_leftDrawablePadding, 0f)
         } else if (leftType == TYPE_LEFT_IMAGEBUTTON) {
-            leftImageResource = array.getResourceId(R.styleable.CommonTitleBar_leftImageResource, R.drawable.comm_titlebar_reback_selector)
+            leftImageResource = array.getResourceId(
+                R.styleable.CommonTitleBar_leftImageResource,
+                R.drawable.comm_titlebar_reback_selector
+            )
         } else if (leftType == TYPE_LEFT_CUSTOM_VIEW) {
             leftCustomViewRes = array.getResourceId(R.styleable.CommonTitleBar_leftCustomView, 0)
         }
         rightType = array.getInt(R.styleable.CommonTitleBar_rightType, TYPE_RIGHT_NONE)
         if (rightType == TYPE_RIGHT_TEXTVIEW) {
             rightText = array.getString(R.styleable.CommonTitleBar_rightText)
-            rightTextColor = array.getColor(R.styleable.CommonTitleBar_rightTextColor, resources.getColor(R.color.titlebar_text_color))
-            rightTextSize = array.getDimension(R.styleable.CommonTitleBar_rightTextSize, resources.getDimensionPixelSize(R.dimen.titlebar_text_size).toFloat())
+            rightTextColor = array.getColor(
+                R.styleable.CommonTitleBar_rightTextColor,
+                resources.getColor(R.color.titlebar_text_color)
+            )
+            rightTextSize = array.getDimension(
+                R.styleable.CommonTitleBar_rightTextSize,
+                resources.getDimensionPixelSize(R.dimen.titlebar_text_size).toFloat()
+            )
         } else if (rightType == TYPE_RIGHT_IMAGEBUTTON) {
-            rightImageResource = array.getResourceId(R.styleable.CommonTitleBar_rightImageResource, 0)
+            rightImageResource =
+                array.getResourceId(R.styleable.CommonTitleBar_rightImageResource, 0)
         } else if (rightType == TYPE_RIGHT_CUSTOM_VIEW) {
             rightCustomViewRes = array.getResourceId(R.styleable.CommonTitleBar_rightCustomView, 0)
         }
         centerType = array.getInt(R.styleable.CommonTitleBar_centerType, TYPE_CENTER_NONE)
         if (centerType == TYPE_CENTER_TEXTVIEW) {
             centerText = array.getString(R.styleable.CommonTitleBar_centerText)
-            centerTextColor = array.getColor(R.styleable.CommonTitleBar_centerTextColor, resources.getColor(R.color.titlebar_text_color))
-            centerTextSize = array.getDimension(R.styleable.CommonTitleBar_centerTextSize, resources.getDimensionPixelSize(R.dimen.titlebar_title_size).toFloat())
-            centerTextMarquee = array.getBoolean(R.styleable.CommonTitleBar_centerTextMarquee, false)
+            centerTextColor = array.getColor(
+                R.styleable.CommonTitleBar_centerTextColor,
+                resources.getColor(R.color.titlebar_text_color)
+            )
+            centerTextSize = array.getDimension(
+                R.styleable.CommonTitleBar_centerTextSize,
+                resources.getDimensionPixelSize(R.dimen.titlebar_title_size).toFloat()
+            )
+            centerTextMarquee =
+                array.getBoolean(R.styleable.CommonTitleBar_centerTextMarquee, false)
             centerSubText = array.getString(R.styleable.CommonTitleBar_centerSubText)
-            centerSubTextColor = array.getColor(R.styleable.CommonTitleBar_centerSubTextColor, Color.parseColor("#666666"))
-            centerSubTextSize = array.getDimension(R.styleable.CommonTitleBar_centerSubTextSize, DensityUtil.Companion.dp2px(context, 11f).toFloat())
+            centerSubTextColor = array.getColor(
+                R.styleable.CommonTitleBar_centerSubTextColor,
+                Color.parseColor("#666666")
+            )
+            centerSubTextSize = array.getDimension(
+                R.styleable.CommonTitleBar_centerSubTextSize,
+                DensityUtil.Companion.dp2px(context, 11f).toFloat()
+            )
         } else if (centerType == TYPE_CENTER_SEARCHVIEW) {
-            centerSearchEditable = array.getBoolean(R.styleable.CommonTitleBar_centerSearchEditable, true)
-            centerSearchBgResource = array.getResourceId(R.styleable.CommonTitleBar_centerSearchBg, R.drawable.comm_titlebar_search_gray_shape)
-            centerSearchRightType = array.getInt(R.styleable.CommonTitleBar_centerSearchRightType, TYPE_CENTER_SEARCH_RIGHT_VOICE)
+            centerSearchEditable =
+                array.getBoolean(R.styleable.CommonTitleBar_centerSearchEditable, true)
+            centerSearchBgResource = array.getResourceId(
+                R.styleable.CommonTitleBar_centerSearchBg,
+                R.drawable.comm_titlebar_search_gray_shape
+            )
+            centerSearchRightType = array.getInt(
+                R.styleable.CommonTitleBar_centerSearchRightType,
+                TYPE_CENTER_SEARCH_RIGHT_VOICE
+            )
         } else if (centerType == TYPE_CENTER_CUSTOM_VIEW) {
-            centerCustomViewRes = array.getResourceId(R.styleable.CommonTitleBar_centerCustomView, 0)
+            centerCustomViewRes =
+                array.getResourceId(R.styleable.CommonTitleBar_centerCustomView, 0)
         }
         array.recycle()
     }
@@ -357,7 +402,8 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
             rlMain?.addView(btnRight, rightInnerParams)
         } else if (rightType == TYPE_RIGHT_CUSTOM_VIEW) {
             // 初始化自定义view
-            viewCustomRight = LayoutInflater.from(context).inflate(rightCustomViewRes, rlMain, false)
+            viewCustomRight =
+                LayoutInflater.from(context).inflate(rightCustomViewRes, rlMain, false)
             rlMain?.addView(viewCustomRight, rightInnerParams)
         }
     }
@@ -466,7 +512,10 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
                 hint = resources.getString(R.string.titlebar_search_hint)
                 setTextColor(Color.parseColor("#666666"))
                 setHintTextColor(Color.parseColor("#999999"))
-                setTextSize(TypedValue.COMPLEX_UNIT_PX, DensityUtil.Companion.dp2px(context, 14f).toFloat())
+                setTextSize(
+                    TypedValue.COMPLEX_UNIT_PX,
+                    DensityUtil.Companion.dp2px(context, 14f).toFloat()
+                )
                 //            etSearchHint.setPadding(PADDING_5, 0, PADDING_5, 0);
                 if (!centerSearchEditable) {
                     isCursorVisible = false
@@ -492,7 +541,8 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
             rlMainCenterSearch?.addView(etSearchHint, searchHintParams)
         } else if (centerType == TYPE_CENTER_CUSTOM_VIEW) {
             // 初始化中间自定义布局
-            centerCustomView = LayoutInflater.from(context).inflate(centerCustomViewRes, rlMain, false)
+            centerCustomView =
+                LayoutInflater.from(context).inflate(centerCustomViewRes, rlMain, false)
             val centerCustomParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
             centerCustomParams.addRule(CENTER_IN_PARENT)
             rlMain?.addView(centerCustomView, centerCustomParams)
@@ -528,12 +578,13 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
             }
         }
     }
-    private val editorActionListener: OnEditorActionListener = OnEditorActionListener { v, actionId, event ->
-        if (listener != null && actionId == EditorInfo.IME_ACTION_SEARCH) {
-            listener!!.onClicked(v, ACTION_SEARCH_SUBMIT, etSearchHint?.text.toString())
+    private val editorActionListener: OnEditorActionListener =
+        OnEditorActionListener { v, actionId, event ->
+            if (listener != null && actionId == EditorInfo.IME_ACTION_SEARCH) {
+                listener!!.onClicked(v, ACTION_SEARCH_SUBMIT, etSearchHint?.text.toString())
+            }
+            false
         }
-        false
-    }
     private var lastClickMillis: Long = 0 // 双击事件中，上次被点击时间
     override fun onClick(v: View?) {
         if (listener == null) return
@@ -581,7 +632,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getLeftTextView(): TextView? {
+    open fun getLeftTextView(): TextView? {
         return tvLeft
     }
 
@@ -590,7 +641,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getLeftImageButton(): ImageButton? {
+    open fun getLeftImageButton(): ImageButton? {
         return btnLeft
     }
 
@@ -599,7 +650,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getRightTextView(): TextView? {
+    open fun getRightTextView(): TextView? {
         return tvRight
     }
 
@@ -608,11 +659,11 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getRightImageButton(): ImageButton? {
+    open fun getRightImageButton(): ImageButton? {
         return btnRight
     }
 
-    fun getCenterLayout(): LinearLayout? {
+    open fun getCenterLayout(): LinearLayout? {
         return llMainCenter
     }
 
@@ -621,11 +672,11 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getCenterTextView(): TextView? {
+    open fun getCenterTextView(): TextView? {
         return tvCenter
     }
 
-    fun getCenterSubTextView(): TextView? {
+    open fun getCenterSubTextView(): TextView? {
         return tvCenterSub
     }
 
@@ -634,7 +685,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getCenterSearchView(): RelativeLayout? {
+    open fun getCenterSearchView(): RelativeLayout? {
         return rlMainCenterSearch
     }
 
@@ -643,7 +694,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getCenterSearchEditText(): EditText? {
+    open fun getCenterSearchEditText(): EditText? {
         return etSearchHint
     }
 
@@ -652,11 +703,11 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getCenterSearchRightImageView(): ImageView? {
+    open fun getCenterSearchRightImageView(): ImageView? {
         return ivVoice
     }
 
-    fun getCenterSearchLeftImageView(): ImageView? {
+    open fun getCenterSearchLeftImageView(): ImageView? {
         return ivSearch
     }
 
@@ -665,7 +716,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getLeftCustomView(): View? {
+    open fun getLeftCustomView(): View? {
         return viewCustomLeft
     }
 
@@ -674,7 +725,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getRightCustomView(): View? {
+    open fun getRightCustomView(): View? {
         return viewCustomRight
     }
 
@@ -683,18 +734,18 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @return
      */
-    fun getCenterCustomView(): View? {
+    open fun getCenterCustomView(): View? {
         return centerCustomView
     }
 
-    fun setTitleText(title: String?) {
+    open fun setTitleText(title: String?) {
         tvCenter?.text = title
     }
 
     /**
      * @param leftView
      */
-    fun setLeftView(leftView: View?) {
+    open fun setLeftView(leftView: View?) {
         val leftInnerParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         leftInnerParams.addRule(ALIGN_PARENT_LEFT)
         leftInnerParams.addRule(CENTER_VERTICAL)
@@ -704,7 +755,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
     /**
      * @param centerView
      */
-    fun setCenterView(centerView: View?) {
+    open fun setCenterView(centerView: View?) {
         val centerInnerParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         centerInnerParams.addRule(CENTER_IN_PARENT)
         centerInnerParams.addRule(CENTER_VERTICAL)
@@ -714,7 +765,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
     /**
      * @param rightView
      */
-    fun setRightView(rightView: View?) {
+    open fun setRightView(rightView: View?) {
         val rightInnerParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         rightInnerParams.addRule(ALIGN_PARENT_RIGHT)
         rightInnerParams.addRule(CENTER_VERTICAL)
@@ -726,14 +777,14 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @param res
      */
-    fun setSearchRightImageResource(res: Int) {
+    open fun setSearchRightImageResource(res: Int) {
         ivVoice?.setImageResource(res)
     }
 
     /**
      * 获取SearchView输入结果
      */
-    fun getSearchKey(): String {
+    open fun getSearchKey(): String {
         return etSearchHint?.text?.toString() ?: ""
     }
 
@@ -742,11 +793,11 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
      *
      * @param listener
      */
-    fun setListener(listener: OnTitleBarListener) {
+    open fun setListener(listener: OnTitleBarListener) {
         this.listener = listener
     }
 
-    fun setDoubleClickListener(doubleClickListener: OnTitleBarDoubleClickListener?) {
+    open fun setDoubleClickListener(doubleClickListener: OnTitleBarDoubleClickListener?) {
         this.doubleClickListener = doubleClickListener
     }
 

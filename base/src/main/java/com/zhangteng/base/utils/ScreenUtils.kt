@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi
 /**
  * 屏幕相关辅助类
  */
-open class ScreenUtils private constructor() {
+class ScreenUtils private constructor() {
     companion object {
         /**
          * 获得屏幕宽度

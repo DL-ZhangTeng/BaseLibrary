@@ -13,17 +13,24 @@ open class CommonFragmentAdapter : FragmentPagerAdapter {
     private var titles: Array<String?>?
     private var fragments: ArrayList<Fragment>
 
-    constructor(fm: FragmentManager, fragments: ArrayList<Fragment>) : super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    constructor(fm: FragmentManager, fragments: ArrayList<Fragment>) : super(
+        fm,
+        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+    ) {
         this.fragments = fragments
         titles = arrayOfNulls<String?>(fragments.size)
     }
 
-    constructor(fm: FragmentManager, titles: Array<String?>?, fragments: ArrayList<Fragment>) : super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    constructor(
+        fm: FragmentManager,
+        titles: Array<String?>?,
+        fragments: ArrayList<Fragment>
+    ) : super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         this.titles = titles
         this.fragments = fragments
     }
 
-    fun getFragments(): ArrayList<Fragment> {
+    open fun getFragments(): ArrayList<Fragment> {
         return fragments
     }
 

@@ -15,7 +15,8 @@ import com.zhangteng.base.bean.GroupInfo
 /**
  * Created by swing on 2018/4/12.
  */
-open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterface?) : ItemDecoration() {
+open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterface?) :
+    ItemDecoration() {
     private val mFontMetrics: Paint.FontMetrics?
     private var mStickyHeight = 60
     private var textSize = 16
@@ -43,7 +44,13 @@ open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterfa
                         val top = view.top - 1
                         val bottom = view.top
                         if (mPaint != null)
-                            c.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), mPaint)
+                            c.drawRect(
+                                left.toFloat(),
+                                top.toFloat(),
+                                right.toFloat(),
+                                bottom.toFloat(),
+                                mPaint
+                            )
                     }
                 } else {
                     //当 ItemView 是屏幕上第一个可见的View 时，不管它是不是组内第一个View
@@ -66,17 +73,34 @@ open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterfa
         }
     }
 
-    private fun drawStickyHeader(c: Canvas?, groupinfo: GroupInfo?, left: Int, top: Int, right: Int, bottom: Int) {
+    private fun drawStickyHeader(
+        c: Canvas?,
+        groupinfo: GroupInfo?,
+        left: Int,
+        top: Int,
+        right: Int,
+        bottom: Int
+    ) {
         if (c == null || groupinfo == null || mPaint == null || mFontMetrics == null || mTextPaint == null) return
         //绘制Header
         c.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), mPaint)
         val titleX = (left + padding).toFloat()
         val titleY = bottom - mFontMetrics.descent - padding / 2
         //绘制Title
-        c.drawText((if (TextUtils.isEmpty(groupinfo.getTitle())) "" else groupinfo.getTitle())!!, titleX, titleY, mTextPaint)
+        c.drawText(
+            (if (TextUtils.isEmpty(groupinfo.getTitle())) "" else groupinfo.getTitle())!!,
+            titleX,
+            titleY,
+            mTextPaint
+        )
     }
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         super.getItemOffsets(outRect, view, parent, state)
         val position = parent.getChildAdapterPosition(view)
         val groupInfo = groupInfoInterface?.getGroupInfo(position)
@@ -88,16 +112,16 @@ open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterfa
         Log.e("top", outRect.top.toString() + position)
     }
 
-    fun setmStickyHeight(mStickyHeight: Int) {
+    open fun setmStickyHeight(mStickyHeight: Int) {
         this.mStickyHeight = mStickyHeight
     }
 
-    fun setTextSize(textSize: Int) {
+    open fun setTextSize(textSize: Int) {
         this.textSize = textSize
         mTextPaint?.textSize = textSize.toFloat()
     }
 
-    fun setTextPadding(padding: Int) {
+    open fun setTextPadding(padding: Int) {
         this.padding = padding
     }
 

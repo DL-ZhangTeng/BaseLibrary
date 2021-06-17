@@ -13,7 +13,11 @@ import com.zhangteng.base.R
 /**
  * Created by Swing on 2019/6/05.
  */
-open class ShapedImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet?, defStyle: Int = 0) : AppCompatImageView(context, attrs, defStyle) {
+open class ShapedImageView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet?,
+    defStyle: Int = 0
+) : AppCompatImageView(context, attrs, defStyle) {
     private val mShaderMatrix: Matrix = Matrix()
     private var mBorderSize = 0f // 边框大小,默认为0，即无边框
     private var mBorderColor = Color.WHITE // 边框颜色，默认为白色
@@ -51,16 +55,22 @@ open class ShapedImageView @JvmOverloads constructor(context: Context, attrs: At
     }
 
     private fun init(attrs: AttributeSet?) {
-        @SuppressLint("CustomViewStyleable") val a = context.obtainStyledAttributes(attrs,
-                R.styleable.ShapeImageView)
+        @SuppressLint("CustomViewStyleable") val a = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.ShapeImageView
+        )
         mShape = a.getInt(R.styleable.ShapeImageView_siv_shape, mShape)
         mRoundRadius = a.getDimension(R.styleable.ShapeImageView_siv_corner_radius, mRoundRadius)
         mBorderSize = a.getDimension(R.styleable.ShapeImageView_siv_border_size, mBorderSize)
         mBorderColor = a.getColor(R.styleable.ShapeImageView_siv_border_color, mBorderColor)
-        mRoundRadiusLeftBottom = a.getDimension(R.styleable.ShapeImageView_siv_round_radius_leftBottom, mRoundRadius)
-        mRoundRadiusLeftTop = a.getDimension(R.styleable.ShapeImageView_siv_round_radius_leftTop, mRoundRadius)
-        mRoundRadiusRightBottom = a.getDimension(R.styleable.ShapeImageView_siv_round_radius_rightBottom, mRoundRadius)
-        mRoundRadiusRightTop = a.getDimension(R.styleable.ShapeImageView_siv_round_radius_rightTop, mRoundRadius)
+        mRoundRadiusLeftBottom =
+            a.getDimension(R.styleable.ShapeImageView_siv_round_radius_leftBottom, mRoundRadius)
+        mRoundRadiusLeftTop =
+            a.getDimension(R.styleable.ShapeImageView_siv_round_radius_leftTop, mRoundRadius)
+        mRoundRadiusRightBottom =
+            a.getDimension(R.styleable.ShapeImageView_siv_round_radius_rightBottom, mRoundRadius)
+        mRoundRadiusRightTop =
+            a.getDimension(R.styleable.ShapeImageView_siv_round_radius_rightTop, mRoundRadius)
         a.recycle()
     }
 
@@ -75,35 +85,45 @@ open class ShapedImageView @JvmOverloads constructor(context: Context, attrs: At
     public override fun onDraw(canvas: Canvas?) {
         if (mBitmap != null) {
             if (mShape == SHAPE_CIRCLE) {
-                canvas?.drawCircle(mViewRect.right / 2, mViewRect.bottom / 2,
-                        Math.min(mViewRect.right, mViewRect.bottom) / 2, mBitmapPaint)
+                canvas?.drawCircle(
+                    mViewRect.right / 2, mViewRect.bottom / 2,
+                    Math.min(mViewRect.right, mViewRect.bottom) / 2, mBitmapPaint
+                )
             } else if (mShape == SHAPE_OVAL) {
                 canvas?.drawOval(mViewRect, mBitmapPaint)
             } else {
 //                canvas.drawRoundRect(mViewRect, mRoundRadius, mRoundRadius, mBitmapPaint);
                 mPath.reset()
-                mPath.addRoundRect(mViewRect, floatArrayOf(
+                mPath.addRoundRect(
+                    mViewRect, floatArrayOf(
                         mRoundRadiusLeftTop, mRoundRadiusLeftTop,
                         mRoundRadiusRightTop, mRoundRadiusRightTop,
                         mRoundRadiusRightBottom, mRoundRadiusRightBottom,
-                        mRoundRadiusLeftBottom, mRoundRadiusLeftBottom), Path.Direction.CW)
+                        mRoundRadiusLeftBottom, mRoundRadiusLeftBottom
+                    ), Path.Direction.CW
+                )
                 canvas?.drawPath(mPath, mBitmapPaint)
             }
         }
         if (mBorderSize > 0) { // 绘制边框
             if (mShape == SHAPE_CIRCLE) {
-                canvas?.drawCircle(mViewRect.right / 2, mViewRect.bottom / 2,
-                        Math.min(mViewRect.right, mViewRect.bottom) / 2 - mBorderSize / 2, mBorderPaint)
+                canvas?.drawCircle(
+                    mViewRect.right / 2, mViewRect.bottom / 2,
+                    Math.min(mViewRect.right, mViewRect.bottom) / 2 - mBorderSize / 2, mBorderPaint
+                )
             } else if (mShape == SHAPE_OVAL) {
                 canvas?.drawOval(mBorderRect, mBorderPaint)
             } else {
 //                canvas.drawRoundRect(mBorderRect, mRoundRadius, mRoundRadius, mBorderPaint);
                 mPath.reset()
-                mPath.addRoundRect(mBorderRect, floatArrayOf(
+                mPath.addRoundRect(
+                    mBorderRect, floatArrayOf(
                         mRoundRadiusLeftTop, mRoundRadiusLeftTop,
                         mRoundRadiusRightTop, mRoundRadiusRightTop,
                         mRoundRadiusRightBottom, mRoundRadiusRightBottom,
-                        mRoundRadiusLeftBottom, mRoundRadiusLeftBottom), Path.Direction.CW)
+                        mRoundRadiusLeftBottom, mRoundRadiusLeftBottom
+                    ), Path.Direction.CW
+                )
                 canvas?.drawPath(mPath, mBorderPaint)
             }
         }
@@ -117,8 +137,8 @@ open class ShapedImageView @JvmOverloads constructor(context: Context, attrs: At
 
     // 不能在onLayout()调用invalidate()，否则导致绘制异常。（setupBitmapShader()中调用了invalidate()）
     override fun onLayout(
-            changed: Boolean, left: Int, top: Int, right: Int,
-            bottom: Int,
+        changed: Boolean, left: Int, top: Int, right: Int,
+        bottom: Int,
     ) {
         super.onLayout(changed, left, top, right, bottom)
         //        initRect();
@@ -161,45 +181,50 @@ open class ShapedImageView @JvmOverloads constructor(context: Context, attrs: At
         mBorderRect.bottom = height - mBorderSize / 2
     }
 
-    fun getShape(): Int {
+    open fun getShape(): Int {
         return mShape
     }
 
-    fun setShape(shape: Int) {
+    open fun setShape(shape: Int) {
         mShape = shape
     }
 
-    fun getBorderSize(): Float {
+    open fun getBorderSize(): Float {
         return mBorderSize
     }
 
-    fun setBorderSize(mBorderSize: Int) {
+    open fun setBorderSize(mBorderSize: Int) {
         this.mBorderSize = mBorderSize.toFloat()
         mBorderPaint.setStrokeWidth(mBorderSize.toFloat())
         initRect()
         invalidate()
     }
 
-    fun getBorderColor(): Int {
+    open fun getBorderColor(): Int {
         return mBorderColor
     }
 
-    fun setBorderColor(mBorderColor: Int) {
+    open fun setBorderColor(mBorderColor: Int) {
         this.mBorderColor = mBorderColor
         mBorderPaint.setColor(mBorderColor)
         invalidate()
     }
 
-    fun getRoundRadius(): Float {
+    open fun getRoundRadius(): Float {
         return mRoundRadius
     }
 
-    fun setRoundRadius(mRoundRadius: Float) {
+    open fun setRoundRadius(mRoundRadius: Float) {
         this.mRoundRadius = mRoundRadius
         invalidate()
     }
 
-    fun setRoundRadiis(roundRadiusLeftBottom: Float, roundRadiusLeftTop: Float, roundRadiusRightBottom: Float, roundRadiusRightTop: Float) {
+    open fun setRoundRadiis(
+        roundRadiusLeftBottom: Float,
+        roundRadiusLeftTop: Float,
+        roundRadiusRightBottom: Float,
+        roundRadiusRightTop: Float
+    ) {
         mRoundRadiusLeftBottom = roundRadiusLeftBottom
         mRoundRadiusLeftTop = roundRadiusLeftTop
         mRoundRadiusRightBottom = roundRadiusRightBottom
@@ -207,8 +232,13 @@ open class ShapedImageView @JvmOverloads constructor(context: Context, attrs: At
         invalidate()
     }
 
-    fun getRoundRadiis(): FloatArray {
-        return floatArrayOf(mRoundRadiusLeftBottom, mRoundRadiusLeftTop, mRoundRadiusRightBottom, mRoundRadiusRightTop)
+    open fun getRoundRadiis(): FloatArray {
+        return floatArrayOf(
+            mRoundRadiusLeftBottom,
+            mRoundRadiusLeftTop,
+            mRoundRadiusRightBottom,
+            mRoundRadiusRightTop
+        )
     }
 
     private fun getBitmapFromDrawable(drawable: Drawable?): Bitmap? {
@@ -221,7 +251,11 @@ open class ShapedImageView @JvmOverloads constructor(context: Context, attrs: At
             val bitmap: Bitmap = if (drawable is ColorDrawable) {
                 Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG)
             } else {
-                Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, BITMAP_CONFIG)
+                Bitmap.createBitmap(
+                    drawable.intrinsicWidth,
+                    drawable.intrinsicHeight,
+                    BITMAP_CONFIG
+                )
             }
             val canvas = Canvas(bitmap)
             drawable.setBounds(0, 0, canvas.width, canvas.height)

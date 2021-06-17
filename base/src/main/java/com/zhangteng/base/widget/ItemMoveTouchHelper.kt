@@ -10,9 +10,6 @@ import java.util.*
 
 /**
  * Created by swing on 2018/5/7.
- */
-open class ItemMoveTouchHelper
-/**
  * Creates an ItemTouchHelper that will work with the given Callback.
  *
  *
@@ -22,16 +19,19 @@ open class ItemMoveTouchHelper
  *
  * @param callback The Callback which controls the behavior of this touch helper.
  */
-(callback: Callback) : ItemTouchHelper(callback) {
+open class ItemMoveTouchHelper(callback: Callback) : ItemTouchHelper(callback) {
     override fun attachToRecyclerView(recyclerView: RecyclerView?) {
         super.attachToRecyclerView(recyclerView)
     }
 
-    class MoveTouchCallback : Callback() {
+    open class MoveTouchCallback : Callback() {
         /**
          * 如果是列表布局的话则拖拽方向为DOWN和UP，如果是网格布局的话则是DOWN和UP和LEFT和RIGHT
          */
-        override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int {
             return if (recyclerView.getLayoutManager() is GridLayoutManager) {
                 val dragFlags = UP or DOWN or
                         LEFT or RIGHT
@@ -47,14 +47,19 @@ open class ItemMoveTouchHelper
         /**
          * 将正在拖拽的item和集合的item进行交换元素
          */
-        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
             val baseAdapter = recyclerView.adapter as BaseAdapter<*, *>? ?: return true
             val data = baseAdapter.data
             //得到当拖拽的viewHolder的Position
             val fromPosition = viewHolder.adapterPosition
             //拿到当前拖拽到的item的viewHolder
             val toPosition = target.adapterPosition
-            val headerCount = if (baseAdapter.hasHeaderOrFooter) (baseAdapter as HeaderOrFooterAdapter<*>?)!!.getHeadersCount() else 0
+            val headerCount =
+                if (baseAdapter.hasHeaderOrFooter) (baseAdapter as HeaderOrFooterAdapter<*>?)!!.getHeadersCount() else 0
             if (fromPosition < toPosition) {
                 for (i in fromPosition - headerCount until toPosition - headerCount) {
                     Collections.swap(data, i, i + 1)

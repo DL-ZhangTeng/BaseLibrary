@@ -41,31 +41,31 @@ open class Node {
         this.name = name
     }
 
-    fun getIcon(): Int {
+    open fun getIcon(): Int {
         return icon
     }
 
-    fun setIcon(icon: Int) {
+    open fun setIcon(icon: Int) {
         this.icon = icon
     }
 
-    fun getId(): Int {
+    open fun getId(): Int {
         return id
     }
 
-    fun setId(id: Int) {
+    open fun setId(id: Int) {
         this.id = id
     }
 
-    fun getName(): String? {
+    open fun getName(): String? {
         return name
     }
 
-    fun setName(name: String?) {
+    open fun setName(name: String?) {
         this.name = name
     }
 
-    fun isExpand(): Boolean {
+    open fun isExpand(): Boolean {
         return isExpand
     }
 
@@ -74,7 +74,7 @@ open class Node {
      *
      * @param isExpand
      */
-    fun setExpand(isExpand: Boolean) {
+    open fun setExpand(isExpand: Boolean) {
         this.isExpand = isExpand
         if (!isExpand && children != null) {
             for (node in children!!) {
@@ -83,19 +83,19 @@ open class Node {
         }
     }
 
-    fun getChildren(): MutableList<Node?>? {
+    open fun getChildren(): MutableList<Node?>? {
         return children
     }
 
-    fun setChildren(children: MutableList<Node?>?) {
+    open fun setChildren(children: MutableList<Node?>?) {
         this.children = children
     }
 
-    fun getParent(): Node? {
+    open fun getParent(): Node? {
         return parent
     }
 
-    fun setParent(parent: Node?) {
+    open fun setParent(parent: Node?) {
         this.parent = parent
     }
 
@@ -104,7 +104,7 @@ open class Node {
      *
      * @return
      */
-    fun isRoot(): Boolean {
+    open fun isRoot(): Boolean {
         return parent == null
     }
 
@@ -113,7 +113,7 @@ open class Node {
      *
      * @return
      */
-    fun isParentExpand(): Boolean {
+    open fun isParentExpand(): Boolean {
         return parent?.isExpand() ?: false
     }
 
@@ -122,18 +122,18 @@ open class Node {
      *
      * @return
      */
-    fun isLeaf(): Boolean {
+    open fun isLeaf(): Boolean {
         return children?.size == 0
     }
 
     /**
      * 获取level
      */
-    fun getLevel(): Int {
+    open fun getLevel(): Int {
         return if (parent == null) 0 else parent!!.getLevel() + 1
     }
 
-    fun setLevel(level: Int) {
+    open fun setLevel(level: Int) {
         this.level = level
     }
 }

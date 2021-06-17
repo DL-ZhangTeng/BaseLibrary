@@ -36,11 +36,12 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
             field = value
             if (clButton != null && clButton!!.childCount > 0 && clButton!!.getChildAt(0) is ViewGroup) {
                 if ((clButton!!.getChildAt(0) as ViewGroup).getChildAt((clButton!!.getChildAt(0) as ViewGroup).childCount - 1) != null) {
-                    (clButton!!.getChildAt(0) as ViewGroup).getChildAt((clButton!!.getChildAt(0) as ViewGroup).childCount - 1).setOnClickListener { v ->
-                        if (this@BasePopupWindow.onConfirmClickListener != null) {
-                            this@BasePopupWindow.onConfirmClickListener!!.onConfirm(v)
+                    (clButton!!.getChildAt(0) as ViewGroup).getChildAt((clButton!!.getChildAt(0) as ViewGroup).childCount - 1)
+                        .setOnClickListener { v ->
+                            if (this@BasePopupWindow.onConfirmClickListener != null) {
+                                this@BasePopupWindow.onConfirmClickListener!!.onConfirm(v)
+                            }
                         }
-                    }
                 }
             }
         }
@@ -107,12 +108,12 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
         super.showAsDropDown(view)
     }
 
-    fun setDropDown() {
+    open fun setDropDown() {
         //设置SelectPicPopupWindow弹出窗体动画效果
         this.animationStyle = R.style.showAsDropDown
     }
 
-    fun setDropUp() {
+    open fun setDropUp() {
         this.animationStyle = R.style.showAsDropUp
     }
 
@@ -131,7 +132,7 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
     /**
      * 窗口变暗
      */
-    fun showBlackWindowBackground(activity: Activity?) {
+    open fun showBlackWindowBackground(activity: Activity?) {
         activity?.let {
             val lp = activity.window?.attributes
             lp!!.alpha = 0.4f
@@ -140,7 +141,7 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
         }
     }
 
-    fun dismissBlackWindowBackground(activity: Activity?) {
+    open fun dismissBlackWindowBackground(activity: Activity?) {
         activity?.let {
             val lp = activity.window.attributes
             lp.alpha = 1f

@@ -31,11 +31,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract fun initView()
     protected abstract fun initData()
-    fun showToast(message: String?) {
+    open fun showToast(message: String?) {
         ToastUtils.showShort(this, message)
     }
 
-    fun showToast(messageId: Int) {
+    open fun showToast(messageId: Int) {
         ToastUtils.showShort(this, messageId)
     }
 

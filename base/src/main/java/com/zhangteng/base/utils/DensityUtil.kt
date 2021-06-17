@@ -6,7 +6,7 @@ import android.util.TypedValue
 /**
  * 单位转换类
  */
-open class DensityUtil private constructor() {
+class DensityUtil private constructor() {
     companion object {
         private var density = -1f
         private var widthPixels = -1

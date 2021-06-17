@@ -29,7 +29,7 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    fun showNetNodataView(currentView: View?) {
+    open fun showNetNodataView(currentView: View?) {
         showNodataView(NETWORKNO, currentView, R.mipmap.wangluowu, "无网络", "点击重试")
     }
 
@@ -38,7 +38,7 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    fun showContentNodataView(currentView: View?) {
+    open fun showContentNodataView(currentView: View?) {
         showNodataView(CONTENTNODATA, currentView, R.mipmap.neirongwu, "暂无内容~", "")
     }
 
@@ -47,7 +47,13 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    fun showNodataView(type: Int, currentView: View?, drawableRes: Int, nodataText: String?, nodataAgainText: String?) {
+    open fun showNodataView(
+        type: Int,
+        currentView: View?,
+        drawableRes: Int,
+        nodataText: String?,
+        nodataAgainText: String?
+    ) {
         if (contentViews == null || noDataViews == null) return
         if (contentViews.get(type, null) == null) {
             contentViews.put(type, currentView)
@@ -93,7 +99,7 @@ open class LoadViewHelper {
      * @param mContext dialog上下文
      */
     @JvmOverloads
-    fun showProgressDialog(mContext: Context?, mLoadingText: String? = "加载中...") {
+    open fun showProgressDialog(mContext: Context?, mLoadingText: String? = "加载中...") {
         if (mContext == null) {
             return
         }
@@ -107,7 +113,7 @@ open class LoadViewHelper {
      * @param mLoadingText dialog文本
      * @param layoutRes    dialog布局文件
      */
-    fun showProgressDialog(mContext: Context?, mLoadingText: String?, layoutRes: Int) {
+    open fun showProgressDialog(mContext: Context?, mLoadingText: String?, layoutRes: Int) {
         if (mContext == null) {
             return
         }
@@ -134,7 +140,9 @@ open class LoadViewHelper {
                 mProgressDialog = null
                 return
             } else {
-                if (mProgressDialog!!.ownerActivity == null) mProgressDialog!!.setOwnerActivity(activity)
+                if (mProgressDialog!!.ownerActivity == null) mProgressDialog!!.setOwnerActivity(
+                    activity
+                )
             }
             if (showQueue != null && !showQueue.isEmpty())
                 showQueue.add(mProgressDialog)
@@ -148,7 +156,9 @@ open class LoadViewHelper {
                     mProgressDialog = null
                     return
                 } else {
-                    if (mProgressDialog!!.ownerActivity == null) mProgressDialog!!.setOwnerActivity(activity)
+                    if (mProgressDialog!!.ownerActivity == null) mProgressDialog!!.setOwnerActivity(
+                        activity
+                    )
                 }
                 showQueue.add(mProgressDialog)
             }
@@ -159,7 +169,7 @@ open class LoadViewHelper {
     /**
      * 完成dialog
      */
-    fun dismissProgressDialog() {
+    open fun dismissProgressDialog() {
         if (showQueue != null && !showQueue.isEmpty()) {
             val first = showQueue.pollFirst()
             alwaysShowProgressDialog()
@@ -178,7 +188,7 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    fun hiddenNetNodataView(currentView: View?) {
+    open fun hiddenNetNodataView(currentView: View?) {
         hiddenNodataView(NETWORKNO, currentView)
     }
 
@@ -187,7 +197,7 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    fun hiddenContentNodataView(currentView: View?) {
+    open fun hiddenContentNodataView(currentView: View?) {
         hiddenNodataView(CONTENTNODATA, currentView)
     }
 
@@ -196,7 +206,7 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    fun hiddenNodataView(type: Int, currentView: View?) {
+    open fun hiddenNodataView(type: Int, currentView: View?) {
         if (contentViews == null || noDataViews == null) return
         val mNoDataViews = noDataViews.get(type, null)
         var mContentViews = contentViews.get(type, null)
@@ -231,11 +241,11 @@ open class LoadViewHelper {
         }
     }
 
-    fun setAgainRequestListener(againRequestListener: AgainRequestListener?) {
+    open fun setAgainRequestListener(againRequestListener: AgainRequestListener?) {
         this.againRequestListener = againRequestListener
     }
 
-    fun setCancelRequestListener(cancelRequestListener: CancelRequestListener?) {
+    open fun setCancelRequestListener(cancelRequestListener: CancelRequestListener?) {
         this.cancelRequestListener = cancelRequestListener
     }
 

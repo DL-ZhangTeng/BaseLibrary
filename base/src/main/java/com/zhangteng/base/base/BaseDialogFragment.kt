@@ -19,5 +19,5 @@ abstract class BaseDialogFragment : DialogFragment() {
     }
 
     protected abstract fun initView(view: View?)
-    protected fun initData() {}
+    protected open fun initData() {}
 }

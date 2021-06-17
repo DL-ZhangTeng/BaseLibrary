@@ -10,7 +10,8 @@ import com.zhangteng.base.R
 /**
  * Created by swing on 2018/9/6.
  */
-abstract class BaseDialog constructor(context: Context, themeResId: Int = R.style.SelfDialog) : Dialog(context, themeResId) {
+abstract class BaseDialog constructor(context: Context, themeResId: Int = R.style.SelfDialog) :
+    Dialog(context, themeResId) {
     protected var clTitle: LinearLayout? = null
     protected var clContent: ConstraintLayout? = null
     protected var clButton: LinearLayout? = null
@@ -24,11 +25,12 @@ abstract class BaseDialog constructor(context: Context, themeResId: Int = R.styl
             field = value
             if (clButton != null && clButton!!.getChildCount() > 0 && clButton!!.getChildAt(0) is ViewGroup) {
                 if ((clButton!!.getChildAt(0) as ViewGroup).getChildAt(0) != null) {
-                    (clButton!!.getChildAt(0) as ViewGroup).getChildAt(0).setOnClickListener { v: View? ->
-                        if (this@BaseDialog.onCancelClickListener != null) {
-                            this@BaseDialog.onCancelClickListener!!.onCancel(v)
+                    (clButton!!.getChildAt(0) as ViewGroup).getChildAt(0)
+                        .setOnClickListener { v: View? ->
+                            if (this@BaseDialog.onCancelClickListener != null) {
+                                this@BaseDialog.onCancelClickListener!!.onCancel(v)
+                            }
                         }
-                    }
                 }
             }
         }
@@ -41,11 +43,12 @@ abstract class BaseDialog constructor(context: Context, themeResId: Int = R.styl
             field = value
             if (clButton != null && clButton!!.getChildCount() > 0 && clButton!!.getChildAt(0) is ViewGroup) {
                 if ((clButton!!.getChildAt(0) as ViewGroup).getChildAt((clButton!!.getChildAt(0) as ViewGroup).childCount - 1) != null) {
-                    (clButton!!.getChildAt(0) as ViewGroup).getChildAt((clButton!!.getChildAt(0) as ViewGroup).childCount - 1).setOnClickListener { v: View? ->
-                        if (this@BaseDialog.onConfirmClickListener != null) {
-                            this@BaseDialog.onConfirmClickListener!!.onConfirm(v)
+                    (clButton!!.getChildAt(0) as ViewGroup).getChildAt((clButton!!.getChildAt(0) as ViewGroup).childCount - 1)
+                        .setOnClickListener { v: View? ->
+                            if (this@BaseDialog.onConfirmClickListener != null) {
+                                this@BaseDialog.onConfirmClickListener!!.onConfirm(v)
+                            }
                         }
-                    }
                 }
             }
         }
@@ -77,21 +80,21 @@ abstract class BaseDialog constructor(context: Context, themeResId: Int = R.styl
     abstract fun getSelfContentView(): Int
     abstract fun getSelfButtonView(): Int
     abstract fun initView(view: View?)
-    fun setClTitle(view: View?) {
+    open fun setClTitle(view: View?) {
         clTitle?.removeAllViews()
         if (view != null) {
             clTitle?.addView(view)
         }
     }
 
-    fun setClContent(view: View?) {
+    open fun setClContent(view: View?) {
         clContent?.removeAllViews()
         if (view != null) {
             clContent?.addView(view)
         }
     }
 
-    fun setClButton(view: View?) {
+    open fun setClButton(view: View?) {
         clButton?.removeAllViews()
         if (view != null) {
             clButton?.addView(view)

@@ -22,5 +22,5 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected abstract fun initView(view: View, savedInstanceState: Bundle?)
-    protected fun initData(savedInstanceState: Bundle?) {}
+    protected open fun initData(savedInstanceState: Bundle?) {}
 }

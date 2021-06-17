@@ -37,17 +37,17 @@ abstract class MemoryActivity : TitlebarActivity() {
                 if (action == CommonTitleBar.ACTION_LEFT_BUTTON || action == CommonTitleBar.ACTION_LEFT_TEXT) {
                     if (isSaveStateForEver()) {
                         CommonDialog(this@MemoryActivity, "是否保存已编辑的数据？")
-                                .setPositiveButton("保存")
-                                .setNegativeButton("取消")
-                                .setDialogCancelable(false)
-                                .setDialogCanceledOnTouchOutside(false)
-                                .setListener(object : CommonDialog.OnCloseListener {
-                                    override fun onClick(dialog: Dialog?, confirm: Boolean) {
-                                        isSaveStateForEver = confirm
-                                        dialog?.dismiss()
-                                        finish()
-                                    }
-                                }).show()
+                            .setPositiveButton("保存")
+                            .setNegativeButton("取消")
+                            .setDialogCancelable(false)
+                            .setDialogCanceledOnTouchOutside(false)
+                            .setListener(object : CommonDialog.OnCloseListener {
+                                override fun onClick(dialog: Dialog?, confirm: Boolean) {
+                                    isSaveStateForEver = confirm
+                                    dialog?.dismiss()
+                                    finish()
+                                }
+                            }).show()
                     } else {
                         finish()
                     }
@@ -95,11 +95,11 @@ abstract class MemoryActivity : TitlebarActivity() {
      *
      * @return isSaveStateForEver 是否永久缓存
      */
-    protected fun isSaveStateForEver(): Boolean {
+    protected open fun isSaveStateForEver(): Boolean {
         return isSaveStateForEver
     }
 
-    fun setSaveStateForEver(saveStateForEver: Boolean) {
+    open fun setSaveStateForEver(saveStateForEver: Boolean) {
         isSaveStateForEver = saveStateForEver
     }
 
@@ -137,17 +137,17 @@ abstract class MemoryActivity : TitlebarActivity() {
     override fun onBackPressed() {
         if (isSaveStateForEver()) {
             CommonDialog(this, "是否保存已编辑的数据？")
-                    .setPositiveButton("保存")
-                    .setNegativeButton("取消")
-                    .setDialogCancelable(false)
-                    .setDialogCanceledOnTouchOutside(false)
-                    .setListener(object : CommonDialog.OnCloseListener {
-                        override fun onClick(dialog: Dialog?, confirm: Boolean) {
-                            isSaveStateForEver = confirm
-                            dialog?.dismiss()
-                            super@MemoryActivity.onBackPressed()
-                        }
-                    }).show()
+                .setPositiveButton("保存")
+                .setNegativeButton("取消")
+                .setDialogCancelable(false)
+                .setDialogCanceledOnTouchOutside(false)
+                .setListener(object : CommonDialog.OnCloseListener {
+                    override fun onClick(dialog: Dialog?, confirm: Boolean) {
+                        isSaveStateForEver = confirm
+                        dialog?.dismiss()
+                        super@MemoryActivity.onBackPressed()
+                    }
+                }).show()
         } else {
             super.onBackPressed()
         }

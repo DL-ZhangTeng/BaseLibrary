@@ -11,7 +11,12 @@ import com.zhangteng.base.tree.*
  * 树结构的列表适配器
  * Created by swing on 2018/6/29.
  */
-abstract class TreeRecyclerViewAdapter<T>(mTree: RecyclerView?, protected var mContext: Context?, datas: MutableList<T?>?, defaultExpandLevel: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
+abstract class TreeRecyclerViewAdapter<T>(
+    mTree: RecyclerView?,
+    protected var mContext: Context?,
+    datas: MutableList<T?>?,
+    defaultExpandLevel: Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
     /**
      * 存储所有可见的Node
      */
@@ -27,7 +32,7 @@ abstract class TreeRecyclerViewAdapter<T>(mTree: RecyclerView?, protected var mC
      * 点击的回调接口
      */
     private var onTreeNodeClickListener: OnTreeNodeClickListener? = null
-    fun setOnTreeNodeClickListener(onTreeNodeClickListener: OnTreeNodeClickListener?) {
+    open fun setOnTreeNodeClickListener(onTreeNodeClickListener: OnTreeNodeClickListener?) {
         this.onTreeNodeClickListener = onTreeNodeClickListener
     }
 
@@ -36,7 +41,7 @@ abstract class TreeRecyclerViewAdapter<T>(mTree: RecyclerView?, protected var mC
      *
      * @param position
      */
-    fun expandOrCollapse(position: Int) {
+    open fun expandOrCollapse(position: Int) {
         val n = mNodes?.get(position)
         if (n != null) { // 排除传入参数错误异常
             if (!n.isLeaf()) {
@@ -51,7 +56,10 @@ abstract class TreeRecyclerViewAdapter<T>(mTree: RecyclerView?, protected var mC
         return getCreateViewHolder(parent, viewType)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        @SuppressLint("RecyclerView") position: Int
+    ) {
         val node = mNodes?.get(position)
         getBindViewHolder(node, position, holder)
         // 设置内边距

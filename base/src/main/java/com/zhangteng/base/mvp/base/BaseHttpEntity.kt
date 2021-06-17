@@ -7,7 +7,7 @@ package com.zhangteng.base.mvp.base
 abstract class BaseHttpEntity<T> {
     private var iView: IView? = null
 
-    constructor() {}
+    constructor()
     constructor(iView: IView?) {
         this.iView = iView
     }
@@ -15,7 +15,7 @@ abstract class BaseHttpEntity<T> {
     /**
      * 请求开始
      */
-    fun onStart() {
+    open fun onStart() {
         if (iView != null && iView is BaseLoadingView<*>) (iView as BaseLoadingView<*>?)?.showLoadingView()
     }
 
@@ -24,24 +24,24 @@ abstract class BaseHttpEntity<T> {
     /**
      * 无网络
      */
-    fun onNoNetworkError() {
+    open fun onNoNetworkError() {
         if (iView != null && iView is BaseNoNetworkView<*>) (iView as BaseNoNetworkView<*>?)?.showNoNetwork()
     }
 
     /**
      * 业务异常处理
      */
-    fun onError(code: Int, error: String?) {}
+    open fun onError(code: Int, error: String?) {}
 
     /**
      * http异常处理
      */
-    fun onHttpError(code: Int, error: String?) {}
+    open fun onHttpError(code: Int, error: String?) {}
 
     /**
      * 请求完成
      */
-    fun onFinish() {
+    open fun onFinish() {
         if (iView != null && iView is BaseNoNetworkView<*>) (iView as BaseNoNetworkView<*>?)?.hideNoNetwork()
         if (iView != null && iView is BaseRefreshView<*>) (iView as BaseRefreshView<*>?)?.finishRefreshOrLoadMore()
         if (iView != null && iView is BaseLoadingView<*>) (iView as BaseLoadingView<*>?)?.dismissLoadingView()

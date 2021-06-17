@@ -9,7 +9,7 @@ open class GroupInfo {
     private var position = 0
     private var total = 0
 
-    constructor() {}
+    constructor()
     constructor(groupNum: Int, title: String?, position: Int, total: Int) {
         this.groupNum = groupNum
         this.title = title
@@ -24,43 +24,43 @@ open class GroupInfo {
         this.total = total?.toInt() ?: 0
     }
 
-    fun isFirst(): Boolean {
+    open fun isFirst(): Boolean {
         return position == 0
     }
 
-    fun isLast(): Boolean {
+    open fun isLast(): Boolean {
         return position == total - 1
     }
 
-    fun getGroupNum(): Int {
+    open fun getGroupNum(): Int {
         return groupNum
     }
 
-    fun setGroupNum(groupNum: Int) {
+    open fun setGroupNum(groupNum: Int) {
         this.groupNum = groupNum
     }
 
-    fun getTitle(): String? {
+    open fun getTitle(): String? {
         return title
     }
 
-    fun setTitle(title: String?) {
+    open fun setTitle(title: String?) {
         this.title = title
     }
 
-    fun getPosition(): Int {
+    open fun getPosition(): Int {
         return position
     }
 
-    fun setPosition(position: Int) {
+    open fun setPosition(position: Int) {
         this.position = position
     }
 
-    fun getTotal(): Int {
+    open fun getTotal(): Int {
         return total
     }
 
-    fun setTotal(total: Int) {
+    open fun setTotal(total: Int) {
         this.total = total
     }
 
