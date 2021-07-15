@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 
 /**
- * 使用代理的方式自动调用加载动画开启与关闭方法
+ * 使用代理的方式自动调用加载动画开启与关闭方法，同步执行方法时才有意义
  * Proxy.newProxyInstance(
  * MainPresenter::class.java.classLoader,
  * arrayOf(IMainPresenter::class.java),

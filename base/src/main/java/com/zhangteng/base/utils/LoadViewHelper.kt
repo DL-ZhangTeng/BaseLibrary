@@ -25,21 +25,21 @@ open class LoadViewHelper {
     private val showQueue: ArrayDeque<Dialog?>?
 
     /**
-     * 网络无数据view
+     * 无网络view
      *
      * @param currentView 需要替换的view
      */
-    open fun showNetNodataView(currentView: View?) {
-        showNodataView(NETWORKNO, currentView, R.mipmap.wangluowu, "无网络", "点击重试")
+    open fun showNoNetView(currentView: View?) {
+        showNoDataView(NETWORKNO, currentView, R.mipmap.wangluowu, "无网络", "点击重试")
     }
 
     /**
-     * 内容无数据view
+     * 无内容view
      *
      * @param currentView 需要替换的view
      */
-    open fun showContentNodataView(currentView: View?) {
-        showNodataView(CONTENTNODATA, currentView, R.mipmap.neirongwu, "暂无内容~", "")
+    open fun showNoContentView(currentView: View?) {
+        showNoDataView(CONTENTNODATA, currentView, R.mipmap.neirongwu, "暂无内容~", "")
     }
 
     /**
@@ -47,7 +47,7 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    open fun showNodataView(
+    open fun showNoDataView(
         type: Int,
         currentView: View?,
         drawableRes: Int,
@@ -184,21 +184,21 @@ open class LoadViewHelper {
     }
 
     /**
-     * 网络无数据view
+     * 隐藏无网络view
      *
      * @param currentView 需要替换的view
      */
-    open fun hiddenNetNodataView(currentView: View?) {
-        hiddenNodataView(NETWORKNO, currentView)
+    open fun hiddenNoNetView(currentView: View?) {
+        hiddenNoDataView(NETWORKNO, currentView)
     }
 
     /**
-     * 内容无数据view
+     * 隐藏无内容view
      *
      * @param currentView 需要替换的view
      */
-    open fun hiddenContentNodataView(currentView: View?) {
-        hiddenNodataView(CONTENTNODATA, currentView)
+    open fun hiddenNoContentView(currentView: View?) {
+        hiddenNoDataView(CONTENTNODATA, currentView)
     }
 
     /**
@@ -206,7 +206,7 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    open fun hiddenNodataView(type: Int, currentView: View?) {
+    open fun hiddenNoDataView(type: Int, currentView: View?) {
         if (contentViews == null || noDataViews == null) return
         val mNoDataViews = noDataViews.get(type, null)
         var mContentViews = contentViews.get(type, null)
