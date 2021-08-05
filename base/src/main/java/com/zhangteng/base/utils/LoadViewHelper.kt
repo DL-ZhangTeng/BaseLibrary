@@ -16,13 +16,13 @@ import java.util.*
  * Created by swing on 2018/10/8.
  */
 open class LoadViewHelper {
-    private val contentViews: SparseArray<View?>?
-    private val noDataViews: SparseArray<NoDataView?>?
+    private val contentViews: SparseArray<View?> = SparseArray()
+    private val noDataViews: SparseArray<NoDataView?> = SparseArray()
+    private val showQueue: ArrayDeque<Dialog?> = ArrayDeque()
     private var mProgressDialog: Dialog? = null
     private var loadView: TextView? = null
     private var againRequestListener: AgainRequestListener? = null
     private var cancelRequestListener: CancelRequestListener? = null
-    private val showQueue: ArrayDeque<Dialog?>?
 
     /**
      * 无网络view
@@ -54,7 +54,6 @@ open class LoadViewHelper {
         nodataText: String?,
         nodataAgainText: String?
     ) {
-        if (contentViews == null || noDataViews == null) return
         if (contentViews.get(type, null) == null) {
             contentViews.put(type, currentView)
         }
@@ -126,11 +125,11 @@ open class LoadViewHelper {
             if (mLoadingText != null) {
                 loadView?.text = mLoadingText
             }
-            mProgressDialog!!.setContentView(view)
-            mProgressDialog!!.setCancelable(true)
-            mProgressDialog!!.setCanceledOnTouchOutside(false)
-            mProgressDialog!!.setOnDismissListener {
-                if (showQueue != null && !showQueue.isEmpty()) {
+            mProgressDialog?.setContentView(view)
+            mProgressDialog?.setCancelable(true)
+            mProgressDialog?.setCanceledOnTouchOutside(false)
+            mProgressDialog?.setOnDismissListener {
+                if (!showQueue.isEmpty()) {
                     showQueue.remove(mProgressDialog)
                 }
                 cancelRequestListener?.cancel()
@@ -140,23 +139,22 @@ open class LoadViewHelper {
                 mProgressDialog = null
                 return
             } else {
-                if (mProgressDialog!!.ownerActivity == null) mProgressDialog!!.setOwnerActivity(
+                if (mProgressDialog?.ownerActivity == null) mProgressDialog?.setOwnerActivity(
                     activity
                 )
             }
-            if (showQueue != null && !showQueue.isEmpty())
-                showQueue.add(mProgressDialog)
+            showQueue.add(mProgressDialog)
         } else if (!mProgressDialog!!.isShowing) {
             if (mLoadingText != null && loadView != null) {
                 loadView?.text = mLoadingText
             }
-            if (showQueue != null && !showQueue.isEmpty() && !showQueue.contains(mProgressDialog)) {
+            if (!showQueue.isEmpty() && !showQueue.contains(mProgressDialog)) {
                 val activity = findActivity(mContext)
                 if (activity == null || activity.isDestroyed || activity.isFinishing) {
                     mProgressDialog = null
                     return
                 } else {
-                    if (mProgressDialog!!.ownerActivity == null) mProgressDialog!!.setOwnerActivity(
+                    if (mProgressDialog?.ownerActivity == null) mProgressDialog?.setOwnerActivity(
                         activity
                     )
                 }
@@ -170,7 +168,7 @@ open class LoadViewHelper {
      * 完成dialog
      */
     open fun dismissProgressDialog() {
-        if (showQueue != null && !showQueue.isEmpty()) {
+        if (!showQueue.isEmpty()) {
             val first = showQueue.pollFirst()
             alwaysShowProgressDialog()
             val activity = first?.ownerActivity
@@ -207,7 +205,6 @@ open class LoadViewHelper {
      * @param currentView 需要替换的view
      */
     open fun hiddenNoDataView(type: Int, currentView: View?) {
-        if (contentViews == null || noDataViews == null) return
         val mNoDataViews = noDataViews.get(type, null)
         var mContentViews = contentViews.get(type, null)
         if (mContentViews == null) {
@@ -230,14 +227,14 @@ open class LoadViewHelper {
     }
 
     private fun alwaysShowProgressDialog() {
-        if (showQueue != null && !showQueue.isEmpty() && showQueue.first != null && !showQueue.first!!.isShowing) {
-            val activity1 = showQueue.first!!.ownerActivity
+        if (!showQueue.isEmpty() && showQueue.first != null && !showQueue.first!!.isShowing) {
+            val activity1 = showQueue.first?.ownerActivity
             if (activity1 == null || activity1.isDestroyed || activity1.isFinishing) {
                 showQueue.remove(mProgressDialog)
                 alwaysShowProgressDialog()
                 return
             }
-            showQueue.first!!.show()
+            showQueue.first?.show()
         }
     }
 
@@ -271,11 +268,5 @@ open class LoadViewHelper {
                 null
             }
         }
-    }
-
-    init {
-        contentViews = SparseArray()
-        noDataViews = SparseArray()
-        showQueue = ArrayDeque()
     }
 }
