@@ -92,6 +92,8 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         return this
     }
 
+
+
     override fun getSelfTitleView(): Int {
         return 0
     }

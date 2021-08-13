@@ -29,6 +29,6 @@
         android:layout_weight="1.0"
         android:gravity="center"
         android:text="@string/dialog_affirm"
-        android:textColor="#fffe5722"
+        android:textColor="#ff222222"
         android:textSize="15sp" />
 </LinearLayout>

@@ -13,15 +13,13 @@ import com.zhangteng.base.R
 /**
  * Created by Swing on 2019/6/05.
  */
-open class ShapedImageView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet?,
-    defStyle: Int = 0
-) : AppCompatImageView(context, attrs, defStyle) {
+open class ShapedImageView : AppCompatImageView {
+
+
     private val mShaderMatrix: Matrix = Matrix()
     private var mBorderSize = 0f // 边框大小,默认为0，即无边框
     private var mBorderColor = Color.WHITE // 边框颜色，默认为白色
-    private var mShape = SHAPE_CIRCLE // 形状，默认为直接矩形
+    private var mShape = ShapeType.SHAPE_CIRCLE.type // 形状，默认为直接矩形
     private var mRoundRadius = 0f // 矩形的圆角半径,默认为0，即直角矩形
     private var mRoundRadiusLeftTop = 0f
     private var mRoundRadiusLeftBottom = 0f
@@ -34,6 +32,23 @@ open class ShapedImageView @JvmOverloads constructor(
     private var mBitmapShader: BitmapShader? = null
     private var mBitmap: Bitmap? = null
     private val mPath: Path = Path()
+
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
+        init(attrs)
+        mBorderPaint.style = Paint.Style.STROKE
+        mBorderPaint.strokeWidth = mBorderSize
+        mBorderPaint.color = mBorderColor
+        mBorderPaint.isAntiAlias = true
+        mBitmapPaint.isAntiAlias = true
+        super.setScaleType(ScaleType.CENTER_CROP) // 固定为CENTER_CROP，其他不生效
+    }
+
     override fun setImageResource(resId: Int) {
         super.setImageResource(resId)
         mBitmap = getBitmapFromDrawable(drawable)
@@ -84,12 +99,12 @@ open class ShapedImageView @JvmOverloads constructor(
     @SuppressLint("DrawAllocation")
     public override fun onDraw(canvas: Canvas?) {
         if (mBitmap != null) {
-            if (mShape == SHAPE_CIRCLE) {
+            if (mShape == ShapeType.SHAPE_CIRCLE.type) {
                 canvas?.drawCircle(
                     mViewRect.right / 2, mViewRect.bottom / 2,
                     Math.min(mViewRect.right, mViewRect.bottom) / 2, mBitmapPaint
                 )
-            } else if (mShape == SHAPE_OVAL) {
+            } else if (mShape == ShapeType.SHAPE_OVAL.type) {
                 canvas?.drawOval(mViewRect, mBitmapPaint)
             } else {
 //                canvas.drawRoundRect(mViewRect, mRoundRadius, mRoundRadius, mBitmapPaint);
@@ -106,12 +121,12 @@ open class ShapedImageView @JvmOverloads constructor(
             }
         }
         if (mBorderSize > 0) { // 绘制边框
-            if (mShape == SHAPE_CIRCLE) {
+            if (mShape == ShapeType.SHAPE_CIRCLE.type) {
                 canvas?.drawCircle(
                     mViewRect.right / 2, mViewRect.bottom / 2,
                     Math.min(mViewRect.right, mViewRect.bottom) / 2 - mBorderSize / 2, mBorderPaint
                 )
-            } else if (mShape == SHAPE_OVAL) {
+            } else if (mShape == ShapeType.SHAPE_OVAL.type) {
                 canvas?.drawOval(mBorderRect, mBorderPaint)
             } else {
 //                canvas.drawRoundRect(mBorderRect, mRoundRadius, mRoundRadius, mBorderPaint);
@@ -133,16 +148,6 @@ open class ShapedImageView @JvmOverloads constructor(
         super.onSizeChanged(w, h, oldw, oldh)
         initRect()
         setupBitmapShader()
-    }
-
-    // 不能在onLayout()调用invalidate()，否则导致绘制异常。（setupBitmapShader()中调用了invalidate()）
-    override fun onLayout(
-        changed: Boolean, left: Int, top: Int, right: Int,
-        bottom: Int,
-    ) {
-        super.onLayout(changed, left, top, right, bottom)
-        //        initRect();
-//        setupBitmapShader();
     }
 
     private fun setupBitmapShader() {
@@ -195,7 +200,7 @@ open class ShapedImageView @JvmOverloads constructor(
 
     open fun setBorderSize(mBorderSize: Int) {
         this.mBorderSize = mBorderSize.toFloat()
-        mBorderPaint.setStrokeWidth(mBorderSize.toFloat())
+        mBorderPaint.strokeWidth = mBorderSize.toFloat()
         initRect()
         invalidate()
     }
@@ -206,7 +211,7 @@ open class ShapedImageView @JvmOverloads constructor(
 
     open fun setBorderColor(mBorderColor: Int) {
         this.mBorderColor = mBorderColor
-        mBorderPaint.setColor(mBorderColor)
+        mBorderPaint.color = mBorderColor
         invalidate()
     }
 
@@ -249,12 +254,12 @@ open class ShapedImageView @JvmOverloads constructor(
             (drawable as BitmapDrawable?)?.bitmap
         } else try {
             val bitmap: Bitmap = if (drawable is ColorDrawable) {
-                Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG)
+                Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888)
             } else {
                 Bitmap.createBitmap(
                     drawable.intrinsicWidth,
                     drawable.intrinsicHeight,
-                    BITMAP_CONFIG
+                    Bitmap.Config.ARGB_8888
                 )
             }
             val canvas = Canvas(bitmap)
@@ -267,21 +272,9 @@ open class ShapedImageView @JvmOverloads constructor(
         }
     }
 
-    companion object {
-        private val BITMAP_CONFIG: Bitmap.Config = Bitmap.Config.ARGB_8888
-        private const val COLORDRAWABLE_DIMENSION = 2
-        var SHAPE_REC = 1 // 矩形
-        var SHAPE_CIRCLE = 2 // 圆形
-        var SHAPE_OVAL = 3 // 椭圆
-    }
-
-    init {
-        init(attrs)
-        mBorderPaint.setStyle(Paint.Style.STROKE)
-        mBorderPaint.setStrokeWidth(mBorderSize)
-        mBorderPaint.setColor(mBorderColor)
-        mBorderPaint.setAntiAlias(true)
-        mBitmapPaint.setAntiAlias(true)
-        super.setScaleType(ScaleType.CENTER_CROP) // 固定为CENTER_CROP，其他不生效
+    enum class ShapeType(val type: Int) {
+        SHAPE_REC(1), // 矩形
+        SHAPE_CIRCLE(2), // 圆形
+        SHAPE_OVAL(3) // 椭圆
     }
 }

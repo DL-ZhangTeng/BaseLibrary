@@ -46,7 +46,7 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
             }
         }
 
-    private fun initView(context: Context?) {
+    protected fun initView(context: Context?) {
         parent = LayoutInflater.from(context).inflate(R.layout.self_base_popupwindow, null)
         clTitle = parent?.findViewById(R.id.self_base_popupwindow_title)
         clContent = parent?.findViewById(R.id.self_base_popupwindow_content)
@@ -60,7 +60,6 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
         if (getSelfButtonView() != 0) {
             LayoutInflater.from(context).inflate(getSelfButtonView(), clButton, true)
         }
-        initView(parent)
         this.contentView = parent
 
         //设置高
@@ -77,10 +76,12 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
         val dw = ColorDrawable(0x00000000)
         //设置SelectPicPopupWindow弹出窗体的背景
         setBackgroundDrawable(dw)
-        //设置SelectPicPopupWindow弹出窗体动画效果
+        //默认向下弹出
         this.animationStyle = R.style.showAsDropDown
         //防止被虚拟导航栏阻挡
         this.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+
+        initView(parent)
     }
 
     abstract fun getSelfTitleView(): Int
@@ -108,25 +109,37 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
         super.showAsDropDown(view)
     }
 
+    /**
+     * @description 向下弹出
+     */
     open fun setDropDown() {
         //设置SelectPicPopupWindow弹出窗体动画效果
         this.animationStyle = R.style.showAsDropDown
     }
 
+    /**
+     * @description 向上弹出
+     */
     open fun setDropUp() {
         this.animationStyle = R.style.showAsDropUp
     }
 
+    /**
+     * @description  向左弹出
+     */
+    open fun setDropLeft() {
+        this.animationStyle = R.style.showAsDropLeft
+    }
+
+    /**
+     * @description向右弹出
+     */
+    open fun setDropRight() {
+        this.animationStyle = R.style.showAsDropRight
+    }
+
     override fun showAtLocation(parent: View?, gravity: Int, x: Int, y: Int) {
         super.showAtLocation(parent, gravity, x, y)
-    }
-
-    override fun showAsDropDown(anchor: View?, xoff: Int, yoff: Int) {
-        super.showAsDropDown(anchor, xoff, yoff)
-    }
-
-    override fun showAsDropDown(anchor: View?, xoff: Int, yoff: Int, gravity: Int) {
-        super.showAsDropDown(anchor, xoff, yoff, gravity)
     }
 
     /**

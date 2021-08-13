@@ -21,6 +21,16 @@
         <item name="android:windowExitAnimation">@anim/self_popupwindow_showasdropup_close</item>
     </style>
 
+    <style name="showAsDropLeft">
+        <item name="android:windowEnterAnimation">@anim/self_popupwindow_showasdropleft_open</item>
+        <item name="android:windowExitAnimation">@anim/self_popupwindow_showasdropleft_close</item>
+    </style>
+
+    <style name="showAsDropRight">
+        <item name="android:windowEnterAnimation">@anim/self_popupwindow_showasdropright_open</item>
+        <item name="android:windowExitAnimation">@anim/self_popupwindow_showasdropright_close</item>
+    </style>
+
     <style name="MyTabLayout">
         <item name="tabMyIndicatorPaddingLeft">0dp</item>
         <item name="tabMyIndicatorPaddingRight">0dp</item>
@@ -48,4 +58,5 @@
         <item name="android:windowBackground">@drawable/shape_loading</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
 </resources>
