@@ -4,21 +4,19 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.*
 import android.graphics.drawable.AnimationDrawable
-import android.util.SparseArray
 import android.view.*
 import android.widget.*
 import com.zhangteng.base.R
 import com.zhangteng.base.widget.NoDataView
 import java.util.*
+import kotlin.collections.HashMap
 
 /**
- * 将某个视图替换为正在加载、无数据、加载失败等视图
+ * 将某个视图替换为正在加载、无数据、加载失败等视图(保证每一个页面一个实例，不可单例使用会造成内存泄露或闪退)
  * Created by swing on 2018/10/8.
  */
 open class LoadViewHelper {
-    private val contentViews: SparseArray<View?> = SparseArray()
-    private val noDataViews: SparseArray<NoDataView?> = SparseArray()
-    private val showQueue: ArrayDeque<Dialog?> = ArrayDeque()
+    private val contentViews: HashMap<View, NoDataView> = HashMap()
     private var mProgressDialog: Dialog? = null
     private var loadView: TextView? = null
     private var againRequestListener: AgainRequestListener? = null
@@ -30,7 +28,7 @@ open class LoadViewHelper {
      * @param currentView 需要替换的view
      */
     open fun showNoNetView(currentView: View?) {
-        showNoDataView(NETWORKNO, currentView, R.mipmap.wangluowu, "无网络", "点击重试")
+        showNoDataView(currentView, R.mipmap.wangluowu, "无网络", "点击重试")
     }
 
     /**
@@ -39,7 +37,7 @@ open class LoadViewHelper {
      * @param currentView 需要替换的view
      */
     open fun showNoContentView(currentView: View?) {
-        showNoDataView(CONTENTNODATA, currentView, R.mipmap.neirongwu, "暂无内容~", "")
+        showNoDataView(currentView, R.mipmap.neirongwu, "暂无内容~", "")
     }
 
     /**
@@ -48,43 +46,38 @@ open class LoadViewHelper {
      * @param currentView 需要替换的view
      */
     open fun showNoDataView(
-        type: Int,
         currentView: View?,
         drawableRes: Int,
-        nodataText: String?,
-        nodataAgainText: String?
+        noDataText: String?,
+        noDataAgainText: String?
     ) {
-        if (contentViews.get(type, null) == null) {
-            contentViews.put(type, currentView)
+        if (currentView == null) return
+        if (contentViews[currentView] == null) {
+            contentViews[currentView] = NoDataView(currentView.context)
         }
-        if (noDataViews.get(type, null) == null) {
-            noDataViews.put(type, contentViews.get(type)?.context?.let { NoDataView(it) })
-        }
-        val mNoDataViews = noDataViews.get(type)
-        val mContentViews = contentViews.get(type)
-        if (mNoDataViews == null || mContentViews == null) return
-        mNoDataViews.setNoDataImageResource(drawableRes)
-        mNoDataViews.setNoDataText(nodataText)
-        if (null == nodataAgainText || "" == nodataAgainText) {
-            mNoDataViews.setNoDataAgainVisivility(View.GONE)
+        val mNoDataView = contentViews[currentView] ?: return
+        mNoDataView.setNoDataImageResource(drawableRes)
+        mNoDataView.setNoDataText(noDataText)
+        if (null == noDataAgainText || "" == noDataAgainText) {
+            mNoDataView.setNoDataAgainVisivility(View.GONE)
         } else {
-            mNoDataViews.setNoDataAgainText(nodataAgainText)
+            mNoDataView.setNoDataAgainText(noDataAgainText)
         }
-        mNoDataViews.setAgainRequestListener(object : NoDataView.AgainRequestListener {
+        mNoDataView.setAgainRequestListener(object : NoDataView.AgainRequestListener {
             override fun request() {
                 againRequestListener?.request()
             }
         })
-        if (mNoDataViews.isNoDataViewShow()) {
+        if (mNoDataView.isNoDataViewShow()) {
             return
         }
-        val viewGroup = mContentViews.parent
+        val viewGroup = currentView.parent
         if (viewGroup != null) {
             viewGroup as ViewGroup
-            viewGroup.removeView(mContentViews)
-            viewGroup.addView(mNoDataViews, mContentViews.layoutParams)
+            viewGroup.removeView(currentView)
+            viewGroup.addView(mNoDataView, currentView.layoutParams)
         }
-        mNoDataViews.setNoDataViewShow(true)
+        mNoDataView.setNoDataViewShow(true)
     }
     /**
      * 显示dialog
@@ -116,6 +109,7 @@ open class LoadViewHelper {
         if (mContext == null) {
             return
         }
+
         if (mProgressDialog == null) {
             mProgressDialog = Dialog(mContext, R.style.progress_dialog)
             val view = View.inflate(mContext, layoutRes, null)
@@ -129,55 +123,40 @@ open class LoadViewHelper {
             mProgressDialog?.setCancelable(true)
             mProgressDialog?.setCanceledOnTouchOutside(false)
             mProgressDialog?.setOnDismissListener {
-                if (!showQueue.isEmpty()) {
-                    showQueue.remove(mProgressDialog)
-                }
                 cancelRequestListener?.cancel()
             }
             val activity = findActivity(mContext)
             if (activity == null || activity.isDestroyed || activity.isFinishing) {
+                if (mProgressDialog?.isShowing == true)
+                    mProgressDialog?.dismiss()
                 mProgressDialog = null
                 return
             } else {
-                if (mProgressDialog?.ownerActivity == null) mProgressDialog?.setOwnerActivity(
-                    activity
-                )
+                if (mProgressDialog?.ownerActivity == null)
+                    mProgressDialog?.setOwnerActivity(activity)
             }
-            showQueue.add(mProgressDialog)
-        } else if (!mProgressDialog!!.isShowing) {
+        } else {
             if (mLoadingText != null && loadView != null) {
                 loadView?.text = mLoadingText
             }
-            if (!showQueue.isEmpty() && !showQueue.contains(mProgressDialog)) {
-                val activity = findActivity(mContext)
-                if (activity == null || activity.isDestroyed || activity.isFinishing) {
-                    mProgressDialog = null
-                    return
-                } else {
-                    if (mProgressDialog?.ownerActivity == null) mProgressDialog?.setOwnerActivity(
-                        activity
-                    )
-                }
-                showQueue.add(mProgressDialog)
-            }
         }
-        alwaysShowProgressDialog()
+        val activity1 = mProgressDialog?.ownerActivity
+        if (activity1 == null || activity1.isDestroyed || activity1.isFinishing) {
+            if (mProgressDialog?.isShowing == true)
+                mProgressDialog?.dismiss()
+            mProgressDialog = null
+            return
+        }
+        if (mProgressDialog?.isShowing == false)
+            mProgressDialog?.show()
     }
 
     /**
      * 完成dialog
      */
     open fun dismissProgressDialog() {
-        if (!showQueue.isEmpty()) {
-            val first = showQueue.pollFirst()
-            alwaysShowProgressDialog()
-            val activity = first?.ownerActivity
-            if (activity == null || activity.isDestroyed) {
-                showQueue.remove(mProgressDialog)
-                dismissProgressDialog()
-                return
-            }
-            first.dismiss()
+        if (mProgressDialog?.isShowing == true) {
+            mProgressDialog?.dismiss()
         }
     }
 
@@ -187,7 +166,7 @@ open class LoadViewHelper {
      * @param currentView 需要替换的view
      */
     open fun hiddenNoNetView(currentView: View?) {
-        hiddenNoDataView(NETWORKNO, currentView)
+        hiddenNoDataView(currentView)
     }
 
     /**
@@ -196,7 +175,7 @@ open class LoadViewHelper {
      * @param currentView 需要替换的view
      */
     open fun hiddenNoContentView(currentView: View?) {
-        hiddenNoDataView(CONTENTNODATA, currentView)
+        hiddenNoDataView(currentView)
     }
 
     /**
@@ -204,37 +183,29 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    open fun hiddenNoDataView(type: Int, currentView: View?) {
-        val mNoDataViews = noDataViews.get(type, null)
-        var mContentViews = contentViews.get(type, null)
-        if (mContentViews == null) {
-            contentViews.put(type, currentView)
-            mContentViews = currentView
-        }
-        if (mNoDataViews == null) {
+    open fun hiddenNoDataView(currentView: View?) {
+        val mNoDataView = contentViews[currentView]
+        if (mNoDataView?.isNoDataViewShow() == false) {
             return
         }
-        if (!mNoDataViews.isNoDataViewShow()) {
-            return
-        }
-        val viewGroup = mNoDataViews.parent
+        val viewGroup = mNoDataView?.parent
         if (viewGroup != null) {
             viewGroup as ViewGroup
-            viewGroup.removeView(mNoDataViews)
-            viewGroup.addView(mContentViews)
+            viewGroup.removeView(mNoDataView)
+            viewGroup.addView(currentView)
         }
-        mNoDataViews.setNoDataViewShow(false)
+        mNoDataView?.setNoDataViewShow(false)
     }
 
-    private fun alwaysShowProgressDialog() {
-        if (!showQueue.isEmpty() && showQueue.first != null && !showQueue.first!!.isShowing) {
-            val activity1 = showQueue.first?.ownerActivity
-            if (activity1 == null || activity1.isDestroyed || activity1.isFinishing) {
-                showQueue.remove(mProgressDialog)
-                alwaysShowProgressDialog()
-                return
-            }
-            showQueue.first?.show()
+    public fun findActivity(context: Context?): Activity? {
+        if (context is Activity) {
+            return context
+        }
+        return if (context is ContextWrapper) {
+            val wrapper = context as ContextWrapper?
+            findActivity(wrapper?.baseContext)
+        } else {
+            null
         }
     }
 
@@ -252,21 +223,5 @@ open class LoadViewHelper {
 
     interface AgainRequestListener {
         open fun request()
-    }
-
-    companion object {
-        const val NETWORKNO = 0
-        const val CONTENTNODATA = 1
-        private fun findActivity(context: Context?): Activity? {
-            if (context is Activity) {
-                return context
-            }
-            return if (context is ContextWrapper) {
-                val wrapper = context as ContextWrapper?
-                findActivity(wrapper?.baseContext)
-            } else {
-                null
-            }
-        }
     }
 }
