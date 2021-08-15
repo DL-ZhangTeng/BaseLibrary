@@ -23,6 +23,12 @@ open class LoadViewHelper {
     private var cancelRequestListener: CancelRequestListener? = null
 
     /**
+     * @description: 解决连续进度弹窗问题
+     */
+    @Volatile
+    private var showCount: Int = 0
+
+    /**
      * 无网络view
      *
      * @param currentView 需要替换的view
@@ -105,6 +111,7 @@ open class LoadViewHelper {
      * @param mLoadingText dialog文本
      * @param layoutRes    dialog布局文件
      */
+    @Synchronized
     open fun showProgressDialog(mContext: Context?, mLoadingText: String?, layoutRes: Int) {
         if (mContext == null) {
             return
@@ -147,6 +154,7 @@ open class LoadViewHelper {
             mProgressDialog = null
             return
         }
+        showCount++
         if (mProgressDialog?.isShowing == false)
             mProgressDialog?.show()
     }
@@ -154,8 +162,11 @@ open class LoadViewHelper {
     /**
      * 完成dialog
      */
+    @Synchronized
     open fun dismissProgressDialog() {
-        if (mProgressDialog?.isShowing == true) {
+        showCount--
+        if (mProgressDialog?.isShowing == true && showCount <= 0) {
+            showCount = 0
             mProgressDialog?.dismiss()
         }
     }
