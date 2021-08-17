@@ -36,6 +36,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation(project(":base"))
 //    implementation 'com.github.duoluo9:BaseLibrary:1.1.3'
 }

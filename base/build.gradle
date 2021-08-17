@@ -75,6 +75,10 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.70'
     implementation "androidx.core:core-ktx:1.3.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
 }
 ////上传命令：1、gradlew javadocJar 2、gradlew sourcesJar 3、gradlew install 4、gradlew bintrayUpload
 //def siteUrl = 'https://github.com/duoluo9/BaseLibrary' //项目在github主页地址

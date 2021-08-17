@@ -25,9 +25,10 @@ import java.util.*
  * RecyclerView 自定义的适配器
  * Created by Swing on 2018/5/7.
  */
-abstract class BaseAdapter<T, VH : DefaultViewHolder>(data: MutableList<T?>?) : RecyclerView.Adapter<VH?>() {
-    init {
-        data.also { this.data = it }
+abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH?> {
+
+    constructor(data: MutableList<T?>?) : super() {
+        this.data = data
     }
 
     var data: MutableList<T?>? = null
@@ -43,7 +44,12 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder>(data: MutableList<T?>?) : 
 
     abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.itemView.setOnClickListener { v: View? -> mOnItemClickListener?.onItemClick(v, holder.adapterPosition) }
+        holder.itemView.setOnClickListener { v: View? ->
+            mOnItemClickListener?.onItemClick(
+                v,
+                holder.adapterPosition
+            )
+        }
         if (mOnItemLongClickListener != null) {
             holder.itemView.isLongClickable = true
             holder.itemView.setOnClickListener { v: View? ->
@@ -150,7 +156,10 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder>(data: MutableList<T?>?) : 
          * @param backgroundRes A resource to use as a background.
          * @return The DefaultViewHolder for chaining.
          */
-        fun setBackgroundRes(@IdRes viewId: Int, @DrawableRes backgroundRes: Int): DefaultViewHolder? {
+        fun setBackgroundRes(
+            @IdRes viewId: Int,
+            @DrawableRes backgroundRes: Int
+        ): DefaultViewHolder? {
             val view = getView<View?>(viewId)
             view?.setBackgroundResource(backgroundRes)
             return this
@@ -395,7 +404,10 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder>(data: MutableList<T?>?) : 
                 }
                 view.setOnLongClickListener(OnLongClickListener { v ->
                     adapter?.mOnItemChildLongClickListener != null &&
-                            adapter?.mOnItemChildLongClickListener!!.onItemChildLongClick(v, layoutPosition)
+                            adapter?.mOnItemChildLongClickListener!!.onItemChildLongClick(
+                                v,
+                                layoutPosition
+                            )
                 })
             }
             return this
@@ -408,7 +420,10 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder>(data: MutableList<T?>?) : 
          * @param listener The item long click listener;
          * @return The DefaultViewHolder for chaining.
          */
-        fun setOnItemLongClickListener(@IdRes viewId: Int, listener: AdapterView.OnItemLongClickListener?): DefaultViewHolder? {
+        fun setOnItemLongClickListener(
+            @IdRes viewId: Int,
+            listener: AdapterView.OnItemLongClickListener?
+        ): DefaultViewHolder? {
             val view = getView<AdapterView<*>?>(viewId)
             view?.onItemLongClickListener = listener
             return this
@@ -421,7 +436,10 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder>(data: MutableList<T?>?) : 
          * @param listener The item selected click listener;
          * @return The DefaultViewHolder for chaining.
          */
-        fun setOnItemSelectedClickListener(@IdRes viewId: Int, listener: OnItemSelectedListener?): DefaultViewHolder? {
+        fun setOnItemSelectedClickListener(
+            @IdRes viewId: Int,
+            listener: OnItemSelectedListener?
+        ): DefaultViewHolder? {
             val view = getView<AdapterView<*>?>(viewId)
             view?.onItemSelectedListener = listener
             return this
@@ -434,7 +452,10 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder>(data: MutableList<T?>?) : 
          * @param listener The checked change listener of compound button.
          * @return The DefaultViewHolder for chaining.
          */
-        fun setOnCheckedChangeListener(@IdRes viewId: Int, listener: CompoundButton.OnCheckedChangeListener?): DefaultViewHolder? {
+        fun setOnCheckedChangeListener(
+            @IdRes viewId: Int,
+            listener: CompoundButton.OnCheckedChangeListener?
+        ): DefaultViewHolder? {
             val view = getView<CompoundButton?>(viewId)
             view?.setOnCheckedChangeListener(listener)
             return this
