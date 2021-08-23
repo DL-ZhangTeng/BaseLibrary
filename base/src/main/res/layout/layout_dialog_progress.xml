@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:scaleType="centerInside"
-            android:src="@drawable/loadings" />
+            android:src="@drawable/loading1" />
 
         <TextView
             android:id="@+id/loadView"

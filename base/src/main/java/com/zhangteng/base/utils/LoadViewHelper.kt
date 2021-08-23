@@ -2,14 +2,16 @@ package com.zhangteng.base.utils
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.*
-import android.graphics.drawable.AnimationDrawable
-import android.view.*
-import android.widget.*
+import android.content.Context
+import android.content.ContextWrapper
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
+import android.widget.ImageView
+import android.widget.TextView
 import com.zhangteng.base.R
 import com.zhangteng.base.widget.NoDataView
-import java.util.*
-import kotlin.collections.HashMap
 
 /**
  * 将某个视图替换为正在加载、无数据、加载失败等视图(保证每一个页面一个实例，不可单例使用会造成内存泄露或闪退)
@@ -18,7 +20,8 @@ import kotlin.collections.HashMap
 open class LoadViewHelper {
     private val contentViews: HashMap<View, NoDataView> = HashMap()
     private var mProgressDialog: Dialog? = null
-    private var loadView: TextView? = null
+    private var mLoadTextView: TextView? = null
+    private var mLoadImageView: ImageView? = null
     private var againRequestListener: AgainRequestListener? = null
     private var cancelRequestListener: CancelRequestListener? = null
 
@@ -85,34 +88,64 @@ open class LoadViewHelper {
         }
         mNoDataView.setNoDataViewShow(true)
     }
-    /**
-     * 显示dialog
-     *
-     * @param mContext     dialog上下文
-     * @param mLoadingText dialog文本
-     */
-    /**
-     * 显示dialog
-     *
-     * @param mContext dialog上下文
-     */
-    @JvmOverloads
-    open fun showProgressDialog(mContext: Context?, mLoadingText: String? = "加载中...") {
-        if (mContext == null) {
-            return
-        }
-        showProgressDialog(mContext, mLoadingText, R.layout.layout_dialog_progress)
-    }
 
     /**
      * 显示dialog
      *
      * @param mContext     dialog上下文
      * @param mLoadingText dialog文本
+     */
+    @JvmOverloads
+    open fun showProgressDialog(mContext: Context?, mLoadingText: String? = "加载中...") {
+        if (mContext == null) {
+            return
+        }
+        showProgressDialog(
+            mContext,
+            R.drawable.loading1,
+            mLoadingText
+        )
+    }
+
+    /**
+     * 显示dialog
+     *
+     * @param mContext     dialog上下文
+     * @param mLoadingImage dialog动画
+     * @param mLoadingText dialog文本
+     */
+    @JvmOverloads
+    open fun showProgressDialog(
+        mContext: Context?,
+        mLoadingImage: Int,
+        mLoadingText: String?
+    ) {
+        if (mContext == null) {
+            return
+        }
+        showProgressDialog(
+            mContext,
+            mLoadingImage,
+            mLoadingText,
+            R.layout.layout_dialog_progress
+        )
+    }
+
+    /**
+     * 显示dialog
+     *
+     * @param mContext     dialog上下文
+     * @param mLoadingImage dialog动画
+     * @param mLoadingText dialog文本
      * @param layoutRes    dialog布局文件
      */
     @Synchronized
-    open fun showProgressDialog(mContext: Context?, mLoadingText: String?, layoutRes: Int) {
+    open fun showProgressDialog(
+        mContext: Context?,
+        mLoadingImage: Int,
+        mLoadingText: String?,
+        layoutRes: Int
+    ) {
         if (mContext == null) {
             return
         }
@@ -120,11 +153,15 @@ open class LoadViewHelper {
         if (mProgressDialog == null) {
             mProgressDialog = Dialog(mContext, R.style.progress_dialog)
             val view = View.inflate(mContext, layoutRes, null)
-            loadView = view.findViewById(R.id.loadView)
-            val mImageView = view.findViewById<ImageView?>(R.id.progress_bar)
-            (mImageView?.drawable as AnimationDrawable).start()
+            mLoadTextView = view.findViewById(R.id.loadView)
+            mLoadImageView = view.findViewById(R.id.progress_bar)
+            mLoadImageView?.setImageResource(mLoadingImage)
+            mLoadImageView?.startAnimation(
+                AnimationUtils.loadAnimation(mContext, R.anim.loadings)
+                    .apply { interpolator = LinearInterpolator() })
+
             if (mLoadingText != null) {
-                loadView?.text = mLoadingText
+                mLoadTextView?.text = mLoadingText
             }
             mProgressDialog?.setContentView(view)
             mProgressDialog?.setCancelable(true)
@@ -143,8 +180,8 @@ open class LoadViewHelper {
                     mProgressDialog?.setOwnerActivity(activity)
             }
         } else {
-            if (mLoadingText != null && loadView != null) {
-                loadView?.text = mLoadingText
+            if (mLoadingText != null && mLoadTextView != null) {
+                mLoadTextView?.text = mLoadingText
             }
         }
         val activity1 = mProgressDialog?.ownerActivity
@@ -167,6 +204,7 @@ open class LoadViewHelper {
         showCount--
         if (mProgressDialog?.isShowing == true && showCount <= 0) {
             showCount = 0
+            mLoadImageView?.clearAnimation()
             mProgressDialog?.dismiss()
         }
     }
