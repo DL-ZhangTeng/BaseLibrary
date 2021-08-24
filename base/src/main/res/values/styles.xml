@@ -1,4 +1,20 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 全透明 沉浸式主题样式 -->
+    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 设置状态栏半透明 -->
+        <item name="android:windowTranslucentStatus">false</item>
+        <!-- 设置底部导航栏半透明，默认false黑色，设置true半透明 -->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <!-- Android 5.0+，设置状态栏全透明透明 -->
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+    </style>
+    <!-- 半透明 沉浸式主题样式 -->
+    <style name="HalfTranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--半透明状态栏-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--半透明导航栏-->
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
 
     <style name="SelfDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
