@@ -1429,14 +1429,28 @@ open class MyTabLayout @JvmOverloads constructor(
             // Now lets measure
             super.onMeasure(widthMeasureSpec, origHeightMeasureSpec)
 
-            if (mTabViewSelf && mCustomView != null) {
-                widthMeasureSpec = if (mCustomView is ViewGroup) {
-                    val tab = (mCustomView as ViewGroup).getChildAt(0)
-                    val width = tab.measuredWidth + mTabPaddingStart + mTabPaddingEnd
-                    MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
-                } else {
-                    val width = mCustomView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
-                    MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+            if (mTabViewSelf) {
+                if (mCustomView != null) {
+                    widthMeasureSpec = if (mCustomView is ViewGroup) {
+                        val tab = (mCustomView as ViewGroup).getChildAt(0)
+                        val width = tab.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                        MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+                    } else {
+                        val width = mCustomView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                        MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+                    }
+                } else if (mCustomTextView != null) {
+                    val width = mCustomTextView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                    widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+                } else if (mTextView != null) {
+                    val width = mTextView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                    widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+                } else if (mCustomIconView != null) {
+                    val width = mCustomIconView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                    widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+                } else if (mIconView != null) {
+                    val width = mIconView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                    widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
                 }
                 super.onMeasure(widthMeasureSpec, origHeightMeasureSpec)
             }
