@@ -137,6 +137,7 @@
         <attr name="tabMyViewNumber" format="integer" />
         <attr name="tabMySelectedTextSize" format="dimension" />
         <attr name="tabMyTextSize" format="dimension" />
+        <attr name="tabMyTabViewSelf" format="boolean" />
     </declare-styleable>
     <declare-styleable name="MyTabItem">
         <attr name="myText" format="string" />

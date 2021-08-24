@@ -65,6 +65,7 @@ open class MyTabLayout @JvmOverloads constructor(
     var mTabPaddingTop: Int
     var mTabPaddingEnd: Int
     var mTabPaddingBottom: Int
+    var mTabViewSelf = false
     var mTabTextAppearance: Int
     var mTabTypeface: Int
     var mTabSelectedTypeface: Int
@@ -1414,8 +1415,7 @@ open class MyTabLayout @JvmOverloads constructor(
             val specWidthSize = MeasureSpec.getSize(origWidthMeasureSpec)
             val specWidthMode = MeasureSpec.getMode(origWidthMeasureSpec)
             val maxWidth = getTabMaxWidth()
-            val widthMeasureSpec: Int
-            widthMeasureSpec = if (maxWidth > 0 && (specWidthMode == MeasureSpec.UNSPECIFIED
+            var widthMeasureSpec = if (maxWidth > 0 && (specWidthMode == MeasureSpec.UNSPECIFIED
                         || specWidthSize > maxWidth)
             ) {
                 // If we have a max width and a given spec which is either unspecified or
@@ -1428,6 +1428,18 @@ open class MyTabLayout @JvmOverloads constructor(
 
             // Now lets measure
             super.onMeasure(widthMeasureSpec, origHeightMeasureSpec)
+
+            if (mTabViewSelf && mCustomView != null) {
+                widthMeasureSpec = if (mCustomView is ViewGroup) {
+                    val tab = (mCustomView as ViewGroup).getChildAt(0)
+                    val width = tab.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                    MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+                } else {
+                    val width = mCustomView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                    MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
+                }
+                super.onMeasure(widthMeasureSpec, origHeightMeasureSpec)
+            }
 
             // We need to switch the text size based on whether the text is spanning 2 lines or not
             if (mTextView != null) {
@@ -2250,6 +2262,10 @@ open class MyTabLayout @JvmOverloads constructor(
             val screenWidth = resources.displayMetrics.widthPixels
             mRequestedTabMinWidth = screenWidth / tabViewNumber
         }
+        mTabViewSelf = a.getBoolean(
+            R.styleable.MyTabLayout_tabMyTabViewSelf,
+            false
+        )
         a.recycle()
         val res = resources
         mTabTextMultiLineSize =
