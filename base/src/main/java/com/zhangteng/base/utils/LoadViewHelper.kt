@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import android.widget.ImageView
@@ -21,6 +22,7 @@ open class LoadViewHelper {
     private val contentViews: HashMap<View, NoDataView> = HashMap()
     private var mProgressDialog: Dialog? = null
     private var mLoadTextView: TextView? = null
+    private var mAnimation: Animation? = null
     private var mLoadImageView: ImageView? = null
     private var againRequestListener: AgainRequestListener? = null
     private var cancelRequestListener: CancelRequestListener? = null
@@ -156,9 +158,9 @@ open class LoadViewHelper {
             mLoadTextView = view.findViewById(R.id.loadView)
             mLoadImageView = view.findViewById(R.id.progress_bar)
             mLoadImageView?.setImageResource(mLoadingImage)
-            mLoadImageView?.startAnimation(
-                AnimationUtils.loadAnimation(mContext, R.anim.loadings)
-                    .apply { interpolator = LinearInterpolator() })
+            mAnimation = AnimationUtils.loadAnimation(mContext, R.anim.loadings)
+                .apply { interpolator = LinearInterpolator() }
+            mLoadImageView?.startAnimation(mAnimation)
 
             if (mLoadingText != null) {
                 mLoadTextView?.text = mLoadingText
@@ -182,6 +184,13 @@ open class LoadViewHelper {
         } else {
             if (mLoadingText != null && mLoadTextView != null) {
                 mLoadTextView?.text = mLoadingText
+            }
+            if (mLoadImageView != null) {
+                if (mAnimation == null) {
+                    mAnimation = AnimationUtils.loadAnimation(mContext, R.anim.loadings)
+                        .apply { interpolator = LinearInterpolator() }
+                }
+                mLoadImageView?.startAnimation(mAnimation)
             }
         }
         val activity1 = mProgressDialog?.ownerActivity
