@@ -39,7 +39,6 @@ import com.zhangteng.base.R
 import com.zhangteng.base.utils.TextUtil
 import java.lang.ref.WeakReference
 import java.util.*
-import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -561,7 +560,7 @@ open class MyTabLayout @JvmOverloads constructor(
             if (vp is ViewPager) {
                 // If we have a ViewPager parent and we've been added as part of its decor, let's
                 // assume that we should automatically setup to display any titles
-                setupWithViewPager(vp as ViewPager, true, true)
+                setupWithViewPager(vp, true, true)
             }
         }
     }
@@ -577,7 +576,7 @@ open class MyTabLayout @JvmOverloads constructor(
 
     private fun getTabScrollRange(): Int {
         return Math.max(
-            0, (mTabStrip?.getWidth() ?: 0) - width - paddingLeft
+            0, (mTabStrip?.width ?: 0) - width - paddingLeft
                     - paddingRight
         )
     }
@@ -603,7 +602,7 @@ open class MyTabLayout @JvmOverloads constructor(
     open fun populateFromPagerAdapter() {
         removeAllTabs()
         if (mPagerAdapter != null) {
-            val adapterCount = mPagerAdapter!!.getCount()
+            val adapterCount = mPagerAdapter!!.count
             for (i in 0 until adapterCount) {
                 addTab(newTab().setText(mPagerAdapter!!.getPageTitle(i)), false)
             }
@@ -843,7 +842,7 @@ open class MyTabLayout @JvmOverloads constructor(
             if (currentTab != null) {
                 val currentTabTextView = currentTab.mView?.mTextView
                 if (mTabTypeface != mTabSelectedTypeface && currentTabTextView != null && currentTabTextView.typeface.style != mTabTypeface) {
-                    currentTabTextView.setTypeface(Typeface.defaultFromStyle(mTabTypeface))
+                    currentTabTextView.typeface = Typeface.defaultFromStyle(mTabTypeface)
                 }
                 if (mTabTextSize != mTabSelectedTextSize && currentTabTextView != null && currentTabTextView.textSize != mTabTextSize) {
                     currentTabTextView.textSize = mTabTextSize
@@ -854,7 +853,7 @@ open class MyTabLayout @JvmOverloads constructor(
             if (tab != null) {
                 val tabTextView = tab.mView?.mTextView
                 if (mTabTypeface != mTabSelectedTypeface && tabTextView != null && tabTextView.typeface.style != mTabSelectedTypeface) {
-                    tabTextView.setTypeface(Typeface.defaultFromStyle(mTabSelectedTypeface))
+                    tabTextView.typeface = Typeface.defaultFromStyle(mTabSelectedTypeface)
                 }
                 if (mTabTextSize != mTabSelectedTextSize && tabTextView != null && tabTextView.textSize != mTabSelectedTextSize) {
                     tabTextView.textSize = mTabSelectedTextSize
@@ -1204,7 +1203,7 @@ open class MyTabLayout @JvmOverloads constructor(
          */
         open fun setContentDescription(@StringRes resId: Int): Tab {
             requireNotNull(mParent) { "Tab not attached to a TabLayout" }
-            return setContentDescription(mParent!!.getResources().getText(resId))
+            return setContentDescription(mParent!!.resources.getText(resId))
         }
 
         /**
@@ -1444,9 +1443,8 @@ open class MyTabLayout @JvmOverloads constructor(
                     val width = mCustomTextView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
                     widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
                 } else if (mTextView != null) {
-                    val offWidth = ceil((mTabSelectedTextSize - mTabTextSize).toDouble()).toInt()
                     val width =
-                        mTextView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd + offWidth
+                        mTextView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
                     widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
                 } else if (mCustomIconView != null) {
                     val width = mCustomIconView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
@@ -1460,15 +1458,24 @@ open class MyTabLayout @JvmOverloads constructor(
 
             // We need to switch the text size based on whether the text is spanning 2 lines or not
             if (mTextView != null) {
-                val res = resources
                 var textSize = mTabTextSize
                 val selectedTextSize = mTabSelectedTextSize
                 var maxLines = mDefaultMaxLines
                 if (mTabSelectedTypeface != mTabTypeface) {
-                    mTextView!!.setTypeface(Typeface.defaultFromStyle(if (mTextView!!.isSelected()) mTabSelectedTypeface else mTabTypeface))
+                    mTextView!!.typeface =
+                        Typeface.defaultFromStyle(if (mTextView!!.isSelected) mTabSelectedTypeface else mTabTypeface)
                 } else if (mTextView!!.typeface.style != mTabTypeface) {
-                    mTextView!!.setTypeface(Typeface.defaultFromStyle(mTabTypeface))
+                    mTextView!!.typeface = Typeface.defaultFromStyle(mTabTypeface)
                 }
+                if (mTabSelectedTextSize != mTabTextSize) {
+                    mTextView!!.setTextSize(
+                        TypedValue.COMPLEX_UNIT_PX,
+                        if (mTextView!!.isSelected) mTabSelectedTextSize else mTabTextSize
+                    )
+                } else if (mTextView!!.textSize != mTabTextSize) {
+                    mTextView!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabTextSize)
+                }
+
                 if (mIconView != null && mIconView != null && mIconView!!.visibility == VISIBLE) {
                     // If the icon view is being displayed, we limit the text to 1 line
                     maxLines = 1
@@ -1479,7 +1486,7 @@ open class MyTabLayout @JvmOverloads constructor(
                 val curTextSize = mTextView!!.textSize
                 val curLineCount = mTextView!!.lineCount
                 val curMaxLines = TextViewCompat.getMaxLines(mTextView!!)
-                if (textSize != curTextSize || selectedTextSize != curTextSize || curMaxLines >= 0 && maxLines != curMaxLines) {
+                if (textSize != curTextSize || selectedTextSize != curTextSize || (curMaxLines >= 0 && maxLines != curMaxLines)) {
                     // We've got a new text size and/or max lines...
                     var updateTextView = true
                     if (mMode == MODE_FIXED && textSize > curTextSize && selectedTextSize > curTextSize && curLineCount == 1) {
@@ -1496,13 +1503,7 @@ open class MyTabLayout @JvmOverloads constructor(
                         }
                     }
                     if (updateTextView) {
-                        mTextView!!.setTextSize(
-                            TypedValue.COMPLEX_UNIT_PX,
-                            if (mTextView!!.isSelected) selectedTextSize else textSize
-                        )
                         mTextView!!.maxLines = maxLines
-                        mTextView!!.minWidth =
-                            ceil((if (mTextView!!.isSelected) selectedTextSize else textSize).toDouble()).toInt()
                         super.onMeasure(widthMeasureSpec, origHeightMeasureSpec)
                     }
                 }
@@ -1659,7 +1660,7 @@ open class MyTabLayout @JvmOverloads constructor(
         }
     }
 
-    private inner class SlidingTabStrip internal constructor(context: Context) :
+    private inner class SlidingTabStrip(context: Context) :
         LinearLayout(context) {
         private val mSelectedIndicatorPaint: Paint?
         var mSelectedPosition = -1
@@ -1843,7 +1844,7 @@ open class MyTabLayout @JvmOverloads constructor(
                 // If we're currently running an animation, lets cancel it and start a
                 // new animation with the remaining duration
                 mIndicatorAnimator!!.cancel()
-                val duration = mIndicatorAnimator!!.getDuration()
+                val duration = mIndicatorAnimator!!.duration
                 animateIndicatorToPosition(
                     mSelectedPosition,
                     ((1f - mIndicatorAnimator!!.animatedFraction) * duration).roundToInt()
@@ -1932,8 +1933,8 @@ open class MyTabLayout @JvmOverloads constructor(
                 mIndicatorAnimator = ValueAnimator()
                 val animator = mIndicatorAnimator
                 animator?.let {
-                    it.setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR)
-                    it.setDuration(duration.toLong())
+                    it.interpolator = AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR
+                    it.duration = duration.toLong()
                     it.setFloatValues(0f, 1f)
                     it.addUpdateListener(AnimatorUpdateListener { animator ->
                         val fraction = animator.animatedFraction
@@ -2048,7 +2049,7 @@ open class MyTabLayout @JvmOverloads constructor(
         }
     }
 
-    private inner class PagerAdapterObserver internal constructor() : DataSetObserver() {
+    private inner class PagerAdapterObserver() : DataSetObserver() {
         override fun onChanged() {
             populateFromPagerAdapter()
         }
@@ -2058,7 +2059,7 @@ open class MyTabLayout @JvmOverloads constructor(
         }
     }
 
-    private inner class AdapterChangeListener internal constructor() : OnAdapterChangeListener {
+    private inner class AdapterChangeListener() : OnAdapterChangeListener {
         private var mAutoRefresh = false
         override fun onAdapterChanged(
             viewPager: ViewPager,
