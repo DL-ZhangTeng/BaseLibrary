@@ -835,10 +835,11 @@ open class MyTabLayout @JvmOverloads constructor(
                 } else {
                     animateToTab(newPosition)
                 }
-                if (newPosition != Tab.INVALID_POSITION) {
-                    setSelectedTabView(newPosition)
-                }
             }
+            if (newPosition != Tab.INVALID_POSITION) {
+                setSelectedTabView(newPosition)
+            }
+
             if (currentTab != null) {
                 val currentTabTextView = currentTab.mView?.mTextView
                 if (mTabTypeface != mTabSelectedTypeface && currentTabTextView != null && currentTabTextView.typeface.style != mTabTypeface) {
