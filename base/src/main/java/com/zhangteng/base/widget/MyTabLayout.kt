@@ -39,6 +39,7 @@ import com.zhangteng.base.R
 import com.zhangteng.base.utils.TextUtil
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -1443,7 +1444,9 @@ open class MyTabLayout @JvmOverloads constructor(
                     val width = mCustomTextView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
                     widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
                 } else if (mTextView != null) {
-                    val width = mTextView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
+                    val offWidth = ceil((mTabSelectedTextSize - mTabTextSize).toDouble()).toInt()
+                    val width =
+                        mTextView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd + offWidth
                     widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST)
                 } else if (mCustomIconView != null) {
                     val width = mCustomIconView!!.measuredWidth + mTabPaddingStart + mTabPaddingEnd
@@ -1498,6 +1501,8 @@ open class MyTabLayout @JvmOverloads constructor(
                             if (mTextView!!.isSelected) selectedTextSize else textSize
                         )
                         mTextView!!.maxLines = maxLines
+                        mTextView!!.minWidth =
+                            ceil((if (mTextView!!.isSelected) selectedTextSize else textSize).toDouble()).toInt()
                         super.onMeasure(widthMeasureSpec, origHeightMeasureSpec)
                     }
                 }
