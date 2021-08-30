@@ -17,19 +17,28 @@ class TreeActivity : BaseListActivity<TreeBean, TreeAdapter>() {
     }
 
     override fun createAdapter(): TreeAdapter {
-        var rootTree: TreeBean? = null
-        rootTree = TreeBean().apply {
+        val rootTree = TreeBean().apply {
             id = "1"
             label = "1"
             children = ArrayList()
-            children?.add(TreeBean().apply {
-                id = "2"
-                label = "2"
-                children = ArrayList()
-                parent = rootTree
-            })
             parent = null
         }
+        val oneTree = TreeBean().apply {
+            id = "2"
+            label = "2"
+            children = ArrayList()
+            parent = null
+        }
+        rootTree.children?.add(oneTree)
+
+        val twoTree = TreeBean().apply {
+            id = "3"
+            label = "3"
+            children = ArrayList()
+            parent = null
+        }
+        oneTree.children?.add(twoTree)
+
         data.add(rootTree)
         return TreeAdapter(data, 1)
     }
