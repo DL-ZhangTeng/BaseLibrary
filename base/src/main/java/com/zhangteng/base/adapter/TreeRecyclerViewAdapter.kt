@@ -1,27 +1,20 @@
 package com.zhangteng.base.adapter
 
-import android.annotation.SuppressLint
 import android.content.*
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import com.zhangteng.base.base.BaseAdapter
 import com.zhangteng.base.tree.*
 
 /**
  * 树结构的列表适配器
  * Created by swing on 2018/6/29.
  */
-abstract class TreeRecyclerViewAdapter<T>(
-    mTree: RecyclerView?,
-    protected var mContext: Context?,
-    datas: MutableList<T?>?,
-    defaultExpandLevel: Int
-) : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
+abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandLevel: Int) :
+    BaseAdapter<T, BaseAdapter.DefaultViewHolder>() {
     /**
      * 存储所有可见的Node
      */
     protected var mNodes: MutableList<Node?>?
-    protected var mInflater: LayoutInflater?
 
     /**
      * 存储所有的Node
@@ -32,6 +25,7 @@ abstract class TreeRecyclerViewAdapter<T>(
      * 点击的回调接口
      */
     private var onTreeNodeClickListener: OnTreeNodeClickListener? = null
+
     open fun setOnTreeNodeClickListener(onTreeNodeClickListener: OnTreeNodeClickListener?) {
         this.onTreeNodeClickListener = onTreeNodeClickListener
     }
@@ -52,14 +46,12 @@ abstract class TreeRecyclerViewAdapter<T>(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DefaultViewHolder {
         return getCreateViewHolder(parent, viewType)
     }
 
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        @SuppressLint("RecyclerView") position: Int
-    ) {
+    override fun onBindViewHolder(holder: DefaultViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
         val node = mNodes?.get(position)
         getBindViewHolder(node, position, holder)
         // 设置内边距
@@ -79,29 +71,24 @@ abstract class TreeRecyclerViewAdapter<T>(
         return mNodes?.size ?: 0
     }
 
-    abstract fun getCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder
-    abstract fun getBindViewHolder(node: Node?, position: Int, holder: RecyclerView.ViewHolder?)
+    abstract fun getCreateViewHolder(parent: ViewGroup?, viewType: Int): DefaultViewHolder
+    abstract fun getBindViewHolder(node: Node?, position: Int, holder: DefaultViewHolder?)
     interface OnTreeNodeClickListener {
         open fun onClick(node: Node?, position: Int)
     }
 
     /**
-     * @param mTree
-     * @param context
-     * @param datas
+     * @param data 原始数据
      * @param defaultExpandLevel 默认展开几级树
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
      */
     init {
         /**
          * 对所有的Node进行排序
          */
-        mAllNodes = TreeHelper.getSortedNodes(datas, defaultExpandLevel)
+        mAllNodes = TreeHelper.getSortedNodes(data, defaultExpandLevel)
         /**
          * 过滤出可见的Node
          */
         mNodes = TreeHelper.filterVisibleNode(mAllNodes)
-        mInflater = LayoutInflater.from(mContext)
     }
 }

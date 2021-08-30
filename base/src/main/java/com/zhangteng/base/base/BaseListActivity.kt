@@ -1,7 +1,6 @@
 package com.zhangteng.base.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +28,7 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
     /**
      * 列表数据 实体bean
      */
-    protected var mList = ArrayList<D>()
+    protected var mList = ArrayList<D?>()
 
     /**
      * 当前请求的视频列表最后数据的页码，用于查询下一页数据
@@ -41,8 +40,8 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
      */
     protected var mTotal = 0
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_list)
     }
 
@@ -111,7 +110,6 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
     protected fun refreshData(refresh: Boolean) {
         if (refresh) {
             mPage = 1
-            showProgressDialog()
         } else {
             mPage++
         }
@@ -131,9 +129,8 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
      * @param total 总数
      * @param data  数据
      */
-    protected fun showDataSuccess(total: Int, data: List<D>?) {
+    protected fun showDataSuccess(total: Int, data: List<D?>?) {
         mRefreshLayout?.finishRefresh()
-        dismissProgressDialog()
         mTotal = 0
         if (mPage == 1) {
             mList.clear()
@@ -162,7 +159,6 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
     protected fun showDataFailure() {
         mRefreshLayout?.finishRefresh()
         mRefreshLayout?.finishLoadMoreWithNoMoreData()
-        dismissProgressDialog()
         showNoContentView(mRecyclerView)
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -11,36 +11,17 @@
         android:id="@+id/tv_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Hello World!" />
 
-    <com.zhangteng.base.widget.MyTabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tabMyBackground="@color/colorWhite"
-        app:tabMyIndicatorBottomLayer="true"
-        app:tabMyIndicatorColor="#222222"
-        app:tabMyIndicatorHeight="3dp"
-        app:tabMyIndicatorMarginBottomSelfFit="false"
-        app:tabMyIndicatorRoundRadius="2dp"
-        app:tabMyIndicatorSelfFit="true"
-        app:tabMyMode="MODE_SCROLLABLE"
-        app:tabMyPaddingEnd="18dp"
-        app:tabMyPaddingStart="18dp"
-        app:tabMySelectedTextColor="#222222"
-        app:tabMySelectedTextSize="26sp"
-        app:tabMySelectedTypeface="NORMAL"
-        app:tabMyTabViewSelf="true"
-        app:tabMyTextColor="#999999"
-        app:tabMyTextSize="14sp"
-        app:tabMyTypeface="NORMAL" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickTabLayout"
+        android:text="TabLayout" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickTree"
+        android:text="Tree" />
 </LinearLayout>
