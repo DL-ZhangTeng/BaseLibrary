@@ -8,4 +8,6 @@
     <color name="dialog_nav_bg">#99000000</color>
     <color name="default_text_grey_color">#747474</color>
     <color name="default_text_green_color">#00C7B5</color>
+
+    <color name="srb_stars">#42BC64</color>
 </resources>
