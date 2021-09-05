@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="base_theme_color">#222222</color>
+
     <color name="titlebar_bg">#ffffff</color>
     <color name="titlebar_text_color">#333333</color>
     <color name="titlebar_text_light_color">#ffffff</color>
