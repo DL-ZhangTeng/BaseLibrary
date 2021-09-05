@@ -9,6 +9,7 @@ import com.zhangteng.base.utils.ActivityHelper
 import com.zhangteng.base.utils.LoadViewHelper
 import com.zhangteng.base.utils.LogUtils
 import com.zhangteng.base.utils.ToastUtils
+import com.zhangteng.baselibrary.activity.NineImageActivity
 import com.zhangteng.baselibrary.activity.TabLayoutActivity
 import com.zhangteng.baselibrary.activity.TreeActivity
 import com.zhangteng.baselibrary.mvp.model.imodel.IMainModel
@@ -75,5 +76,9 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
 
     fun onClickTree(v: View) {
         ActivityHelper.jumpToActivity(this, TreeActivity::class.java, 1)
+    }
+
+    fun onClickNineImage(v: View) {
+        ActivityHelper.jumpToActivity(this, NineImageActivity::class.java, 1)
     }
 }

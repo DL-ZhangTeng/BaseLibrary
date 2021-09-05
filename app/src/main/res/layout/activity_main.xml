@@ -17,11 +17,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickTabLayout"
-        android:text="TabLayout" />
+        android:text="onClickTabLayout" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickTree"
-        android:text="Tree" />
+        android:text="onClickTree" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickNineImage"
+        android:text="onClickNineImage" />
 </LinearLayout>

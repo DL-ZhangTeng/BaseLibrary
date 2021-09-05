@@ -81,6 +81,7 @@ dependencies {
     implementation  'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
 
     implementation 'com.github.duoluo9:ImagePicker:1.1.7'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 }
 ////上传命令：1、gradlew javadocJar 2、gradlew sourcesJar 3、gradlew install 4、gradlew bintrayUpload
 //def siteUrl = 'https://github.com/duoluo9/BaseLibrary' //项目在github主页地址

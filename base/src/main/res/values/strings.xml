@@ -7,4 +7,5 @@
     <string name="dialog_affirm" translatable="false">确定</string>
     <string name="collapse" translatable="false">折叠</string>
     <string name="expand" translatable="false">展开</string>
+    <string name="select">%1$s/%2$s</string>
 </resources>

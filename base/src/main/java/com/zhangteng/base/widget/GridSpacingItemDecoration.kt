@@ -9,9 +9,12 @@ import com.zhangteng.base.base.BaseDecoration
  * 网格布局分割线
  * Created by Swing on 2019/6/6 0006.
  */
-class GridSpacingItemDecoration(//列数
-    private val spanCount: Int, //间隔
-    private val spacing: Int, //是否包含边缘
+class GridSpacingItemDecoration(
+    //列数
+    private val spanCount: Int,
+    //间隔
+    private val spacing: Int,
+    //是否包含边缘
     private val includeEdge: Boolean
 ) : BaseDecoration() {
     override fun getItemOffsets(
