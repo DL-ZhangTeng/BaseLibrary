@@ -3,22 +3,6 @@
 根模块，包含一些常用工具类与基类
 [GitHub仓库地址](https://github.com/duoluo9/BaseLibrary)
 ## 引入
-### maven
-```xml
-<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-</repositories>
-
-<dependency>
-	    <groupId>com.github.duoluo9</groupId>
-	    <artifactId>BaseLibrary</artifactId>
-	    <version>1.1.20</version>
-</dependency>
-```
-
 ### gradle
 ```groovy
 allprojects {
@@ -27,7 +11,7 @@ allprojects {
     }
 }
 
-implementation 'com.github.duoluo9:BaseLibrary:1.1.20'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.1.20'
 //库所使用的三方
 implementation 'com.google.android.material:material:1.2.1'
 implementation 'com.alibaba:fastjson:1.2.70'
@@ -36,7 +20,7 @@ implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必�
 implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
 implementation  'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
 
-implementation 'com.github.duoluo9:ImagePicker:1.1.7'
+implementation 'com.github.DL-ZhangTeng:ImagePicker:1.1.7'
 implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 ```
 
