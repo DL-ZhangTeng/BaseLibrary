@@ -41,9 +41,9 @@ BasePresenter| P层实现，实现了attachView、detachView、onDestroy等方�
 BaseLoadingPresenter| P层加载中动画实现，增加了getBaseLoadingView()方法
 BaseHttpEntity| model到presenter的回调
 LoadingPresenterHandler| 使用代理的方式自动调用加载动画开启与关闭方法，同步执行方法时才有意义(好像没啥用...)
-BaseMvpFragment| 使用Mvp模式Fragment基类（可使用插件自动创建Fragment。[插件仓库地址](https://github.com/duoluo9/BaseLibraryPlugin)）
+BaseMvpFragment| 使用Mvp模式Fragment基类（可使用插件自动创建Fragment。[插件仓库地址](https://github.com/DL-ZhangTeng/BaseLibraryPlugin)）
 BaseListMvpFragment| 使用Mvp模式列表Fragment基类
-BaseMvpActivity| 使用Mvp模式Activity基类（可使用插件自动创建Activity。[插件仓库地址](https://github.com/duoluo9/BaseLibraryPlugin)）
+BaseMvpActivity| 使用Mvp模式Activity基类（可使用插件自动创建Activity。[插件仓库地址](https://github.com/DL-ZhangTeng/BaseLibraryPlugin)）
 BaseListMvpActivity| 使用Mvp模式列表Activity基类
 
 ### 九宫格图片工具包（com/zhangteng/base/adapter、com/zhangteng/base/widget）
