@@ -1,7 +1,7 @@
 
 # BaseLibrary
 根模块，包含一些常用工具类与基类
-[GitHub仓库地址](https://github.com/duoluo9/BaseLibrary)
+[GitHub仓库地址](https://github.com/DL-ZhangTeng/BaseLibrary)
 ## 引入
 ### gradle
 ```groovy
