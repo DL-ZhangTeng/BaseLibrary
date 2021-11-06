@@ -12,25 +12,32 @@ import com.zhangteng.base.utils.ToastUtils
  * Created by swing on 2017/11/23.
  */
 abstract class BaseActivity : AppCompatActivity() {
+    protected var isMvvmModel = false
 
     protected var mLoadViewHelper: LoadViewHelper? = null
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
-        initView()
-        initData()
+        if (!isMvvmModel) {
+            initView()
+            initData()
+        }
     }
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
-        initView()
-        initData()
+        if (!isMvvmModel) {
+            initView()
+            initData()
+        }
     }
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         super.setContentView(view, params)
-        initView()
-        initData()
+        if (!isMvvmModel) {
+            initView()
+            initData()
+        }
     }
 
     protected abstract fun initView()

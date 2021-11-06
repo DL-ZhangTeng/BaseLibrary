@@ -26,6 +26,10 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
@@ -42,10 +46,25 @@ dependencies {
     implementation "androidx.core:core-ktx:1.3.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
+    //lifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    // viewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+    implementation "androidx.fragment:fragment-ktx:1.3.1"
+    // liveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
+
     implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
     implementation  'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
 
     implementation 'com.github.DL-ZhangTeng:ImagePicker:1.1.7'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    implementation 'com.github.DL-ZhangTeng:RxHttpUtils:1.1.6'
+
+
 }

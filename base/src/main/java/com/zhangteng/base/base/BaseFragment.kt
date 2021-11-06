@@ -13,11 +13,15 @@ import com.zhangteng.base.utils.ToastUtils
  * Created by swing on 2017/11/23.
  */
 abstract class BaseFragment : Fragment() {
+    protected var isMvvmModel = false
+
     protected var mLoadViewHelper: LoadViewHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(view, savedInstanceState)
+        if (!isMvvmModel) {
+            initView(view, savedInstanceState)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
