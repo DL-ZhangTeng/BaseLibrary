@@ -63,8 +63,4 @@ dependencies {
 
     implementation 'com.github.DL-ZhangTeng:ImagePicker:1.1.7'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
-
-    implementation 'com.github.DL-ZhangTeng:RxHttpUtils:1.1.6'
-
-
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.zhangteng.base.mvvm.base.BaseViewModel
 
@@ -22,13 +23,10 @@ abstract class BaseMvvmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mDatabind = createDataBind()
+        mDatabind = DataBindingUtil.inflate(inflater, layoutId(), container, false)
         mDatabind.lifecycleOwner = this
         return mDatabind.root
     }
 
-    /**
-     * 创建DataBinding,使用DataBindingUtil.inflate(inflater, layoutId, container, false)
-     */
-    abstract fun createDataBind(): DB
+    abstract fun layoutId(): Int
 }

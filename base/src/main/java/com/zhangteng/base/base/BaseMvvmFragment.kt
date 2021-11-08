@@ -24,7 +24,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
     private val handler = Handler()
 
     //是否第一次加载
-    private var isFirst: Boolean = true
+    protected var isFirst: Boolean = true
 
     lateinit var mViewModel: VM
 
@@ -32,12 +32,10 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        isMvvmModel = true
         mActivity = context as AppCompatActivity
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         isFirst = true
         mViewModel = createViewModel()
         initView(view, savedInstanceState)
@@ -53,7 +51,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
     /**
      * 创建viewModel
      */
-    private fun createViewModel(): VM {
+    protected fun createViewModel(): VM {
         return ViewModelProvider(this).get(getVmClazz(this))
     }
 
@@ -82,7 +80,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
     /**
      * 注册 UI 事件
      */
-    private fun registerDefUIChange() {
+    protected fun registerDefUIChange() {
         if (mViewModel is BaseLoadingViewModel) {
             //显示弹窗
             (mViewModel as BaseLoadingViewModel).loadingChange.showLoadingView.observe(

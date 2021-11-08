@@ -1,9 +1,7 @@
 package com.zhangteng.base.base
 
-import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.zhangteng.base.mvvm.base.BaseLoadingViewModel
 import com.zhangteng.base.mvvm.base.BaseNoNetworkViewModel
@@ -20,13 +18,8 @@ abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
 
     lateinit var mViewModel: VM
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        isMvvmModel = true
-    }
-
     override fun setContentView(layoutResID: Int) {
-        super.setContentView(layoutResID)
+        delegate.setContentView(layoutResID)
         mViewModel = createViewModel()
         registerUiChange()
         initView()
@@ -38,7 +31,7 @@ abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
     }
 
     override fun setContentView(view: View?) {
-        super.setContentView(view)
+        delegate.setContentView(view)
         mViewModel = createViewModel()
         registerUiChange()
         initView()
@@ -50,7 +43,7 @@ abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
     }
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        super.setContentView(view, params)
+        delegate.setContentView(view, params)
         mViewModel = createViewModel()
         registerUiChange()
         initView()
@@ -64,14 +57,14 @@ abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
     /**
      * 创建viewModel
      */
-    private fun createViewModel(): VM {
+    protected fun createViewModel(): VM {
         return ViewModelProvider(this).get(getVmClazz(this))
     }
 
     /**
      * 注册UI 事件(处理了加载中，无网络，无数据，完成刷新等)
      */
-    private fun registerUiChange() {
+    protected fun registerUiChange() {
         if (mViewModel is BaseLoadingViewModel) {
             //显示弹窗
             (mViewModel as BaseLoadingViewModel).loadingChange.showLoadingView.observe(
