@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * 使 observe#LiveData时只相应一次onChanged操作
+ * 使 observe#LiveData时只响应一次onChanged操作
  * 可避免共享作用域 VM 下 liveData 被 observe 时旧数据倒灌的情况
  */
 class SingleLiveData<T> : MutableLiveData<T>() {

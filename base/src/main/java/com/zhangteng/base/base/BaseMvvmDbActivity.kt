@@ -1,7 +1,6 @@
 package com.zhangteng.base.base
 
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.zhangteng.base.mvvm.base.BaseViewModel
 
@@ -15,15 +14,13 @@ abstract class BaseMvvmDbActivity<VM : BaseViewModel, DB : ViewDataBinding> :
     lateinit var mDatabind: DB
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        userDataBinding(true)
         super.onCreate(savedInstanceState)
+        mDatabind = createDataBind()
+        mDatabind.lifecycleOwner = this
     }
 
     /**
-     * 创建DataBinding
+     * 创建DataBinding, 使用DataBindingUtil.setContentView(this, layoutId)
      */
-    override fun initDataBind() {
-        mDatabind = DataBindingUtil.setContentView(this, layoutId())
-        mDatabind.lifecycleOwner = this
-    }
+    abstract fun createDataBind(): DB
 }

@@ -17,27 +17,27 @@ class NetworkStateReceive : BroadcastReceiver() {
             if (!NetworkUtils.isAvailable(context)) {
                 //收到没有网络时判断之前的值是不是有网络，如果有网络才提示通知 ，防止重复通知
                 NetworkStateManager.instance.mNetworkStateCallback.value?.let {
-                    if (it.isSuccess) {
+                    if (it.isAvailable) {
                         //没网
                         NetworkStateManager.instance.mNetworkStateCallback.value =
-                            NetState(isSuccess = false)
+                            NetState(isAvailable = false)
                     }
                     return
                 }
                 NetworkStateManager.instance.mNetworkStateCallback.value =
-                    NetState(isSuccess = false)
+                    NetState(isAvailable = false)
             } else {
                 //收到有网络时判断之前的值是不是没有网络，如果没有网络才提示通知 ，防止重复通知
                 NetworkStateManager.instance.mNetworkStateCallback.value?.let {
-                    if (!it.isSuccess) {
+                    if (!it.isAvailable) {
                         //有网络了
                         NetworkStateManager.instance.mNetworkStateCallback.value =
-                            NetState(isSuccess = true)
+                            NetState(isAvailable = true)
                     }
                     return
                 }
                 NetworkStateManager.instance.mNetworkStateCallback.value =
-                    NetState(isSuccess = true)
+                    NetState(isAvailable = true)
             }
         }
     }

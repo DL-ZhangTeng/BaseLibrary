@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.zhangteng.base.mvvm.base.BaseLoadingViewModel
+import com.zhangteng.base.mvvm.base.BaseNoNetworkViewModel
+import com.zhangteng.base.mvvm.base.BaseRefreshViewModel
 import com.zhangteng.base.mvvm.base.BaseViewModel
 import com.zhangteng.base.mvvm.manager.NetState
 import com.zhangteng.base.mvvm.manager.NetworkStateManager
@@ -16,98 +18,123 @@ import com.zhangteng.base.mvvm.utils.getVmClazz
  */
 abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
 
-    /**
-     * 是否需要使用DataBinding 供子类BaseVmDbActivity修改，用户请慎动
-     */
-    private var isUserDb = false
-
     lateinit var mViewModel: VM
-
-    abstract fun layoutId(): Int
-
-    abstract fun showLoading(message: String = "请求网络中...")
-
-    abstract fun dismissLoading()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isMvvmModel = true
-        if (!isUserDb) {
-            setContentView(layoutId())
-        } else {
-            initDataBind()
-        }
+    }
+
+    override fun setContentView(layoutResID: Int) {
+        super.setContentView(layoutResID)
         mViewModel = createViewModel()
         registerUiChange()
         initView()
         createObserver()
-        NetworkStateManager.instance.mNetworkStateCallback.observe(this, Observer {
+        NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
+            onNetworkStateChanged(it)
+        })
+        initData()
+    }
+
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
+        mViewModel = createViewModel()
+        registerUiChange()
+        initView()
+        createObserver()
+        NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
+            onNetworkStateChanged(it)
+        })
+        initData()
+    }
+
+    override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
+        super.setContentView(view, params)
+        mViewModel = createViewModel()
+        registerUiChange()
+        initView()
+        createObserver()
+        NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
             onNetworkStateChanged(it)
         })
         initData()
     }
 
     /**
-     * 网络变化监听 子类重写
-     */
-    open fun onNetworkStateChanged(netState: NetState) {}
-
-    /**
      * 创建viewModel
      */
     private fun createViewModel(): VM {
-
         return ViewModelProvider(this).get(getVmClazz(this))
     }
 
     /**
-     * 创建LiveData数据观察者
-     */
-    abstract fun createObserver()
-
-    /**
-     * 注册UI 事件
+     * 注册UI 事件(处理了加载中，无网络，无数据，完成刷新等)
      */
     private fun registerUiChange() {
         if (mViewModel is BaseLoadingViewModel) {
             //显示弹窗
             (mViewModel as BaseLoadingViewModel).loadingChange.showLoadingView.observe(
                 this,
-                Observer {
-                    showLoading(it)
-                })
+                this::showProgressDialog
+            )
             //关闭弹窗
             (mViewModel as BaseLoadingViewModel).loadingChange.dismissLoadingView.observe(
                 this,
-                Observer {
-                    dismissLoading()
+                {
+                    dismissProgressDialog()
                 })
         }
-    }
-
-    /**
-     * 将非该Activity绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
-     * @param viewModels Array<out BaseViewModel>
-     */
-    protected fun addLoadingObserve(vararg viewModels: BaseLoadingViewModel) {
-        viewModels.forEach { viewModel ->
-            //显示弹窗
-            viewModel.loadingChange.showLoadingView.observe(this, Observer {
-                showLoading(it)
-            })
-            //关闭弹窗
-            viewModel.loadingChange.dismissLoadingView.observe(this, Observer {
-                dismissLoading()
-            })
+        if (mViewModel is BaseNoNetworkViewModel) {
+            //显示
+            (mViewModel as BaseNoNetworkViewModel).networkChange.showNoNetwork.observe(
+                this,
+                {
+                    showNoNetView(it)
+                }
+            )
+            //关闭
+            (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoNetwork.observe(
+                this,
+                {
+                    hiddenNoNetView(it)
+                })
+            //显示
+            (mViewModel as BaseNoNetworkViewModel).networkChange.showNoDataView.observe(
+                this,
+                {
+                    showNoContentView(it)
+                }
+            )
+            //关闭
+            (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoDataView.observe(
+                this,
+                {
+                    hiddenNoContentView(it)
+                })
+        }
+        if (mViewModel is BaseRefreshViewModel) {
+            (mViewModel as BaseRefreshViewModel).listChange.finishRefreshOrLoadMore.observe(
+                this,
+                {
+                    finishRefreshOrLoadMore()
+                }
+            )
         }
     }
 
-    fun userDataBinding(isUserDb: Boolean) {
-        this.isUserDb = isUserDb
-    }
+    /**
+     * 创建LiveData数据观察者
+     */
+    protected abstract fun createObserver()
 
     /**
-     * 供子类BaseVmDbActivity 初始化Databinding操作
+     * 网络变化监听(通过广播获取变化，需要注册广播接收者[com.zhangteng.base.mvvm.manager.NetworkStateReceive]) 子类重写
      */
-    open fun initDataBind() {}
+    protected open fun onNetworkStateChanged(netState: NetState) {}
+
+    /**
+     * 完成加载刷新动画
+     */
+    protected open fun finishRefreshOrLoadMore() {}
 }

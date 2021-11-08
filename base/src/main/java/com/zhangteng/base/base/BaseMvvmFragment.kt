@@ -3,14 +3,13 @@ package com.zhangteng.base.base
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.zhangteng.base.mvvm.base.BaseLoadingViewModel
+import com.zhangteng.base.mvvm.base.BaseNoNetworkViewModel
+import com.zhangteng.base.mvvm.base.BaseRefreshViewModel
 import com.zhangteng.base.mvvm.base.BaseViewModel
 import com.zhangteng.base.mvvm.manager.NetState
 import com.zhangteng.base.mvvm.manager.NetworkStateManager
@@ -31,19 +30,6 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
 
     lateinit var mActivity: AppCompatActivity
 
-    /**
-     * 当前Fragment绑定的视图布局
-     */
-    abstract fun layoutId(): Int
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(layoutId(), container, false)
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         isMvvmModel = true
@@ -59,35 +45,16 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
         registerDefUIChange()
     }
 
-    /**
-     * 网络变化监听 子类重写
-     */
-    open fun onNetworkStateChanged(netState: NetState) {}
+    override fun onResume() {
+        super.onResume()
+        onVisible()
+    }
 
     /**
      * 创建viewModel
      */
     private fun createViewModel(): VM {
         return ViewModelProvider(this).get(getVmClazz(this))
-    }
-
-    override fun initView(view: View, savedInstanceState: Bundle?) {
-
-    }
-
-    /**
-     * 懒加载
-     */
-    abstract fun lazyLoadData()
-
-    /**
-     * 创建观察者
-     */
-    abstract fun createObserver()
-
-    override fun onResume() {
-        super.onResume()
-        onVisible()
     }
 
     /**
@@ -101,7 +68,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
                 //在Fragment中，只有懒加载过了才能开启网络变化监听
                 NetworkStateManager.instance.mNetworkStateCallback.observe(
                     this,
-                    Observer {
+                    {
                         //不是首次订阅时调用方法，防止数据第一次监听错误
                         if (!isFirst) {
                             onNetworkStateChanged(it)
@@ -112,44 +79,80 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
         }
     }
 
-    abstract fun showLoading(message: String = "请求网络中...")
-
-    abstract fun dismissLoading()
-
     /**
      * 注册 UI 事件
      */
     private fun registerDefUIChange() {
         if (mViewModel is BaseLoadingViewModel) {
+            //显示弹窗
             (mViewModel as BaseLoadingViewModel).loadingChange.showLoadingView.observe(
                 this,
-                Observer {
-                    showLoading(it)
-                })
+                this::showProgressDialog
+            )
+            //关闭弹窗
             (mViewModel as BaseLoadingViewModel).loadingChange.dismissLoadingView.observe(
                 this,
-                Observer {
-                    dismissLoading()
+                {
+                    dismissProgressDialog()
                 })
+        }
+        if (mViewModel is BaseNoNetworkViewModel) {
+            //显示
+            (mViewModel as BaseNoNetworkViewModel).networkChange.showNoNetwork.observe(
+                this,
+                {
+                    showNoNetView(it)
+                }
+            )
+            //关闭
+            (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoNetwork.observe(
+                this,
+                {
+                    hiddenNoNetView(it)
+                })
+            //显示
+            (mViewModel as BaseNoNetworkViewModel).networkChange.showNoDataView.observe(
+                this,
+                {
+                    showNoContentView(it)
+                }
+            )
+            //关闭
+            (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoDataView.observe(
+                this,
+                {
+                    hiddenNoContentView(it)
+                })
+        }
+        if (mViewModel is BaseRefreshViewModel) {
+            (mViewModel as BaseRefreshViewModel).listChange.finishRefreshOrLoadMore.observe(
+                this,
+                {
+                    finishRefreshOrLoadMore()
+                }
+            )
         }
     }
 
     /**
-     * 将非该Fragment绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
-     * @param viewModels Array<out BaseViewModel>
+     * 懒加载
      */
-    protected fun addLoadingObserve(vararg viewModels: BaseLoadingViewModel) {
-        viewModels.forEach { viewModel ->
-            //显示弹窗
-            viewModel.loadingChange.showLoadingView.observe(this, Observer {
-                showLoading(it)
-            })
-            //关闭弹窗
-            viewModel.loadingChange.dismissLoadingView.observe(this, Observer {
-                dismissLoading()
-            })
-        }
-    }
+    protected abstract fun lazyLoadData()
+
+    /**
+     * 创建观察者
+     */
+    protected abstract fun createObserver()
+
+    /**
+     * 网络变化监听 子类重写
+     */
+    protected open fun onNetworkStateChanged(netState: NetState) {}
+
+    /**
+     * 完成加载刷新动画
+     */
+    protected open fun finishRefreshOrLoadMore() {}
 
     /**
      * 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿  bug
@@ -157,7 +160,7 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
      * 不传默认 300毫秒
      * @return Long
      */
-    open fun lazyLoadTime(): Long {
+    protected open fun lazyLoadTime(): Long {
         return 300
     }
 
