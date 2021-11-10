@@ -1,5 +1,6 @@
 package com.zhangteng.base.base
 
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -18,40 +19,33 @@ abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
 
     lateinit var mViewModel: VM
 
-    override fun setContentView(layoutResID: Int) {
-        delegate.setContentView(layoutResID)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         mViewModel = createViewModel()
+    }
+
+    override fun setContentView(layoutResID: Int) {
+        super.setContentView(layoutResID)
         registerUiChange()
-        initView()
-        createObserver()
         NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
             onNetworkStateChanged(it)
         })
-        initData()
     }
 
     override fun setContentView(view: View?) {
-        delegate.setContentView(view)
-        mViewModel = createViewModel()
+        super.setContentView(view)
         registerUiChange()
-        initView()
-        createObserver()
         NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
             onNetworkStateChanged(it)
         })
-        initData()
     }
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        delegate.setContentView(view, params)
-        mViewModel = createViewModel()
+        super.setContentView(view, params)
         registerUiChange()
-        initView()
-        createObserver()
         NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
             onNetworkStateChanged(it)
         })
-        initData()
     }
 
     /**
@@ -115,11 +109,6 @@ abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
             )
         }
     }
-
-    /**
-     * 创建LiveData数据观察者
-     */
-    protected abstract fun createObserver()
 
     /**
      * 网络变化监听(通过广播获取变化，需要注册广播接收者[com.zhangteng.base.mvvm.manager.NetworkStateReceive]) 子类重写
