@@ -57,10 +57,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
 
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
-    implementation  'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
+    implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
 
     implementation 'com.github.DL-ZhangTeng:ImagePicker:1.1.7'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    compileOnly 'com.github.DL-ZhangTeng:RxHttpUtils:1.1.6'
 }
