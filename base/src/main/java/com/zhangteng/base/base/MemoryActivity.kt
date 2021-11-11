@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
-import com.zhangteng.base.utils.SPUtils
+import com.zhangteng.base.utils.getFromSP
+import com.zhangteng.base.utils.putToSP
 import com.zhangteng.base.widget.CommonDialog
 import com.zhangteng.base.widget.CommonTitleBar
 import org.json.JSONObject
@@ -59,7 +60,7 @@ abstract class MemoryActivity : TitlebarActivity() {
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
         if (isSaveStateForEver) {
-            val state = SPUtils.get(this, SPUtils.FILE_NAME, javaClass.name, null) as String
+            val state = getFromSP("share_data", javaClass.name, null) as String
             if (!TextUtils.isEmpty(state)) {
                 outState = jsonToMap(state)
                 restoreStateForEver(outState)
@@ -70,7 +71,7 @@ abstract class MemoryActivity : TitlebarActivity() {
     override fun setContentView(view: View?) {
         super.setContentView(view)
         if (isSaveStateForEver) {
-            val state = SPUtils.get(this, SPUtils.FILE_NAME, javaClass.name, null) as String
+            val state = getFromSP("share_data", javaClass.name, null) as String
             if (!TextUtils.isEmpty(state)) {
                 outState = jsonToMap(state)
                 restoreStateForEver(outState)
@@ -81,7 +82,7 @@ abstract class MemoryActivity : TitlebarActivity() {
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         super.setContentView(view, params)
         if (isSaveStateForEver) {
-            val state = SPUtils.get(this, SPUtils.FILE_NAME, javaClass.name, null) as String
+            val state = getFromSP("share_data", javaClass.name, null) as String
             if (!TextUtils.isEmpty(state)) {
                 outState = jsonToMap(state)
                 restoreStateForEver(outState)
@@ -125,12 +126,12 @@ abstract class MemoryActivity : TitlebarActivity() {
             if (outState == null) outState = HashMap()
             saveStateForEver(outState)
             if (outState != null && outState!!.isNotEmpty()) {
-                SPUtils.put(this, SPUtils.FILE_NAME, javaClass.name, JSON.toJSONString(outState))
+                putToSP("share_data", javaClass.name, JSON.toJSONString(outState))
             } else {
-                SPUtils.put(this, SPUtils.FILE_NAME, javaClass.name, null)
+                putToSP("share_data", javaClass.name, null)
             }
         } else {
-            SPUtils.put(this, SPUtils.FILE_NAME, javaClass.name, null)
+            putToSP("share_data", javaClass.name, null)
         }
     }
 
