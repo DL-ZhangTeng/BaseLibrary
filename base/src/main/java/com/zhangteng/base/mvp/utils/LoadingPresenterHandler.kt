@@ -1,5 +1,8 @@
-package com.zhangteng.base.mvp.base
+package com.zhangteng.base.mvp.utils
 
+import com.zhangteng.base.mvp.base.BaseLoadingPresenter
+import com.zhangteng.base.mvp.base.BaseLoadingView
+import com.zhangteng.base.mvp.base.IModel
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 

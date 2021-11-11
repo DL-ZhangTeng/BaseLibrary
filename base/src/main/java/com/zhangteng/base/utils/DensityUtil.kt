@@ -4,94 +4,80 @@ import android.content.Context
 import android.util.TypedValue
 
 /**
- * 单位转换类
+ * dp转px
+ *
+ * @param dpVal
+ * @return
  */
-class DensityUtil private constructor() {
-    companion object {
-        private var density = -1f
-        private var widthPixels = -1
-        private var heightPixels = -1
+fun Context?.dp2px(dpVal: Float): Int {
+    return if (this != null) {
+        TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dpVal,
+            resources.displayMetrics
+        ).toInt()
+    } else -1
+}
 
-        /**
-         * dp转px
-         *
-         * @param context
-         * @param dpVal
-         * @return
-         */
-        fun dp2px(context: Context?, dpVal: Float): Int {
-            return if (context != null) {
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, context.resources.displayMetrics).toInt()
-            } else -1
-        }
+/**
+ * sp转px
+ *
+ * @param spVal
+ * @return
+ */
+fun Context?.sp2px(spVal: Float): Int {
+    return if (this != null) {
+        TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP,
+            spVal,
+            resources.displayMetrics
+        ).toInt()
+    } else -1
+}
 
-        /**
-         * sp转px
-         *
-         * @param context
-         * @param spVal
-         * @return
-         */
-        fun sp2px(context: Context?, spVal: Float): Int {
-            return if (context != null) {
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, context.resources.displayMetrics).toInt()
-            } else -1
-        }
+/**
+ * px转dp
+ *
+ * @param pxVal
+ * @return
+ */
+fun Context?.px2dp(pxVal: Float): Float {
+    if (this == null) return -1f
+    val scale = resources.displayMetrics.density
+    return pxVal / scale
+}
 
-        /**
-         * px转dp
-         *
-         * @param context
-         * @param pxVal
-         * @return
-         */
-        fun px2dp(context: Context?, pxVal: Float): Float {
-            if (context == null) return -1f
-            val scale = context.resources.displayMetrics.density
-            return pxVal / scale
-        }
+/**
+ * px转sp
+ *
+ * @param pxVal
+ * @return
+ */
+fun Context?.px2sp(pxVal: Float): Float {
+    if (this == null) return -1f
+    return pxVal / resources.displayMetrics.scaledDensity
+}
 
-        /**
-         * px转sp
-         *
-         * @param context
-         * @param pxVal
-         * @return
-         */
-        fun px2sp(context: Context?, pxVal: Float): Float {
-            if (context == null) return -1f
-            return pxVal / context.resources.displayMetrics.scaledDensity
-        }
+/**
+ * 获取Density
+ */
+fun Context?.getDensity(): Float {
+    if (this == null) return -1f
+    return resources.displayMetrics.density
+}
 
-        fun getDensity(context: Context?): Float {
-            if (density <= 0f) {
-                if (context == null) return -1f
-                density = context.resources.displayMetrics.density
-            }
-            return density
-        }
+/**
+ * 获取屏幕宽度
+ */
+fun Context?.getScreenWidth(): Int {
+    if (this == null) return -1
+    return resources.displayMetrics.widthPixels
+}
 
-        fun getScreenWidth(context: Context?): Int {
-            if (widthPixels <= 0) {
-                if (context == null) return -1
-                widthPixels = context.resources.displayMetrics.widthPixels
-            }
-            return widthPixels
-        }
-
-        fun getScreenHeight(context: Context?): Int {
-            if (heightPixels <= 0) {
-                if (context == null) return -1
-                heightPixels = context.resources.displayMetrics.heightPixels
-            }
-            return heightPixels
-        }
-    }
-
-    /**
-     * cannot be instantiated
-     */
-    init {
-        throw UnsupportedOperationException("cannot be instantiated")
-    }
+/**
+ * 获取屏幕高度
+ */
+fun Context?.getScreenHeight(): Int {
+    if (this == null) return -1
+    return resources.displayMetrics.heightPixels
 }

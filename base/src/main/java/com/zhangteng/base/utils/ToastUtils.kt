@@ -3,78 +3,60 @@ package com.zhangteng.base.utils
 import android.content.Context
 import android.widget.Toast
 
+var isShowToast = true
+
 /**
- * Toast统一管理类
+ * 短时间显示Toast
+ *
+ * @param message
  */
-class ToastUtils private constructor() {
-    companion object {
-        var isShow = true
+fun Context?.showToastShortToast(message: CharSequence?) {
+    if (isShowToast) Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
 
-        /**
-         * 短时间显示Toast
-         *
-         * @param context
-         * @param message
-         */
-        fun showShort(context: Context?, message: CharSequence?) {
-            if (isShow) Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
+/**
+ * 短时间显示Toast
+ *
+ * @param message
+ */
+fun Context?.showShortToast(message: Int) {
+    if (isShowToast) Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
 
-        /**
-         * 短时间显示Toast
-         *
-         * @param context
-         * @param message
-         */
-        fun showShort(context: Context?, message: Int) {
-            if (isShow) Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
+/**
+ * 长时间显示Toast
+ *
+ * @param message
+ */
+fun Context?.showLongToast(message: CharSequence?) {
+    if (isShowToast) Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+}
 
-        /**
-         * 长时间显示Toast
-         *
-         * @param context
-         * @param message
-         */
-        fun showLong(context: Context?, message: CharSequence?) {
-            if (isShow) Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-        }
+/**
+ * 长时间显示Toast
+ *
+ * @param message
+ */
+fun Context?.showLongToast(message: Int) {
+    if (isShowToast) Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+}
 
-        /**
-         * 长时间显示Toast
-         *
-         * @param context
-         * @param message
-         */
-        fun showLong(context: Context?, message: Int) {
-            if (isShow) Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-        }
+/**
+ * 自定义显示Toast时间
+ *
+ * @param message
+ * @param duration
+ */
+fun Context?.showToast(message: CharSequence?, duration: Int) {
+    if (isShowToast) Toast.makeText(this, message, duration).show()
+}
 
-        /**
-         * 自定义显示Toast时间
-         *
-         * @param context
-         * @param message
-         * @param duration
-         */
-        fun show(context: Context?, message: CharSequence?, duration: Int) {
-            if (isShow) Toast.makeText(context, message, duration).show()
-        }
-
-        /**
-         * 自定义显示Toast时间
-         *
-         * @param context
-         * @param message
-         * @param duration
-         */
-        fun show(context: Context?, message: Int, duration: Int) {
-            if (isShow) Toast.makeText(context, message, duration).show()
-        }
-    }
-
-    /*cannot be instantiated*/
-    init {
-        throw UnsupportedOperationException("cannot be instantiated")
-    }
+/**
+ * 自定义显示Toast时间
+ *
+ * @param message
+ * @param duration
+ */
+fun Context?.showToast(message: Int, duration: Int) {
+    if (isShowToast) Toast.makeText(this, message, duration).show()
 }

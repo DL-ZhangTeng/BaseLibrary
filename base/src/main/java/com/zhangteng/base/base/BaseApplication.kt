@@ -2,6 +2,7 @@ package com.zhangteng.base.base
 
 import android.app.Activity
 import android.app.Application
+import com.zhangteng.base.utils.isDebug
 import java.util.*
 
 /**

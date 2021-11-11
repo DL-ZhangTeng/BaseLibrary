@@ -1,4 +1,9 @@
-package com.zhangteng.base.mvp.base
+package com.zhangteng.base.mvp.utils
+
+import com.zhangteng.base.mvp.base.BaseLoadingView
+import com.zhangteng.base.mvp.base.BaseNoNetworkView
+import com.zhangteng.base.mvp.base.BaseRefreshView
+import com.zhangteng.base.mvp.base.IView
 
 /**
  * model到presenter的回调

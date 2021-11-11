@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.zhangteng.base.utils.LoadViewHelper
-import com.zhangteng.base.utils.ToastUtils
+import com.zhangteng.base.utils.showToast
 
 /**
  * Created by swing on 2017/11/23.
@@ -77,11 +77,11 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected open fun showToast(message: String?) {
-        ToastUtils.showShort(this, message)
+        showToast(message, 100)
     }
 
     protected open fun showToast(messageId: Int) {
-        ToastUtils.showShort(this, messageId)
+        showToast(messageId, 100)
     }
 
     override fun startActivity(intent: Intent?) {

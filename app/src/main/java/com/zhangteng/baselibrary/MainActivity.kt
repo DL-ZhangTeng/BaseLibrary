@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.zhangteng.base.base.BaseMvpActivity
-import com.zhangteng.base.mvp.base.LoadingPresenterHandler
-import com.zhangteng.base.utils.ActivityHelper
+import com.zhangteng.base.mvp.utils.LoadingPresenterHandler
 import com.zhangteng.base.utils.LoadViewHelper
-import com.zhangteng.base.utils.LogUtils
-import com.zhangteng.base.utils.ToastUtils
+import com.zhangteng.base.utils.jumpToActivity
 import com.zhangteng.baselibrary.activity.NineImageActivity
 import com.zhangteng.baselibrary.activity.TabLayoutActivity
 import com.zhangteng.baselibrary.activity.TreeActivity
@@ -43,18 +41,16 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     }
 
     override fun initData() {
-        ToastUtils.show(this, mPresenter?.testString(), 100)
+        showToast(mPresenter?.testString())
     }
 
     override fun showLoadingView() {
-        LogUtils.i("showLoadingView")
         showProgressDialog()
 //        showNoNetView(tv_TextView)
 //        showNoContentView(tv_TextView)
     }
 
     override fun dismissLoadingView() {
-        LogUtils.i("dismissLoadingView")
 //        dismissProgressDialog()
 //        hiddenNoNetView(tv_TextView)
 //        hiddenNoContentView(tv_TextView)
@@ -73,22 +69,22 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     }
 
     fun onClickTabLayout(v: View) {
-        ActivityHelper.jumpToActivity(this, TabLayoutActivity::class.java, 1)
+        jumpToActivity(TabLayoutActivity::class.java, 1)
     }
 
     fun onClickTree(v: View) {
-        ActivityHelper.jumpToActivity(this, TreeActivity::class.java, 1)
+        jumpToActivity(TreeActivity::class.java, 1)
     }
 
     fun onClickNineImage(v: View) {
-        ActivityHelper.jumpToActivity(this, NineImageActivity::class.java, 1)
+        jumpToActivity(NineImageActivity::class.java, 1)
     }
 
     fun onClickMvvm(v: View) {
-        ActivityHelper.jumpToActivity(this, MvvmActivity::class.java, 1)
+        jumpToActivity(MvvmActivity::class.java, 1)
     }
 
     fun onClickMvvmDb(v: View) {
-        ActivityHelper.jumpToActivity(this, MvvmDbActivity::class.java, 1)
+        jumpToActivity(MvvmDbActivity::class.java, 1)
     }
 }
