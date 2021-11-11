@@ -16,6 +16,8 @@ import com.zhangteng.baselibrary.mvp.model.imodel.IMainModel
 import com.zhangteng.baselibrary.mvp.presenter.MainPresenter
 import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IMainPresenter
 import com.zhangteng.baselibrary.mvp.view.IMainView
+import com.zhangteng.baselibrary.ui.mvvm.MvvmActivity
+import com.zhangteng.baselibrary.ui.mvvmdb.MvvmDbActivity
 import java.lang.reflect.Proxy
 
 class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), IMainView {
@@ -80,5 +82,13 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
 
     fun onClickNineImage(v: View) {
         ActivityHelper.jumpToActivity(this, NineImageActivity::class.java, 1)
+    }
+
+    fun onClickMvvm(v: View) {
+        ActivityHelper.jumpToActivity(this, MvvmActivity::class.java, 1)
+    }
+
+    fun onClickMvvmDb(v: View) {
+        ActivityHelper.jumpToActivity(this, MvvmDbActivity::class.java, 1)
     }
 }

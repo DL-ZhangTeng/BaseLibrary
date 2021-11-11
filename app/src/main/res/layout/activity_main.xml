@@ -30,4 +30,16 @@
         android:layout_height="wrap_content"
         android:onClick="onClickNineImage"
         android:text="onClickNineImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickMvvm"
+        android:text="onClickMvvm" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickMvvmDb"
+        android:text="onClickMvvmDb" />
 </LinearLayout>
