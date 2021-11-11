@@ -10,7 +10,7 @@ var isShowToast = true
  *
  * @param message
  */
-fun Context?.showToastShortToast(message: CharSequence?) {
+fun Context?.showShortToast(message: CharSequence?) {
     if (isShowToast) Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
