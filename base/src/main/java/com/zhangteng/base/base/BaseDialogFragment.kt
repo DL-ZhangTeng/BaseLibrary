@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import com.zhangteng.base.utils.LoadViewHelper
-import com.zhangteng.base.utils.ToastUtils
+import com.zhangteng.base.utils.showShortToast
 
 /**
  * Created by swing on 2017/11/30.
@@ -67,10 +67,10 @@ abstract class BaseDialogFragment : DialogFragment() {
     }
 
     protected open fun showToast(message: String?) {
-        ToastUtils.showShort(context, message)
+        context.showShortToast(message)
     }
 
     protected open fun showToast(messageId: Int) {
-        ToastUtils.showShort(context, messageId)
+        context.showShortToast(messageId)
     }
 }

@@ -4,7 +4,8 @@ import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.tabs.TabLayout
 import com.zhangteng.base.mvvm.base.BaseLoadingViewModel
-import com.zhangteng.base.utils.LogUtils
+import com.zhangteng.base.utils.d
+import com.zhangteng.base.utils.e
 import com.zhangteng.baselibrary.http.Api
 import com.zhangteng.baselibrary.http.entity.ArticlesBean
 import com.zhangteng.baselibrary.http.entity.NavTypeBean
@@ -75,7 +76,7 @@ class MvvmDbViewModel : BaseLoadingViewModel() {
                 navTitle.add(item.name)
             }
         }, error = {
-            LogUtils.e(it.message)
+            it.message.e()
         })
     }
 
@@ -111,7 +112,7 @@ class MvvmDbViewModel : BaseLoadingViewModel() {
                 .catch {
                     // 错误处理
                     val err = ApiException.handleException(it)
-                    LogUtils.d("${err.code}: ${err.message}")
+                    "${err.code}: ${err.message}".d()
                 }
                 .collect {
                     if (it.isSuccess()) items.value = it.data.datas

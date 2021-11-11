@@ -1,6 +1,7 @@
 package com.zhangteng.base.utils
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
 
@@ -46,4 +47,24 @@ fun Activity?.snapShotWithoutStatusBar(): Bitmap? {
     )
     view.destroyDrawingCache()
     return bp
+}
+
+/**
+ * 获得状态栏的高度
+ *
+ * @param context
+ * @return
+ */
+fun Context?.getStatusHeight(): Int {
+    var statusHeight = -1
+    this ?: return statusHeight
+    try {
+        val clazz = Class.forName("com.android.internal.R\$dimen")
+        val `object` = clazz.newInstance()
+        val height = clazz.getField("status_bar_height")[`object`].toString().toInt()
+        statusHeight = resources.getDimensionPixelSize(height)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return statusHeight
 }

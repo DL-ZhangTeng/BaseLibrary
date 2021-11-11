@@ -2,7 +2,8 @@ package com.zhangteng.baselibrary.ui.mvvm
 
 import androidx.lifecycle.MutableLiveData
 import com.zhangteng.base.mvvm.base.BaseLoadingViewModel
-import com.zhangteng.base.utils.LogUtils
+import com.zhangteng.base.utils.d
+import com.zhangteng.base.utils.e
 import com.zhangteng.baselibrary.http.Api
 import com.zhangteng.baselibrary.http.entity.ArticlesBean
 import com.zhangteng.baselibrary.http.entity.NavTypeBean
@@ -51,7 +52,7 @@ class MvvmViewModel : BaseLoadingViewModel() {
         }, success = {
             navData.value = it as MutableList<NavTypeBean>
         }, error = {
-            LogUtils.e(it.message)
+            it.message.e()
         })
     }
 
@@ -85,7 +86,7 @@ class MvvmViewModel : BaseLoadingViewModel() {
                 .catch {
                     // 错误处理
                     val err = ApiException.handleException(it)
-                    LogUtils.d("${err.code}: ${err.message}")
+                    "${err.code}: ${err.message}".d()
                 }
                 .collect {
                     if (it.isSuccess()) items.value = it.data.datas

@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import com.zhangteng.base.base.ImagePreviewActivity
 import com.zhangteng.base.bean.PreviewImageInfo
-import com.zhangteng.base.utils.ScreenUtils
+import com.zhangteng.base.utils.getStatusHeight
 import com.zhangteng.base.widget.NineGridView
 import java.io.Serializable
 
@@ -18,7 +18,7 @@ import java.io.Serializable
  */
 class NineGridViewClickAdapter(context: Context, imageInfo: List<PreviewImageInfo?>) :
     NineGridViewAdapter(context, imageInfo) {
-    private val statusHeight: Int
+    private val statusHeight: Int = context.getStatusHeight()
     override fun onImageItemClick(
         context: Context,
         nineGridView: NineGridView,
@@ -51,10 +51,5 @@ class NineGridViewClickAdapter(context: Context, imageInfo: List<PreviewImageInf
         intent.putExtras(bundle)
         context.startActivity(intent)
         (context as Activity).overridePendingTransition(0, 0)
-    }
-
-
-    init {
-        statusHeight = ScreenUtils.getStatusHeight(context)
     }
 }

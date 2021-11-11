@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseDecoration
-import com.zhangteng.base.utils.DensityUtil.Companion.dp2px
+import com.zhangteng.base.utils.dp2px
 
 /**
  * 水平线性布局分割线
@@ -38,7 +38,7 @@ class LinearSpacingItemDecoration(context: Context) : BaseDecoration() {
 
     init {
         firstLeft = context.resources.getDimension(R.dimen.default_list_left_right).toInt()
-        divider = dp2px(context, 10f)
+        divider = context.dp2px(10f)
         lastRight = context.resources.getDimension(R.dimen.default_list_left_right).toInt()
     }
 }

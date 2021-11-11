@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.TextView
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseDialog
-import com.zhangteng.base.utils.AntiShakeUtils
+import com.zhangteng.base.utils.isInvalidClick
 
 open class CommonDialog : BaseDialog, View.OnClickListener {
     private var contentTxt: TextView? = null
@@ -93,7 +93,6 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
     }
 
 
-
     override fun getSelfTitleView(): Int {
         return 0
     }
@@ -121,7 +120,7 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
 
     override fun onClick(v: View?) {
         v ?: return
-        if (AntiShakeUtils.isInvalidClick(v)) return
+        if (v.isInvalidClick()) return
         if (v.id == R.id.cancel) {
             listener?.onClick(this, false)
             dismiss()

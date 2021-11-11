@@ -14,7 +14,8 @@ import android.widget.*
 import android.widget.ImageView.ScaleType
 import android.widget.TextView.OnEditorActionListener
 import com.zhangteng.base.R
-import com.zhangteng.base.utils.DensityUtil
+import com.zhangteng.base.utils.dp2px
+import com.zhangteng.base.utils.getScreenWidth
 
 /**
  * 通用标题栏
@@ -181,8 +182,8 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
     private var listener: OnTitleBarListener? = null
     private var doubleClickListener: OnTitleBarDoubleClickListener? = null
     private fun loadAttributes(context: Context, attrs: AttributeSet?) {
-        PADDING_10 = DensityUtil.Companion.dp2px(context, 10f)
-        PADDING_16 = DensityUtil.Companion.dp2px(context, 16f)
+        PADDING_10 = context.dp2px(10f)
+        PADDING_16 = context.dp2px(16f)
         val array = context.obtainStyledAttributes(attrs, R.styleable.CommonTitleBar)
         titleBarColor = array.getColor(
             R.styleable.CommonTitleBar_titleBarColor,
@@ -205,7 +206,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
             )
             leftTextSize = array.getDimension(
                 R.styleable.CommonTitleBar_leftTextSize,
-                DensityUtil.Companion.dp2px(context, 14f).toFloat()
+                context.dp2px(14f).toFloat()
             )
             leftDrawable = array.getResourceId(R.styleable.CommonTitleBar_leftDrawable, 0)
             leftDrawablePadding =
@@ -255,7 +256,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
             )
             centerSubTextSize = array.getDimension(
                 R.styleable.CommonTitleBar_centerSubTextSize,
-                DensityUtil.Companion.dp2px(context, 11f).toFloat()
+                context.dp2px(11f).toFloat()
             )
         } else if (centerType == TYPE_CENTER_SEARCHVIEW) {
             centerSearchEditable =
@@ -436,7 +437,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
                 isSingleLine = true
                 setTypeface(Typeface.defaultFromStyle(Typeface.BOLD))
                 // 设置跑马灯效果
-                maxWidth = (DensityUtil.Companion.getScreenWidth(context) * 3 / 5.0).toInt()
+                maxWidth = (context.getScreenWidth() * 3 / 5.0).toInt()
                 if (centerTextMarquee) {
                     ellipsize = TextUtils.TruncateAt.MARQUEE
                     marqueeRepeatLimit = -1
@@ -452,8 +453,8 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
             rlMainCenterSearch?.setBackgroundResource(centerSearchBgResource)
             val centerParams = LayoutParams(MATCH_PARENT, MATCH_PARENT)
             // 设置边距
-            centerParams.topMargin = DensityUtil.Companion.dp2px(context, 7f)
-            centerParams.bottomMargin = DensityUtil.Companion.dp2px(context, 7f)
+            centerParams.topMargin = context.dp2px(7f)
+            centerParams.bottomMargin = context.dp2px(7f)
             // 根据左边的布局类型来设置边距,布局依赖规则
             if (leftType == TYPE_LEFT_TEXTVIEW) {
                 if (tvLeft != null)
@@ -481,7 +482,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
             // 初始化搜索框搜索ImageView
             ivSearch = ImageView(context)
             ivSearch?.setOnClickListener(this)
-            val searchIconWidth: Int = DensityUtil.Companion.dp2px(context, 15f)
+            val searchIconWidth: Int = context.dp2px(15f)
             val searchParams = LayoutParams(searchIconWidth, searchIconWidth)
             searchParams.addRule(CENTER_VERTICAL)
             searchParams.addRule(ALIGN_PARENT_LEFT)
@@ -514,7 +515,7 @@ open class CommonTitleBar(context: Context, attrs: AttributeSet?) : RelativeLayo
                 setHintTextColor(Color.parseColor("#999999"))
                 setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    DensityUtil.Companion.dp2px(context, 14f).toFloat()
+                    context.dp2px(14f).toFloat()
                 )
                 //            etSearchHint.setPadding(PADDING_5, 0, PADDING_5, 0);
                 if (!centerSearchEditable) {

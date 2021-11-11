@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseAdapter
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
-import com.zhangteng.base.utils.AntiShakeUtils.isInvalidClick
-import com.zhangteng.base.utils.FileUtils.isVideoFile
+import com.zhangteng.base.utils.isInvalidClick
+import com.zhangteng.base.utils.isVideoFile
 import com.zhangteng.imagepicker.bean.ImageInfo
 import com.zhangteng.imagepicker.callback.HandlerCallBack
 import com.zhangteng.imagepicker.callback.IHandlerCallBack
@@ -165,18 +165,13 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
         return if (super.getItemCount() >= maxSelectable) {
             maxSelectable
         } else if (super.getItemCount() + addButtonNum > maxSelectable) {
-            if (NullUtill.getNotNull(data).size > 0 && isVideoFile(
-                    data!![0]!!.path
-                )
-            ) {
+            if (NullUtill.getNotNull(data).size > 0 && data!![0]!!.path.isVideoFile()) {
                 maxSelectable
             } else {
                 maxSelectable + addButtonNum - 1
             }
         } else {
-            if (NullUtill.getNotNull(data).size > 0 && isVideoFile(
-                    data!![0]!!.path
-                )
+            if (NullUtill.getNotNull(data).size > 0 && data!![0]!!.path.isVideoFile()
             ) {
                 super.getItemCount() + addButtonNum - 1
             } else {
@@ -213,9 +208,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                 data
             ).size < maxSelectable
         ) {
-            if (NullUtill.getNotNull(data).size > 0 && isVideoFile(
-                    data!![0]!!.path
-                )
+            if (NullUtill.getNotNull(data).size > 0 && data!![0]!!.path.isVideoFile()
             ) {
                 IMAGE
             } else ADD_VIDEO
@@ -269,9 +262,9 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
     protected fun setHolderViewClickListener(holder: RecyclerView.ViewHolder) {
         if (holder is PublishViewHolder) {
             holder.imageView.setOnClickListener { v: View? ->
-                if (isInvalidClick(v!!)) return@setOnClickListener
+                if (v!!.isInvalidClick()) return@setOnClickListener
                 val p = holder.getAdapterPosition()
-                if (isVideoFile(data!![p]!!.path)) {
+                if (data!![p]!!.path.isVideoFile()) {
                     if (onVideoItemClickListener != null) {
                         onVideoItemClickListener!!.onVideoItemClick(v)
                     } else {
@@ -288,14 +281,12 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             if (isHaveDeleteBtn) {
                 holder.delete.visibility = View.VISIBLE
                 holder.delete.setOnClickListener { v: View? ->
-                    if (isInvalidClick(v!!)) return@setOnClickListener
+                    if (v!!.isInvalidClick()) return@setOnClickListener
                     val p = holder.getAdapterPosition()
                     if (onDeleteClickListener != null) {
                         onDeleteClickListener!!.onDeleteClick(v, p, data!![p]!!.path)
                     } else {
-                        if (isVideoFile(
-                                data!![p]!!.path
-                            ) && data!!.size == 1
+                        if (data!![p]!!.path.isVideoFile() && data!!.size == 1
                         ) {
                             maxSelectable = 9
                         }
@@ -309,7 +300,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             }
         } else if (holder is PublishAddViewHolder) {
             holder.add.setOnClickListener { v: View? ->
-                if (isInvalidClick(v!!)) return@setOnClickListener
+                if (v!!.isInvalidClick()) return@setOnClickListener
                 if (onAddItemClickListener != null) {
                     onAddItemClickListener!!.onAddItemClick(v)
                 } else {
@@ -323,7 +314,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                             super.onFinish(photoList)
                             if (addButtonNum == 1 && photoList.size > 0) {
                                 for (path in photoList) {
-                                    if (isVideoFile(path.path)) {
+                                    if (path.path.isVideoFile()) {
                                         maxSelectable = 1
                                     }
                                 }
@@ -344,7 +335,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             }
         } else if (holder is PublishAddVideoViewHolder) {
             holder.add.setOnClickListener { v: View? ->
-                if (isInvalidClick(v!!)) return@setOnClickListener
+                if (v!!.isInvalidClick()) return@setOnClickListener
                 if (onAddVideoItemClickListener != null) {
                     onAddVideoItemClickListener!!.onAddVideoItemClick(v)
                 } else {
@@ -374,7 +365,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             }
         } else if (holder is PublishAddFileViewHolder) {
             holder.add.setOnClickListener { v: View? ->
-                if (isInvalidClick(v!!)) return@setOnClickListener
+                if (v!!.isInvalidClick()) return@setOnClickListener
                 if (onAddFileItemClickListener != null) {
                     onAddFileItemClickListener!!.onAddFileItemClick(v)
                 }
@@ -455,9 +446,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                 if (NullUtill.isEmpty(data)) {
                     return
                 } else {
-                    if (vh.layoutPosition == 0 && isVideoFile(
-                            data!![0]!!.path
-                        )
+                    if (vh.layoutPosition == 0 && data!![0]!!.path.isVideoFile()
                     ) {
                         return
                     }
@@ -528,7 +517,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             //拿到当前拖拽到的item的viewHolder
             val toPosition = target.adapterPosition
             if (toPosition >= data!!.size) return false
-            if (toPosition == 0 && isVideoFile(data!![0]!!.path)) return false
+            if (toPosition == 0 && data!![0]!!.path.isVideoFile()) return false
             if (fromPosition < toPosition) {
                 for (i in fromPosition until toPosition) {
                     Collections.swap(data, i, i + 1)

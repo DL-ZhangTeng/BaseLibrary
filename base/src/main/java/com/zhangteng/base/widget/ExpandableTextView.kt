@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.zhangteng.base.R
-import com.zhangteng.base.utils.DensityUtil
+import com.zhangteng.base.utils.sp2px
 
 /**
  * des:可伸展textview
@@ -145,7 +145,7 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
         )
         contentTextSize = typedArray.getDimension(
             R.styleable.ExpandableTextView_android_textSize,
-            DensityUtil.Companion.sp2px(context, 14f).toFloat()
+            context.sp2px(14f).toFloat()
         )
         collapseExpandTextColor = typedArray.getColor(
             R.styleable.ExpandableTextView_collapseExpandTextColor,
@@ -153,7 +153,7 @@ open class ExpandableTextView : LinearLayout, View.OnClickListener {
         )
         collapseExpandTextSize = typedArray.getDimension(
             R.styleable.ExpandableTextView_collapseExpandTextSize,
-            DensityUtil.Companion.sp2px(context, 14f).toFloat()
+            context.sp2px(14f).toFloat()
         )
         grarity =
             typedArray.getInt(R.styleable.ExpandableTextView_collapseExpandGrarity, Gravity.LEFT)

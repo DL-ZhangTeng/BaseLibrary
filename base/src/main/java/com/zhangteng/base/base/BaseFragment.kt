@@ -7,7 +7,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.zhangteng.base.utils.LoadViewHelper
-import com.zhangteng.base.utils.ToastUtils
+import com.zhangteng.base.utils.showShortToast
 
 /**
  * 1.viewpager+fragment时空白页面bug：设置setOffscreenPageLimit为tab数  或  onCreateView生成view前移除上一次已添加的view；
@@ -114,10 +114,10 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected open fun showToast(message: String?) {
-        ToastUtils.showShort(context, message)
+        context.showShortToast(message)
     }
 
     protected open fun showToast(messageId: Int) {
-        ToastUtils.showShort(context, messageId)
+        context.showShortToast(messageId)
     }
 }

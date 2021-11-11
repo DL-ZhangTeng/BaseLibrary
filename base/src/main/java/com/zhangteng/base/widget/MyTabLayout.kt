@@ -36,7 +36,8 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.*
 import com.zhangteng.base.R
-import com.zhangteng.base.utils.TextUtil
+import com.zhangteng.base.utils.getTextHeight
+import com.zhangteng.base.utils.getTextWidth
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.math.max
@@ -1974,12 +1975,12 @@ open class MyTabLayout @JvmOverloads constructor(
             if (mTabIndicatorSelfFit) {
                 if (getTabAt(getSelectedTabPosition()) != null) {
                     val textView = getTabAt(getSelectedTabPosition())!!.mView?.mTextView
-                    val textWidth = TextUtil.getTextWidth(textView)
+                    val textWidth = textView.getTextWidth()
                     val width = width / getTabCount()
                     mIndicatorPaddingRight = (width - (textWidth ?: 0)) / 2
                     mIndicatorPaddingLeft = (width - (textWidth ?: 0)) / 2
                     if (mTabIndicatorMarginBottomSelfFit) {
-                        val textHeight = TextUtil.getTextHeight(textView)
+                        val textHeight = textView.getTextHeight()
                         val height = height
                         mIndicatorMarginBottom = (height - (textHeight
                             ?: 0)) / 2 - mSelectedIndicatorHeight / 2

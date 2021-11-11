@@ -11,7 +11,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
-import com.zhangteng.base.utils.DensityUtil.Companion.dp2px
+import com.zhangteng.base.utils.dp2px
 import java.util.*
 
 /**
@@ -107,10 +107,10 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
 
     fun setMargin(margin: Int) {
         val layoutParams = mRecyclerView?.layoutParams as SmartRefreshLayout.LayoutParams
-        layoutParams.topMargin = dp2px(context, margin.toFloat())
-        layoutParams.bottomMargin = dp2px(context, margin.toFloat())
-        layoutParams.leftMargin = dp2px(context, margin.toFloat())
-        layoutParams.rightMargin = dp2px(context, margin.toFloat())
+        layoutParams.topMargin = context.dp2px(margin.toFloat())
+        layoutParams.bottomMargin = context.dp2px(margin.toFloat())
+        layoutParams.leftMargin = context.dp2px(margin.toFloat())
+        layoutParams.rightMargin = context.dp2px(margin.toFloat())
         mRecyclerView?.layoutParams = layoutParams
     }
 
