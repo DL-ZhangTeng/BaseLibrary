@@ -56,6 +56,17 @@ class ThreadPoolUtils private constructor() {
     }
 
     /**
+     * 任务从线程池中移除
+     *
+     * @param paramRunnable
+     */
+    fun removeExecuteTask(paramRunnable: Runnable?): Boolean {
+        return if (paramRunnable == null) {
+            false
+        } else threadPool.remove(paramRunnable)
+    }
+
+    /**
      * 延时任务添加到线程池中
      *
      * @param task
@@ -117,14 +128,14 @@ class ThreadPoolUtils private constructor() {
         /**
          * 保持心跳时间
          */
-        val keepAliveTime = 1
+        const val keepAliveTime = 1
 
         /**
          * 定时执行线程个数
          */
-        val minSchedule = 2
+        const val minSchedule = 2
 
-        private fun printException(r: Runnable, throwable: Throwable) {
+        private fun printException(r: Runnable?, throwable: Throwable?) {
             var t: Throwable? = throwable
             if (t == null && r is Future<*>) {
                 try {
@@ -165,14 +176,22 @@ class ThreadPoolUtils private constructor() {
             taskQueue.offer(r)
         }
         threadPool = object : ThreadPoolExecutor(
-            corePoolCount,
-            maximumPoolSize,
+            if (corePoolCount <= 0) {
+                2
+            } else {
+                corePoolCount
+            },
+            if (maximumPoolSize <= 0) {
+                5
+            } else {
+                maximumPoolSize
+            },
             keepAliveTime.toLong(),
             TimeUnit.SECONDS,
             ArrayBlockingQueue(20),
             Executors.defaultThreadFactory(), myHandler
         ) {
-            public override fun afterExecute(r: Runnable, t: Throwable) {
+            public override fun afterExecute(r: Runnable?, t: Throwable?) {
                 super.afterExecute(r, t)
                 printException(r, t)
             }
