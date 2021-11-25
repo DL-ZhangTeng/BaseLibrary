@@ -26,7 +26,7 @@ implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
 ## 部分工具功能
 
-### MVP工具包（com/zhangteng/base/mvp/base、com/zhangteng/base/base）
+### MVP工具包（com/zhangteng/base/mvp、com/zhangteng/base/base）
 
 工具包名/类名| 描述
 --- | ---
@@ -45,6 +45,25 @@ BaseMvpFragment| 使用Mvp模式Fragment基类（可使用插件自动创建Frag
 BaseListMvpFragment| 使用Mvp模式列表Fragment基类
 BaseMvpActivity| 使用Mvp模式Activity基类（可使用插件自动创建Activity。[插件仓库地址](https://github.com/DL-ZhangTeng/BaseLibraryPlugin)）
 BaseListMvpActivity| 使用Mvp模式列表Activity基类
+
+### MVVM工具包（com/zhangteng/base/mvvm、com/zhangteng/base/base）
+
+工具包名/类名| 描述
+--- | ---
+BaseViewModel| VM层基类，内置了协程请求网络数据
+BaseLoadingViewModel| VM层带加载中状态基类，内置了协程请求网络数据
+BaseNoNetworkViewModel| VM层带网络状态基类
+BaseRefreshViewModel| VM层带刷新状态基类
+NetState| 网络是否可以状态
+NetworkStateManager|可观测的网络可以状态
+NetworkStateReceive| 网络状态广播接收器
+MvvmUtils| 获取当前类绑定的泛型ViewModel-clazz
+databind包| databind基本数据类型提供了默认值，避免取值的时候还要判空
+livedata包| livedata基本数据类型提供了默认值，避免取值的时候还要判空
+BaseMvvmActivity| 使用MVVM模式Activity基类
+BaseMvvmDbActivity| 使用MVVM模式使用DataBinding的Activity基类
+BaseMvvmFragment| 使用MVVM模式Fragment基类
+BaseMvvmDbFragment| 使用MVVM模式使用DataBinding的Fragment基类
 
 ### 九宫格图片工具包（com/zhangteng/base/adapter、com/zhangteng/base/widget）
 
