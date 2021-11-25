@@ -11,7 +11,7 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.1.20'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.2.0'
 //库所使用的三方
 implementation 'com.google.android.material:material:1.2.1'
 implementation 'com.alibaba:fastjson:1.2.70'
