@@ -1,12 +1,10 @@
 package com.zhangteng.base.base
 
-import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
 import com.zhangteng.base.utils.dp2px
 import java.util.*
@@ -40,26 +38,12 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
      */
     protected var mTotal = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_base_list)
-    }
-
     override fun initView() {
-        mRefreshLayout = findViewById(R.id.refresh_layout)
-        mRecyclerView = findViewById(R.id.recycler_view)
+        mRefreshLayout = getSmartRefreshLayout()
+        mRecyclerView = getRecyclerView()
         setLayoutManager()
         initRecyclerView()
     }
-
-    override fun initData() {
-
-    }
-
-    /**
-     * 设置布局样式
-     */
-    protected abstract fun setLayoutManager()
 
     protected fun initRecyclerView() {
         mAdapter = createAdapter()
@@ -81,6 +65,21 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
      * @return 适配器
      */
     protected abstract fun createAdapter(): A
+
+    /**
+     * 设置RecyclerView
+     */
+    protected abstract fun getRecyclerView(): RecyclerView
+
+    /**
+     * 设置SmartRefreshLayout
+     */
+    protected abstract fun getSmartRefreshLayout(): SmartRefreshLayout
+
+    /**
+     * 设置布局样式
+     */
+    protected abstract fun setLayoutManager()
 
     protected fun setGridLayoutManager(spanCount: Int) {
         val layoutManager = GridLayoutManager(this, spanCount)

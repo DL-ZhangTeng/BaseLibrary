@@ -44,30 +44,12 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
      */
     protected var mTotal = 0
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_base_list, container, false)
-    }
-
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        mRefreshLayout = view.findViewById(R.id.refresh_layout)
-        mRecyclerView = view.findViewById(R.id.recycler_view)
+        mRefreshLayout = getSmartRefreshLayout()
+        mRecyclerView = getRecyclerView()
         setLayoutManager()
         initRecyclerView()
     }
-
-    override fun initData(savedInstanceState: Bundle?) {
-        super.initData(savedInstanceState)
-
-    }
-
-    /**
-     * 设置布局样式
-     */
-    protected abstract fun setLayoutManager()
 
     protected fun initRecyclerView() {
         mAdapter = createAdapter()
@@ -89,6 +71,21 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
      * @return 适配器
      */
     protected abstract fun createAdapter(): A
+
+    /**
+     * 设置RecyclerView
+     */
+    protected abstract fun getRecyclerView(): RecyclerView
+
+    /**
+     * 设置SmartRefreshLayout
+     */
+    protected abstract fun getSmartRefreshLayout(): SmartRefreshLayout
+
+    /**
+     * 设置布局样式
+     */
+    protected abstract fun setLayoutManager()
 
     fun cancelRefresh(isCanRefresh: Boolean) {
         mRefreshLayout?.setEnableRefresh(isCanRefresh)
