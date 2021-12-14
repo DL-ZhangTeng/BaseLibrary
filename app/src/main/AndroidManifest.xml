@@ -21,7 +21,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".activity.BaseTitlebarDemoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.BaseMvvmDbDemoDbActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.BaseMvvmDemoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.BaseMvpDemoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.BaseListMvpDemoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.BaseListDemoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.BaseDemoActivity"
+            android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

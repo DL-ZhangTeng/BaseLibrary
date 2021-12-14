@@ -75,12 +75,12 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
     /**
      * 设置RecyclerView
      */
-    protected abstract fun getRecyclerView(): RecyclerView
+    protected abstract fun getRecyclerView(): RecyclerView?
 
     /**
      * 设置SmartRefreshLayout
      */
-    protected abstract fun getSmartRefreshLayout(): SmartRefreshLayout
+    protected abstract fun getSmartRefreshLayout(): SmartRefreshLayout?
 
     /**
      * 设置布局样式
