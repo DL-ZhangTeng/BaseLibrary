@@ -1534,11 +1534,11 @@ open class MyTabLayout @JvmOverloads constructor(
                     mIconView!!.visibility = GONE
                     mIconView!!.setImageDrawable(null)
                 }
-                mCustomTextView = custom.findViewById<View?>(android.R.id.text1) as TextView
+                mCustomTextView = custom.findViewById<View?>(android.R.id.text1) as TextView?
                 if (mCustomTextView != null) {
                     mDefaultMaxLines = TextViewCompat.getMaxLines(mCustomTextView!!)
                 }
-                mCustomIconView = custom.findViewById<View?>(android.R.id.icon) as ImageView
+                mCustomIconView = custom.findViewById<View?>(android.R.id.icon) as ImageView?
             } else {
                 // We do not have a custom view. Remove one if it already exists
                 if (mCustomView != null) {
