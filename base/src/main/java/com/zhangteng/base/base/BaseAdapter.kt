@@ -44,6 +44,7 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH?
 
     abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH
     override fun onBindViewHolder(holder: VH, position: Int) {
+        holder.setAdapter(this)
         holder.itemView.setOnClickListener { v: View? ->
             mOnItemClickListener?.onItemClick(
                 v,
@@ -525,7 +526,7 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH?
          * @param adapter The adapter;
          * @return The DefaultViewHolder for chaining.
          */
-        protected fun setAdapter(adapter: BaseAdapter<*, *>?): DefaultViewHolder? {
+        fun setAdapter(adapter: BaseAdapter<*, *>?): DefaultViewHolder? {
             this.adapter = adapter
             return this
         }
