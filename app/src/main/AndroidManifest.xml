@@ -22,13 +22,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.BaseTitlebarDemoActivity"
-            android:exported="true" />
-        <activity
             android:name=".activity.BaseMvvmDbDemoDbActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.BaseMvvmDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.BaseTitlebarDemoActivity"
             android:exported="true" />
         <activity
             android:name=".activity.BaseMvpDemoActivity"
