@@ -1,5 +1,6 @@
 package com.zhangteng.base.base
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Paint
 import android.graphics.Typeface
@@ -32,6 +33,7 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH?
     }
 
     var data: MutableList<T?>? = null
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -43,21 +45,30 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH?
     var mOnItemChildLongClickListener: OnItemChildLongClickListener? = null
 
     abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH
+
     override fun onBindViewHolder(holder: VH, position: Int) {
+        if (position < 0) return
         holder.setAdapter(this)
         holder.itemView.setOnClickListener { v: View? ->
             mOnItemClickListener?.onItemClick(
                 v,
-                holder.adapterPosition
+                holder.bindingAdapterPosition
             )
         }
         if (mOnItemLongClickListener != null) {
             holder.itemView.isLongClickable = true
             holder.itemView.setOnClickListener { v: View? ->
-                mOnItemLongClickListener?.onItemLongClick(v, holder.adapterPosition)
+                mOnItemLongClickListener?.onItemLongClick(v, holder.bindingAdapterPosition)
             }
         }
+        if (data == null || position >= data!!.size) {
+            onBindViewHolder(holder, null, position)
+        } else {
+            onBindViewHolder(holder, data!![position], position)
+        }
     }
+
+    abstract fun onBindViewHolder(holder: VH, item: T?, position: Int)
 
     override fun getItemCount(): Int {
         return if (data == null || data!!.isEmpty()) 0 else data!!.size
