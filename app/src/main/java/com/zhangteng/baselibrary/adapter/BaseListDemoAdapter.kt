@@ -13,4 +13,12 @@ class BaseListDemoAdapter : BaseAdapter<BaseListDemoBean, BaseAdapter.DefaultVie
             LayoutInflater.from(parent.context).inflate(R.layout.item_base_list_demo, parent, false)
         )
     }
+
+    override fun onBindViewHolder(
+        holder: DefaultViewHolder,
+        item: BaseListDemoBean?,
+        position: Int
+    ) {
+
+    }
 }

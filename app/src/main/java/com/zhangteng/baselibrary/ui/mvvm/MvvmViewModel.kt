@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.*
 
 class MvvmViewModel : BaseLoadingViewModel() {
 
+    private val mRepository by lazy { MvvmRepository() }
+
     var navData = MutableLiveData<MutableList<NavTypeBean>>()
 
     var items = MutableLiveData<MutableList<ArticlesBean?>?>()
@@ -27,10 +29,7 @@ class MvvmViewModel : BaseLoadingViewModel() {
          * 只返回结果，其他全抛自定义异常
          * */
         launchOnlyResult({
-            HttpUtils.getInstance()
-                .ConfigGlobalHttpUtils()
-                .createService(Api::class.java)
-                .getProjectList(page, cid)
+            mRepository.getProjectList(page, cid)
         }, {
             items.value = it.datas
         }, error = {
@@ -45,10 +44,7 @@ class MvvmViewModel : BaseLoadingViewModel() {
      * */
     fun getData() {
         launchOnlyResult({
-            HttpUtils.getInstance()
-                .ConfigGlobalHttpUtils()
-                .createService(Api::class.java)
-                .naviJson()
+            mRepository.getData()
         }, success = {
             navData.value = it as MutableList<NavTypeBean>
         }, error = {
@@ -64,10 +60,7 @@ class MvvmViewModel : BaseLoadingViewModel() {
 
         launchUI {
             launchFlow {
-                HttpUtils.getInstance()
-                    .ConfigGlobalHttpUtils()
-                    .createService(Api::class.java)
-                    .naviJson()
+                mRepository.getFirstData()
             }
                 .flatMapConcat {
                     return@flatMapConcat if (it.isSuccess()) {

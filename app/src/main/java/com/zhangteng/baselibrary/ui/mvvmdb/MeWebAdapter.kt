@@ -17,15 +17,16 @@ class MeWebAdapter : BaseAdapter<ArticlesBean, BaseDataBindingHolder<ItemUsedweb
         viewType: Int
     ): BaseDataBindingHolder<ItemUsedwebBinding> {
         return BaseDataBindingHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_usedweb, parent,false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_usedweb, parent, false)
         )
     }
 
     override fun onBindViewHolder(
         holder: BaseDataBindingHolder<ItemUsedwebBinding>,
+        item: ArticlesBean?,
         position: Int
     ) {
-        holder.dataBinding?.itemData = data?.get(position)
+        holder.dataBinding?.itemData = item
         holder.dataBinding?.executePendingBindings()
     }
 }

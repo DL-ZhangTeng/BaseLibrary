@@ -14,4 +14,12 @@ class BaseListMvpDemoAdapter : BaseAdapter<BaseListMvpDemoBean, BaseAdapter.Defa
                 .inflate(R.layout.item_base_list_mvp_demo, parent, false)
         )
     }
+
+    override fun onBindViewHolder(
+        holder: DefaultViewHolder,
+        item: BaseListMvpDemoBean?,
+        position: Int
+    ) {
+
+    }
 }

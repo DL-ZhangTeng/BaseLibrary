@@ -50,8 +50,7 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
         return getCreateViewHolder(parent, viewType)
     }
 
-    override fun onBindViewHolder(holder: DefaultViewHolder, position: Int) {
-        super.onBindViewHolder(holder, position)
+    override fun onBindViewHolder(holder: DefaultViewHolder, item: T?, position: Int) {
         val node = mNodes?.get(position)
         getBindViewHolder(node, position, holder)
         // 设置内边距
