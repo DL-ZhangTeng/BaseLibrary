@@ -1,11 +1,10 @@
 package com.zhangteng.base.mvvm.base
-
 /**
- * description: 网络数据仓库
+ * description: 本地数据仓库
  * author: Swing
  * date: 2021/12/28
  */
-open class BaseNetRepository : BaseRepository() {
+open class BaseLocalRepository : BaseRepository() {
 
     suspend fun <T : Any> executeRequest(
         block: suspend () -> IResponse<T>
