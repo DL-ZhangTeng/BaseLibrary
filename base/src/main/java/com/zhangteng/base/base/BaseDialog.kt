@@ -12,6 +12,7 @@ import com.zhangteng.base.R
  */
 abstract class BaseDialog constructor(context: Context, themeResId: Int = R.style.SelfDialog) :
     Dialog(context, themeResId) {
+    protected lateinit var parent: View
     protected var clTitle: LinearLayout? = null
     protected var clContent: ConstraintLayout? = null
     protected var clButton: LinearLayout? = null
@@ -54,11 +55,11 @@ abstract class BaseDialog constructor(context: Context, themeResId: Int = R.styl
         }
 
     private fun init(context: Context?) {
-        val view = LayoutInflater.from(context).inflate(R.layout.self_base_dialog, null)
-        clTitle = view.findViewById(R.id.self_base_dialog_title)
-        clContent = view.findViewById(R.id.self_base_dialog_content)
-        clButton = view.findViewById(R.id.self_base_dialog_button)
-        divider = view.findViewById(R.id.self_base_dialog_content_divider)
+        parent = LayoutInflater.from(context).inflate(R.layout.self_base_dialog, null)
+        clTitle = parent.findViewById(R.id.self_base_dialog_title)
+        clContent = parent.findViewById(R.id.self_base_dialog_content)
+        clButton = parent.findViewById(R.id.self_base_dialog_button)
+        divider = parent.findViewById(R.id.self_base_dialog_content_divider)
         if (getSelfTitleView() != 0) {
             LayoutInflater.from(context).inflate(getSelfTitleView(), clTitle, true)
         }
@@ -72,14 +73,20 @@ abstract class BaseDialog constructor(context: Context, themeResId: Int = R.styl
         } else {
             divider?.visibility = View.GONE
         }
-        initView(view)
-        setContentView(view)
+        initView(parent)
+        setContentView(parent)
     }
 
     abstract fun getSelfTitleView(): Int
     abstract fun getSelfContentView(): Int
     abstract fun getSelfButtonView(): Int
-    abstract fun initView(view: View?)
+    abstract fun initView(parent: View)
+
+    /**
+     * description 数据渲染，放在子类构造方法的super()之后执行，避免构造方法传参无法获取的问题
+     */
+    abstract fun initData()
+
     open fun setClTitle(view: View?) {
         clTitle?.removeAllViews()
         if (view != null) {

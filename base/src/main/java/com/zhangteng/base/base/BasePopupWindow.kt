@@ -14,10 +14,10 @@ import com.zhangteng.base.R
  * Created by swing on 2018/9/6.
  */
 abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
+    protected lateinit var parent: View
     protected var clTitle: LinearLayout? = null
     protected var clContent: ConstraintLayout? = null
     protected var clButton: LinearLayout? = null
-    protected var parent: View? = null
     var onCancelClickListener: OnCancelClickListener? = null
         set(value) {
             field = value
@@ -48,9 +48,9 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
 
     protected fun initView(context: Context?) {
         parent = LayoutInflater.from(context).inflate(R.layout.self_base_popupwindow, null)
-        clTitle = parent?.findViewById(R.id.self_base_popupwindow_title)
-        clContent = parent?.findViewById(R.id.self_base_popupwindow_content)
-        clButton = parent?.findViewById(R.id.self_base_popupwindow_button)
+        clTitle = parent.findViewById(R.id.self_base_popupwindow_title)
+        clContent = parent.findViewById(R.id.self_base_popupwindow_content)
+        clButton = parent.findViewById(R.id.self_base_popupwindow_button)
         if (getSelfTitleView() != 0) {
             LayoutInflater.from(context).inflate(getSelfTitleView(), clTitle, true)
         }
@@ -87,7 +87,33 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
     abstract fun getSelfTitleView(): Int
     abstract fun getSelfContentView(): Int
     abstract fun getSelfButtonView(): Int
-    abstract fun initView(view: View?)
+    abstract fun initView(parent: View)
+
+    /**
+     * description 数据渲染，放在子类构造方法的super()之后执行，避免构造方法传参无法获取的问题
+     */
+    abstract fun initData()
+
+    open fun setClTitle(view: View?) {
+        clTitle?.removeAllViews()
+        if (view != null) {
+            clTitle?.addView(view)
+        }
+    }
+
+    open fun setClContent(view: View?) {
+        clContent?.removeAllViews()
+        if (view != null) {
+            clContent?.addView(view)
+        }
+    }
+
+    open fun setClButton(view: View?) {
+        clButton?.removeAllViews()
+        if (view != null) {
+            clButton?.addView(view)
+        }
+    }
 
     override fun getContentView(): View? {
         return super.getContentView()

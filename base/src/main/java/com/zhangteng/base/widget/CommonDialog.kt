@@ -105,17 +105,19 @@ open class CommonDialog : BaseDialog, View.OnClickListener {
         return R.layout.dialog_common_button
     }
 
-    override fun initView(view: View?) {
-        view?.let {
-            contentTxt = view.findViewById(R.id.content)
-            titleTxt = view.findViewById(R.id.title)
-            titleDevider = view.findViewById(R.id.titleDevider)
-            devider = view.findViewById(R.id.devider)
-            submitTxt = view.findViewById(R.id.submit)
-            submitTxt?.setOnClickListener(this)
-            cancelTxt = view.findViewById(R.id.cancel)
-            cancelTxt?.setOnClickListener(this)
-        }
+    override fun initView(parent: View) {
+        contentTxt = parent.findViewById(R.id.content)
+        titleTxt = parent.findViewById(R.id.title)
+        titleDevider = parent.findViewById(R.id.titleDevider)
+        devider = parent.findViewById(R.id.devider)
+        submitTxt = parent.findViewById(R.id.submit)
+        submitTxt?.setOnClickListener(this)
+        cancelTxt = parent.findViewById(R.id.cancel)
+        cancelTxt?.setOnClickListener(this)
+    }
+
+    override fun initData() {
+
     }
 
     override fun onClick(v: View?) {
