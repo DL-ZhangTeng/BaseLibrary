@@ -142,7 +142,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
     override fun onBindViewHolder(holder: DefaultViewHolder, item: ImageInfo?, position: Int) {
         if (holder is PublishViewHolder) {
             GlideImageLoader().loadImage(
-                holder.imageView.context, holder.imageView, data!![position]!!.path
+                holder.imageView.context, holder.imageView, item!!.path
             )
         }
         setHolderViewClickListener(holder)

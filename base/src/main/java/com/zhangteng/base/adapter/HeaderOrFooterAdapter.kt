@@ -34,13 +34,13 @@ abstract class HeaderOrFooterAdapter<T>(private val mInnerAdapter: BaseAdapter<T
         return mInnerAdapter.onCreateViewHolder(parent, viewType)
     }
 
-    override fun onBindViewHolder(holder: DefaultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DefaultViewHolder, item: T?, position: Int) {
         if (isHeaderViewPos(position)) {
-            onBindHeaderOrFooterViewHolder(holder, getItemViewType(position))
+            onBindHeaderOrFooterViewHolder(holder, item, getItemViewType(position))
             return
         }
         if (isFooterViewPos(position)) {
-            onBindHeaderOrFooterViewHolder(holder, getItemViewType(position))
+            onBindHeaderOrFooterViewHolder(holder, item, getItemViewType(position))
             return
         }
         mInnerAdapter.onBindViewHolder(holder, position - getHeadersCount())
@@ -134,7 +134,7 @@ abstract class HeaderOrFooterAdapter<T>(private val mInnerAdapter: BaseAdapter<T
         viewInt: Int?
     ): DefaultViewHolder
 
-    abstract fun onBindHeaderOrFooterViewHolder(holder: DefaultViewHolder, viewType: Int)
+    abstract fun onBindHeaderOrFooterViewHolder(holder: DefaultViewHolder, item: T?, viewType: Int)
     open fun getHeaderViewByType(viewType: Int): View? {
         return mHeaderViews.get(viewType)
     }

@@ -1,5 +1,6 @@
 package com.zhangteng.base.adapter
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.view.ViewGroup
 import com.zhangteng.base.base.BaseAdapter
@@ -35,6 +36,7 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
      *
      * @param position
      */
+    @SuppressLint("NotifyDataSetChanged")
     open fun expandOrCollapse(position: Int) {
         val n = mNodes?.get(position)
         if (n != null) { // 排除传入参数错误异常
@@ -46,13 +48,9 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DefaultViewHolder {
-        return getCreateViewHolder(parent, viewType)
-    }
-
     override fun onBindViewHolder(holder: DefaultViewHolder, item: T?, position: Int) {
         val node = mNodes?.get(position)
-        getBindViewHolder(node, position, holder)
+        onBindViewHolder(holder, item, position, node)
         // 设置内边距
         holder.itemView.setPadding((node?.getLevel() ?: 0) * 40, 3, 3, 3)
         /**
@@ -70,8 +68,8 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
         return mNodes?.size ?: 0
     }
 
-    abstract fun getCreateViewHolder(parent: ViewGroup?, viewType: Int): DefaultViewHolder
-    abstract fun getBindViewHolder(node: Node?, position: Int, holder: DefaultViewHolder?)
+    abstract fun onBindViewHolder(holder: DefaultViewHolder?, item: T?, position: Int, node: Node?)
+
     interface OnTreeNodeClickListener {
         open fun onClick(node: Node?, position: Int)
     }
