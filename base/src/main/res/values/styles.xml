@@ -28,23 +28,23 @@
     </style>
 
     <style name="showAsDropDown">
-        <item name="android:windowEnterAnimation">@anim/self_popupwindow_showasdropdown_open</item>
-        <item name="android:windowExitAnimation">@anim/self_popupwindow_showasdropdown_close</item>
+        <item name="android:windowEnterAnimation">@anim/self_show_dropdown_open</item>
+        <item name="android:windowExitAnimation">@anim/self_show_dropdown_close</item>
     </style>
 
     <style name="showAsDropUp">
-        <item name="android:windowEnterAnimation">@anim/self_popupwindow_showasdropup_open</item>
-        <item name="android:windowExitAnimation">@anim/self_popupwindow_showasdropup_close</item>
+        <item name="android:windowEnterAnimation">@anim/self_show_dropup_open</item>
+        <item name="android:windowExitAnimation">@anim/self_show_dropup_close</item>
     </style>
 
     <style name="showAsDropLeft">
-        <item name="android:windowEnterAnimation">@anim/self_popupwindow_showasdropleft_open</item>
-        <item name="android:windowExitAnimation">@anim/self_popupwindow_showasdropleft_close</item>
+        <item name="android:windowEnterAnimation">@anim/self_show_dropleft_open</item>
+        <item name="android:windowExitAnimation">@anim/self_show_dropleft_close</item>
     </style>
 
     <style name="showAsDropRight">
-        <item name="android:windowEnterAnimation">@anim/self_popupwindow_showasdropright_open</item>
-        <item name="android:windowExitAnimation">@anim/self_popupwindow_showasdropright_close</item>
+        <item name="android:windowEnterAnimation">@anim/self_show_dropright_open</item>
+        <item name="android:windowExitAnimation">@anim/self_show_dropright_close</item>
     </style>
 
     <style name="MyTabLayout">

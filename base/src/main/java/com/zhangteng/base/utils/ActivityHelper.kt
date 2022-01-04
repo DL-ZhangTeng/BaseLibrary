@@ -107,29 +107,29 @@ fun Activity?.setActivityAnimClose() {
 }
 
 /**
- * 下一个活动进入动画
+ * 下一个页面进入动画(入栈动画)
  */
 fun getNextActivityAnimShow(): Int {
-    return R.anim.activity_show
+    return R.anim.self_enter_anim
 }
 
 /**
- * 当前活动退出动画（start活动时）
+ * 当前页面退出动画(入栈动画)
  */
 fun getCurrentActivityAnimShow(): Int {
-    return R.anim.activity_show_1
+    return R.anim.self_exit_anim
 }
 
 /**
- * 上一个活动进入动画
+ * 上一个页面进入动画(出栈动画)
  */
 fun getPreviousActivityAnimClose(): Int {
-    return R.anim.activity_close_1
+    return R.anim.self_pop_enter_anim
 }
 
 /**
- * 当前活动退出动画（finish活动时）
+ * 当前页面退出动画(出栈动画)
  */
 fun getCurrentActivityAnimClose(): Int {
-    return R.anim.activity_close
+    return R.anim.self_pop_exit_anim
 }
