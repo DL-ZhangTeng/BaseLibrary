@@ -57,8 +57,9 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH?
         }
         if (mOnItemLongClickListener != null) {
             holder.itemView.isLongClickable = true
-            holder.itemView.setOnClickListener { v: View? ->
+            holder.itemView.setOnLongClickListener { v: View? ->
                 mOnItemLongClickListener?.onItemLongClick(v, holder.bindingAdapterPosition)
+                return@setOnLongClickListener true
             }
         }
         if (data == null || position >= data!!.size) {
