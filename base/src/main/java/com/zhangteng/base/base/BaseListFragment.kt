@@ -1,5 +1,6 @@
 package com.zhangteng.base.base
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +33,7 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
     /**
      * 列表数据 实体bean
      */
-    protected var mList = ArrayList<D>()
+    protected var mList = ArrayList<D?>()
 
     /**
      * 当前请求的视频列表最后数据的页码，用于查询下一页数据
@@ -138,7 +139,8 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
      * @param total 总数
      * @param data  数据
      */
-    protected fun showDataSuccess(total: Int, data: List<D>?) {
+    @SuppressLint("NotifyDataSetChanged")
+    protected fun showDataSuccess(total: Int, data: List<D?>?) {
         mRefreshLayout?.finishRefresh()
         mTotal = 0
         if (mPage == 1) {

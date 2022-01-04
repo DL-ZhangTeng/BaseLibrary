@@ -1,5 +1,6 @@
 package com.zhangteng.base.base
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -128,6 +129,7 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
      * @param total 总数
      * @param data  数据
      */
+    @SuppressLint("NotifyDataSetChanged")
     protected fun showDataSuccess(total: Int, data: List<D?>?) {
         mRefreshLayout?.finishRefresh()
         mTotal = 0
