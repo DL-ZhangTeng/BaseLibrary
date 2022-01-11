@@ -19,19 +19,19 @@ import com.zhangteng.base.widget.NoDataView
  * Created by swing on 2018/10/8.
  */
 open class LoadViewHelper {
-    private val contentViews: HashMap<View, NoDataView> = HashMap()
-    private var mProgressDialog: Dialog? = null
-    private var mLoadTextView: TextView? = null
-    private var mAnimation: Animation? = null
-    private var mLoadImageView: ImageView? = null
-    private var againRequestListener: AgainRequestListener? = null
-    private var cancelRequestListener: CancelRequestListener? = null
+    protected val contentViews: HashMap<View, NoDataView> = HashMap()
+    protected var mProgressDialog: Dialog? = null
+    protected var mLoadTextView: TextView? = null
+    protected var mAnimation: Animation? = null
+    protected var mLoadImageView: ImageView? = null
+    protected var againRequestListener: AgainRequestListener? = null
+    protected var cancelRequestListener: CancelRequestListener? = null
 
     /**
      * @description: 解决连续进度弹窗问题
      */
     @Volatile
-    private var showCount: Int = 0
+    protected var showCount: Int = 0
 
     /**
      * 无网络view
@@ -116,7 +116,6 @@ open class LoadViewHelper {
      * @param mLoadingImage dialog动画
      * @param mLoadingText dialog文本
      */
-    @JvmOverloads
     open fun showProgressDialog(
         mContext: Context?,
         mLoadingImage: Int,
@@ -267,19 +266,11 @@ open class LoadViewHelper {
         }
     }
 
-    open fun setAgainRequestListener(againRequestListener: AgainRequestListener?) {
-        this.againRequestListener = againRequestListener
-    }
-
-    open fun setCancelRequestListener(cancelRequestListener: CancelRequestListener?) {
-        this.cancelRequestListener = cancelRequestListener
-    }
-
     interface CancelRequestListener {
-        open fun cancel()
+        fun cancel()
     }
 
     interface AgainRequestListener {
-        open fun request()
+        fun request()
     }
 }
