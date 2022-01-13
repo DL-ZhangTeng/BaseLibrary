@@ -8,6 +8,7 @@ import android.text.TextPaint
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.zhangteng.base.bean.GroupInfo
@@ -19,13 +20,12 @@ open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterfa
     ItemDecoration() {
     private val mFontMetrics: Paint.FontMetrics?
     private var mStickyHeight = 60
-    private var textSize = 16
     private var padding = 16
     private val mTextPaint: Paint?
     private val mPaint: Paint?
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
-        val childCount = parent.getChildCount()
+        val childCount = parent.childCount
         for (i in 0 until childCount) {
             val view = parent.getChildAt(i)
             val index = parent.getChildAdapterPosition(view)
@@ -75,20 +75,20 @@ open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterfa
 
     private fun drawStickyHeader(
         c: Canvas?,
-        groupinfo: GroupInfo?,
+        groupInfo: GroupInfo?,
         left: Int,
         top: Int,
         right: Int,
         bottom: Int
     ) {
-        if (c == null || groupinfo == null || mPaint == null || mFontMetrics == null || mTextPaint == null) return
+        if (c == null || groupInfo == null || mPaint == null || mFontMetrics == null || mTextPaint == null) return
         //绘制Header
         c.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), mPaint)
         val titleX = (left + padding).toFloat()
         val titleY = bottom - mFontMetrics.descent - padding / 2
         //绘制Title
         c.drawText(
-            (if (TextUtils.isEmpty(groupinfo.getTitle())) "" else groupinfo.getTitle())!!,
+            (if (TextUtils.isEmpty(groupInfo.getTitle())) "" else groupInfo.getTitle())!!,
             titleX,
             titleY,
             mTextPaint
@@ -112,13 +112,20 @@ open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterfa
         Log.e("top", outRect.top.toString() + position)
     }
 
-    open fun setmStickyHeight(mStickyHeight: Int) {
+    open fun setStickyHeight(mStickyHeight: Int) {
         this.mStickyHeight = mStickyHeight
     }
 
-    open fun setTextSize(textSize: Int) {
-        this.textSize = textSize
-        mTextPaint?.textSize = textSize.toFloat()
+    open fun setStickyColor(@ColorInt stickyColor: Int) {
+        mPaint?.color = stickyColor
+    }
+
+    open fun setTextSize(textSize: Float) {
+        mTextPaint?.textSize = textSize
+    }
+
+    open fun setTextColor(@ColorInt textColor: Int) {
+        mTextPaint?.color = textColor
     }
 
     open fun setTextPadding(padding: Int) {
@@ -126,13 +133,13 @@ open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterfa
     }
 
     interface GroupInfoInterface {
-        open fun getGroupInfo(position: Int): GroupInfo?
+        fun getGroupInfo(position: Int): GroupInfo?
     }
 
     init {
         mTextPaint = TextPaint()
-        mTextPaint.setColor(Color.parseColor("#989898"))
-        mTextPaint.setTextSize(textSize.toFloat())
+        mTextPaint.color = Color.parseColor("#989898")
+        mTextPaint.textSize = 16f
         mFontMetrics = mTextPaint.getFontMetrics()
         mPaint = Paint()
         mPaint.isAntiAlias = true
