@@ -1,13 +1,7 @@
 package com.zhangteng.utils
 
-import android.graphics.Bitmap
-import com.zhangteng.utils.NullUtils
 import android.text.TextUtils
-import android.view.WindowManager
-import android.util.DisplayMetrics
-import android.app.Activity
-import android.widget.Toast
-import java.util.ArrayList
+import java.util.*
 
 /**
  * 为空判断
