@@ -17,7 +17,7 @@ import com.zhangteng.baselibrary.ui.mvvmdb.MvvmDbActivity
 import com.zhangteng.utils.jumpToActivity
 import java.lang.reflect.Proxy
 
-class MainActivity : com.zhangteng.mvp.mvp.BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), IMainView {
+class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), IMainView {
     private var tv_TextView: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

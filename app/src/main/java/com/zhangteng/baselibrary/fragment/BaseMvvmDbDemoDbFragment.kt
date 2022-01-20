@@ -8,7 +8,7 @@ import com.zhangteng.baselibrary.databinding.FragmentBaseMvvmDbDemoDbBinding
 import com.zhangteng.baselibrary.mvvm.vm.BaseMvvmDbDemoDbFragmentViewModel
 
 class BaseMvvmDbDemoDbFragment :
-    com.zhangteng.mvvm.mvvm.BaseMvvmDbFragment<BaseMvvmDbDemoDbFragmentViewModel, FragmentBaseMvvmDbDemoDbBinding>() {
+    BaseMvvmDbFragment<BaseMvvmDbDemoDbFragmentViewModel, FragmentBaseMvvmDbDemoDbBinding>() {
 
     companion object {
         fun newInstance() = BaseMvvmDbDemoDbFragment()

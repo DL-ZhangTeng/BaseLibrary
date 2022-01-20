@@ -9,7 +9,7 @@ import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IBaseMvpDemoPresenter
 import com.zhangteng.baselibrary.mvp.view.IBaseMvpDemoView
 
 class BaseMvpDemoActivity :
-    com.zhangteng.mvp.mvp.BaseMvpActivity<IBaseMvpDemoView, IBaseMvpDemoModel, IBaseMvpDemoPresenter>(),
+    BaseMvpActivity<IBaseMvpDemoView, IBaseMvpDemoModel, IBaseMvpDemoPresenter>(),
     IBaseMvpDemoView {
 
     override fun onCreate(savedInstanceState: Bundle?) {

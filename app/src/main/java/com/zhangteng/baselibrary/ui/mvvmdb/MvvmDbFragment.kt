@@ -14,7 +14,7 @@ import com.zhangteng.baselibrary.databinding.MvvmDbFragmentBinding
  * author: Swing
  * date: 2021/11/11
  */
-class MvvmDbFragment : com.zhangteng.mvvm.mvvm.BaseMvvmDbFragment<MvvmDbViewModel, MvvmDbFragmentBinding>() {
+class MvvmDbFragment : BaseMvvmDbFragment<MvvmDbViewModel, MvvmDbFragmentBinding>() {
     private val mAdapter by lazy { MeWebAdapter() }
 
     companion object {

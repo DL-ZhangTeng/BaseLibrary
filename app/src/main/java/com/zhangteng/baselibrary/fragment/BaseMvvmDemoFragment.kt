@@ -8,7 +8,7 @@ import com.zhangteng.mvvm.mvvm.BaseMvvmFragment
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.mvvm.vm.BaseMvvmDemoFragmentViewModel
 
-class BaseMvvmDemoFragment : com.zhangteng.mvvm.mvvm.BaseMvvmFragment<BaseMvvmDemoFragmentViewModel>() {
+class BaseMvvmDemoFragment : BaseMvvmFragment<BaseMvvmDemoFragmentViewModel>() {
 
     companion object {
         fun newInstance() = BaseMvvmDemoFragment()

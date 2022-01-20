@@ -18,7 +18,7 @@ import com.zhangteng.baselibrary.ui.mvvmdb.MeWebAdapter
  * author: Swing
  * date: 2021/11/11
  */
-class MvvmFragment : com.zhangteng.mvvm.mvvm.BaseMvvmFragment<MvvmViewModel>() {
+class MvvmFragment : BaseMvvmFragment<MvvmViewModel>() {
     private val mAdapter by lazy { MeWebAdapter() }
     private var tbProject: TabLayout? = null
     private var rvProject: RecyclerView? = null

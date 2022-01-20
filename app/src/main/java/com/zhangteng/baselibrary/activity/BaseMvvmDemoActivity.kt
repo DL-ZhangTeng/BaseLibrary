@@ -7,7 +7,7 @@ import com.zhangteng.mvvm.manager.NetworkStateReceive
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.mvvm.vm.BaseMvvmDemoViewModel
 
-class BaseMvvmDemoActivity : com.zhangteng.mvvm.mvvm.BaseMvvmActivity<BaseMvvmDemoViewModel>() {
+class BaseMvvmDemoActivity : BaseMvvmActivity<BaseMvvmDemoViewModel>() {
 
     private var intentFilter: IntentFilter? = null
     private var netChangeReceiver: NetworkStateReceive? = null

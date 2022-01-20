@@ -13,7 +13,7 @@ import com.zhangteng.baselibrary.mvp.view.IBaseMvpDemoFragmentView
 import com.zhangteng.baselibrary.R
 
 class BaseMvpDemoFragment :
-    com.zhangteng.mvp.mvp.BaseMvpFragment<IBaseMvpDemoFragmentView, IBaseMvpDemoFragmentModel, IBaseMvpDemoFragmentPresenter>(),
+    BaseMvpFragment<IBaseMvpDemoFragmentView, IBaseMvpDemoFragmentModel, IBaseMvpDemoFragmentPresenter>(),
     IBaseMvpDemoFragmentView {
 
     companion object {

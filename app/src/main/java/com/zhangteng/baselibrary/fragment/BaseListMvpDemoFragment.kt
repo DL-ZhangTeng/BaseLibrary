@@ -17,7 +17,7 @@ import com.zhangteng.baselibrary.mvp.view.IBaseListMvpDemoFragmentView
 import com.zhangteng.baselibrary.R
 
 class BaseListMvpDemoFragment :
-    com.zhangteng.mvp.mvp.BaseListMvpFragment<IBaseListMvpDemoFragmentView, IBaseListMvpDemoFragmentModel, IBaseListMvpDemoFragmentPresenter, BaseListMvpDemoBean, BaseListMvpDemoAdapter>(),
+    BaseListMvpFragment<IBaseListMvpDemoFragmentView, IBaseListMvpDemoFragmentModel, IBaseListMvpDemoFragmentPresenter, BaseListMvpDemoBean, BaseListMvpDemoAdapter>(),
     IBaseListMvpDemoFragmentView {
 
     companion object {

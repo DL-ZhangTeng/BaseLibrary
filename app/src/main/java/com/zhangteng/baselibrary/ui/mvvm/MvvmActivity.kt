@@ -7,7 +7,7 @@ import com.zhangteng.mvvm.manager.NetworkStateReceive
 import com.zhangteng.baselibrary.R
 
 
-class MvvmActivity : com.zhangteng.mvvm.mvvm.BaseMvvmActivity<MvvmActivityViewModel>() {
+class MvvmActivity : BaseMvvmActivity<MvvmActivityViewModel>() {
     private var intentFilter: IntentFilter? = null
     private var netChangeReceiver: NetworkStateReceive? = null
     override fun onCreate(savedInstanceState: Bundle?) {

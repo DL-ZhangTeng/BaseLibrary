@@ -5,7 +5,7 @@ import com.zhangteng.mvvm.mvvm.BaseMvvmDbActivity
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.databinding.MvvmDbActivityBinding
 
-class MvvmDbActivity : com.zhangteng.mvvm.mvvm.BaseMvvmDbActivity<MvvmDbActivityViewModel, MvvmDbActivityBinding>() {
+class MvvmDbActivity : BaseMvvmDbActivity<MvvmDbActivityViewModel, MvvmDbActivityBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
