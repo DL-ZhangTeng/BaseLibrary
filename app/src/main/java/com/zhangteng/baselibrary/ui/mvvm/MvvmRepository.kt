@@ -1,6 +1,6 @@
 package com.zhangteng.baselibrary.ui.mvvm
 
-import com.zhangteng.base.mvvm.base.BaseNetRepository
+import com.zhangteng.mvvm.base.BaseNetRepository
 import com.zhangteng.baselibrary.http.Api
 import com.zhangteng.baselibrary.http.BaseResult
 import com.zhangteng.baselibrary.http.entity.HomeListBean

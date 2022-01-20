@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.zhangteng.base.base.BaseAdapter
-import com.zhangteng.base.base.BaseMvvmDbFragment
+import com.zhangteng.mvvm.mvvm.BaseMvvmDbFragment
 import com.zhangteng.baselibrary.MainActivity
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.databinding.MvvmDbFragmentBinding
@@ -14,7 +14,7 @@ import com.zhangteng.baselibrary.databinding.MvvmDbFragmentBinding
  * author: Swing
  * date: 2021/11/11
  */
-class MvvmDbFragment : BaseMvvmDbFragment<MvvmDbViewModel, MvvmDbFragmentBinding>() {
+class MvvmDbFragment : com.zhangteng.mvvm.mvvm.BaseMvvmDbFragment<MvvmDbViewModel, MvvmDbFragmentBinding>() {
     private val mAdapter by lazy { MeWebAdapter() }
 
     companion object {

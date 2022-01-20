@@ -1,6 +1,6 @@
 package com.zhangteng.baselibrary.mvp.presenter
 
-import com.zhangteng.base.mvp.base.BaseLoadingPresenter
+import com.zhangteng.mvp.base.BaseLoadingPresenter
 import com.zhangteng.baselibrary.mvp.model.MainModel
 import com.zhangteng.baselibrary.mvp.model.imodel.IMainModel
 import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IMainPresenter

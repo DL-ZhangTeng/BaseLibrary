@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.zhangteng.base.base.BaseMvvmFragment
+import com.zhangteng.mvvm.mvvm.BaseMvvmFragment
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.mvvm.vm.BaseMvvmDemoFragmentViewModel
 
-class BaseMvvmDemoFragment : BaseMvvmFragment<BaseMvvmDemoFragmentViewModel>() {
+class BaseMvvmDemoFragment : com.zhangteng.mvvm.mvvm.BaseMvvmFragment<BaseMvvmDemoFragmentViewModel>() {
 
     companion object {
         fun newInstance() = BaseMvvmDemoFragment()

@@ -1,7 +1,7 @@
 package com.zhangteng.baselibrary.activity
 
 import android.os.Bundle
-import com.zhangteng.base.base.BaseMvpActivity
+import com.zhangteng.mvp.mvp.BaseMvpActivity
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.mvp.model.imodel.IBaseMvpDemoModel
 import com.zhangteng.baselibrary.mvp.presenter.BaseMvpDemoPresenter
@@ -9,7 +9,7 @@ import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IBaseMvpDemoPresenter
 import com.zhangteng.baselibrary.mvp.view.IBaseMvpDemoView
 
 class BaseMvpDemoActivity :
-    BaseMvpActivity<IBaseMvpDemoView, IBaseMvpDemoModel, IBaseMvpDemoPresenter>(),
+    com.zhangteng.mvp.mvp.BaseMvpActivity<IBaseMvpDemoView, IBaseMvpDemoModel, IBaseMvpDemoPresenter>(),
     IBaseMvpDemoView {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.zhangteng.base.base.BaseMvpFragment
+import com.zhangteng.mvp.mvp.BaseMvpFragment
 import com.zhangteng.baselibrary.mvp.model.imodel.IBaseMvpDemoFragmentModel
 import com.zhangteng.baselibrary.mvp.presenter.BaseMvpDemoFragmentPresenter
 import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IBaseMvpDemoFragmentPresenter
@@ -13,7 +13,7 @@ import com.zhangteng.baselibrary.mvp.view.IBaseMvpDemoFragmentView
 import com.zhangteng.baselibrary.R
 
 class BaseMvpDemoFragment :
-    BaseMvpFragment<IBaseMvpDemoFragmentView, IBaseMvpDemoFragmentModel, IBaseMvpDemoFragmentPresenter>(),
+    com.zhangteng.mvp.mvp.BaseMvpFragment<IBaseMvpDemoFragmentView, IBaseMvpDemoFragmentModel, IBaseMvpDemoFragmentPresenter>(),
     IBaseMvpDemoFragmentView {
 
     companion object {

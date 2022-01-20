@@ -1,6 +1,6 @@
 package com.zhangteng.baselibrary.http
 
-import com.zhangteng.base.mvvm.base.IResponse
+import com.zhangteng.mvvm.base.IResponse
 
 data class BaseResult<T>(
     val errorMsg: String,

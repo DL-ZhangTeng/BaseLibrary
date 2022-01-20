@@ -2,3 +2,5 @@ include ':base'
 include ':app'
 rootProject.name = "BaseLibrary"
 include ':utils'
+include ':mvp'
+include ':mvvm'

@@ -3,10 +3,8 @@ package com.zhangteng.baselibrary
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.zhangteng.base.base.BaseMvpActivity
-import com.zhangteng.base.mvp.utils.LoadingPresenterHandler
-import com.zhangteng.utils.LoadViewHelper
-import com.zhangteng.utils.jumpToActivity
+import com.zhangteng.mvp.mvp.BaseMvpActivity
+import com.zhangteng.mvp.utils.LoadingPresenterHandler
 import com.zhangteng.baselibrary.activity.NineImageActivity
 import com.zhangteng.baselibrary.activity.TabLayoutActivity
 import com.zhangteng.baselibrary.activity.TreeActivity
@@ -16,9 +14,10 @@ import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IMainPresenter
 import com.zhangteng.baselibrary.mvp.view.IMainView
 import com.zhangteng.baselibrary.ui.mvvm.MvvmActivity
 import com.zhangteng.baselibrary.ui.mvvmdb.MvvmDbActivity
+import com.zhangteng.utils.jumpToActivity
 import java.lang.reflect.Proxy
 
-class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), IMainView {
+class MainActivity : com.zhangteng.mvp.mvp.BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), IMainView {
     private var tv_TextView: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

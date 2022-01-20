@@ -1,5 +1,5 @@
 package com.zhangteng.baselibrary.mvp.model.imodel
 
-import com.zhangteng.base.mvp.base.IModel
+import com.zhangteng.mvp.base.IModel
 
 interface IBaseListMvpDemoModel : IModel

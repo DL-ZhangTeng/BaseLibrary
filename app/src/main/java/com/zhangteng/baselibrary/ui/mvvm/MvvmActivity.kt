@@ -2,12 +2,12 @@ package com.zhangteng.baselibrary.ui.mvvm
 
 import android.content.IntentFilter
 import android.os.Bundle
-import com.zhangteng.base.base.BaseMvvmActivity
-import com.zhangteng.base.mvvm.manager.NetworkStateReceive
+import com.zhangteng.mvvm.mvvm.BaseMvvmActivity
+import com.zhangteng.mvvm.manager.NetworkStateReceive
 import com.zhangteng.baselibrary.R
 
 
-class MvvmActivity : BaseMvvmActivity<MvvmActivityViewModel>() {
+class MvvmActivity : com.zhangteng.mvvm.mvvm.BaseMvvmActivity<MvvmActivityViewModel>() {
     private var intentFilter: IntentFilter? = null
     private var netChangeReceiver: NetworkStateReceive? = null
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.zhangteng.base.base.BaseAdapter
-import com.zhangteng.base.base.BaseMvvmFragment
+import com.zhangteng.mvvm.mvvm.BaseMvvmFragment
 import com.zhangteng.baselibrary.MainActivity
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.ui.mvvmdb.MeWebAdapter
@@ -18,7 +18,7 @@ import com.zhangteng.baselibrary.ui.mvvmdb.MeWebAdapter
  * author: Swing
  * date: 2021/11/11
  */
-class MvvmFragment : BaseMvvmFragment<MvvmViewModel>() {
+class MvvmFragment : com.zhangteng.mvvm.mvvm.BaseMvvmFragment<MvvmViewModel>() {
     private val mAdapter by lazy { MeWebAdapter() }
     private var tbProject: TabLayout? = null
     private var rvProject: RecyclerView? = null

@@ -3,14 +3,14 @@ package com.zhangteng.baselibrary.ui.mvvmdb
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.tabs.TabLayout
-import com.zhangteng.base.mvvm.base.BaseLoadingViewModel
+import com.zhangteng.mvvm.base.BaseLoadingViewModel
 import com.zhangteng.utils.d
-import com.zhangteng.utils.e
 import com.zhangteng.baselibrary.http.Api
 import com.zhangteng.baselibrary.http.entity.ArticlesBean
 import com.zhangteng.baselibrary.http.entity.NavTypeBean
 import com.zhangteng.rxhttputils.exception.ApiException
 import com.zhangteng.rxhttputils.http.HttpUtils
+import com.zhangteng.utils.e
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 

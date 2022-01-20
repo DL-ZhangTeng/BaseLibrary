@@ -1,6 +1,6 @@
 package com.zhangteng.baselibrary.mvvm.repository
 
-import com.zhangteng.base.mvvm.base.BaseNetRepository
+import com.zhangteng.mvvm.base.BaseNetRepository
 
 class BaseMvvmDemoRepository : BaseNetRepository() {
 

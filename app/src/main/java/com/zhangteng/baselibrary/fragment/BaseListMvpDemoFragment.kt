@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.zhangteng.base.base.BaseListMvpFragment
+import com.zhangteng.mvp.mvp.BaseListMvpFragment
 import com.zhangteng.baselibrary.adapter.BaseListMvpDemoAdapter
 import com.zhangteng.baselibrary.bean.BaseListMvpDemoBean
 import com.zhangteng.baselibrary.mvp.model.imodel.IBaseListMvpDemoFragmentModel
@@ -17,7 +17,7 @@ import com.zhangteng.baselibrary.mvp.view.IBaseListMvpDemoFragmentView
 import com.zhangteng.baselibrary.R
 
 class BaseListMvpDemoFragment :
-    BaseListMvpFragment<IBaseListMvpDemoFragmentView, IBaseListMvpDemoFragmentModel, IBaseListMvpDemoFragmentPresenter, BaseListMvpDemoBean, BaseListMvpDemoAdapter>(),
+    com.zhangteng.mvp.mvp.BaseListMvpFragment<IBaseListMvpDemoFragmentView, IBaseListMvpDemoFragmentModel, IBaseListMvpDemoFragmentPresenter, BaseListMvpDemoBean, BaseListMvpDemoAdapter>(),
     IBaseListMvpDemoFragmentView {
 
     companion object {

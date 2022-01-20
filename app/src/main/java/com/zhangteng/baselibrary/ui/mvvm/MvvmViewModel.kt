@@ -1,14 +1,14 @@
 package com.zhangteng.baselibrary.ui.mvvm
 
 import androidx.lifecycle.MutableLiveData
-import com.zhangteng.base.mvvm.base.BaseLoadingViewModel
-import com.zhangteng.utils.d
-import com.zhangteng.utils.e
 import com.zhangteng.baselibrary.http.Api
 import com.zhangteng.baselibrary.http.entity.ArticlesBean
 import com.zhangteng.baselibrary.http.entity.NavTypeBean
+import com.zhangteng.mvvm.base.BaseLoadingViewModel
 import com.zhangteng.rxhttputils.exception.ApiException
 import com.zhangteng.rxhttputils.http.HttpUtils
+import com.zhangteng.utils.d
+import com.zhangteng.utils.e
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 
