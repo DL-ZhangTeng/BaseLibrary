@@ -1,7 +1,6 @@
 package com.zhangteng.utils
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Environment
 import android.text.TextUtils
 import android.util.Log
@@ -10,10 +9,6 @@ import java.net.URLConnection
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-
-/**
- * 文件操作工具类
- */
 
 /**
  * 在指定的位置创建文件夹
@@ -330,6 +325,22 @@ fun Context?.getDiskCacheDir(): String? {
 }
 
 /**
+ * 获取图片文件夹
+ *
+ * @return 文件夹路径
+ */
+val pictureDir: String
+    get() = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath
+
+/**
+ * 获取视频文件夹
+ *
+ * @return 文件夹路径
+ */
+val videoDir: String
+    get() = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).absolutePath
+
+/**
  * 获取媒体文件夹
  *
  * @return
@@ -347,12 +358,13 @@ fun Context?.getFilesDir(): String? {
 /**
  * 在缓存路径里创建文件
  *
- * @param filePath 文件路径
+ * @param rootPath 文件夹根路径
+ * @param filePath 相对路径
  * @return file
  */
-fun Context?.createTmpFile(filePath: String?): File {
+fun Context?.createImageFile(rootPath: String, filePath: String): File {
     val timeStamp = SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(Date())
-    val dir = File(getFilesDir() + filePath)
+    val dir = File(rootPath + filePath)
     if (!dir.exists()) {
         dir.mkdirs()
     }
@@ -362,11 +374,12 @@ fun Context?.createTmpFile(filePath: String?): File {
 /**
  * 在缓存路径里创建初始文件夹。保存拍摄图片和剪裁后的图片
  *
- * @param filePath 文件夹路径
+ * @param rootPath 文件夹根路径
+ * @param filePath 相对路径
  */
-fun Context?.createFile(filePath: String?) {
-    val dir = File(getFilesDir() + filePath)
-    val cropFile = File(getFilesDir() + filePath + "/crop")
+fun Context?.createFile(rootPath: String, filePath: String) {
+    val dir = File(rootPath + filePath)
+    val cropFile = File("$rootPath$filePath/crop")
     if (!dir.exists()) {
         if (!dir.isDirectory) {
             dir.delete()
@@ -392,10 +405,11 @@ fun Context?.createFile(filePath: String?) {
 /**
  * 获取缓存路径里的剪裁文件夹
  *
+ * @param rootPath 文件夹根路径
  * @param path 相对路径
  */
-fun Context?.getCropDir(path: String?): File {
-    val cropFile = File(getFilesDir() + path + "/crop")
+fun Context?.getCropDir(rootPath: String, path: String): File {
+    val cropFile = File("$rootPath$path/crop")
     if (!cropFile.exists()) {
         if (cropFile.parentFile != null && !cropFile.parentFile!!.isDirectory) {
             cropFile.parentFile!!.delete()
@@ -430,21 +444,4 @@ fun Context?.getJsonFromAssets(fileName: String?): String? {
         sb.delete(0, sb.length)
     }
     return sb.toString().trim { it <= ' ' }
-}
-
-/**
- * 在缓存路径里保存拍摄图片和剪裁后的图片
- *
- * @param dir 文件夹路径
- * @return 图片绝对路径
- */
-fun Bitmap?.saveBitmap(context: Context?, dir: String?): String? {
-    val dataTake = Calendar.getInstance().timeInMillis
-    val jpegName = "picture_$dataTake.jpg"
-    val path = context.getFilesDir() + dir
-    return if (saveBitmap(path, jpegName)) {
-        path + jpegName
-    } else {
-        null
-    }
 }
