@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
-import com.zhangteng.base.utils.dp2px
+import com.zhangteng.utils.dp2px
 import java.util.*
 
 /**

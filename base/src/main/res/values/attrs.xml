@@ -85,11 +85,6 @@
         <attr name="centerCustomView" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="NoDataView">
-        <attr name="nodatatext" format="string" />
-        <attr name="nodataimage" format="reference" />
-        <attr name="nodatavisibility" format="integer" />
-    </declare-styleable>
     <declare-styleable name="MyTabLayout">
         <attr name="tabMyGravity" format="enum">
             <enum name="GRAVITY_FILL" value="0" />

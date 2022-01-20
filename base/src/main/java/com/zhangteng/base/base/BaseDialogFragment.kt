@@ -3,15 +3,15 @@ package com.zhangteng.base.base
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
-import com.zhangteng.base.utils.LoadViewHelper
-import com.zhangteng.base.utils.showShortToast
+import com.zhangteng.utils.LoadViewHelper
+import com.zhangteng.utils.showShortToast
 
 /**
  * Created by swing on 2017/11/30.
  */
 abstract class BaseDialogFragment : DialogFragment() {
 
-    protected var mLoadViewHelper: LoadViewHelper? = null
+    protected var mLoadViewHelper: com.zhangteng.utils.LoadViewHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,14 +28,14 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     protected open fun showProgressDialog() {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(context, "")
     }
 
     protected open fun showProgressDialog(mLoadingText: String?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(context, mLoadingText)
     }
@@ -46,7 +46,7 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     protected open fun showNoNetView(currentView: View?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showNoNetView(currentView)
     }
@@ -57,7 +57,7 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     protected open fun showNoContentView(currentView: View?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showNoContentView(currentView)
     }

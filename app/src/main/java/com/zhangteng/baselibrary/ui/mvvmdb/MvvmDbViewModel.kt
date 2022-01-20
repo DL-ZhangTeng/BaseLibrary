@@ -4,8 +4,8 @@ import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.tabs.TabLayout
 import com.zhangteng.base.mvvm.base.BaseLoadingViewModel
-import com.zhangteng.base.utils.d
-import com.zhangteng.base.utils.e
+import com.zhangteng.utils.d
+import com.zhangteng.utils.e
 import com.zhangteng.baselibrary.http.Api
 import com.zhangteng.baselibrary.http.entity.ArticlesBean
 import com.zhangteng.baselibrary.http.entity.NavTypeBean

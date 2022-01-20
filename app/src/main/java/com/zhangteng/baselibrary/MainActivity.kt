@@ -5,8 +5,8 @@ import android.view.View
 import android.widget.TextView
 import com.zhangteng.base.base.BaseMvpActivity
 import com.zhangteng.base.mvp.utils.LoadingPresenterHandler
-import com.zhangteng.base.utils.LoadViewHelper
-import com.zhangteng.base.utils.jumpToActivity
+import com.zhangteng.utils.LoadViewHelper
+import com.zhangteng.utils.jumpToActivity
 import com.zhangteng.baselibrary.activity.NineImageActivity
 import com.zhangteng.baselibrary.activity.TabLayoutActivity
 import com.zhangteng.baselibrary.activity.TreeActivity
@@ -63,7 +63,7 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
 
     override fun showProgressDialog() {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(this, R.drawable.loading5, "")
     }

@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.TextView
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseDialog
-import com.zhangteng.base.utils.isInvalidClick
+import com.zhangteng.utils.isInvalidClick
 
 open class CommonDialog : BaseDialog, View.OnClickListener {
     private var contentTxt: TextView? = null

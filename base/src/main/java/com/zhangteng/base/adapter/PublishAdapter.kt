@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseAdapter
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
-import com.zhangteng.base.utils.isInvalidClick
-import com.zhangteng.base.utils.isVideoFile
+import com.zhangteng.utils.isInvalidClick
+import com.zhangteng.utils.isVideoFile
 import com.zhangteng.imagepicker.bean.ImageInfo
 import com.zhangteng.imagepicker.callback.HandlerCallBack
 import com.zhangteng.imagepicker.callback.IHandlerCallBack

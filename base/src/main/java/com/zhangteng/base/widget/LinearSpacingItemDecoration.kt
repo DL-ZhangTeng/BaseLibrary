@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseDecoration
-import com.zhangteng.base.utils.dp2px
+import com.zhangteng.utils.dp2px
 
 /**
  * 水平线性布局分割线

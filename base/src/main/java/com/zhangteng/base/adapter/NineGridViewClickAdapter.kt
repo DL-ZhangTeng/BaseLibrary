@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import com.zhangteng.base.base.ImagePreviewActivity
 import com.zhangteng.base.bean.PreviewImageInfo
-import com.zhangteng.base.utils.getStatusHeight
+import com.zhangteng.utils.getStatusHeight
 import com.zhangteng.base.widget.NineGridView
 import java.io.Serializable
 

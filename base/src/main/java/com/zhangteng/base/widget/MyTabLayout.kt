@@ -36,8 +36,8 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.*
 import com.zhangteng.base.R
-import com.zhangteng.base.utils.getTextHeight
-import com.zhangteng.base.utils.getTextWidth
+import com.zhangteng.utils.getTextHeight
+import com.zhangteng.utils.getTextWidth
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.math.max
@@ -1349,7 +1349,7 @@ open class MyTabLayout @JvmOverloads constructor(
 
     internal object ThemeUtils {
         private val APPCOMPAT_CHECK_ATTRS: IntArray = intArrayOf(
-            androidx.appcompat.R.attr.colorPrimary
+            R.attr.colorPrimary
         )
 
         open fun checkAppCompatTheme(context: Context?) {
@@ -2223,14 +2223,14 @@ open class MyTabLayout @JvmOverloads constructor(
         // Text colors/sizes come from the text appearance first
         val ta = context.obtainStyledAttributes(
             mTabTextAppearance,
-            androidx.appcompat.R.styleable.TextAppearance
+            R.styleable.TextAppearance
         )
         try {
             mTabTextSize = ta.getDimensionPixelSize(
-                androidx.appcompat.R.styleable.TextAppearance_android_textSize, 0
+                R.styleable.TextAppearance_android_textSize, 0
             ).toFloat()
             mTabTextColors = ta.getColorStateList(
-                androidx.appcompat.R.styleable.TextAppearance_android_textColor
+                R.styleable.TextAppearance_android_textColor
             )
         } finally {
             ta.recycle()

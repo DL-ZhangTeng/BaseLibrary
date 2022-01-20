@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.zhangteng.base.R
-import com.zhangteng.base.utils.sp2px
+import com.zhangteng.utils.sp2px
 
 /**
  * des:可伸展textview

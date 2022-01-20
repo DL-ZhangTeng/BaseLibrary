@@ -14,8 +14,8 @@ import android.widget.*
 import android.widget.ImageView.ScaleType
 import android.widget.TextView.OnEditorActionListener
 import com.zhangteng.base.R
-import com.zhangteng.base.utils.dp2px
-import com.zhangteng.base.utils.getScreenWidth
+import com.zhangteng.utils.dp2px
+import com.zhangteng.utils.getScreenWidth
 
 /**
  * 通用标题栏

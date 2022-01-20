@@ -6,8 +6,8 @@ import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import com.zhangteng.base.utils.LoadViewHelper
-import com.zhangteng.base.utils.showShortToast
+import com.zhangteng.utils.LoadViewHelper
+import com.zhangteng.utils.showShortToast
 
 /**
  * 1.viewpager+fragment时空白页面bug：设置setOffscreenPageLimit为tab数  或  onCreateView生成view前移除上一次已添加的view；
@@ -22,7 +22,7 @@ abstract class BaseFragment : Fragment() {
 
     private val handler = Handler(Looper.getMainLooper())
 
-    protected var mLoadViewHelper: LoadViewHelper? = null
+    protected var mLoadViewHelper: com.zhangteng.utils.LoadViewHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,14 +75,14 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun showProgressDialog() {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(context, "")
     }
 
     protected open fun showProgressDialog(mLoadingText: String?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(context, mLoadingText)
     }
@@ -93,7 +93,7 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun showNoNetView(currentView: View?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showNoNetView(currentView)
     }
@@ -104,7 +104,7 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun showNoContentView(currentView: View?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
         }
         mLoadViewHelper?.showNoContentView(currentView)
     }
