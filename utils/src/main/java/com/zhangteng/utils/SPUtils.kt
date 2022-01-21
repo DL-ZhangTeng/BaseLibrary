@@ -76,6 +76,19 @@ fun Context?.getFromSP(
     return null
 }
 
+fun Context?.getFromSP(
+    spname: String?,
+    key: String?,
+    defaultSet: Set<String?>?
+): Set<String>? {
+    if (this == null || spname == null || key == null) return null
+    val sp = getSharedPreferences(
+        spname,
+        Context.MODE_PRIVATE
+    )
+    return sp.getStringSet(key, defaultSet)
+}
+
 /**
  * 移除某个key值已经对应的值
  *
