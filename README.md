@@ -10,9 +10,15 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+//使用单个库
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.0'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.0'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.0'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.0'
+//使用全部库
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.0'
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.2.0'
-//库所使用的三方
+//base库所使用的三方
 implementation 'com.google.android.material:material:1.2.1'
 implementation 'com.alibaba:fastjson:1.2.70'
 
@@ -20,13 +26,13 @@ implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必�
 implementation  'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
 implementation  'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
 
-implementation 'com.github.DL-ZhangTeng:ImagePicker:1.1.7'
+implementation 'com.github.DL-ZhangTeng:ImagePicker:1.2.0'
 implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 ```
 
-## 部分工具功能(安装配套插件快速创建模板文件BaseLibraryTemplatePlugin-0.0.1.jar)
+## 部分工具功能(安装配套插件快速创建模板文件BaseLibraryTemplatePlugin-1.3.0.jar)
 
-### MVP工具包（com/zhangteng/base/mvp、com/zhangteng/base/base）
+### MVP工具包（com/zhangteng/mvp）
 
 工具包名/类名| 描述
 --- | ---
@@ -46,7 +52,7 @@ BaseListMvpFragment| 使用Mvp模式列表Fragment基类
 BaseMvpActivity| 使用Mvp模式Activity基类（可使用插件自动创建Activity。[插件仓库地址](https://github.com/DL-ZhangTeng/BaseLibraryTemplatePlugin)）
 BaseListMvpActivity| 使用Mvp模式列表Activity基类
 
-### MVVM工具包（com/zhangteng/base/mvvm、com/zhangteng/base/base）
+### MVVM工具包（com/zhangteng/mvvm）
 
 工具包名/类名| 描述
 --- | ---
@@ -130,6 +136,17 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
+v1.3.0| 工具类&mvp&mvvp拆分| 2022/1/20 at 23:27
+v1.2.9| 顶部悬停api调整| 2022/1/13 at 9:35
+v1.2.8| 增加加载中动画gif支持| 2022/1/11 at 11:43
+v1.2.7| 适配器长按事件bug| 2022/1/4 at 21:01
+v1.2.6| 动画重命名| 2022/1/4 at 17:4
+v1.2.5| 基类弹窗修改| 2021/12/30 at 10:34
+v1.2.4| Mvvm增加Repository层| 2021/12/28 at 11:47
+v1.2.3| DefaultViewHolder未设置adapter bug| 2021/12/18 at 10:10
+v1.2.2| 自定义Tab时bug修复| 2021/12/14 at 21:58
+v1.2.1| 增加线程池工具| 2021/11/24 at 12:34
+v1.2.0| 部分工具类转为扩展函数异常处理| 2021/11/11 at 19:12
 v1.1.20| 增加九宫格图片展示| 2021/9/5 at 16:51
 v1.1.19| 星型进度条（使用固定星型）、树形结构demo,父节点不需要赋值（自动处理）| 2021/8/31 at 14:44
 v1.1.17| TabLayout 滑动ViewPager切换时tab字体错乱问题| 2021/8/26 at 17:48
