@@ -12,13 +12,13 @@ import java.lang.reflect.Method
  * @param defaultValue
  */
 fun Context?.putToSP(
-    spname: String? = "currentUser",
+    spName: String? = "currentUser",
     key: String?,
     defaultValue: Any?
 ) {
-    if (this == null || spname == null || key == null) return
+    if (this == null || spName == null || key == null) return
     val sp = getSharedPreferences(
-        spname,
+        spName,
         Context.MODE_PRIVATE
     )
     val editor = sp.edit()
@@ -53,13 +53,13 @@ fun Context?.putToSP(
  * @return
  */
 fun Context?.getFromSP(
-    spname: String? = "currentUser",
+    spName: String? = "currentUser",
     key: String?,
     defaultObject: Any?
 ): Any? {
-    if (this == null || spname == null || key == null) return null
+    if (this == null || spName == null || key == null) return null
     val sp = getSharedPreferences(
-        spname,
+        spName,
         Context.MODE_PRIVATE
     )
     if (defaultObject is String) {
@@ -76,17 +76,31 @@ fun Context?.getFromSP(
     return null
 }
 
-fun Context?.getFromSP(
-    spname: String?,
+fun Context?.getFromSPForSet(
+    spName: String? = "currentUser",
     key: String?,
     defaultSet: Set<String?>?
 ): Set<String>? {
-    if (this == null || spname == null || key == null) return null
+    if (this == null || spName == null || key == null) return null
     val sp = getSharedPreferences(
-        spname,
+        spName,
         Context.MODE_PRIVATE
     )
     return sp.getStringSet(key, defaultSet)
+}
+
+/**
+ * 返回所有的键值对
+ *
+ * @return
+ */
+fun Context?.getFromSPForAll(spName: String? = "currentUser"): MutableMap<String?, *>? {
+    if (this == null || spName == null) return null
+    val sp = getSharedPreferences(
+        spName,
+        Context.MODE_PRIVATE
+    )
+    return sp.all
 }
 
 /**
@@ -94,10 +108,10 @@ fun Context?.getFromSP(
  *
  * @param key
  */
-fun Context?.removeFromSP(spname: String? = "currentUser", key: String?) {
-    if (this == null || spname == null || key == null) return
+fun Context?.removeFromSP(spName: String? = "currentUser", key: String?) {
+    if (this == null || spName == null || key == null) return
     val sp = getSharedPreferences(
-        spname,
+        spName,
         Context.MODE_PRIVATE
     )
     val editor = sp.edit()
@@ -109,10 +123,10 @@ fun Context?.removeFromSP(spname: String? = "currentUser", key: String?) {
  * 清除所有数据
  *
  */
-fun Context?.clearFromSP(spname: String? = "currentUser") {
-    if (this == null || spname == null) return
+fun Context?.clearFromSP(spName: String? = "currentUser") {
+    if (this == null || spName == null) return
     val sp = getSharedPreferences(
-        spname,
+        spName,
         Context.MODE_PRIVATE
     )
     val editor = sp.edit()
@@ -126,27 +140,13 @@ fun Context?.clearFromSP(spname: String? = "currentUser") {
  * @param key
  * @return
  */
-fun Context?.containsInSP(spname: String? = "currentUser", key: String?): Boolean? {
-    if (this == null || spname == null || key == null) return null
+fun Context?.containsInSP(spName: String? = "currentUser", key: String?): Boolean? {
+    if (this == null || spName == null || key == null) return null
     val sp = getSharedPreferences(
-        spname,
+        spName,
         Context.MODE_PRIVATE
     )
     return sp.contains(key)
-}
-
-/**
- * 返回所有的键值对
- *
- * @return
- */
-fun Context?.getFromSP(spname: String? = "currentUser"): MutableMap<String?, *>? {
-    if (this == null || spname == null) return null
-    val sp = getSharedPreferences(
-        spname,
-        Context.MODE_PRIVATE
-    )
-    return sp.all
 }
 
 /**
