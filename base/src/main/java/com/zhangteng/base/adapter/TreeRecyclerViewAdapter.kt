@@ -2,7 +2,6 @@ package com.zhangteng.base.adapter
 
 import android.annotation.SuppressLint
 import android.content.*
-import android.view.ViewGroup
 import com.zhangteng.base.base.BaseAdapter
 import com.zhangteng.base.tree.*
 
@@ -15,12 +14,12 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
     /**
      * 存储所有可见的Node
      */
-    protected var mNodes: MutableList<Node?>?
+    protected var mNodes: MutableList<Node<T?>?>?
 
     /**
      * 存储所有的Node
      */
-    protected var mAllNodes: MutableList<Node?>?
+    protected var mAllNodes: MutableList<Node<T?>?>?
 
     /**
      * 点击的回调接口
@@ -50,9 +49,8 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
 
     override fun onBindViewHolder(holder: DefaultViewHolder, item: T?, position: Int) {
         val node = mNodes?.get(position)
-        onBindViewHolder(holder, item, position, node)
-        // 设置内边距
-        holder.itemView.setPadding((node?.getLevel() ?: 0) * 40, 3, 3, 3)
+        onBindViewHolder(holder, node, position)
+
         /**
          * 设置节点点击时，可以展开以及关闭；并且将ItemClick事件继续往外公布
          */
@@ -68,10 +66,14 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
         return mNodes?.size ?: 0
     }
 
-    abstract fun onBindViewHolder(holder: DefaultViewHolder?, item: T?, position: Int, node: Node?)
+    abstract fun onBindViewHolder(
+        holder: DefaultViewHolder?,
+        node: Node<T?>?,
+        position: Int
+    )
 
     interface OnTreeNodeClickListener {
-        open fun onClick(node: Node?, position: Int)
+        open fun <T> onClick(node: Node<T?>?, position: Int)
     }
 
     /**

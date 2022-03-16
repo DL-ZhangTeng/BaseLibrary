@@ -21,10 +21,10 @@ class TreeAdapter(
 
     override fun onBindViewHolder(
         holder: DefaultViewHolder?,
-        item: TreeBean?,
-        position: Int,
-        node: Node?
+        node: Node<TreeBean?>?,
+        position: Int
     ) {
-        holder?.getView<TextView>(R.id.tv_name)?.text = node?.getName()
+        holder?.getView<TextView>(R.id.tv_name)?.text = node?.getActualValue()?.label
     }
+
 }

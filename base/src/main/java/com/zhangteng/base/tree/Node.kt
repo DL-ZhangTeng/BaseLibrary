@@ -1,13 +1,21 @@
 package com.zhangteng.base.tree
 
-import java.util.*
-
 /**
  * Created by swing on 2018/6/29.
  */
-open class Node {
-    private var id = 0
+open class Node<T> {
+    private var id: String? = null
     private var name: String? = null
+
+    /**
+     * 父Node
+     */
+    private var parent: Node<T?>? = null
+
+    /**
+     * 下一级的子Node
+     */
+    private var children: MutableList<Node<T?>?>? = ArrayList()
 
     /**
      * 当前的级别
@@ -18,26 +26,37 @@ open class Node {
      * 是否展开
      */
     private var isExpand = false
+
+    /**
+     * 展开折叠时显示的图标
+     */
     private var icon: Int = 0
 
     /**
-     * 下一级的子Node
+     * 实际值
      */
-    private var children: MutableList<Node?>? = ArrayList()
-
-    /**
-     * 父Node
-     */
-    private var parent: Node? = null
+    private var actualValue: T? = null
 
     constructor() {}
-    constructor(id: Int, name: String?) : super() {
+
+    constructor(id: String?, name: String?) : super() {
         this.id = id
         this.name = name
     }
 
-    constructor(id: String?, name: String?) : super() {
-        this.id = id?.toInt() ?: 0
+    open fun getId(): String? {
+        return id
+    }
+
+    open fun setId(id: String?) {
+        this.id = id
+    }
+
+    open fun getName(): String? {
+        return name
+    }
+
+    open fun setName(name: String?) {
         this.name = name
     }
 
@@ -49,21 +68,14 @@ open class Node {
         this.icon = icon
     }
 
-    open fun getId(): Int {
-        return id
+    open fun getActualValue(): T? {
+        return actualValue
     }
 
-    open fun setId(id: Int) {
-        this.id = id
+    open fun setActualValue(actualValue: T?) {
+        this.actualValue = actualValue
     }
 
-    open fun getName(): String? {
-        return name
-    }
-
-    open fun setName(name: String?) {
-        this.name = name
-    }
 
     open fun isExpand(): Boolean {
         return isExpand
@@ -83,19 +95,19 @@ open class Node {
         }
     }
 
-    open fun getChildren(): MutableList<Node?>? {
+    open fun getChildren(): MutableList<Node<T?>?>? {
         return children
     }
 
-    open fun setChildren(children: MutableList<Node?>?) {
+    open fun setChildren(children: MutableList<Node<T?>?>?) {
         this.children = children
     }
 
-    open fun getParent(): Node? {
+    open fun getParent(): Node<T?>? {
         return parent
     }
 
-    open fun setParent(parent: Node?) {
+    open fun setParent(parent: Node<T?>?) {
         this.parent = parent
     }
 

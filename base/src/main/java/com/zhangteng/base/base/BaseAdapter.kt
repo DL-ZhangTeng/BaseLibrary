@@ -1,6 +1,5 @@
 package com.zhangteng.base.base
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Paint
 import android.graphics.Typeface
@@ -20,7 +19,6 @@ import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
-import java.util.*
 
 /**
  * RecyclerView 自定义的适配器
@@ -33,11 +31,6 @@ abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH?
     }
 
     var data: MutableList<T?>? = null
-        @SuppressLint("NotifyDataSetChanged")
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
     var hasHeaderOrFooter = false
     var mOnItemClickListener: OnItemClickListener? = null
     var mOnItemLongClickListener: OnItemLongClickListener? = null
