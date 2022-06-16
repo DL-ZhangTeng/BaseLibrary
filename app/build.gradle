@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.hujiang.android-aspectjx'
 
 android {
     compileSdkVersion 30
@@ -31,6 +32,15 @@ android {
         enabled = true
     }
 }
+// AOP 配置
+// AspectJX默认会处理所有的二进制代码文件和库，为了提升编译效率及规避部分第三方库出现的编译兼容性问题，
+// AspectJX提供include,exclude命令来过滤需要处理的文件及排除某些文件(包括class文件及jar文件)。
+aspectjx {
+    // 排除一些第三方库的包名（Gson、 LeakCanary 和 AOP 有冲突）
+    // 否则就会起冲突：ClassNotFoundException: Didn't find class on path: DexPathList
+//    exclude 'androidx', 'com.google', 'com.squareup', 'org.apache'
+    include 'com.zhangteng.baselibrary','com.zhangteng.aop'
+}
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -49,6 +59,9 @@ dependencies {
     implementation(project(":utils"))
     implementation(project(":mvp"))
     implementation(project(":mvvm"))
+
+    implementation(project(":aop"))
+
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.github.DL-ZhangTeng:RxHttpUtils:1.1.9'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

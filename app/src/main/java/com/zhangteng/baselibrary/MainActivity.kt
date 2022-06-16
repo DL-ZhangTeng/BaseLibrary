@@ -3,8 +3,7 @@ package com.zhangteng.baselibrary
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.zhangteng.mvp.mvp.BaseMvpActivity
-import com.zhangteng.mvp.utils.LoadingPresenterHandler
+import com.zhangteng.aop.annotation.TimeLog
 import com.zhangteng.baselibrary.activity.NineImageActivity
 import com.zhangteng.baselibrary.activity.TabLayoutActivity
 import com.zhangteng.baselibrary.activity.TreeActivity
@@ -14,6 +13,8 @@ import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IMainPresenter
 import com.zhangteng.baselibrary.mvp.view.IMainView
 import com.zhangteng.baselibrary.ui.mvvm.MvvmActivity
 import com.zhangteng.baselibrary.ui.mvvmdb.MvvmDbActivity
+import com.zhangteng.mvp.mvp.BaseMvpActivity
+import com.zhangteng.mvp.utils.LoadingPresenterHandler
 import com.zhangteng.utils.jumpToActivity
 import java.lang.reflect.Proxy
 
@@ -67,22 +68,27 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
         mLoadViewHelper?.showProgressDialog(this, R.drawable.loading5, "")
     }
 
+    @TimeLog
     fun onClickTabLayout(v: View) {
         jumpToActivity(TabLayoutActivity::class.java, 1)
     }
 
+    @TimeLog
     fun onClickTree(v: View) {
         jumpToActivity(TreeActivity::class.java, 1)
     }
 
+    @TimeLog
     fun onClickNineImage(v: View) {
         jumpToActivity(NineImageActivity::class.java, 1)
     }
 
+    @TimeLog
     fun onClickMvvm(v: View) {
         jumpToActivity(MvvmActivity::class.java, 1)
     }
 
+    @TimeLog
     fun onClickMvvmDb(v: View) {
         jumpToActivity(MvvmDbActivity::class.java, 1)
     }

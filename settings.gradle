@@ -4,3 +4,4 @@ rootProject.name = "BaseLibrary"
 include ':utils'
 include ':mvp'
 include ':mvvm'
+include ':aop'
