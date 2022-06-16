@@ -21,8 +21,8 @@ apply plugin: 'android-aspectjx'
 // AspectJX默认会处理所有的二进制代码文件和库，为了提升编译效率及规避部分第三方库出现的编译兼容性问题，
 // AspectJX提供include,exclude命令来过滤需要处理的文件及排除某些文件(包括class文件及jar文件)。
 aspectjx {
-     //只导入需要AspectJX处理的包
-    include 'com.zhangteng.**'
+     //只导入需要AspectJX处理的包com.zhangteng.aop必须添加
+    include 'com.zhangteng.aop', '应用包名'
 }
 
 //使用单个库
