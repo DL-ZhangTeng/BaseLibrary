@@ -11,6 +11,10 @@ allprojects {
     }
 }
 
+//如果使用aop，项目的build.gradle添加以下代码
+dependencies {
+    classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
+}
 //如果使用aop，app的build.gradle添加插件android-aspectjx
 apply plugin: 'android-aspectjx'
 // AOP 配置
