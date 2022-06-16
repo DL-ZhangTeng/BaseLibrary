@@ -10,13 +10,25 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
+//如果使用aop，app的build.gradle添加插件android-aspectjx
+apply plugin: 'android-aspectjx'
+// AOP 配置
+// AspectJX默认会处理所有的二进制代码文件和库，为了提升编译效率及规避部分第三方库出现的编译兼容性问题，
+// AspectJX提供include,exclude命令来过滤需要处理的文件及排除某些文件(包括class文件及jar文件)。
+aspectjx {
+     //只导入需要AspectJX处理的包
+    include 'com.zhangteng.**'
+}
+
 //使用单个库
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.0'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.0'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.0'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.0'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.3'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.3'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.3'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.3'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.3'
 //使用全部库
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.0'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.3'
 
 //base库所使用的三方
 implementation 'com.google.android.material:material:1.2.1'
@@ -31,6 +43,11 @@ implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 ```
 
 ## 部分工具功能(安装配套插件快速创建模板文件BaseLibraryTemplatePlugin-1.3.0.jar)
+### aop工具包（com/zhangteng/aop）
+工具包名/类名| 描述
+--- | ---
+TimeLog| 在需要打印耗时时间的方法添加此注解
+TimeLogAspect| 耗时时间方法切入点处理逻辑
 
 ### MVP工具包（com/zhangteng/mvp）
 
@@ -136,6 +153,9 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
+v1.3.3| aop打印方法耗时时间| 2022/6/16 at 15:38
+v1.3.2| Uri转文件绝对路径工具类| 2022/5/16 at 22:20
+v1.3.1| 树形结构adapter重构| 2022/3/16 at 10:45
 v1.3.0| 工具类&mvp&mvvp拆分| 2022/1/20 at 23:27
 v1.2.9| 顶部悬停api调整| 2022/1/13 at 9:35
 v1.2.8| 增加加载中动画gif支持| 2022/1/11 at 11:43
