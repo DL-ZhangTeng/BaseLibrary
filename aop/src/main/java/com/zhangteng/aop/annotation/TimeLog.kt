@@ -1,9 +1,5 @@
-package com.zhangteng.aop.annotation;
+package com.zhangteng.aop.annotation
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 /**
  * AnnotationRetention.SOURCE：不存储在编译后的 Class 文件。
  * AnnotationRetention.BINARY：存储在编译后的 Class 文件，但是反射不可见。
@@ -25,8 +21,11 @@ import java.lang.annotation.Target;
  * AnnotationTarget.FILE：文件。
  * AnnotationTarget.TYPEALIAS：@SinceKotlin("1.1") 类型别名，Kotlin1.1已可用。
  */
-@Target({ElementType.PARAMETER, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface TimeLog {
-    public String value() default "";
-}
+@Target(
+    AnnotationTarget.VALUE_PARAMETER,
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.PROPERTY_GETTER,
+    AnnotationTarget.PROPERTY_SETTER
+)
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+annotation class TimeLog(val value: String = "")
