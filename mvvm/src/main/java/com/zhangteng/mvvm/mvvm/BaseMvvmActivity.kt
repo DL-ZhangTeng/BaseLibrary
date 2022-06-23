@@ -1,8 +1,6 @@
 package com.zhangteng.mvvm.mvvm
 
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.zhangteng.base.base.BaseActivity
 import com.zhangteng.mvvm.base.BaseLoadingViewModel
@@ -23,30 +21,10 @@ abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModel = createViewModel()
-    }
-
-    override fun setContentView(layoutResID: Int) {
-        super.setContentView(layoutResID)
         registerUiChange()
-        NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
+        NetworkStateManager.instance.mNetworkStateCallback.observe(this) {
             onNetworkStateChanged(it)
-        })
-    }
-
-    override fun setContentView(view: View?) {
-        super.setContentView(view)
-        registerUiChange()
-        NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
-            onNetworkStateChanged(it)
-        })
-    }
-
-    override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        super.setContentView(view, params)
-        registerUiChange()
-        NetworkStateManager.instance.mNetworkStateCallback.observe(this, {
-            onNetworkStateChanged(it)
-        })
+        }
     }
 
     /**
@@ -68,46 +46,43 @@ abstract class BaseMvvmActivity<VM : BaseViewModel> : BaseActivity() {
             )
             //关闭弹窗
             (mViewModel as BaseLoadingViewModel).loadingChange.dismissLoadingView.observe(
-                this,
-                {
-                    dismissProgressDialog()
-                })
+                this
+            ) {
+                dismissProgressDialog()
+            }
         }
         if (mViewModel is BaseNoNetworkViewModel) {
             //显示
             (mViewModel as BaseNoNetworkViewModel).networkChange.showNoNetwork.observe(
-                this,
-                {
-                    showNoNetView(it)
-                }
-            )
+                this
+            ) {
+                showNoNetView(it)
+            }
             //关闭
             (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoNetwork.observe(
-                this,
-                {
-                    hiddenNoNetView(it)
-                })
+                this
+            ) {
+                hiddenNoNetView(it)
+            }
             //显示
             (mViewModel as BaseNoNetworkViewModel).networkChange.showNoDataView.observe(
-                this,
-                {
-                    showNoContentView(it)
-                }
-            )
+                this
+            ) {
+                showNoContentView(it)
+            }
             //关闭
             (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoDataView.observe(
-                this,
-                {
-                    hiddenNoContentView(it)
-                })
+                this
+            ) {
+                hiddenNoContentView(it)
+            }
         }
         if (mViewModel is BaseRefreshViewModel) {
             (mViewModel as BaseRefreshViewModel).listChange.finishRefreshOrLoadMore.observe(
-                this,
-                {
-                    finishRefreshOrLoadMore()
-                }
-            )
+                this
+            ) {
+                finishRefreshOrLoadMore()
+            }
         }
     }
 

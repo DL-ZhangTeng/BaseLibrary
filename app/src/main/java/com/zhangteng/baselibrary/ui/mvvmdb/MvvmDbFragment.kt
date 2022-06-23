@@ -3,12 +3,15 @@ package com.zhangteng.baselibrary.ui.mvvmdb
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.zhangteng.base.base.BaseAdapter
-import com.zhangteng.mvvm.mvvm.BaseMvvmDbFragment
 import com.zhangteng.baselibrary.MainActivity
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.databinding.MvvmDbFragmentBinding
+import com.zhangteng.mvvm.mvvm.BaseMvvmDbFragment
+
 /**
  * description: 有databinding的mvvm
  * author: Swing
@@ -19,6 +22,13 @@ class MvvmDbFragment : BaseMvvmDbFragment<MvvmDbViewModel, MvvmDbFragmentBinding
 
     companion object {
         fun newInstance() = MvvmDbFragment()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.mvvm_db_fragment, container, false)
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -44,9 +54,5 @@ class MvvmDbFragment : BaseMvvmDbFragment<MvvmDbViewModel, MvvmDbFragmentBinding
             mAdapter.notifyDataSetChanged()
         })
         mViewModel.getData()
-    }
-
-    override fun layoutId(): Int {
-        return R.layout.mvvm_db_fragment
     }
 }

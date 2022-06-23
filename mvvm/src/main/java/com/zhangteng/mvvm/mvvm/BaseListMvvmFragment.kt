@@ -4,7 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.zhangteng.base.base.BaseFragment
+import com.zhangteng.base.base.BaseAdapter
+import com.zhangteng.base.base.BaseListFragment
 import com.zhangteng.mvvm.base.BaseLoadingViewModel
 import com.zhangteng.mvvm.base.BaseNoNetworkViewModel
 import com.zhangteng.mvvm.base.BaseRefreshViewModel
@@ -17,7 +18,8 @@ import com.zhangteng.mvvm.utils.getVmClazz
  * ViewModelFragment基类，自动把ViewModel注入Fragment
  */
 
-abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
+abstract class BaseListMvvmFragment<VM : BaseViewModel, D, A : BaseAdapter<D, BaseAdapter.DefaultViewHolder>> :
+    BaseListFragment<D, A>() {
 
     lateinit var mViewModel: VM
 

@@ -54,6 +54,8 @@
         <activity android:name=".activity.NineImageActivity" />
         <activity android:name=".ui.mvvmdb.MvvmDbActivity" />
         <activity android:name=".ui.mvvm.MvvmActivity" />
+        <activity android:name=".activity.BaseListMvvmDemoActivity" />
+        <activity android:name=".activity.BaseListMvvmDbDemoDbActivity" />
     </application>
 
 </manifest>

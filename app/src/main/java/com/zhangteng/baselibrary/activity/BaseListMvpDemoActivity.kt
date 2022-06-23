@@ -39,7 +39,7 @@ class BaseListMvpDemoActivity :
     override fun initData() {}
 
     override fun createAdapter(): BaseListMvpDemoAdapter {
-        return BaseListMvpDemoAdapter()
+        return BaseListMvpDemoAdapter(mList)
     }
 
     override fun getRecyclerView(): RecyclerView {

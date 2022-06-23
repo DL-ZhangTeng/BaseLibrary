@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.zhangteng.mvp.mvp.BaseListMvpFragment
+import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.adapter.BaseListMvpDemoAdapter
 import com.zhangteng.baselibrary.bean.BaseListMvpDemoBean
 import com.zhangteng.baselibrary.mvp.model.imodel.IBaseListMvpDemoFragmentModel
 import com.zhangteng.baselibrary.mvp.presenter.BaseListMvpDemoFragmentPresenter
 import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IBaseListMvpDemoFragmentPresenter
 import com.zhangteng.baselibrary.mvp.view.IBaseListMvpDemoFragmentView
-import com.zhangteng.baselibrary.R
+import com.zhangteng.mvp.mvp.BaseListMvpFragment
 
 class BaseListMvpDemoFragment :
     BaseListMvpFragment<IBaseListMvpDemoFragmentView, IBaseListMvpDemoFragmentModel, IBaseListMvpDemoFragmentPresenter, BaseListMvpDemoBean, BaseListMvpDemoAdapter>(),
@@ -50,7 +50,7 @@ class BaseListMvpDemoFragment :
     }
 
     override fun createAdapter(): BaseListMvpDemoAdapter {
-        return BaseListMvpDemoAdapter()
+        return BaseListMvpDemoAdapter(mList)
     }
 
     override fun getRecyclerView(): RecyclerView? {

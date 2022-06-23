@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.zhangteng.aop.annotation.TimeLog
-import com.zhangteng.baselibrary.activity.NineImageActivity
-import com.zhangteng.baselibrary.activity.TabLayoutActivity
-import com.zhangteng.baselibrary.activity.TreeActivity
+import com.zhangteng.baselibrary.activity.*
 import com.zhangteng.baselibrary.mvp.model.imodel.IMainModel
 import com.zhangteng.baselibrary.mvp.presenter.MainPresenter
 import com.zhangteng.baselibrary.mvp.presenter.ipresenter.IMainPresenter
@@ -51,7 +49,7 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     }
 
     override fun dismissLoadingView() {
-//        dismissProgressDialog()
+        dismissProgressDialog()
 //        hiddenNoNetView(tv_TextView)
 //        hiddenNoContentView(tv_TextView)
 
@@ -91,5 +89,15 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     @TimeLog
     fun onClickMvvmDb(v: View) {
         jumpToActivity(MvvmDbActivity::class.java, 1)
+    }
+
+    @TimeLog
+    fun onClickListMvvm(v: View) {
+        jumpToActivity(BaseListMvvmDemoActivity::class.java, 1)
+    }
+
+    @TimeLog
+    fun onClickListMvvmDb(v: View) {
+        jumpToActivity(BaseListMvvmDbDemoDbActivity::class.java, 1)
     }
 }
