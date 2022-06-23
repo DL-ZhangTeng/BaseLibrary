@@ -26,13 +26,13 @@ aspectjx {
 }
 
 //使用单个库
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.3'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.3'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.3'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.3'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.3'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.4'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.4'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.4'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.4'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.4'
 //使用全部库
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.3'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.4'
 
 //base库所使用的三方
 implementation 'com.google.android.material:material:1.2.1'
@@ -157,6 +157,7 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
+v1.3.4| mvvm框架增加list基类&mvvm基类方法执行顺序优化&mvvm基类删除layoutId方法，使用默认方式设置布局文件| 2022/6/23 at 17:33
 v1.3.3| aop打印方法耗时时间| 2022/6/16 at 15:38
 v1.3.2| Uri转文件绝对路径工具类| 2022/5/16 at 22:20
 v1.3.1| 树形结构adapter重构| 2022/3/16 at 10:45
