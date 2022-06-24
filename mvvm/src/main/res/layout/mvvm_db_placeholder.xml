@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <!--仅作为占位使用，使BaseMvvmDbActivity、BaseMvvmDbFragment、BaseListMvvmDbActivity、BaseListMvvmDbFragment自动设置BaseViewModel-->
+        <variable
+            name="viewModel"
+            type="com.zhangteng.mvvm.base.BaseViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/mvvm_db"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".mvvm.BaseMvvmDbActivity">
+
+    </LinearLayout>
+</layout>

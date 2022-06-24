@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.zhangteng.base.base.BaseAdapter
+import com.zhangteng.mvvm.BR
 import com.zhangteng.mvvm.base.BaseViewModel
 
 /**
@@ -19,6 +20,7 @@ abstract class BaseListMvvmDbFragment<VM : BaseViewModel, DB : ViewDataBinding, 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mDatabind = DataBindingUtil.bind(view)!!
+        mDatabind.setVariable(BR.viewModel, mViewModel)
         mDatabind.lifecycleOwner = this
         super.onViewCreated(mDatabind.root, savedInstanceState)
     }
