@@ -19,8 +19,8 @@ abstract class BaseMvvmDbFragment<VM : BaseViewModel, DB : ViewDataBinding> :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mDatabind = DataBindingUtil.bind(view)!!
-        mDatabind.lifecycleOwner = this
         mDatabind.setVariable(BR.viewModel, mViewModel)
+        mDatabind.lifecycleOwner = this
         super.onViewCreated(mDatabind.root, savedInstanceState)
     }
 }
