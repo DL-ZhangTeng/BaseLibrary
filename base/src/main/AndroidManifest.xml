@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.zhangteng.base">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,6 +10,7 @@
     <application>
         <activity
             android:name="com.zhangteng.base.base.ImagePreviewActivity"
+            android:exported="false"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 </manifest>

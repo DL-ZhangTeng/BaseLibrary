@@ -29,33 +29,49 @@
             android:exported="false" />
         <activity
             android:name=".activity.BaseTitlebarDemoActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.BaseMvpDemoActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.BaseListMvpDemoActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.BaseListDemoActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activity.BaseDemoActivity"
-            android:exported="true" />
-        <activity android:name=".MainActivity">
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.TabLayoutActivity" />
-        <activity android:name=".activity.TreeActivity" />
-        <activity android:name=".activity.NineImageActivity" />
-        <activity android:name=".ui.mvvmdb.MvvmDbActivity" />
-        <activity android:name=".ui.mvvm.MvvmActivity" />
-        <activity android:name=".activity.BaseListMvvmDemoActivity" />
-        <activity android:name=".activity.BaseListMvvmDbDemoDbActivity" />
+        <activity
+            android:name=".activity.TabLayoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TreeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.NineImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mvvmdb.MvvmDbActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mvvm.MvvmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.BaseListMvvmDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.BaseListMvvmDbDemoDbActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

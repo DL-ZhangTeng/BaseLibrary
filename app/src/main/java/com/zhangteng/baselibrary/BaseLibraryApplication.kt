@@ -1,6 +1,8 @@
 package com.zhangteng.baselibrary
 
 import android.app.Application
+import android.content.Context
+import androidx.multidex.MultiDex
 import com.zhangteng.base.base.BaseApplication
 import com.zhangteng.rxhttputils.http.HttpUtils
 
@@ -34,5 +36,10 @@ class BaseLibraryApplication : BaseApplication() {
 
     override fun initModuleData(application: Application?) {
 
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 }

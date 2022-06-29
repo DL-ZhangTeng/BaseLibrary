@@ -15,6 +15,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -27,9 +29,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     dataBinding {
         enabled = true
+    }
+    kapt {
+        correctErrorTypes true
     }
 }
 // AOP 配置
@@ -37,38 +41,74 @@ android {
 // AspectJX提供include,exclude命令来过滤需要处理的文件及排除某些文件(包括class文件及jar文件)。
 aspectjx {
     //只导入需要AspectJX处理的包
-    include 'com.zhangteng.baselibrary','com.zhangteng.aop'
+    include 'com.zhangteng.baselibrary', 'com.zhangteng.aop'
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation "com.android.support:multidex:1.0.3"
+
+    //公共库
     implementation "androidx.core:core-ktx:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.annotation:annotation:1.2.0'
+
+    //base
     implementation(project(":base"))
-    implementation(project(":utils"))
-    implementation(project(":mvp"))
-    implementation(project(":mvvm"))
-
-    implementation(project(":aop"))
-
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
+    implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
+    implementation('com.github.DL-ZhangTeng:ImagePicker:1.2.0') {
+        transitive = false
+    }
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.github.DL-ZhangTeng:RxHttpUtils:1.1.9'
+    implementation 'com.alibaba:fastjson:1.2.70'
+
+    //工具类
+    implementation project(":utils")
+
+    //mvp
+    implementation project(":mvp")
+
+    //mvvm
+    implementation project(":mvvm")
+    //lifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    //viewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation "androidx.fragment:fragment-ktx:1.3.5"
+    //liveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
+
+    //aop
+    implementation project(":aop")
+    implementation 'org.aspectj:aspectjrt:1.9.9.1'
+
+    //网络
+    implementation('com.github.DL-ZhangTeng:RxHttpUtils:1.2.1') {
+        exclude group: "com.github.DL-ZhangTeng.BaseLibrary", module: "utils"
+    }
+    implementation 'androidx.lifecycle:lifecycle-common:2.3.1'
+    //mvvm库已经导入lifecycle
+    //implementation 'androidx.lifecycle:lifecycle-runtime:2.3.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.8.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
-
-    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
-    implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
-    implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
+    //utils库已导入
+    //implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
 }
