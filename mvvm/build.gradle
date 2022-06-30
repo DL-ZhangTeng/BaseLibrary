@@ -55,7 +55,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
 
-    implementation('com.github.DL-ZhangTeng:RxHttpUtils:1.2.1') {
+    compileOnly('com.github.DL-ZhangTeng:RxHttpUtils:1.2.1') {
         exclude group: "com.github.DL-ZhangTeng.BaseLibrary", module: "utils"
     }
     implementation project(":utils")
