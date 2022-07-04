@@ -63,10 +63,7 @@ open class BaseLoadingViewModel : BaseViewModel() {
                         block().let {
                             if (it.isSuccess()) it.getResult()
                             else
-                                throw IException(Throwable(it.getMsg()))
-                                    .apply {
-                                        code = it.getCode()
-                                    }
+                                throw IException(it.getMsg(), it.getCode())
                         }
                     }.also { success(it) }
                 },
@@ -92,7 +89,7 @@ open class BaseLoadingViewModel : BaseViewModel() {
             try {
                 block()
             } catch (e: Throwable) {
-                error(IException(e).handleException())
+                error(IException.handleException(e))
             } finally {
                 complete()
             }
