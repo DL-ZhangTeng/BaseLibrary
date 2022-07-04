@@ -1,7 +1,7 @@
 package com.zhangteng.mvvm.base
 
 import com.zhangteng.mvvm.livedata.SingleLiveData
-import com.zhangteng.rxhttputils.exception.ApiException
+import com.zhangteng.utils.IException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -23,7 +23,7 @@ open class BaseLoadingViewModel : BaseViewModel() {
      */
     fun launchGo(
         block: suspend CoroutineScope.() -> Unit,
-        error: suspend CoroutineScope.(ApiException) -> Unit,
+        error: suspend CoroutineScope.(IException) -> Unit,
         complete: suspend CoroutineScope.() -> Unit = {},
         isShowDialog: Boolean = true
     ) {
@@ -51,7 +51,7 @@ open class BaseLoadingViewModel : BaseViewModel() {
     fun <T> launchOnlyResult(
         block: suspend CoroutineScope.() -> IResponse<T>,
         success: (T) -> Unit,
-        error: (ApiException) -> Unit,
+        error: (IException) -> Unit,
         complete: () -> Unit = {},
         isShowDialog: Boolean = true
     ) {
@@ -62,7 +62,11 @@ open class BaseLoadingViewModel : BaseViewModel() {
                     withContext(Dispatchers.IO) {
                         block().let {
                             if (it.isSuccess()) it.getResult()
-                            else throw ApiException(Throwable(it.getMsg()), it.getCode())
+                            else
+                                throw IException(Throwable(it.getMsg()))
+                                    .apply {
+                                        code = it.getCode()
+                                    }
                         }
                     }.also { success(it) }
                 },
@@ -81,14 +85,14 @@ open class BaseLoadingViewModel : BaseViewModel() {
      */
     private suspend fun handleException(
         block: suspend CoroutineScope.() -> Unit,
-        error: suspend CoroutineScope.(ApiException) -> Unit,
+        error: suspend CoroutineScope.(IException) -> Unit,
         complete: suspend CoroutineScope.() -> Unit
     ) {
         coroutineScope {
             try {
                 block()
             } catch (e: Throwable) {
-                error(ApiException.handleException(e))
+                error(IException(e).handleException())
             } finally {
                 complete()
             }

@@ -31,10 +31,11 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.6'
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
-    implementation 'com.github.DL-ZhangTeng:ImagePicker:1.2.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.alibaba:fastjson:1.2.70'
+    //使用PublishAdapter需要此依赖
+    implementation 'com.github.DL-ZhangTeng:ImagePicker:1.3.0'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.6'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.6'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.6'
@@ -174,7 +175,7 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
-v1.3.6| 部分工具类更新优化（主要是ActivityHelper.kt）| 2022/7/4 at 11:50
+v1.3.6| 部分工具类更新优化（主要是ActivityHelper.kt）&mvvm库中异常处理使用com.zhangteng.utils.IException| 2022/7/4 at 11:50
 v1.3.5| 自动设置BaseViewModel| 2022/6/25 at 10:12
 v1.3.4| mvvm框架增加list基类&mvvm基类方法执行顺序优化&mvvm基类删除layoutId方法，使用默认方式设置布局文件| 2022/6/23 at 17:33
 v1.3.3| aop打印方法耗时时间| 2022/6/16 at 15:38
