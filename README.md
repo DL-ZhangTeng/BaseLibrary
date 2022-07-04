@@ -26,7 +26,7 @@ aspectjx {
 }
 
 //使用单个库
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.5'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.6'
     //base使用的三方库
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
@@ -35,9 +35,9 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.5'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.alibaba:fastjson:1.2.70'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.5'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.5'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.5'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.6'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.6'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.6'
     //mvvm使用的三方库
     //lifecycle
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -45,18 +45,18 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.5'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     //viewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
-    implementation "androidx.fragment:fragment-ktx:1.3.5"
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
     //liveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.5'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.6'
     //aop使用的三方库
     implementation 'org.aspectj:aspectjrt:1.9.9.1'
 
 //使用全部库
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.5'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.6'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:1.3.5") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:1.3.6") {
     exclude group: "com.yalantis", module: "ucrop"
     exclude group: "com.github.bumptech.glide", module: "glide"
     exclude group: "com.github.DL-ZhangTeng", module: "ImagePicker"
@@ -174,6 +174,7 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
+v1.3.6| 部分工具类更新优化（主要是ActivityHelper.kt）| 2022/7/4 at 11:50
 v1.3.5| 自动设置BaseViewModel| 2022/6/25 at 10:12
 v1.3.4| mvvm框架增加list基类&mvvm基类方法执行顺序优化&mvvm基类删除layoutId方法，使用默认方式设置布局文件| 2022/6/23 at 17:33
 v1.3.3| aop打印方法耗时时间| 2022/6/16 at 15:38
