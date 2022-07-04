@@ -68,36 +68,36 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
 
     @TimeLog
     fun onClickTabLayout(v: View) {
-        jumpToActivity(TabLayoutActivity::class.java, 1)
+        jumpToActivity<TabLayoutActivity>()
     }
 
     @TimeLog
     fun onClickTree(v: View) {
-        jumpToActivity(TreeActivity::class.java, 1)
+        jumpToActivity<TreeActivity>()
     }
 
     @TimeLog
     fun onClickNineImage(v: View) {
-        jumpToActivity(NineImageActivity::class.java, 1)
+        jumpToActivity<NineImageActivity>()
     }
 
     @TimeLog
     fun onClickMvvm(v: View) {
-        jumpToActivity(MvvmActivity::class.java, 1)
+        jumpToActivity<MvvmActivity>()
     }
 
     @TimeLog
     fun onClickMvvmDb(v: View) {
-        jumpToActivity(MvvmDbActivity::class.java, 1)
+        jumpToActivity<MvvmDbActivity>()
     }
 
     @TimeLog
     fun onClickListMvvm(v: View) {
-        jumpToActivity(BaseListMvvmDemoActivity::class.java, 1)
+        jumpToActivity<BaseListMvvmDemoActivity>()
     }
 
     @TimeLog
     fun onClickListMvvmDb(v: View) {
-        jumpToActivity(BaseListMvvmDbDemoDbActivity::class.java, 1)
+        jumpToActivity<BaseListMvvmDbDemoDbActivity>()
     }
 }

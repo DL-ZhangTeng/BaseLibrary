@@ -1,9 +1,5 @@
 package com.zhangteng.utils
 
-import kotlin.Throws
-import kotlin.jvm.Synchronized
-import android.annotation.SuppressLint
-import java.lang.Exception
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
 import javax.crypto.Cipher
@@ -16,7 +12,7 @@ import javax.crypto.spec.SecretKeySpec
  */
 object AESUtils {
     /**
-     * 随机生成秘钥
+     * description 随机生成AES秘钥
      */
     val key: String
         get() = try {
@@ -31,7 +27,8 @@ object AESUtils {
         }
 
     /**
-     * 使用指定的字符串生成秘钥
+     * description 使用指定的字符串生成AES秘钥
+     * @param keyRaw 任意字符串
      */
     fun getKeyByPass(keyRaw: String): String {
         return try {
@@ -52,7 +49,7 @@ object AESUtils {
      * byte数组转化为16进制字符串
      *
      * @param bytes
-     * @return
+     * @return 编码后的字符串
      */
     fun byteToHexString(bytes: ByteArray): String {
         val sb = StringBuffer()
@@ -71,33 +68,45 @@ object AESUtils {
         return sb.toString()
     }
 
-    //加密
+    /**
+     * description AES加密，模式AES/CBC/NoPadding
+     * @param data 原文
+     * @param key 秘钥
+     * @param iv 盐，任意16位
+     * @return 密文
+     */
     @Throws(Exception::class)
-    fun encrypt(data: String, key: String, iv: String): String? {
+    fun encrypt(data: String, key: String, iv: String): String {
         val cipher = Cipher.getInstance("AES/CBC/NoPadding")
         val blockSize = cipher.blockSize
         val dataBytes = data.toByteArray()
         var plaintextLength = dataBytes.size
         if (plaintextLength % blockSize != 0) {
-            plaintextLength = plaintextLength + (blockSize - plaintextLength % blockSize)
+            plaintextLength += (blockSize - plaintextLength % blockSize)
         }
         val plaintext = ByteArray(plaintextLength)
         System.arraycopy(dataBytes, 0, plaintext, 0, dataBytes.size)
-        val keyspec = SecretKeySpec(key.toByteArray(), "AES")
-        val ivspec = IvParameterSpec(iv.toByteArray())
-        cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec)
+        val keySpec = SecretKeySpec(key.toByteArray(), "AES")
+        val ivSpec = IvParameterSpec(iv.toByteArray())
+        cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec)
         val encrypted = cipher.doFinal(plaintext)
         return Base64Utils.encode(encrypted)
     }
 
-    //解密
+    /**
+     * description AES解密，模式AES/CBC/NoPadding
+     * @param data 原文
+     * @param key 秘钥
+     * @param iv 盐，任意16位
+     * @return 密文
+     */
     @Throws(Exception::class)
     fun decrypt(data: String, key: String, iv: String): String {
         val encrypted1 = Base64Utils.decode(data)
         val cipher = Cipher.getInstance("AES/CBC/NoPadding")
-        val keyspec = SecretKeySpec(key.toByteArray(), "AES")
-        val ivspec = IvParameterSpec(iv.toByteArray())
-        cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec)
+        val keySpec = SecretKeySpec(key.toByteArray(), "AES")
+        val ivSpec = IvParameterSpec(iv.toByteArray())
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec)
         val original = cipher.doFinal(encrypted1)
         return String(original)
     }
