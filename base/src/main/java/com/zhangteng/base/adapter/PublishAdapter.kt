@@ -19,16 +19,7 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseAdapter
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
-import com.zhangteng.imagepicker.bean.ImageInfo
-import com.zhangteng.imagepicker.callback.HandlerCallBack
-import com.zhangteng.imagepicker.callback.IHandlerCallBack
-import com.zhangteng.imagepicker.config.ImagePickerConfig
-import com.zhangteng.imagepicker.config.ImagePickerEnum
-import com.zhangteng.imagepicker.config.ImagePickerOpen
-import com.zhangteng.imagepicker.imageloader.GlideImageLoader
-import com.zhangteng.utils.NullUtils
-import com.zhangteng.utils.isInvalidClick
-import com.zhangteng.utils.isVideoFile
+import com.zhangteng.utils.*
 import java.util.*
 
 /**
@@ -36,13 +27,14 @@ import java.util.*
  * 请配合 [com.zhangteng.base.widget.GridSpacingItemDecoration][com.zhangteng.base.widget.LinearSpacingItemDecoration]调整间距
  * Created by swing on 2018/5/7.
  */
-class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
+abstract class PublishAdapter : BaseAdapter<IMediaBean?, DefaultViewHolder> {
     private var onAddItemClickListener: OnAddItemClickListener? = null
     private var onAddVideoItemClickListener: OnAddVideoItemClickListener? = null
     private var onAddFileItemClickListener: OnAddFileItemClickListener? = null
     private var onDeleteClickListener: OnDeleteClickListener? = null
     private var onImageItemClickListener: OnImageItemClickListener? = null
     private var onVideoItemClickListener: OnVideoItemClickListener? = null
+    private var openPickerListener: OpenPickerListener? = null
     private var activity: FragmentActivity
     private var recyclerView: RecyclerView? = null
     private var itemTouchHelper: ItemTouchHelper? = null
@@ -63,6 +55,11 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
     private var addButtonNum = 1
 
     /**
+     * 图片加载器
+     */
+    private var imageLoader: ImageLoader? = null
+
+    /**
      * 是否有删除按钮
      */
     var isHaveDeleteBtn = true
@@ -71,13 +68,15 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
     @JvmOverloads
     constructor(
         activity: FragmentActivity,
-        data: MutableList<ImageInfo?>?,
+        data: MutableList<IMediaBean?>?,
         @IntRange(from = 1, to = 3) addButtonNum: Int = 1,
-        onlyImage: Boolean = false
+        onlyImage: Boolean = false,
+        imageLoader: ImageLoader? = null,
     ) : super(data) {
         this.activity = activity
         this.addButtonNum = addButtonNum
         this.onlyImage = onlyImage
+        this.imageLoader = imageLoader
     }
     //</editor-fold>
 
@@ -86,9 +85,10 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
     constructor(
         activity: FragmentActivity,
         recyclerView: RecyclerView,
-        data: MutableList<ImageInfo?>?,
+        data: MutableList<IMediaBean?>?,
         @IntRange(from = 1, to = 3) addButtonNum: Int = 1,
-        onlyImage: Boolean = false
+        onlyImage: Boolean = false,
+        imageLoader: ImageLoader? = null,
     ) : super(data) {
         this.activity = activity
         this.recyclerView = recyclerView
@@ -97,6 +97,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
         this.recyclerView!!.addOnItemTouchListener(PublishItemClickListener())
         this.addButtonNum = addButtonNum
         this.onlyImage = onlyImage
+        this.imageLoader = imageLoader
         val itemAnimator = recyclerView.itemAnimator
         if (itemAnimator is SimpleItemAnimator) {
             itemAnimator.supportsChangeAnimations = false
@@ -142,10 +143,10 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
         }
     }
 
-    override fun onBindViewHolder(holder: DefaultViewHolder, item: ImageInfo?, position: Int) {
+    override fun onBindViewHolder(holder: DefaultViewHolder, item: IMediaBean?, position: Int) {
         if (holder is PublishViewHolder) {
-            GlideImageLoader().loadImage(
-                holder.imageView.context, holder.imageView, item!!.path
+            imageLoader?.loadImage(
+                holder.imageView.context, holder.imageView, item!!.getPath()
             )
         }
         setHolderViewClickListener(holder)
@@ -168,13 +169,13 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
         return if (super.getItemCount() >= maxSelectable) {
             maxSelectable
         } else if (super.getItemCount() + addButtonNum > maxSelectable) {
-            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.path.isVideoFile()) {
+            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.getPath().isVideoFile()) {
                 maxSelectable
             } else {
                 maxSelectable + addButtonNum - 1
             }
         } else {
-            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.path.isVideoFile()
+            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.getPath().isVideoFile()
             ) {
                 super.getItemCount() + addButtonNum - 1
             } else {
@@ -211,7 +212,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                 data
             ).size < maxSelectable
         ) {
-            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.path.isVideoFile()
+            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.getPath().isVideoFile()
             ) {
                 IMAGE
             } else ADD_VIDEO
@@ -262,12 +263,16 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
         this.onAddFileItemClickListener = onAddFileItemClickListener
     }
 
+    fun setOpenPickerListener(openPickerListener: OpenPickerListener?) {
+        this.openPickerListener = openPickerListener
+    }
+
     protected fun setHolderViewClickListener(holder: RecyclerView.ViewHolder) {
         if (holder is PublishViewHolder) {
             holder.imageView.setOnClickListener { v: View? ->
                 if (v!!.isInvalidClick()) return@setOnClickListener
                 val p = holder.bindingAdapterPosition
-                if (data!![p]!!.path.isVideoFile()) {
+                if (data!![p]!!.getPath().isVideoFile()) {
                     if (onVideoItemClickListener != null) {
                         onVideoItemClickListener!!.onVideoItemClick(v)
                     } else {
@@ -287,9 +292,9 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                     if (v!!.isInvalidClick()) return@setOnClickListener
                     val p = holder.bindingAdapterPosition
                     if (onDeleteClickListener != null) {
-                        onDeleteClickListener!!.onDeleteClick(v, p, data!![p]!!.path)
+                        onDeleteClickListener!!.onDeleteClick(v, p, data!![p]!!.getPath())
                     } else {
-                        if (data!![p]!!.path.isVideoFile() && data!!.size == 1
+                        if (data!![p]!!.getPath().isVideoFile() && data!!.size == 1
                         ) {
                             maxSelectable = 9
                         }
@@ -307,18 +312,24 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                 if (onAddItemClickListener != null) {
                     onAddItemClickListener!!.onAddItemClick(v)
                 } else {
-                    val iHandlerCallBack: IHandlerCallBack = object : HandlerCallBack() {
+                    val iHandlerCallBack: IHandlerCallBack = object : IHandlerCallBack {
+                        override fun onStart() {
 
-                        override fun onSuccess(photoList: List<ImageInfo>) {
-                            super.onSuccess(photoList)
+                        }
+
+                        override fun onSuccess(photoList: List<IMediaBean>) {
+
+                        }
+
+                        override fun onCancel() {
+
                         }
 
                         @SuppressLint("NotifyDataSetChanged")
-                        override fun onFinish(photoList: List<ImageInfo>) {
-                            super.onFinish(photoList)
+                        override fun onFinish(photoList: List<IMediaBean>) {
                             if (addButtonNum == 1 && photoList.size > 0) {
                                 for (path in photoList) {
-                                    if (path.path.isVideoFile()) {
+                                    if (path.getPath().isVideoFile()) {
                                         maxSelectable = 1
                                     }
                                 }
@@ -327,8 +338,11 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                             notifyDataSetChanged()
                         }
 
+                        override fun onError() {
+
+                        }
                     }
-                    initPicker(
+                    openPickerListener?.initPicker(
                         activity,
                         iHandlerCallBack,
                         maxSelectable - data!!.size,
@@ -343,23 +357,33 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                 if (onAddVideoItemClickListener != null) {
                     onAddVideoItemClickListener!!.onAddVideoItemClick(v)
                 } else {
-                    val iHandlerCallBack: IHandlerCallBack = object : HandlerCallBack() {
+                    val iHandlerCallBack: IHandlerCallBack = object : IHandlerCallBack {
+                        override fun onStart() {
 
-                        override fun onSuccess(photoList: List<ImageInfo>) {
-                            super.onSuccess(photoList)
+                        }
+
+                        override fun onSuccess(photoList: List<IMediaBean>) {
+
+                        }
+
+                        override fun onCancel() {
+
                         }
 
                         @SuppressLint("NotifyDataSetChanged")
-                        override fun onFinish(photoList: List<ImageInfo>) {
-                            super.onFinish(photoList)
+                        override fun onFinish(photoList: List<IMediaBean>) {
                             if (!NullUtils.isEmpty(photoList)) {
                                 data!!.add(0, photoList[0])
                                 notifyDataSetChanged()
                             }
                         }
 
+                        override fun onError() {
+
+                        }
+
                     }
-                    initPicker(
+                    openPickerListener?.initPicker(
                         activity,
                         iHandlerCallBack,
                         maxSelectable - data!!.size - 1,
@@ -400,6 +424,18 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
 
     interface OnAddFileItemClickListener {
         fun onAddFileItemClick(view: View?)
+    }
+
+    interface OpenPickerListener {
+        fun initPicker(
+            activity: FragmentActivity?,
+            iHandlerCallBack: IHandlerCallBack?,
+            maxImage: Int,
+            isSelectVideo: Boolean = true,
+            isSelectImage: Boolean = true,
+            isCrop: Boolean = false,
+            cropAspectRatio: Float = 0f
+        )
     }
 
     /**
@@ -449,7 +485,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                 if (NullUtils.isEmpty(data)) {
                     return
                 } else {
-                    if (vh.layoutPosition == 0 && data!![0]!!.path.isVideoFile()
+                    if (vh.layoutPosition == 0 && data!![0]!!.getPath().isVideoFile()
                     ) {
                         return
                     }
@@ -534,7 +570,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             //拿到当前拖拽到的item的viewHolder
             val toPosition = target.bindingAdapterPosition
             if (toPosition >= data!!.size) return false
-            if (toPosition == 0 && data!![0]!!.path.isVideoFile()) return false
+            if (toPosition == 0 && data!![0]!!.getPath().isVideoFile()) return false
             if (fromPosition < toPosition) {
                 for (i in fromPosition until toPosition) {
                     Collections.swap(data!!, i, i + 1)
@@ -563,42 +599,42 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
         private const val IMAGE = 0
 
         //<editor-fold desc="初始化图片选择器">
-        @JvmOverloads
-        fun initPicker(
-            activity: FragmentActivity?,
-            iHandlerCallBack: IHandlerCallBack?,
-            maxImage: Int,
-            isSelectVideo: Boolean = true,
-            isSelectImage: Boolean = true,
-            isCrop: Boolean = false,
-            cropAspectRatio: Float = 0f
-        ) {
-            val imagePickerConfig = ImagePickerConfig.Builder()
-                .pickerThemeColorRes(R.color.titlebar_bg)
-                .pickerTitleColorRes(R.color.titlebar_text_color)
-                .pickerBackRes(R.mipmap.image_picker_back_black)
-                .pickerFolderRes(R.mipmap.image_picker_folder_black)
-                .cropThemeColorRes(R.color.base_theme_color)
-                .cropTitleColorRes(R.color.titlebar_text_light_color)
-                .imageLoader(GlideImageLoader()) //图片加载器
-                .iHandlerCallBack(iHandlerCallBack) //图片选择器生命周期监听（直接打开摄像头时无效）
-                .multiSelect(true) //是否开启多选
-                .isVideoPicker(isSelectVideo) //是否选择视频 默认false
-                .isShowCamera(!isSelectVideo)
-                .isImagePicker(isSelectImage)
-                .imagePickerType(ImagePickerEnum.PHOTO_PICKER) //选择器打开类型
-                .isMirror(false) //是否旋转镜头
-                .maxImageSelectable(maxImage) //图片可选择数
-                .maxVideoSelectable(1)
-                .maxHeight(1920) //图片最大高度
-                .maxWidth(1080) //图片最大宽度
-                .maxImageSize(15) //图片最大大小Mb
-                .maxVideoLength(10 * 60 * 1000)
-                .maxVideoSize(50)
-                .isCrop(isCrop, cropAspectRatio)
-                .build()
-            ImagePickerOpen.getInstance().setImagePickerConfig(imagePickerConfig).open(activity)
-        }
+//        @JvmOverloads
+//        fun initPicker(
+//            activity: FragmentActivity?,
+//            iHandlerCallBack: IHandlerCallBack?,
+//            maxImage: Int,
+//            isSelectVideo: Boolean = true,
+//            isSelectImage: Boolean = true,
+//            isCrop: Boolean = false,
+//            cropAspectRatio: Float = 0f
+//        ) {
+//            val imagePickerConfig = ImagePickerConfig.Builder()
+//                .pickerThemeColorRes(R.color.titlebar_bg)
+//                .pickerTitleColorRes(R.color.titlebar_text_color)
+//                .pickerBackRes(R.mipmap.image_picker_back_black)
+//                .pickerFolderRes(R.mipmap.image_picker_folder_black)
+//                .cropThemeColorRes(R.color.base_theme_color)
+//                .cropTitleColorRes(R.color.titlebar_text_light_color)
+//                .imageLoader(GlideImageLoader()) //图片加载器
+//                .iHandlerCallBack(iHandlerCallBack) //图片选择器生命周期监听（直接打开摄像头时无效）
+//                .multiSelect(true) //是否开启多选
+//                .isVideoPicker(isSelectVideo) //是否选择视频 默认false
+//                .isShowCamera(!isSelectVideo)
+//                .isImagePicker(isSelectImage)
+//                .imagePickerType(ImagePickerEnum.PHOTO_PICKER) //选择器打开类型
+//                .isMirror(false) //是否旋转镜头
+//                .maxImageSelectable(maxImage) //图片可选择数
+//                .maxVideoSelectable(1)
+//                .maxHeight(1920) //图片最大高度
+//                .maxWidth(1080) //图片最大宽度
+//                .maxImageSize(15) //图片最大大小Mb
+//                .maxVideoLength(10 * 60 * 1000)
+//                .maxVideoSize(50)
+//                .isCrop(isCrop, cropAspectRatio)
+//                .build()
+//            ImagePickerOpen.getInstance().setImagePickerConfig(imagePickerConfig).open(activity)
+//        }
         //</editor-fold>
     }
 }
