@@ -5,15 +5,15 @@ import java.util.List;
 /**
  * Created by Swing on 2018/4/18.
  */
-public interface IHandlerCallBack {
+public interface IHandlerCallBack<T extends IMediaBean> {
 
     void onStart();
 
-    void onSuccess(List<IMediaBean> selectList);
+    void onSuccess(List<T> selectList);
 
     void onCancel();
 
-    void onFinish(List<IMediaBean> selectList);
+    void onFinish(List<T> selectList);
 
     void onError();
 
