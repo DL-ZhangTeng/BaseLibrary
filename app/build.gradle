@@ -95,7 +95,7 @@ dependencies {
     implementation 'org.aspectj:aspectjrt:1.9.9.1'
 
     //网络
-    implementation('com.github.DL-ZhangTeng:RxHttpUtils:1.2.1') {
+    implementation('com.github.DL-ZhangTeng:RxHttpUtils:1.2.2') {
         exclude group: "com.github.DL-ZhangTeng.BaseLibrary", module: "utils"
     }
     implementation 'androidx.lifecycle:lifecycle-common:2.3.1'
