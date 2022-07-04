@@ -27,7 +27,7 @@ import java.util.*
  * 请配合 [com.zhangteng.base.widget.GridSpacingItemDecoration][com.zhangteng.base.widget.LinearSpacingItemDecoration]调整间距
  * Created by swing on 2018/5/7.
  */
-abstract class PublishAdapter : BaseAdapter<IMediaBean?, DefaultViewHolder> {
+abstract class PublishAdapter<M : IMediaBean> : BaseAdapter<M?, DefaultViewHolder> {
     private var onAddItemClickListener: OnAddItemClickListener? = null
     private var onAddVideoItemClickListener: OnAddVideoItemClickListener? = null
     private var onAddFileItemClickListener: OnAddFileItemClickListener? = null
@@ -68,7 +68,7 @@ abstract class PublishAdapter : BaseAdapter<IMediaBean?, DefaultViewHolder> {
     @JvmOverloads
     constructor(
         activity: FragmentActivity,
-        data: MutableList<IMediaBean?>?,
+        data: MutableList<M?>?,
         @IntRange(from = 1, to = 3) addButtonNum: Int = 1,
         onlyImage: Boolean = false,
         imageLoader: ImageLoader? = null,
@@ -85,7 +85,7 @@ abstract class PublishAdapter : BaseAdapter<IMediaBean?, DefaultViewHolder> {
     constructor(
         activity: FragmentActivity,
         recyclerView: RecyclerView,
-        data: MutableList<IMediaBean?>?,
+        data: MutableList<M?>?,
         @IntRange(from = 1, to = 3) addButtonNum: Int = 1,
         onlyImage: Boolean = false,
         imageLoader: ImageLoader? = null,
@@ -143,7 +143,7 @@ abstract class PublishAdapter : BaseAdapter<IMediaBean?, DefaultViewHolder> {
         }
     }
 
-    override fun onBindViewHolder(holder: DefaultViewHolder, item: IMediaBean?, position: Int) {
+    override fun onBindViewHolder(holder: DefaultViewHolder, item: M?, position: Int) {
         if (holder is PublishViewHolder) {
             imageLoader?.loadImage(
                 holder.imageView.context, holder.imageView, item!!.getPath()
@@ -312,36 +312,37 @@ abstract class PublishAdapter : BaseAdapter<IMediaBean?, DefaultViewHolder> {
                 if (onAddItemClickListener != null) {
                     onAddItemClickListener!!.onAddItemClick(v)
                 } else {
-                    val iHandlerCallBack: IHandlerCallBack = object : IHandlerCallBack {
-                        override fun onStart() {
+                    val iHandlerCallBack: IHandlerCallBack<M> =
+                        object : IHandlerCallBack<M> {
+                            override fun onStart() {
 
-                        }
+                            }
 
-                        override fun onSuccess(photoList: List<IMediaBean>) {
+                            override fun onSuccess(photoList: List<M>) {
 
-                        }
+                            }
 
-                        override fun onCancel() {
+                            override fun onCancel() {
 
-                        }
+                            }
 
-                        @SuppressLint("NotifyDataSetChanged")
-                        override fun onFinish(photoList: List<IMediaBean>) {
-                            if (addButtonNum == 1 && photoList.size > 0) {
-                                for (path in photoList) {
-                                    if (path.getPath().isVideoFile()) {
-                                        maxSelectable = 1
+                            @SuppressLint("NotifyDataSetChanged")
+                            override fun onFinish(photoList: List<M>) {
+                                if (addButtonNum == 1 && photoList.size > 0) {
+                                    for (path in photoList) {
+                                        if (path.getPath().isVideoFile()) {
+                                            maxSelectable = 1
+                                        }
                                     }
                                 }
+                                data!!.addAll(photoList)
+                                notifyDataSetChanged()
                             }
-                            data!!.addAll(photoList)
-                            notifyDataSetChanged()
-                        }
 
-                        override fun onError() {
+                            override fun onError() {
 
+                            }
                         }
-                    }
                     openPickerListener?.initPicker(
                         activity,
                         iHandlerCallBack,
@@ -357,32 +358,33 @@ abstract class PublishAdapter : BaseAdapter<IMediaBean?, DefaultViewHolder> {
                 if (onAddVideoItemClickListener != null) {
                     onAddVideoItemClickListener!!.onAddVideoItemClick(v)
                 } else {
-                    val iHandlerCallBack: IHandlerCallBack = object : IHandlerCallBack {
-                        override fun onStart() {
+                    val iHandlerCallBack: IHandlerCallBack<M> =
+                        object : IHandlerCallBack<M> {
+                            override fun onStart() {
 
-                        }
-
-                        override fun onSuccess(photoList: List<IMediaBean>) {
-
-                        }
-
-                        override fun onCancel() {
-
-                        }
-
-                        @SuppressLint("NotifyDataSetChanged")
-                        override fun onFinish(photoList: List<IMediaBean>) {
-                            if (!NullUtils.isEmpty(photoList)) {
-                                data!!.add(0, photoList[0])
-                                notifyDataSetChanged()
                             }
+
+                            override fun onSuccess(photoList: List<M>) {
+
+                            }
+
+                            override fun onCancel() {
+
+                            }
+
+                            @SuppressLint("NotifyDataSetChanged")
+                            override fun onFinish(photoList: List<M>) {
+                                if (!NullUtils.isEmpty(photoList)) {
+                                    data!!.add(0, photoList[0])
+                                    notifyDataSetChanged()
+                                }
+                            }
+
+                            override fun onError() {
+
+                            }
+
                         }
-
-                        override fun onError() {
-
-                        }
-
-                    }
                     openPickerListener?.initPicker(
                         activity,
                         iHandlerCallBack,
@@ -427,9 +429,9 @@ abstract class PublishAdapter : BaseAdapter<IMediaBean?, DefaultViewHolder> {
     }
 
     interface OpenPickerListener {
-        fun initPicker(
+        fun <M : IMediaBean> initPicker(
             activity: FragmentActivity?,
-            iHandlerCallBack: IHandlerCallBack?,
+            iHandlerCallBack: IHandlerCallBack<M>?,
             maxImage: Int,
             isSelectVideo: Boolean = true,
             isSelectImage: Boolean = true,
