@@ -1,6 +1,9 @@
 package com.zhangteng.base.adapter
 
+import android.annotation.SuppressLint
 import android.app.Service
+import android.os.Build
+import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.LayoutInflater
@@ -16,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.zhangteng.base.R
 import com.zhangteng.base.base.BaseAdapter
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
-import com.zhangteng.utils.isInvalidClick
-import com.zhangteng.utils.isVideoFile
 import com.zhangteng.imagepicker.bean.ImageInfo
 import com.zhangteng.imagepicker.callback.HandlerCallBack
 import com.zhangteng.imagepicker.callback.IHandlerCallBack
@@ -25,7 +26,9 @@ import com.zhangteng.imagepicker.config.ImagePickerConfig
 import com.zhangteng.imagepicker.config.ImagePickerEnum
 import com.zhangteng.imagepicker.config.ImagePickerOpen
 import com.zhangteng.imagepicker.imageloader.GlideImageLoader
-import com.zhangteng.imagepicker.utils.NullUtill
+import com.zhangteng.utils.NullUtils
+import com.zhangteng.utils.isInvalidClick
+import com.zhangteng.utils.isVideoFile
 import java.util.*
 
 /**
@@ -165,13 +168,13 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
         return if (super.getItemCount() >= maxSelectable) {
             maxSelectable
         } else if (super.getItemCount() + addButtonNum > maxSelectable) {
-            if (NullUtill.getNotNull(data).size > 0 && data!![0]!!.path.isVideoFile()) {
+            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.path.isVideoFile()) {
                 maxSelectable
             } else {
                 maxSelectable + addButtonNum - 1
             }
         } else {
-            if (NullUtill.getNotNull(data).size > 0 && data!![0]!!.path.isVideoFile()
+            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.path.isVideoFile()
             ) {
                 super.getItemCount() + addButtonNum - 1
             } else {
@@ -199,16 +202,16 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
      * @param addButtonNum 不包含上传文件按钮之外的按钮数量
      */
     protected fun getAddButtonNumLesserItemViewType(position: Int, addButtonNum: Int): Int {
-        return if (position == getAddButtonNumLesserItemCount(addButtonNum) - 1 && NullUtill.getNotNull(
+        return if (position == getAddButtonNumLesserItemCount(addButtonNum) - 1 && NullUtils.getNotNull(
                 data
             ).size < maxSelectable
         ) {
             ADD_IMAGE
-        } else if (addButtonNum == 2 && position == getAddButtonNumLesserItemCount(addButtonNum) - 2 && NullUtill.getNotNull(
+        } else if (addButtonNum == 2 && position == getAddButtonNumLesserItemCount(addButtonNum) - 2 && NullUtils.getNotNull(
                 data
             ).size < maxSelectable
         ) {
-            if (NullUtill.getNotNull(data).size > 0 && data!![0]!!.path.isVideoFile()
+            if (NullUtils.getNotNull(data).isNotEmpty() && data!![0]!!.path.isVideoFile()
             ) {
                 IMAGE
             } else ADD_VIDEO
@@ -263,7 +266,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
         if (holder is PublishViewHolder) {
             holder.imageView.setOnClickListener { v: View? ->
                 if (v!!.isInvalidClick()) return@setOnClickListener
-                val p = holder.getAdapterPosition()
+                val p = holder.bindingAdapterPosition
                 if (data!![p]!!.path.isVideoFile()) {
                     if (onVideoItemClickListener != null) {
                         onVideoItemClickListener!!.onVideoItemClick(v)
@@ -282,7 +285,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                 holder.delete.visibility = View.VISIBLE
                 holder.delete.setOnClickListener { v: View? ->
                     if (v!!.isInvalidClick()) return@setOnClickListener
-                    val p = holder.getAdapterPosition()
+                    val p = holder.bindingAdapterPosition
                     if (onDeleteClickListener != null) {
                         onDeleteClickListener!!.onDeleteClick(v, p, data!![p]!!.path)
                     } else {
@@ -310,6 +313,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                             super.onSuccess(photoList)
                         }
 
+                        @SuppressLint("NotifyDataSetChanged")
                         override fun onFinish(photoList: List<ImageInfo>) {
                             super.onFinish(photoList)
                             if (addButtonNum == 1 && photoList.size > 0) {
@@ -345,9 +349,10 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                             super.onSuccess(photoList)
                         }
 
+                        @SuppressLint("NotifyDataSetChanged")
                         override fun onFinish(photoList: List<ImageInfo>) {
                             super.onFinish(photoList)
-                            if (!NullUtill.isEmpty(photoList)) {
+                            if (!NullUtils.isEmpty(photoList)) {
                                 data!!.add(0, photoList[0])
                                 notifyDataSetChanged()
                             }
@@ -413,7 +418,9 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
      * recyclerview触摸监听器
      */
     inner class PublishItemClickListener : OnItemTouchListener {
-        private val mGestureDetector: GestureDetectorCompat
+        private val mGestureDetector: GestureDetectorCompat =
+            GestureDetectorCompat(recyclerView!!.context, ItemTouchHelperGestureListener())
+
         override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
             mGestureDetector.onTouchEvent(e)
             return false
@@ -425,10 +432,6 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
 
         override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
 
-        init {
-            mGestureDetector =
-                GestureDetectorCompat(recyclerView!!.context, ItemTouchHelperGestureListener())
-        }
     }
 
     /**
@@ -443,7 +446,7 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             val child = recyclerView!!.findChildViewUnder(e.x, e.y)
             if (child != null) {
                 val vh = recyclerView!!.getChildViewHolder(child)
-                if (NullUtill.isEmpty(data)) {
+                if (NullUtils.isEmpty(data)) {
                     return
                 } else {
                     if (vh.layoutPosition == 0 && data!![0]!!.path.isVideoFile()
@@ -461,8 +464,19 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
                 }
                 itemTouchHelper!!.startDrag(vh)
                 //获取系统震动服务
-                val vib = activity.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator //震动70毫秒
-                vib.vibrate(70)
+                val vib = activity.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val effect = VibrationEffect.createOneShot(
+                            70,
+                            VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                        vib.vibrate(effect, null)
+                    } else {
+                        vib.vibrate(70)
+                    }
+                } catch (iae: IllegalArgumentException) {
+                }
             }
         }
     }
@@ -475,35 +489,38 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder
         ): Int {
-            return if (recyclerView.layoutManager is GridLayoutManager) {
-                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or
-                        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-                val swipeFlags = 0
-                makeMovementFlags(
-                    dragFlags,
-                    swipeFlags
-                )
-            } else if (recyclerView.layoutManager is LinearLayoutManager) {
-                val dragFlags: Int
-                dragFlags =
-                    if ((recyclerView.layoutManager as LinearLayoutManager?)!!.orientation == LinearLayoutManager.HORIZONTAL) {
-                        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-                    } else {
-                        ItemTouchHelper.UP or ItemTouchHelper.DOWN
-                    }
-                val swipeFlags = 0
-                makeMovementFlags(
-                    dragFlags,
-                    swipeFlags
-                )
-            } else {
-                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or
-                        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-                val swipeFlags = 0
-                makeMovementFlags(
-                    dragFlags,
-                    swipeFlags
-                )
+            return when (recyclerView.layoutManager) {
+                is GridLayoutManager -> {
+                    val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or
+                            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                    val swipeFlags = 0
+                    makeMovementFlags(
+                        dragFlags,
+                        swipeFlags
+                    )
+                }
+                is LinearLayoutManager -> {
+                    val dragFlags: Int =
+                        if ((recyclerView.layoutManager as LinearLayoutManager?)!!.orientation == LinearLayoutManager.HORIZONTAL) {
+                            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                        } else {
+                            ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                        }
+                    val swipeFlags = 0
+                    makeMovementFlags(
+                        dragFlags,
+                        swipeFlags
+                    )
+                }
+                else -> {
+                    val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or
+                            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                    val swipeFlags = 0
+                    makeMovementFlags(
+                        dragFlags,
+                        swipeFlags
+                    )
+                }
             }
         }
 
@@ -513,18 +530,18 @@ class PublishAdapter : BaseAdapter<ImageInfo?, DefaultViewHolder> {
             target: RecyclerView.ViewHolder
         ): Boolean {
             //得到当拖拽的viewHolder的Position
-            val fromPosition = viewHolder.adapterPosition
+            val fromPosition = viewHolder.bindingAdapterPosition
             //拿到当前拖拽到的item的viewHolder
-            val toPosition = target.adapterPosition
+            val toPosition = target.bindingAdapterPosition
             if (toPosition >= data!!.size) return false
             if (toPosition == 0 && data!![0]!!.path.isVideoFile()) return false
             if (fromPosition < toPosition) {
                 for (i in fromPosition until toPosition) {
-                    Collections.swap(data, i, i + 1)
+                    Collections.swap(data!!, i, i + 1)
                 }
             } else {
                 for (i in fromPosition downTo toPosition + 1) {
-                    Collections.swap(data, i, i - 1)
+                    Collections.swap(data!!, i, i - 1)
                 }
             }
             notifyItemMoved(fromPosition, toPosition)

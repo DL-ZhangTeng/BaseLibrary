@@ -1,7 +1,6 @@
 package com.zhangteng.utils
 
 import android.text.TextUtils
-import java.util.*
 
 /**
  * 为空判断
@@ -24,16 +23,16 @@ object NullUtils {
         return null == string || "" == string || "null" == string || "NULL" == string
     }
 
-    fun <T> getNotNull(list: List<T>?): List<T>? {
+    fun <T> getNotNull(list: List<T>?): List<T> {
         return if (isEmpty(list)) {
             ArrayList()
-        } else list
+        } else list!!
     }
 
-    fun getNotNull(string: String?): String? {
+    fun getNotNull(string: String?): String {
         return if (isEmpty(string)) {
             ""
-        } else string
+        } else string!!
     }
 
     fun isTrue(i: Int): Boolean {
