@@ -6,8 +6,8 @@ import com.zhangteng.baselibrary.http.entity.ArticlesBean
 import com.zhangteng.baselibrary.http.entity.NavTypeBean
 import com.zhangteng.baselibrary.mvvm.repository.BaseListMvvmDemoRepository
 import com.zhangteng.mvvm.base.BaseLoadingViewModel
-import com.zhangteng.rxhttputils.exception.ApiException
 import com.zhangteng.rxhttputils.http.HttpUtils
+import com.zhangteng.utils.IException
 import com.zhangteng.utils.d
 import com.zhangteng.utils.e
 import kotlinx.coroutines.Dispatchers
@@ -71,14 +71,14 @@ class BaseListMvvmDemoViewModel : BaseLoadingViewModel() {
                                 .ConfigGlobalHttpUtils()
                                 .createService(Api::class.java).getProjectList(page, it.data[0].id)
                         }
-                    } else throw ApiException(Throwable(it.errorMsg), it.errorCode)
+                    } else throw IException(Throwable(it.errorMsg), it.errorCode)
                 }
                 .onStart { loadingChange.showLoadingView.postValue(null) }
                 .flowOn(Dispatchers.IO)
                 .onCompletion { loadingChange.dismissLoadingView.call() }
                 .catch {
                     // 错误处理
-                    val err = ApiException.handleException(it)
+                    val err = IException.handleException(it)
                     "${err.code}: ${err.message}".d()
                 }
                 .collect {
