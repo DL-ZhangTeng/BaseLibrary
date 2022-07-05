@@ -67,6 +67,11 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     }
 
     @TimeLog
+    fun onClickBaseLayout(v: View) {
+        jumpToActivity<BaseDemoActivity>()
+    }
+
+    @TimeLog
     fun onClickTabLayout(v: View) {
         jumpToActivity<TabLayoutActivity>()
     }

@@ -34,7 +34,6 @@ abstract class PublishAdapter<M : IMediaBean> : BaseAdapter<M?, DefaultViewHolde
     private var onDeleteClickListener: OnDeleteClickListener? = null
     private var onImageItemClickListener: OnImageItemClickListener? = null
     private var onVideoItemClickListener: OnVideoItemClickListener? = null
-    private var openPickerListener: OpenPickerListener? = null
     private var activity: FragmentActivity
     private var recyclerView: RecyclerView? = null
     private var itemTouchHelper: ItemTouchHelper? = null
@@ -221,6 +220,19 @@ abstract class PublishAdapter<M : IMediaBean> : BaseAdapter<M?, DefaultViewHolde
         }
     }
 
+    //<editor-fold desc="初始化图片选择器">
+    abstract fun initPicker(
+        activity: FragmentActivity?,
+        iHandlerCallBack: IHandlerCallBack<M>?,
+        imageLoader: ImageLoader?,
+        maxImage: Int,
+        isSelectVideo: Boolean = true,
+        isSelectImage: Boolean = true,
+        isCrop: Boolean = false,
+        cropAspectRatio: Float = 0f
+    )
+
+    //</editor-fold>
     class PublishViewHolder(itemView: View) : DefaultViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.discover_publish_iv)
         val delete: ImageView = itemView.findViewById(R.id.discover_pulish_delete)
@@ -261,10 +273,6 @@ abstract class PublishAdapter<M : IMediaBean> : BaseAdapter<M?, DefaultViewHolde
 
     fun setOnAddFileItemClickListener(onAddFileItemClickListener: OnAddFileItemClickListener?) {
         this.onAddFileItemClickListener = onAddFileItemClickListener
-    }
-
-    fun setOpenPickerListener(openPickerListener: OpenPickerListener?) {
-        this.openPickerListener = openPickerListener
     }
 
     protected fun setHolderViewClickListener(holder: RecyclerView.ViewHolder) {
@@ -343,9 +351,10 @@ abstract class PublishAdapter<M : IMediaBean> : BaseAdapter<M?, DefaultViewHolde
 
                             }
                         }
-                    openPickerListener?.initPicker(
+                    initPicker(
                         activity,
                         iHandlerCallBack,
+                        imageLoader,
                         maxSelectable - data!!.size,
                         !onlyImage && addButtonNum == 1,
                         true
@@ -385,9 +394,10 @@ abstract class PublishAdapter<M : IMediaBean> : BaseAdapter<M?, DefaultViewHolde
                             }
 
                         }
-                    openPickerListener?.initPicker(
+                    initPicker(
                         activity,
                         iHandlerCallBack,
+                        imageLoader,
                         maxSelectable - data!!.size - 1,
                         true,
                         false
@@ -426,18 +436,6 @@ abstract class PublishAdapter<M : IMediaBean> : BaseAdapter<M?, DefaultViewHolde
 
     interface OnAddFileItemClickListener {
         fun onAddFileItemClick(view: View?)
-    }
-
-    interface OpenPickerListener {
-        fun <M : IMediaBean> initPicker(
-            activity: FragmentActivity?,
-            iHandlerCallBack: IHandlerCallBack<M>?,
-            maxImage: Int,
-            isSelectVideo: Boolean = true,
-            isSelectImage: Boolean = true,
-            isCrop: Boolean = false,
-            cropAspectRatio: Float = 0f
-        )
     }
 
     /**
@@ -599,44 +597,5 @@ abstract class PublishAdapter<M : IMediaBean> : BaseAdapter<M?, DefaultViewHolde
         private const val ADD_VIDEO = 2
         private const val ADD_IMAGE = 1
         private const val IMAGE = 0
-
-        //<editor-fold desc="初始化图片选择器">
-//        @JvmOverloads
-//        fun initPicker(
-//            activity: FragmentActivity?,
-//            iHandlerCallBack: IHandlerCallBack?,
-//            maxImage: Int,
-//            isSelectVideo: Boolean = true,
-//            isSelectImage: Boolean = true,
-//            isCrop: Boolean = false,
-//            cropAspectRatio: Float = 0f
-//        ) {
-//            val imagePickerConfig = ImagePickerConfig.Builder()
-//                .pickerThemeColorRes(R.color.titlebar_bg)
-//                .pickerTitleColorRes(R.color.titlebar_text_color)
-//                .pickerBackRes(R.mipmap.image_picker_back_black)
-//                .pickerFolderRes(R.mipmap.image_picker_folder_black)
-//                .cropThemeColorRes(R.color.base_theme_color)
-//                .cropTitleColorRes(R.color.titlebar_text_light_color)
-//                .imageLoader(GlideImageLoader()) //图片加载器
-//                .iHandlerCallBack(iHandlerCallBack) //图片选择器生命周期监听（直接打开摄像头时无效）
-//                .multiSelect(true) //是否开启多选
-//                .isVideoPicker(isSelectVideo) //是否选择视频 默认false
-//                .isShowCamera(!isSelectVideo)
-//                .isImagePicker(isSelectImage)
-//                .imagePickerType(ImagePickerEnum.PHOTO_PICKER) //选择器打开类型
-//                .isMirror(false) //是否旋转镜头
-//                .maxImageSelectable(maxImage) //图片可选择数
-//                .maxVideoSelectable(1)
-//                .maxHeight(1920) //图片最大高度
-//                .maxWidth(1080) //图片最大宽度
-//                .maxImageSize(15) //图片最大大小Mb
-//                .maxVideoLength(10 * 60 * 1000)
-//                .maxVideoSize(50)
-//                .isCrop(isCrop, cropAspectRatio)
-//                .build()
-//            ImagePickerOpen.getInstance().setImagePickerConfig(imagePickerConfig).open(activity)
-//        }
-        //</editor-fold>
     }
 }

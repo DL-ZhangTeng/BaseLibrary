@@ -11,6 +11,7 @@
         android:id="@+id/tv_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onClickBaseLayout"
         android:text="Hello World!" />
 
     <TextView
