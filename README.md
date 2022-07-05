@@ -34,8 +34,6 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.6'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.alibaba:fastjson:1.2.70'
-    //使用PublishAdapter需要此依赖
-    implementation 'com.github.DL-ZhangTeng:ImagePicker:1.3.0'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.6'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.6'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.6'
@@ -58,9 +56,7 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.6'
 implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.6'
 或排除图片库
 implementation("com.github.DL-ZhangTeng:BaseLibrary:1.3.6") {
-    exclude group: "com.yalantis", module: "ucrop"
     exclude group: "com.github.bumptech.glide", module: "glide"
-    exclude group: "com.github.DL-ZhangTeng", module: "ImagePicker"
 }
 ```
 
