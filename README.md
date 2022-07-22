@@ -51,7 +51,7 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.6'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.6'
     //aop使用的三方库
     implementation 'org.aspectj:aspectjrt:1.9.9.1'
-    //PermissionsAspect类demo使用(不使用Permissions注解可不导入)
+    //PermissionsAspect类使用(不使用Permissions注解可不导入)
     //noinspection GradleDynamicVersion
     compileOnly 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
 
