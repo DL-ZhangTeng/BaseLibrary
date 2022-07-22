@@ -76,7 +76,12 @@ class PermissionsAspect {
                             .setListener(
                                 object : CommonDialog.OnCloseListener {
                                     override fun onClick(dialog: Dialog?, confirm: Boolean) {
-                                        joinPoint(joinPoint, permissions)
+                                        if (confirm) {
+                                            joinPoint(joinPoint, permissions)
+                                        } else {
+                                            // 获得权限，执行原方法
+                                            joinPoint.proceed()
+                                        }
                                     }
                                 })
                             .show()
