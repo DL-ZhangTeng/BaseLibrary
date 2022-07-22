@@ -3,6 +3,9 @@ package com.zhangteng.baselibrary
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import com.zhangteng.aop.annotation.CheckNet
+import com.zhangteng.aop.annotation.Permissions
+import com.zhangteng.aop.annotation.SingleClick
 import com.zhangteng.aop.annotation.TimeLog
 import com.zhangteng.baselibrary.activity.*
 import com.zhangteng.baselibrary.mvp.model.imodel.IMainModel
@@ -67,6 +70,9 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     }
 
     @TimeLog
+    @CheckNet
+    @SingleClick
+    @Permissions(value = ["android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE"])
     fun onClickBaseLayout(v: View) {
         jumpToActivity<BaseDemoActivity>()
     }

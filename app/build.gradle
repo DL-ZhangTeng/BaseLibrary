@@ -96,6 +96,9 @@ dependencies {
     //aop
     implementation project(":aop")
     implementation 'org.aspectj:aspectjrt:1.9.9.1'
+    //PermissionsAspect类demo使用(不使用Permissions注解可不导入)
+    //noinspection GradleDynamicVersion
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
 
     //网络
     //noinspection GradleDynamicVersion

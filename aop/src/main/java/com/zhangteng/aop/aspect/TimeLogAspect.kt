@@ -9,7 +9,12 @@ import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
 import org.aspectj.lang.reflect.MethodSignature
 
-@Aspect // 定义切面类
+/**
+ * description: 方法耗时时间切面
+ * author: Swing
+ * date: 2022/7/22
+ */
+@Aspect
 class TimeLogAspect {
     // 1、应用中用到了哪些注解，放到当前的切入点进行处理（找到需要处理的切入点）
     // execution，以方法执行时作为切点，触发Aspect类

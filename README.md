@@ -51,6 +51,9 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.6'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.6'
     //aop使用的三方库
     implementation 'org.aspectj:aspectjrt:1.9.9.1'
+    //PermissionsAspect类demo使用(不使用Permissions注解可不导入)
+    //noinspection GradleDynamicVersion
+    compileOnly 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
 
 //使用全部库
 implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.6'
@@ -66,6 +69,12 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:1.3.6") {
 --- | ---
 TimeLog| 在需要打印耗时时间的方法添加此注解
 TimeLogAspect| 耗时时间方法切入点处理逻辑
+CheckNet| 在需要网络检测的方法添加此注解
+CheckNetAspect| 网络检测方法切入点处理逻辑
+Permissions| 在需要权限申请的方法添加此注解
+PermissionsAspect| 权限申请方法切入点处理逻辑
+SingleClick| 在需要防重复点击的方法添加此注解
+SingleClickAspect| 防重复点击方法切入点处理逻辑
 
 ### MVP工具包（com/zhangteng/mvp）
 
@@ -171,6 +180,7 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
+v1.3.7| 增加网络检测注解&权限申请注解&防重复点击注解| 2022/7/22 at 15:08
 v1.3.6| 部分工具类更新优化（主要是ActivityHelper.kt）&mvvm库中异常处理使用com.zhangteng.utils.IException| 2022/7/4 at 11:50
 v1.3.5| 自动设置BaseViewModel| 2022/6/25 at 10:12
 v1.3.4| mvvm框架增加list基类&mvvm基类方法执行顺序优化&mvvm基类删除layoutId方法，使用默认方式设置布局文件| 2022/6/23 at 17:33
