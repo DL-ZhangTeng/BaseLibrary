@@ -76,7 +76,7 @@ fun Context?.getFromSP(
     return null
 }
 
-fun Context?.getFromSPForSet(
+fun Context?.getFromSPToSet(
     spName: String? = "currentUser",
     key: String?,
     defaultSet: Set<String?>?
