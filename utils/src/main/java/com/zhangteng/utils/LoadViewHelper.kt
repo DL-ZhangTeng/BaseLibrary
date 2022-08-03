@@ -14,22 +14,22 @@ import android.widget.TextView
 
 /**
  * 将某个视图替换为正在加载、无数据、加载失败等视图(保证每一个页面一个实例，不可单例使用会造成内存泄露或闪退)
- * Created by swing on 2018/10/8.
+ * Created by Swing on 2018/10/8.
  */
 open class LoadViewHelper {
-    protected val contentViews: HashMap<View, NoDataView> = HashMap()
-    protected var mProgressDialog: Dialog? = null
-    protected var mLoadTextView: TextView? = null
-    protected var mAnimation: Animation? = null
-    protected var mLoadImageView: ImageView? = null
-    protected var againRequestListener: AgainRequestListener? = null
-    protected var cancelRequestListener: CancelRequestListener? = null
+    protected open val contentViews: HashMap<View, NoDataView> = HashMap()
+    protected open var mProgressDialog: Dialog? = null
+    protected open var mLoadTextView: TextView? = null
+    protected open var mAnimation: Animation? = null
+    protected open var mLoadImageView: ImageView? = null
+    open var againRequestListener: AgainRequestListener? = null
+    open var cancelRequestListener: CancelRequestListener? = null
 
     /**
      * @description: 解决连续进度弹窗问题
      */
     @Volatile
-    protected var showCount: Int = 0
+    protected open var showCount: Int = 0
 
     /**
      * 无网络view
@@ -252,7 +252,7 @@ open class LoadViewHelper {
         mNoDataView?.setNoDataViewShow(false)
     }
 
-    public fun findActivity(context: Context?): Activity? {
+    fun findActivity(context: Context?): Activity? {
         if (context is Activity) {
             return context
         }
