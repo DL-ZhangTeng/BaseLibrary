@@ -17,7 +17,7 @@ import android.widget.TextView
  * Created by Swing on 2018/10/8.
  */
 open class StateViewHelper {
-    protected open val contentViews: HashMap<View, NoDataView> = HashMap()
+    protected open val contentViews: HashMap<View, StateView> = HashMap()
     protected open var mProgressDialog: Dialog? = null
     protected open var mLoadTextView: TextView? = null
     protected open var mAnimation: Animation? = null
@@ -84,36 +84,36 @@ open class StateViewHelper {
     open fun showStateView(
         currentView: View?,
         drawableRes: Int = R.mipmap.icon_default,
-        noDataText: String? = "",
-        noDataAgainText: String? = ""
+        stateText: String? = "",
+        stateAgainText: String? = ""
     ) {
         if (currentView == null) return
         if (contentViews[currentView] == null) {
-            contentViews[currentView] = NoDataView(currentView.context)
+            contentViews[currentView] = StateView(currentView.context)
         }
-        val mNoDataView = contentViews[currentView] ?: return
-        mNoDataView.setNoDataImageResource(drawableRes)
-        mNoDataView.setNoDataText(noDataText)
-        if (null == noDataAgainText || "" == noDataAgainText) {
-            mNoDataView.setNoDataAgainVisibility(View.GONE)
+        val mStateView = contentViews[currentView] ?: return
+        mStateView.setStateImageResource(drawableRes)
+        mStateView.setStateText(stateText)
+        if (null == stateAgainText || "" == stateAgainText) {
+            mStateView.setStateAgainVisibility(View.GONE)
         } else {
-            mNoDataView.setNoDataAgainText(noDataAgainText)
+            mStateView.setStateAgainText(stateAgainText)
         }
-        mNoDataView.setAgainRequestListener(object : NoDataView.AgainRequestListener {
+        mStateView.setAgainRequestListener(object : StateView.AgainRequestListener {
             override fun request() {
                 againRequestListener?.request()
             }
         })
-        if (mNoDataView.isNoDataViewShow()) {
+        if (mStateView.isStateViewShow()) {
             return
         }
         val viewGroup = currentView.parent
         if (viewGroup != null) {
             viewGroup as ViewGroup
             viewGroup.removeView(currentView)
-            viewGroup.addView(mNoDataView, currentView.layoutParams)
+            viewGroup.addView(mStateView, currentView.layoutParams)
         }
-        mNoDataView.setNoDataViewShow(true)
+        mStateView.setStateViewShow(true)
     }
 
     /**
@@ -167,17 +167,17 @@ open class StateViewHelper {
      * @param currentView 需要替换的view
      */
     open fun hiddenStateView(currentView: View?) {
-        val mNoDataView = contentViews[currentView]
-        if (mNoDataView?.isNoDataViewShow() == false) {
+        val mStateView = contentViews[currentView]
+        if (mStateView?.isStateViewShow() == false) {
             return
         }
-        val viewGroup = mNoDataView?.parent
+        val viewGroup = mStateView?.parent
         if (viewGroup != null) {
             viewGroup as ViewGroup
-            viewGroup.removeView(mNoDataView)
+            viewGroup.removeView(mStateView)
             viewGroup.addView(currentView)
         }
-        mNoDataView?.setNoDataViewShow(false)
+        mStateView?.setStateViewShow(false)
     }
 
     /**

@@ -16,12 +16,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
  * @author swing
  * @date 2018/1/23
  */
-open class NoDataView : LinearLayout {
-    private var llNoData: ConstraintLayout? = null
-    private var tvNoData: TextView? = null
-    private var ivNoData: ImageView? = null
-    private var btnNoData: Button? = null
-    private var isNoDataViewShow = false
+open class StateView : LinearLayout {
+    private var llState: ConstraintLayout? = null
+    private var tvState: TextView? = null
+    private var ivState: ImageView? = null
+    private var btnState: Button? = null
+    private var isStateViewShow = false
 
     constructor(context: Context) : super(context) {
         initView(context)
@@ -44,22 +44,22 @@ open class NoDataView : LinearLayout {
     private fun setAttrs(context: Context, attrs: AttributeSet?) {
         val a = context.obtainStyledAttributes(
             attrs,
-            R.styleable.NoDataView
+            R.styleable.StateView
         )
         val indexCount = a.indexCount
         for (i in 0 until indexCount) {
             when (val attr = a.getIndex(i)) {
-                R.styleable.NoDataView_nodatatext -> {
+                R.styleable.StateView_stateText -> {
                     val str = a.getString(attr)
-                    setNoDataText(str)
+                    setStateText(str)
                 }
-                R.styleable.NoDataView_nodataimage -> {
+                R.styleable.StateView_stateImage -> {
                     val id = a.getResourceId(attr, R.mipmap.icon_default)
-                    setNoDataImageResource(id)
+                    setStateImageResource(id)
                 }
-                R.styleable.NoDataView_nodatavisibility -> {
+                R.styleable.StateView_stateVisibility -> {
                     val visibility = a.getInt(attr, VISIBLE)
-                    setNoDataVisibility(visibility)
+                    setStateVisibility(visibility)
                 }
             }
         }
@@ -68,50 +68,50 @@ open class NoDataView : LinearLayout {
 
     private fun initView(context: Context) {
         LayoutInflater.from(context).inflate(R.layout.layout_no_data_view, this, true)
-        llNoData = findViewById(R.id.ll_no_data)
-        tvNoData = findViewById(R.id.tv_no_data)
-        ivNoData = findViewById(R.id.iv_no_data)
-        btnNoData = findViewById(R.id.btn_no_data)
+        llState = findViewById(R.id.ll_no_data)
+        tvState = findViewById(R.id.tv_no_data)
+        ivState = findViewById(R.id.iv_no_data)
+        btnState = findViewById(R.id.btn_no_data)
     }
 
-    open fun setNoDataVisibility(visibility: Int) {
-        llNoData?.visibility = visibility
+    open fun setStateVisibility(visibility: Int) {
+        llState?.visibility = visibility
     }
 
-    open fun setNoDataText(noDataText: String?) {
-        tvNoData?.text = noDataText
+    open fun setStateText(stateText: String?) {
+        tvState?.text = stateText
     }
 
-    open fun setNoDataText(resourceId: Int) {
-        tvNoData?.setText(resourceId)
+    open fun setStateText(resourceId: Int) {
+        tvState?.setText(resourceId)
     }
 
-    open fun setNoDataDrawable(dataDrawable: Drawable?) {
-        ivNoData?.setImageDrawable(dataDrawable)
+    open fun setStateDrawable(dataDrawable: Drawable?) {
+        ivState?.setImageDrawable(dataDrawable)
     }
 
-    open fun setNoDataImageResource(resourceId: Int) {
-        ivNoData?.setImageResource(resourceId)
+    open fun setStateImageResource(resourceId: Int) {
+        ivState?.setImageResource(resourceId)
     }
 
-    open fun isNoDataViewShow(): Boolean {
-        return isNoDataViewShow
+    open fun isStateViewShow(): Boolean {
+        return isStateViewShow
     }
 
-    open fun setNoDataViewShow(noDataViewShow: Boolean) {
-        isNoDataViewShow = noDataViewShow
+    open fun setStateViewShow(stateViewShow: Boolean) {
+        isStateViewShow = stateViewShow
     }
 
-    open fun setNoDataAgainText(noDataAgainText: String?) {
-        btnNoData?.text = noDataAgainText
+    open fun setStateAgainText(stateAgainText: String?) {
+        btnState?.text = stateAgainText
     }
 
-    open fun setNoDataAgainVisibility(visibility: Int) {
-        btnNoData?.visibility = visibility
+    open fun setStateAgainVisibility(visibility: Int) {
+        btnState?.visibility = visibility
     }
 
     open fun setAgainRequestListener(againRequestListener: AgainRequestListener?) {
-        btnNoData?.setOnClickListener { againRequestListener?.request() }
+        btnState?.setOnClickListener { againRequestListener?.request() }
     }
 
     interface AgainRequestListener {
