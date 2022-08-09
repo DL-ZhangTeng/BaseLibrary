@@ -88,13 +88,13 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
             (mViewModel as BaseNoNetworkViewModel).networkChange.showNoDataView.observe(
                 this
             ) {
-                showNoContentView(it)
+                showEmptyView(it)
             }
             //关闭
             (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoDataView.observe(
                 this
             ) {
-                hiddenNoContentView(it)
+                hiddenEmptyView(it)
             }
         }
         if (mViewModel is BaseRefreshViewModel) {

@@ -52,7 +52,7 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
     protected fun initRecyclerView() {
         mAdapter = createAdapter()
         //设置空布局
-        showNoContentView(mRecyclerView)
+        showEmptyView(mRecyclerView)
         // 设置上拉刷新、下拉加载更多
         mRefreshLayout?.setOnRefreshListener { refreshLayout: RefreshLayout? -> refreshData(true) }
         mRefreshLayout?.setOnLoadMoreListener { refreshLayout: RefreshLayout? ->
@@ -148,9 +148,9 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
             mList.addAll(data)
         }
         if (mList.isEmpty()) {
-            showNoContentView(mRecyclerView)
+            showEmptyView(mRecyclerView)
         } else {
-            hiddenNoContentView(mRecyclerView)
+            hiddenEmptyView(mRecyclerView)
         }
         if (mList.size >= mTotal || data?.isEmpty() == true) {
             mRefreshLayout?.finishLoadMoreWithNoMoreData()
@@ -168,7 +168,7 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
         mRefreshLayout?.finishRefresh()
         mRefreshLayout?.finishLoadMoreWithNoMoreData()
         dismissProgressDialog()
-        showNoContentView(mRecyclerView)
+        showEmptyView(mRecyclerView)
     }
 
 }

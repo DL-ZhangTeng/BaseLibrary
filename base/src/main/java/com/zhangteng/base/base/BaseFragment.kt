@@ -6,7 +6,7 @@ import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import com.zhangteng.utils.LoadViewHelper
+import com.zhangteng.utils.StateViewHelper
 import com.zhangteng.utils.showShortToast
 
 /**
@@ -22,7 +22,7 @@ abstract class BaseFragment : Fragment() {
 
     private val handler = Handler(Looper.getMainLooper())
 
-    protected var mLoadViewHelper: LoadViewHelper? = null
+    protected var mStateViewHelper: StateViewHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,43 +74,76 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected open fun showProgressDialog() {
-        if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
         }
-        mLoadViewHelper?.showProgressDialog(context, "")
+        mStateViewHelper?.showProgressDialog(context, "")
     }
 
     protected open fun showProgressDialog(mLoadingText: String?) {
-        if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
         }
-        mLoadViewHelper?.showProgressDialog(context, mLoadingText)
+        mStateViewHelper?.showProgressDialog(context, mLoadingText)
     }
 
     protected open fun dismissProgressDialog() {
-        mLoadViewHelper?.dismissProgressDialog()
+        mStateViewHelper?.dismissProgressDialog()
     }
 
     protected open fun showNoNetView(currentView: View?) {
-        if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
         }
-        mLoadViewHelper?.showNoNetView(currentView)
+        mStateViewHelper?.showNoNetView(currentView)
+    }
+
+    protected open fun showTimeOutView(currentView: View?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
+        }
+        mStateViewHelper?.showTimeOutView(currentView)
+    }
+
+    protected open fun showEmptyView(currentView: View?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
+        }
+        mStateViewHelper?.showEmptyView(currentView)
+    }
+
+    protected open fun showErrorView(currentView: View?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
+        }
+        mStateViewHelper?.showErrorView(currentView)
+    }
+
+    protected open fun showNoLoginView(currentView: View?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
+        }
+        mStateViewHelper?.showNoLoginView(currentView)
     }
 
     protected open fun hiddenNoNetView(currentView: View?) {
-        mLoadViewHelper?.hiddenNoNetView(currentView)
+        mStateViewHelper?.hiddenNoNetView(currentView)
     }
 
-    protected open fun showNoContentView(currentView: View?) {
-        if (mLoadViewHelper == null) {
-            mLoadViewHelper = LoadViewHelper()
-        }
-        mLoadViewHelper?.showEmptyView(currentView)
+    protected open fun hiddenTimeOutView(currentView: View?) {
+        mStateViewHelper?.hiddenTimeOutView(currentView)
     }
 
-    protected open fun hiddenNoContentView(currentView: View?) {
-        mLoadViewHelper?.hiddenEmptyView(currentView)
+    protected open fun hiddenEmptyView(currentView: View?) {
+        mStateViewHelper?.hiddenEmptyView(currentView)
+    }
+
+    protected open fun hiddenErrorView(currentView: View?) {
+        mStateViewHelper?.hiddenErrorView(currentView)
+    }
+
+    protected open fun hiddenNoLoginView(currentView: View?) {
+        mStateViewHelper?.hiddenNoLoginView(currentView)
     }
 
     protected open fun showToast(message: String?) {

@@ -16,7 +16,7 @@ import android.widget.TextView
  * 将某个视图替换为正在加载、无网络、超时、无数据、数据错误、未登录等视图(保证每一个页面一个实例，不可单例使用会造成内存泄露或闪退)
  * Created by Swing on 2018/10/8.
  */
-open class LoadViewHelper {
+open class StateViewHelper {
     protected open val contentViews: HashMap<View, NoDataView> = HashMap()
     protected open var mProgressDialog: Dialog? = null
     protected open var mLoadTextView: TextView? = null

@@ -9,7 +9,7 @@ import android.view.View
  * author: Swing
  * date: 2022/1/11
  */
-open class GifLoadViewHelper : LoadViewHelper() {
+open class GifStateViewHelper : StateViewHelper() {
 
     override fun showProgressDialog(mContext: Context?, mLoadingText: String?) {
         showProgressDialog(mContext, R.drawable.loading_gif1, mLoadingText)

@@ -49,7 +49,7 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
     protected fun initRecyclerView() {
         mAdapter = createAdapter()
         //设置空布局
-        showNoContentView(mRecyclerView)
+        showEmptyView(mRecyclerView)
         // 设置上拉刷新、下拉加载更多
         mRefreshLayout?.setOnRefreshListener { _: RefreshLayout? -> refreshData(true) }
         mRefreshLayout?.setOnLoadMoreListener { _: RefreshLayout? ->
@@ -141,9 +141,9 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
             mList.addAll(data)
         }
         if (mList.isEmpty()) {
-            showNoContentView(mRecyclerView)
+            showEmptyView(mRecyclerView)
         } else {
-            hiddenNoContentView(mRecyclerView)
+            hiddenEmptyView(mRecyclerView)
         }
         if (mList.size >= mTotal || data?.isEmpty() == true) {
             mRefreshLayout?.finishLoadMoreWithNoMoreData()
@@ -160,6 +160,6 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
     protected fun showDataFailure() {
         mRefreshLayout?.finishRefresh()
         mRefreshLayout?.finishLoadMoreWithNoMoreData()
-        showNoContentView(mRecyclerView)
+        showEmptyView(mRecyclerView)
     }
 }

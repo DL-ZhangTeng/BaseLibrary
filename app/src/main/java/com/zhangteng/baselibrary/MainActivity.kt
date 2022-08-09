@@ -48,13 +48,13 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     override fun showLoadingView() {
         showProgressDialog()
 //        showNoNetView(tv_TextView)
-//        showNoContentView(tv_TextView)
+//        showEmptyView(tv_TextView)
     }
 
     override fun dismissLoadingView() {
         dismissProgressDialog()
 //        hiddenNoNetView(tv_TextView)
-//        hiddenNoContentView(tv_TextView)
+//        hiddenEmptyView(tv_TextView)
 
     }
 
@@ -63,10 +63,10 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     }
 
     override fun showProgressDialog() {
-        if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+        if (mStateViewHelper == null) {
+            mStateViewHelper = com.zhangteng.utils.StateViewHelper()
         }
-        mLoadViewHelper?.showProgressDialog(this, R.drawable.loading5, "")
+        mStateViewHelper?.showProgressDialog(this, R.drawable.loading5, "")
     }
 
     @TimeLog

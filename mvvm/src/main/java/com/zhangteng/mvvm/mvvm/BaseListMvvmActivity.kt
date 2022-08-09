@@ -69,13 +69,13 @@ abstract class BaseListMvvmActivity<VM : BaseViewModel, D, A : BaseAdapter<D, Ba
             (mViewModel as BaseNoNetworkViewModel).networkChange.showNoDataView.observe(
                 this
             ) {
-                showNoContentView(it)
+                showEmptyView(it)
             }
             //关闭
             (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoDataView.observe(
                 this
             ) {
-                hiddenNoContentView(it)
+                hiddenEmptyView(it)
             }
         }
         if (mViewModel is BaseRefreshViewModel) {
