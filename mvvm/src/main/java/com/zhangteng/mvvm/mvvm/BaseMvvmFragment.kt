@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.zhangteng.base.base.BaseFragment
 import com.zhangteng.mvvm.base.BaseLoadingViewModel
-import com.zhangteng.mvvm.base.BaseNoNetworkViewModel
+import com.zhangteng.mvvm.base.BaseStateViewModel
 import com.zhangteng.mvvm.base.BaseRefreshViewModel
 import com.zhangteng.mvvm.base.BaseViewModel
 import com.zhangteng.mvvm.manager.NetState
@@ -71,34 +71,70 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
                 dismissProgressDialog()
             }
         }
-        if (mViewModel is BaseNoNetworkViewModel) {
+        if (mViewModel is BaseStateViewModel) {
             //显示
-            (mViewModel as BaseNoNetworkViewModel).networkChange.showNoNetwork.observe(
+            (mViewModel as BaseStateViewModel).stateChange.showNoNetView.observe(
                 this
             ) {
                 showNoNetView(it)
             }
             //关闭
-            (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoNetwork.observe(
+            (mViewModel as BaseStateViewModel).stateChange.hideNoNetView.observe(
                 this
             ) {
                 hiddenNoNetView(it)
             }
             //显示
-            (mViewModel as BaseNoNetworkViewModel).networkChange.showNoDataView.observe(
+            (mViewModel as BaseStateViewModel).stateChange.showTimeOutView.observe(
+                this
+            ) {
+                showTimeOutView(it)
+            }
+            //关闭
+            (mViewModel as BaseStateViewModel).stateChange.hideTimeOutView.observe(
+                this
+            ) {
+                hiddenTimeOutView(it)
+            }
+            //显示
+            (mViewModel as BaseStateViewModel).stateChange.showEmptyView.observe(
                 this
             ) {
                 showEmptyView(it)
             }
             //关闭
-            (mViewModel as BaseNoNetworkViewModel).networkChange.hideNoDataView.observe(
+            (mViewModel as BaseStateViewModel).stateChange.hideEmptyView.observe(
                 this
             ) {
                 hiddenEmptyView(it)
             }
+            //显示
+            (mViewModel as BaseStateViewModel).stateChange.showErrorView.observe(
+                this
+            ) {
+                showErrorView(it)
+            }
+            //关闭
+            (mViewModel as BaseStateViewModel).stateChange.hideErrorView.observe(
+                this
+            ) {
+                hiddenErrorView(it)
+            }
+            //显示
+            (mViewModel as BaseStateViewModel).stateChange.showNoLoginView.observe(
+                this
+            ) {
+                showNoLoginView(it)
+            }
+            //关闭
+            (mViewModel as BaseStateViewModel).stateChange.hideNoLoginView.observe(
+                this
+            ) {
+                hiddenNoLoginView(it)
+            }
         }
         if (mViewModel is BaseRefreshViewModel) {
-            (mViewModel as BaseRefreshViewModel).listChange.finishRefreshOrLoadMore.observe(
+            (mViewModel as BaseRefreshViewModel).refreshChange.finishRefreshOrLoadMore.observe(
                 this
             ) {
                 finishRefreshOrLoadMore()

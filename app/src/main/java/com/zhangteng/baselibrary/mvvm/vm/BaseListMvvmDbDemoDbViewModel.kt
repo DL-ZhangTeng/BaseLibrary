@@ -63,7 +63,7 @@ class BaseListMvvmDbDemoDbViewModel : BaseLoadingViewModel() {
             }
                 .flatMapConcat {
                     return@flatMapConcat if (it.isSuccess()) {
-                        navData.value = it as MutableList<NavTypeBean>
+                        navData.value = it.data as MutableList<NavTypeBean>
 
                         launchFlow {
                             HttpUtils.getInstance()

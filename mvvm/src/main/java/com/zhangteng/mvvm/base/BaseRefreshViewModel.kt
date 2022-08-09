@@ -5,9 +5,9 @@ import com.zhangteng.mvvm.livedata.SingleLiveData
 /**
  * ViewModel的带刷新基类
  */
-open class BaseRefreshViewModel : BaseNoNetworkViewModel() {
+open class BaseRefreshViewModel : BaseStateViewModel() {
 
-    val listChange: UiRefreshChange by lazy { UiRefreshChange() }
+    val refreshChange: UiRefreshChange by lazy { UiRefreshChange() }
 
     inner class UiRefreshChange {
         val finishRefreshOrLoadMore by lazy { SingleLiveData<Boolean>() }
