@@ -1,8 +1,8 @@
 package com.zhangteng.mvp.utils
 
 import com.zhangteng.mvp.base.BaseLoadingView
-import com.zhangteng.mvp.base.BaseNoNetworkView
 import com.zhangteng.mvp.base.BaseRefreshView
+import com.zhangteng.mvp.base.BaseStateView
 import com.zhangteng.mvp.base.IView
 
 /**
@@ -30,7 +30,7 @@ abstract class BaseHttpEntity<T> {
      * 无网络
      */
     open fun onNoNetworkError() {
-        if (iView != null && iView is BaseNoNetworkView<*>) (iView as BaseNoNetworkView<*>?)?.showNoNetwork()
+        if (iView != null && iView is BaseStateView<*>) (iView as BaseStateView<*>?)?.showNoNetView()
     }
 
     /**
@@ -47,7 +47,7 @@ abstract class BaseHttpEntity<T> {
      * 请求完成
      */
     open fun onFinish() {
-        if (iView != null && iView is BaseNoNetworkView<*>) (iView as BaseNoNetworkView<*>?)?.hideNoNetwork()
+        if (iView != null && iView is BaseStateView<*>) (iView as BaseStateView<*>?)?.hideNoNetView()
         if (iView != null && iView is BaseRefreshView<*>) (iView as BaseRefreshView<*>?)?.finishRefreshOrLoadMore()
         if (iView != null && iView is BaseLoadingView<*>) (iView as BaseLoadingView<*>?)?.dismissLoadingView()
     }
