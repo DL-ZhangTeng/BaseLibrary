@@ -8,7 +8,21 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel的基类
+ * ViewModel的基类（建议定义*UiState保存页面状态）
+ *
+ * data class NewsUiState(
+ *  val isSignedIn: Boolean = false,
+ *  val isPremium: Boolean = false,
+ *  val newsItems: List<NewsItemUiState> = listOf(),
+ *  val userMessages: List<Message> = listOf()
+ * )
+ *
+ * data class NewsItemUiState(
+ *  val title: String,
+ *  val body: String,
+ *  val bookmarked: Boolean = false,
+ *  ...
+ * )
  */
 open class BaseViewModel : ViewModel() {
 
