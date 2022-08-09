@@ -22,7 +22,7 @@ abstract class BaseFragment : Fragment() {
 
     private val handler = Handler(Looper.getMainLooper())
 
-    protected var mLoadViewHelper: com.zhangteng.utils.LoadViewHelper? = null
+    protected var mLoadViewHelper: LoadViewHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,14 +75,14 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun showProgressDialog() {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+            mLoadViewHelper = LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(context, "")
     }
 
     protected open fun showProgressDialog(mLoadingText: String?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+            mLoadViewHelper = LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(context, mLoadingText)
     }
@@ -93,7 +93,7 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun showNoNetView(currentView: View?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+            mLoadViewHelper = LoadViewHelper()
         }
         mLoadViewHelper?.showNoNetView(currentView)
     }
@@ -104,13 +104,13 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun showNoContentView(currentView: View?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+            mLoadViewHelper = LoadViewHelper()
         }
-        mLoadViewHelper?.showNoContentView(currentView)
+        mLoadViewHelper?.showEmptyView(currentView)
     }
 
     protected open fun hiddenNoContentView(currentView: View?) {
-        mLoadViewHelper?.hiddenNoContentView(currentView)
+        mLoadViewHelper?.hiddenEmptyView(currentView)
     }
 
     protected open fun showToast(message: String?) {

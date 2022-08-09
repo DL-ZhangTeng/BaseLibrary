@@ -13,7 +13,7 @@ import com.zhangteng.utils.showShortToast
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-    protected var mLoadViewHelper: com.zhangteng.utils.LoadViewHelper? = null
+    protected var mLoadViewHelper: LoadViewHelper? = null
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
@@ -38,14 +38,14 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected open fun showProgressDialog() {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+            mLoadViewHelper = LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(this, "")
     }
 
     protected open fun showProgressDialog(mLoadingText: String?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+            mLoadViewHelper = LoadViewHelper()
         }
         mLoadViewHelper?.showProgressDialog(this, mLoadingText)
     }
@@ -56,7 +56,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected open fun showNoNetView(currentView: View?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+            mLoadViewHelper = LoadViewHelper()
         }
         mLoadViewHelper?.showNoNetView(currentView)
     }
@@ -67,13 +67,13 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected open fun showNoContentView(currentView: View?) {
         if (mLoadViewHelper == null) {
-            mLoadViewHelper = com.zhangteng.utils.LoadViewHelper()
+            mLoadViewHelper = LoadViewHelper()
         }
-        mLoadViewHelper?.showNoContentView(currentView)
+        mLoadViewHelper?.showEmptyView(currentView)
     }
 
     protected open fun hiddenNoContentView(currentView: View?) {
-        mLoadViewHelper?.hiddenNoContentView(currentView)
+        mLoadViewHelper?.hiddenEmptyView(currentView)
     }
 
     protected open fun showToast(message: String?) {

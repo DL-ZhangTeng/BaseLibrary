@@ -48,16 +48,19 @@ open class NoDataView : LinearLayout {
         )
         val indexCount = a.indexCount
         for (i in 0 until indexCount) {
-            val attr = a.getIndex(i)
-            if (attr == R.styleable.NoDataView_nodatatext) {
-                val str = a.getString(attr)
-                setNoDataText(str)
-            } else if (attr == R.styleable.NoDataView_nodataimage) {
-                val id = a.getResourceId(attr, R.mipmap.wangluowu)
-                setNoDataImageResource(id)
-            } else if (attr == R.styleable.NoDataView_nodatavisibility) {
-                val visibility = a.getInt(attr, VISIBLE)
-                setNoDataVisibility(visibility)
+            when (val attr = a.getIndex(i)) {
+                R.styleable.NoDataView_nodatatext -> {
+                    val str = a.getString(attr)
+                    setNoDataText(str)
+                }
+                R.styleable.NoDataView_nodataimage -> {
+                    val id = a.getResourceId(attr, R.mipmap.icon_default)
+                    setNoDataImageResource(id)
+                }
+                R.styleable.NoDataView_nodatavisibility -> {
+                    val visibility = a.getInt(attr, VISIBLE)
+                    setNoDataVisibility(visibility)
+                }
             }
         }
         a.recycle()
@@ -100,11 +103,11 @@ open class NoDataView : LinearLayout {
     }
 
     open fun setNoDataAgainText(noDataAgainText: String?) {
-        btnNoData?.setText(noDataAgainText)
+        btnNoData?.text = noDataAgainText
     }
 
-    open fun setNoDataAgainVisivility(visivility: Int) {
-        btnNoData?.setVisibility(visivility)
+    open fun setNoDataAgainVisibility(visibility: Int) {
+        btnNoData?.visibility = visibility
     }
 
     open fun setAgainRequestListener(againRequestListener: AgainRequestListener?) {

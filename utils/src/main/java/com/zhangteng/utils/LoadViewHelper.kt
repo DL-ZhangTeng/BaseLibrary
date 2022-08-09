@@ -13,7 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 /**
- * 将某个视图替换为正在加载、无数据、加载失败等视图(保证每一个页面一个实例，不可单例使用会造成内存泄露或闪退)
+ * 将某个视图替换为正在加载、无网络、超时、无数据、数据错误、未登录等视图(保证每一个页面一个实例，不可单例使用会造成内存泄露或闪退)
  * Created by Swing on 2018/10/8.
  */
 open class LoadViewHelper {
@@ -37,7 +37,16 @@ open class LoadViewHelper {
      * @param currentView 需要替换的view
      */
     open fun showNoNetView(currentView: View?) {
-        showNoDataView(currentView, R.mipmap.wangluowu, "无网络", "点击重试")
+        showStateView(currentView, R.mipmap.icon_default_nonet, "无网络", "点击重试")
+    }
+
+    /**
+     * 超时view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun showTimeOutView(currentView: View?) {
+        showStateView(currentView, R.mipmap.icon_default_timeout, "请求超时", "点击重试")
     }
 
     /**
@@ -45,8 +54,26 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    open fun showNoContentView(currentView: View?) {
-        showNoDataView(currentView, R.mipmap.neirongwu, "暂无内容~", "")
+    open fun showEmptyView(currentView: View?) {
+        showStateView(currentView, R.mipmap.icon_default_empty, "暂无内容~")
+    }
+
+    /**
+     * 数据错误view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun showErrorView(currentView: View?) {
+        showStateView(currentView, R.mipmap.icon_default_unknown, "数据错误")
+    }
+
+    /**
+     * 未登录view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun showNoLoginView(currentView: View?) {
+        showStateView(currentView, R.mipmap.icon_default_nologin, "未登录", "去登录")
     }
 
     /**
@@ -54,11 +81,11 @@ open class LoadViewHelper {
      *
      * @param currentView 需要替换的view
      */
-    open fun showNoDataView(
+    open fun showStateView(
         currentView: View?,
-        drawableRes: Int,
-        noDataText: String?,
-        noDataAgainText: String?
+        drawableRes: Int = R.mipmap.icon_default,
+        noDataText: String? = "",
+        noDataAgainText: String? = ""
     ) {
         if (currentView == null) return
         if (contentViews[currentView] == null) {
@@ -68,7 +95,7 @@ open class LoadViewHelper {
         mNoDataView.setNoDataImageResource(drawableRes)
         mNoDataView.setNoDataText(noDataText)
         if (null == noDataAgainText || "" == noDataAgainText) {
-            mNoDataView.setNoDataAgainVisivility(View.GONE)
+            mNoDataView.setNoDataAgainVisibility(View.GONE)
         } else {
             mNoDataView.setNoDataAgainText(noDataAgainText)
         }
@@ -87,6 +114,70 @@ open class LoadViewHelper {
             viewGroup.addView(mNoDataView, currentView.layoutParams)
         }
         mNoDataView.setNoDataViewShow(true)
+    }
+
+    /**
+     * 隐藏无网络view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun hiddenNoNetView(currentView: View?) {
+        hiddenStateView(currentView)
+    }
+
+    /**
+     * 隐藏超时view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun hiddenTimeOutView(currentView: View?) {
+        hiddenStateView(currentView)
+    }
+
+    /**
+     * 隐藏隐藏无内容view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun hiddenEmptyView(currentView: View?) {
+        hiddenStateView(currentView)
+    }
+
+    /**
+     * 隐藏数据错误view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun hiddenErrorView(currentView: View?) {
+        hiddenStateView(currentView)
+    }
+
+    /**
+     * 隐藏未登录view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun hiddenNoLoginView(currentView: View?) {
+        hiddenStateView(currentView)
+    }
+
+    /**
+     * 隐藏无数据view
+     *
+     * @param currentView 需要替换的view
+     */
+    open fun hiddenStateView(currentView: View?) {
+        val mNoDataView = contentViews[currentView]
+        if (mNoDataView?.isNoDataViewShow() == false) {
+            return
+        }
+        val viewGroup = mNoDataView?.parent
+        if (viewGroup != null) {
+            viewGroup as ViewGroup
+            viewGroup.removeView(mNoDataView)
+            viewGroup.addView(currentView)
+        }
+        mNoDataView?.setNoDataViewShow(false)
     }
 
     /**
@@ -213,43 +304,6 @@ open class LoadViewHelper {
             mLoadImageView?.clearAnimation()
             mProgressDialog?.dismiss()
         }
-    }
-
-    /**
-     * 隐藏无网络view
-     *
-     * @param currentView 需要替换的view
-     */
-    open fun hiddenNoNetView(currentView: View?) {
-        hiddenNoDataView(currentView)
-    }
-
-    /**
-     * 隐藏无内容view
-     *
-     * @param currentView 需要替换的view
-     */
-    open fun hiddenNoContentView(currentView: View?) {
-        hiddenNoDataView(currentView)
-    }
-
-    /**
-     * 隐藏无数据view
-     *
-     * @param currentView 需要替换的view
-     */
-    open fun hiddenNoDataView(currentView: View?) {
-        val mNoDataView = contentViews[currentView]
-        if (mNoDataView?.isNoDataViewShow() == false) {
-            return
-        }
-        val viewGroup = mNoDataView?.parent
-        if (viewGroup != null) {
-            viewGroup as ViewGroup
-            viewGroup.removeView(mNoDataView)
-            viewGroup.addView(currentView)
-        }
-        mNoDataView?.setNoDataViewShow(false)
     }
 
     fun findActivity(context: Context?): Activity? {
