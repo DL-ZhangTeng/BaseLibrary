@@ -127,23 +127,23 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected open fun hiddenNoNetView(currentView: View?) {
-        mStateViewHelper?.hiddenNoNetView(currentView)
+        mStateViewHelper?.showContentView(currentView)
     }
 
     protected open fun hiddenTimeOutView(currentView: View?) {
-        mStateViewHelper?.hiddenTimeOutView(currentView)
+        mStateViewHelper?.showContentView(currentView)
     }
 
     protected open fun hiddenEmptyView(currentView: View?) {
-        mStateViewHelper?.hiddenEmptyView(currentView)
+        mStateViewHelper?.showContentView(currentView)
     }
 
     protected open fun hiddenErrorView(currentView: View?) {
-        mStateViewHelper?.hiddenErrorView(currentView)
+        mStateViewHelper?.showContentView(currentView)
     }
 
     protected open fun hiddenNoLoginView(currentView: View?) {
-        mStateViewHelper?.hiddenNoLoginView(currentView)
+        mStateViewHelper?.showContentView(currentView)
     }
 
     protected open fun showToast(message: String?) {

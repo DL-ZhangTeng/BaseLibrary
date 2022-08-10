@@ -34,64 +34,64 @@ open class StateViewHelper {
     /**
      * 无网络view
      *
-     * @param currentView 需要替换的view
+     * @param contentView 需要替换的view
      */
-    open fun showNoNetView(currentView: View?) {
-        showStateView(currentView, R.mipmap.icon_default_nonet, "无网络", "点击重试")
+    open fun showNoNetView(contentView: View?) {
+        showStateView(contentView, R.mipmap.icon_default_nonet, "无网络", "点击重试")
     }
 
     /**
      * 超时view
      *
-     * @param currentView 需要替换的view
+     * @param contentView 需要替换的view
      */
-    open fun showTimeOutView(currentView: View?) {
-        showStateView(currentView, R.mipmap.icon_default_timeout, "请求超时", "点击重试")
+    open fun showTimeOutView(contentView: View?) {
+        showStateView(contentView, R.mipmap.icon_default_timeout, "请求超时", "点击重试")
     }
 
     /**
      * 无内容view
      *
-     * @param currentView 需要替换的view
+     * @param contentView 需要替换的view
      */
-    open fun showEmptyView(currentView: View?) {
-        showStateView(currentView, R.mipmap.icon_default_empty, "暂无内容~")
+    open fun showEmptyView(contentView: View?) {
+        showStateView(contentView, R.mipmap.icon_default_empty, "暂无内容~")
     }
 
     /**
      * 数据错误view
      *
-     * @param currentView 需要替换的view
+     * @param contentView 需要替换的view
      */
-    open fun showErrorView(currentView: View?) {
-        showStateView(currentView, R.mipmap.icon_default_unknown, "数据错误")
+    open fun showErrorView(contentView: View?) {
+        showStateView(contentView, R.mipmap.icon_default_unknown, "数据错误")
     }
 
     /**
      * 未登录view
      *
-     * @param currentView 需要替换的view
+     * @param contentView 需要替换的view
      */
-    open fun showNoLoginView(currentView: View?) {
-        showStateView(currentView, R.mipmap.icon_default_nologin, "未登录", "去登录")
+    open fun showNoLoginView(contentView: View?) {
+        showStateView(contentView, R.mipmap.icon_default_nologin, "未登录", "去登录")
     }
 
     /**
      * 显示无数据view
      *
-     * @param currentView 需要替换的view
+     * @param contentView 需要替换的view
      */
     open fun showStateView(
-        currentView: View?,
+        contentView: View?,
         drawableRes: Int = R.mipmap.icon_default,
         stateText: String? = "",
         stateAgainText: String? = ""
     ) {
-        if (currentView == null) return
-        if (contentViews[currentView] == null) {
-            contentViews[currentView] = StateView(currentView.context)
+        if (contentView == null) return
+        if (contentViews[contentView] == null) {
+            contentViews[contentView] = StateView(contentView.context)
         }
-        val mStateView = contentViews[currentView] ?: return
+        val mStateView = contentViews[contentView] ?: return
         mStateView.setStateImageResource(drawableRes)
         mStateView.setStateText(stateText)
         if (null == stateAgainText || "" == stateAgainText) {
@@ -107,67 +107,22 @@ open class StateViewHelper {
         if (mStateView.isStateViewShow()) {
             return
         }
-        val viewGroup = currentView.parent
+        val viewGroup = contentView.parent
         if (viewGroup != null) {
             viewGroup as ViewGroup
-            viewGroup.removeView(currentView)
-            viewGroup.addView(mStateView, currentView.layoutParams)
+            viewGroup.removeView(contentView)
+            viewGroup.addView(mStateView, contentView.layoutParams)
         }
         mStateView.setStateViewShow(true)
     }
 
     /**
-     * 隐藏无网络view
+     * 显示数据view
      *
-     * @param currentView 需要替换的view
+     * @param contentView 需要替换的view
      */
-    open fun hiddenNoNetView(currentView: View?) {
-        hiddenStateView(currentView)
-    }
-
-    /**
-     * 隐藏超时view
-     *
-     * @param currentView 需要替换的view
-     */
-    open fun hiddenTimeOutView(currentView: View?) {
-        hiddenStateView(currentView)
-    }
-
-    /**
-     * 隐藏隐藏无内容view
-     *
-     * @param currentView 需要替换的view
-     */
-    open fun hiddenEmptyView(currentView: View?) {
-        hiddenStateView(currentView)
-    }
-
-    /**
-     * 隐藏数据错误view
-     *
-     * @param currentView 需要替换的view
-     */
-    open fun hiddenErrorView(currentView: View?) {
-        hiddenStateView(currentView)
-    }
-
-    /**
-     * 隐藏未登录view
-     *
-     * @param currentView 需要替换的view
-     */
-    open fun hiddenNoLoginView(currentView: View?) {
-        hiddenStateView(currentView)
-    }
-
-    /**
-     * 隐藏无数据view
-     *
-     * @param currentView 需要替换的view
-     */
-    open fun hiddenStateView(currentView: View?) {
-        val mStateView = contentViews[currentView]
+    open fun showContentView(contentView: View?) {
+        val mStateView = contentViews[contentView]
         if (mStateView?.isStateViewShow() == false) {
             return
         }
@@ -175,7 +130,7 @@ open class StateViewHelper {
         if (viewGroup != null) {
             viewGroup as ViewGroup
             viewGroup.removeView(mStateView)
-            viewGroup.addView(currentView)
+            viewGroup.addView(contentView)
         }
         mStateView?.setStateViewShow(false)
     }
