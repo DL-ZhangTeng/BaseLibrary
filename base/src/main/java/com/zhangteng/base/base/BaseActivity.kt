@@ -40,14 +40,14 @@ abstract class BaseActivity : AppCompatActivity() {
         if (mStateViewHelper == null) {
             mStateViewHelper = StateViewHelper()
         }
-        mStateViewHelper?.showProgressDialog(this, "")
+        mStateViewHelper?.showProgressDialog(this, mLoadingText = "")
     }
 
     protected open fun showProgressDialog(mLoadingText: String?) {
         if (mStateViewHelper == null) {
             mStateViewHelper = StateViewHelper()
         }
-        mStateViewHelper?.showProgressDialog(this, mLoadingText)
+        mStateViewHelper?.showProgressDialog(this, mLoadingText = mLoadingText)
     }
 
     protected open fun dismissProgressDialog() {

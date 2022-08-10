@@ -184,47 +184,6 @@ open class StateViewHelper {
      * 显示dialog
      *
      * @param mContext     dialog上下文
-     * @param mLoadingText dialog文本
-     */
-    @JvmOverloads
-    open fun showProgressDialog(mContext: Context?, mLoadingText: String? = "加载中...") {
-        if (mContext == null) {
-            return
-        }
-        showProgressDialog(
-            mContext,
-            R.drawable.loading1,
-            mLoadingText
-        )
-    }
-
-    /**
-     * 显示dialog
-     *
-     * @param mContext     dialog上下文
-     * @param mLoadingImage dialog动画
-     * @param mLoadingText dialog文本
-     */
-    open fun showProgressDialog(
-        mContext: Context?,
-        mLoadingImage: Int,
-        mLoadingText: String?
-    ) {
-        if (mContext == null) {
-            return
-        }
-        showProgressDialog(
-            mContext,
-            mLoadingImage,
-            mLoadingText,
-            R.layout.layout_dialog_progress
-        )
-    }
-
-    /**
-     * 显示dialog
-     *
-     * @param mContext     dialog上下文
      * @param mLoadingImage dialog动画
      * @param mLoadingText dialog文本
      * @param layoutRes    dialog布局文件
@@ -232,9 +191,9 @@ open class StateViewHelper {
     @Synchronized
     open fun showProgressDialog(
         mContext: Context?,
-        mLoadingImage: Int,
-        mLoadingText: String?,
-        layoutRes: Int
+        mLoadingImage: Int = R.drawable.loading1,
+        mLoadingText: String? = "加载中...",
+        layoutRes: Int = R.layout.layout_dialog_progress
     ) {
         if (mContext == null) {
             return

@@ -11,11 +11,11 @@ import android.view.View
  */
 open class GifStateViewHelper : StateViewHelper() {
 
-    override fun showProgressDialog(mContext: Context?, mLoadingText: String?) {
-        showProgressDialog(mContext, R.drawable.loading_gif1, mLoadingText)
-    }
-
-    override fun showProgressDialog(mContext: Context?, mLoadingImage: Int, mLoadingText: String?) {
+    open fun showProgressDialog(
+        mContext: Context?,
+        mLoadingImage: Int = R.drawable.loading_gif1,
+        mLoadingText: String? = ""
+    ) {
         showProgressDialog(
             mContext,
             mLoadingImage,

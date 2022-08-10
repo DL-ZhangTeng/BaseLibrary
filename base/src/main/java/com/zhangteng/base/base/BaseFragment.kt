@@ -77,14 +77,14 @@ abstract class BaseFragment : Fragment() {
         if (mStateViewHelper == null) {
             mStateViewHelper = StateViewHelper()
         }
-        mStateViewHelper?.showProgressDialog(context, "")
+        mStateViewHelper?.showProgressDialog(context, mLoadingText = "")
     }
 
     protected open fun showProgressDialog(mLoadingText: String?) {
         if (mStateViewHelper == null) {
             mStateViewHelper = StateViewHelper()
         }
-        mStateViewHelper?.showProgressDialog(context, mLoadingText)
+        mStateViewHelper?.showProgressDialog(context, mLoadingText = mLoadingText)
     }
 
     protected open fun dismissProgressDialog() {
