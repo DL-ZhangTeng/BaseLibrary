@@ -6,13 +6,9 @@ package com.zhangteng.mvp.base
  */
 interface BaseStateView<T> : BaseLoadingView<T?> {
     fun showNoNetView()
-    fun hideNoNetView()
     fun showTimeOutView()
-    fun hideTimeOutView()
     fun showEmptyView()
-    fun hideEmptyView()
     fun showErrorView()
-    fun hideErrorView()
     fun showNoLoginView()
-    fun hideNoLoginView()
+    fun showContentView()
 }

@@ -53,65 +53,35 @@ abstract class BaseListMvvmActivity<VM : BaseViewModel, D, A : BaseAdapter<D, Ba
             }
         }
         if (mViewModel is BaseStateViewModel) {
-            //显示
             (mViewModel as BaseStateViewModel).stateChange.showNoNetView.observe(
                 this
             ) {
                 showNoNetView(it)
             }
-            //关闭
-            (mViewModel as BaseStateViewModel).stateChange.hideNoNetView.observe(
-                this
-            ) {
-                hiddenNoNetView(it)
-            }
-            //显示
             (mViewModel as BaseStateViewModel).stateChange.showTimeOutView.observe(
                 this
             ) {
                 showTimeOutView(it)
             }
-            //关闭
-            (mViewModel as BaseStateViewModel).stateChange.hideTimeOutView.observe(
-                this
-            ) {
-                hiddenTimeOutView(it)
-            }
-            //显示
             (mViewModel as BaseStateViewModel).stateChange.showEmptyView.observe(
                 this
             ) {
                 showEmptyView(it)
             }
-            //关闭
-            (mViewModel as BaseStateViewModel).stateChange.hideEmptyView.observe(
-                this
-            ) {
-                hiddenEmptyView(it)
-            }
-            //显示
             (mViewModel as BaseStateViewModel).stateChange.showErrorView.observe(
                 this
             ) {
                 showErrorView(it)
             }
-            //关闭
-            (mViewModel as BaseStateViewModel).stateChange.hideErrorView.observe(
-                this
-            ) {
-                hiddenErrorView(it)
-            }
-            //显示
             (mViewModel as BaseStateViewModel).stateChange.showNoLoginView.observe(
                 this
             ) {
                 showNoLoginView(it)
             }
-            //关闭
-            (mViewModel as BaseStateViewModel).stateChange.hideNoLoginView.observe(
+            (mViewModel as BaseStateViewModel).stateChange.showContentView.observe(
                 this
             ) {
-                hiddenNoLoginView(it)
+                showContentView(it)
             }
         }
         if (mViewModel is BaseRefreshViewModel) {

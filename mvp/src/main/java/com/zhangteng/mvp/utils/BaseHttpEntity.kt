@@ -47,7 +47,7 @@ abstract class BaseHttpEntity<T> {
      * 请求完成
      */
     open fun onFinish() {
-        if (iView != null && iView is BaseStateView<*>) (iView as BaseStateView<*>?)?.hideNoNetView()
+        if (iView != null && iView is BaseStateView<*>) (iView as BaseStateView<*>?)?.showContentView()
         if (iView != null && iView is BaseRefreshView<*>) (iView as BaseRefreshView<*>?)?.finishRefreshOrLoadMore()
         if (iView != null && iView is BaseLoadingView<*>) (iView as BaseLoadingView<*>?)?.dismissLoadingView()
     }

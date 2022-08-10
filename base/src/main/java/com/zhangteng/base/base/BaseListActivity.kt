@@ -143,7 +143,7 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
         if (mList.isEmpty()) {
             showEmptyView(mRecyclerView)
         } else {
-            hiddenEmptyView(mRecyclerView)
+            showContentView(mRecyclerView)
         }
         if (mList.size >= mTotal || data?.isEmpty() == true) {
             mRefreshLayout?.finishLoadMoreWithNoMoreData()

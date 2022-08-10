@@ -73,14 +73,46 @@ abstract class BaseFragment : Fragment() {
         return 300
     }
 
-    protected open fun showProgressDialog() {
+    protected open fun showNoNetView(contentView: View?) {
         if (mStateViewHelper == null) {
             mStateViewHelper = StateViewHelper()
         }
-        mStateViewHelper?.showProgressDialog(context, mLoadingText = "")
+        mStateViewHelper?.showNoNetView(contentView)
     }
 
-    protected open fun showProgressDialog(mLoadingText: String?) {
+    protected open fun showTimeOutView(contentView: View?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
+        }
+        mStateViewHelper?.showTimeOutView(contentView)
+    }
+
+    protected open fun showEmptyView(contentView: View?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
+        }
+        mStateViewHelper?.showEmptyView(contentView)
+    }
+
+    protected open fun showErrorView(contentView: View?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
+        }
+        mStateViewHelper?.showErrorView(contentView)
+    }
+
+    protected open fun showNoLoginView(contentView: View?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper()
+        }
+        mStateViewHelper?.showNoLoginView(contentView)
+    }
+
+    protected open fun showContentView(contentView: View?) {
+        mStateViewHelper?.showContentView(contentView)
+    }
+
+    protected open fun showProgressDialog(mLoadingText: String? = "") {
         if (mStateViewHelper == null) {
             mStateViewHelper = StateViewHelper()
         }
@@ -89,61 +121,6 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun dismissProgressDialog() {
         mStateViewHelper?.dismissProgressDialog()
-    }
-
-    protected open fun showNoNetView(currentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper()
-        }
-        mStateViewHelper?.showNoNetView(currentView)
-    }
-
-    protected open fun showTimeOutView(currentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper()
-        }
-        mStateViewHelper?.showTimeOutView(currentView)
-    }
-
-    protected open fun showEmptyView(currentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper()
-        }
-        mStateViewHelper?.showEmptyView(currentView)
-    }
-
-    protected open fun showErrorView(currentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper()
-        }
-        mStateViewHelper?.showErrorView(currentView)
-    }
-
-    protected open fun showNoLoginView(currentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper()
-        }
-        mStateViewHelper?.showNoLoginView(currentView)
-    }
-
-    protected open fun hiddenNoNetView(currentView: View?) {
-        mStateViewHelper?.showContentView(currentView)
-    }
-
-    protected open fun hiddenTimeOutView(currentView: View?) {
-        mStateViewHelper?.showContentView(currentView)
-    }
-
-    protected open fun hiddenEmptyView(currentView: View?) {
-        mStateViewHelper?.showContentView(currentView)
-    }
-
-    protected open fun hiddenErrorView(currentView: View?) {
-        mStateViewHelper?.showContentView(currentView)
-    }
-
-    protected open fun hiddenNoLoginView(currentView: View?) {
-        mStateViewHelper?.showContentView(currentView)
     }
 
     protected open fun showToast(message: String?) {
