@@ -37,7 +37,7 @@ abstract class BaseDialogFragment : DialogFragment() {
                 }
                 cancelRequestListener = object : StateViewHelper.CancelRequestListener {
                     override fun cancel(dialog: DialogInterface) {
-                        cancelByStateViewHelper(dialog)
+                        cancelRequestByStateViewHelper(dialog)
                     }
                 }
             }
@@ -55,7 +55,7 @@ abstract class BaseDialogFragment : DialogFragment() {
                 }
                 cancelRequestListener = object : StateViewHelper.CancelRequestListener {
                     override fun cancel(dialog: DialogInterface) {
-                        cancelByStateViewHelper(dialog)
+                        cancelRequestByStateViewHelper(dialog)
                     }
                 }
             }
@@ -73,7 +73,7 @@ abstract class BaseDialogFragment : DialogFragment() {
                 }
                 cancelRequestListener = object : StateViewHelper.CancelRequestListener {
                     override fun cancel(dialog: DialogInterface) {
-                        cancelByStateViewHelper(dialog)
+                        cancelRequestByStateViewHelper(dialog)
                     }
                 }
             }
@@ -91,7 +91,7 @@ abstract class BaseDialogFragment : DialogFragment() {
                 }
                 cancelRequestListener = object : StateViewHelper.CancelRequestListener {
                     override fun cancel(dialog: DialogInterface) {
-                        cancelByStateViewHelper(dialog)
+                        cancelRequestByStateViewHelper(dialog)
                     }
                 }
             }
@@ -109,7 +109,7 @@ abstract class BaseDialogFragment : DialogFragment() {
                 }
                 cancelRequestListener = object : StateViewHelper.CancelRequestListener {
                     override fun cancel(dialog: DialogInterface) {
-                        cancelByStateViewHelper(dialog)
+                        cancelRequestByStateViewHelper(dialog)
                     }
                 }
             }
@@ -131,7 +131,7 @@ abstract class BaseDialogFragment : DialogFragment() {
                 }
                 cancelRequestListener = object : StateViewHelper.CancelRequestListener {
                     override fun cancel(dialog: DialogInterface) {
-                        cancelByStateViewHelper(dialog)
+                        cancelRequestByStateViewHelper(dialog)
                     }
                 }
             }
@@ -155,7 +155,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 加载中取消回调
      * @param dialog 加载中弹窗
      */
-    protected open fun cancelByStateViewHelper(dialog: DialogInterface) {
+    protected open fun cancelRequestByStateViewHelper(dialog: DialogInterface) {
 
     }
 

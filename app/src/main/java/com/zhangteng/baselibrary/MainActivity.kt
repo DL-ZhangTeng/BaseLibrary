@@ -115,7 +115,7 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
                 }
                 cancelRequestListener = object : StateViewHelper.CancelRequestListener {
                     override fun cancel(dialog: DialogInterface) {
-                        cancelByStateViewHelper(dialog)
+                        cancelRequestByStateViewHelper(dialog)
                     }
                 }
             }
@@ -128,8 +128,8 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
 
     }
 
-    override fun cancelByStateViewHelper(dialog: DialogInterface) {
-        super.cancelByStateViewHelper(dialog)
+    override fun cancelRequestByStateViewHelper(dialog: DialogInterface) {
+        super.cancelRequestByStateViewHelper(dialog)
 
     }
 }

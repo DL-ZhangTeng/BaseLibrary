@@ -1,6 +1,7 @@
 package com.zhangteng.base.base
 
 import android.annotation.SuppressLint
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +9,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
 import com.zhangteng.utils.dp2px
-import java.util.*
 
 /**
  * 基础懒加载列表Fragment
@@ -161,5 +161,14 @@ abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
         mRefreshLayout?.finishRefresh()
         mRefreshLayout?.finishLoadMoreWithNoMoreData()
         showEmptyView(mRecyclerView)
+    }
+
+    /**
+     * 重新请求
+     * StateView重新请求按钮被点击
+     */
+    override fun againRequestByStateViewHelper(view: View) {
+        super.againRequestByStateViewHelper(view)
+        refreshData(true)
     }
 }

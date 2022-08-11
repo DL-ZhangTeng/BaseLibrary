@@ -171,4 +171,12 @@ abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : Base
         showEmptyView(mRecyclerView)
     }
 
+    /**
+     * 重新请求
+     * StateView重新请求按钮被点击
+     */
+    override fun againRequestByStateViewHelper(view: View) {
+        super.againRequestByStateViewHelper(view)
+        refreshData(true)
+    }
 }
