@@ -13,14 +13,14 @@ open class GifStateViewHelper : StateViewHelper() {
 
     open fun showProgressDialog(
         mContext: Context?,
-        mLoadingImage: Int = R.drawable.loading_gif1,
-        mLoadingText: String? = ""
+        mLoadingImage: Int = loadingImageGif,
+        mLoadingText: String? = loadingTextGif
     ) {
         showProgressDialog(
             mContext,
             mLoadingImage,
             mLoadingText,
-            R.layout.layout_dialog_progress_gif
+            loadingLayoutGif
         )
     }
 
@@ -49,7 +49,7 @@ open class GifStateViewHelper : StateViewHelper() {
             mProgressDialog?.setCancelable(true)
             mProgressDialog?.setCanceledOnTouchOutside(false)
             mProgressDialog?.setOnDismissListener {
-                cancelRequestListener?.cancel()
+                cancelRequestListener?.cancel(it)
             }
             val activity = findActivity(mContext)
             if (activity == null || activity.isDestroyed || activity.isFinishing) {
@@ -76,5 +76,16 @@ open class GifStateViewHelper : StateViewHelper() {
         showCount++
         if (mProgressDialog?.isShowing == false)
             mProgressDialog?.show()
+    }
+
+    companion object {
+        //加载中图标
+        var loadingImageGif: Int = R.drawable.loading_gif1
+
+        //加载中文本
+        var loadingTextGif: String = ""
+
+        //加载中布局
+        var loadingLayoutGif: Int = R.layout.layout_dialog_progress_gif
     }
 }

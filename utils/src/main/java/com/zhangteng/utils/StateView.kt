@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -111,10 +112,10 @@ open class StateView : LinearLayout {
     }
 
     open fun setAgainRequestListener(againRequestListener: AgainRequestListener?) {
-        btnState?.setOnClickListener { againRequestListener?.request() }
+        btnState?.setOnClickListener { againRequestListener?.request(it) }
     }
 
     interface AgainRequestListener {
-        fun request()
+        fun request(view: View)
     }
 }

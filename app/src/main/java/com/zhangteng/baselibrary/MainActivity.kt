@@ -1,5 +1,6 @@
 package com.zhangteng.baselibrary
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -16,6 +17,7 @@ import com.zhangteng.baselibrary.ui.mvvm.MvvmActivity
 import com.zhangteng.baselibrary.ui.mvvmdb.MvvmDbActivity
 import com.zhangteng.mvp.mvp.BaseMvpActivity
 import com.zhangteng.mvp.utils.LoadingPresenterHandler
+import com.zhangteng.utils.StateViewHelper
 import com.zhangteng.utils.jumpToActivity
 import java.lang.reflect.Proxy
 
@@ -60,13 +62,6 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
 
     }
 
-    override fun showProgressDialog(mLoadingText: String?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = com.zhangteng.utils.StateViewHelper()
-        }
-        mStateViewHelper?.showProgressDialog(this, R.drawable.loading5, mLoadingText)
-    }
-
     @TimeLog
     @CheckNet
     @SingleClick
@@ -108,5 +103,33 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
     @TimeLog
     fun onClickListMvvmDb(v: View) {
         jumpToActivity<BaseListMvvmDbDemoDbActivity>()
+    }
+
+    override fun showProgressDialog(mLoadingText: String?) {
+        if (mStateViewHelper == null) {
+            mStateViewHelper = StateViewHelper().apply {
+                againRequestListener = object : StateViewHelper.AgainRequestListener {
+                    override fun request(view: View) {
+                        againRequestByStateViewHelper(view)
+                    }
+                }
+                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
+                    override fun cancel(dialog: DialogInterface) {
+                        cancelByStateViewHelper(dialog)
+                    }
+                }
+            }
+        }
+        mStateViewHelper?.showProgressDialog(this, R.drawable.loading5, mLoadingText)
+    }
+
+    override fun againRequestByStateViewHelper(view: View) {
+        super.againRequestByStateViewHelper(view)
+
+    }
+
+    override fun cancelByStateViewHelper(dialog: DialogInterface) {
+        super.cancelByStateViewHelper(dialog)
+
     }
 }

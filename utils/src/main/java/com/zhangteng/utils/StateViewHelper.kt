@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.DialogInterface
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -17,19 +18,34 @@ import android.widget.TextView
  * Created by Swing on 2018/10/8.
  */
 open class StateViewHelper {
+    /**
+     * description 状态View集合
+     */
     protected open val contentViews: HashMap<View, StateView> = HashMap()
+
+    /**
+     * description: 状态View重试回调
+     */
+    open var againRequestListener: AgainRequestListener? = null
+
+    /**
+     * description: 加载中弹窗
+     */
     protected open var mProgressDialog: Dialog? = null
     protected open var mLoadTextView: TextView? = null
     protected open var mAnimation: Animation? = null
     protected open var mLoadImageView: ImageView? = null
-    open var againRequestListener: AgainRequestListener? = null
-    open var cancelRequestListener: CancelRequestListener? = null
 
     /**
-     * @description: 解决连续进度弹窗问题
+     * description: 解决连续加载中弹窗问题
      */
     @Volatile
     protected open var showCount: Int = 0
+
+    /**
+     * description: 加载中取消回调
+     */
+    open var cancelRequestListener: CancelRequestListener? = null
 
     /**
      * 无网络view
@@ -37,7 +53,7 @@ open class StateViewHelper {
      * @param contentView 需要替换的view
      */
     open fun showNoNetView(contentView: View?) {
-        showStateView(contentView, R.mipmap.icon_default_nonet, "无网络", "点击重试")
+        showStateView(contentView, noNetIcon, noNetText, noNetAgainText)
     }
 
     /**
@@ -46,7 +62,7 @@ open class StateViewHelper {
      * @param contentView 需要替换的view
      */
     open fun showTimeOutView(contentView: View?) {
-        showStateView(contentView, R.mipmap.icon_default_timeout, "请求超时", "点击重试")
+        showStateView(contentView, timeOutIcon, timeOutText, timeOutAgainText)
     }
 
     /**
@@ -55,7 +71,7 @@ open class StateViewHelper {
      * @param contentView 需要替换的view
      */
     open fun showEmptyView(contentView: View?) {
-        showStateView(contentView, R.mipmap.icon_default_empty, "暂无内容~")
+        showStateView(contentView, emptyIcon, emptyText, emptyAgainText)
     }
 
     /**
@@ -64,7 +80,7 @@ open class StateViewHelper {
      * @param contentView 需要替换的view
      */
     open fun showErrorView(contentView: View?) {
-        showStateView(contentView, R.mipmap.icon_default_unknown, "数据错误")
+        showStateView(contentView, unknownIcon, unknownText, unknownAgainText)
     }
 
     /**
@@ -73,7 +89,7 @@ open class StateViewHelper {
      * @param contentView 需要替换的view
      */
     open fun showNoLoginView(contentView: View?) {
-        showStateView(contentView, R.mipmap.icon_default_nologin, "未登录", "去登录")
+        showStateView(contentView, noLoginIcon, noLoginText, noLoginAgainText)
     }
 
     /**
@@ -83,9 +99,9 @@ open class StateViewHelper {
      */
     open fun showStateView(
         contentView: View?,
-        drawableRes: Int = R.mipmap.icon_default,
-        stateText: String? = "",
-        stateAgainText: String? = ""
+        drawableRes: Int = defaultIcon,
+        stateText: String? = defaultText,
+        stateAgainText: String? = defaultAgainText
     ) {
         if (contentView == null) return
         if (contentViews[contentView] == null) {
@@ -100,8 +116,8 @@ open class StateViewHelper {
             mStateView.setStateAgainText(stateAgainText)
         }
         mStateView.setAgainRequestListener(object : StateView.AgainRequestListener {
-            override fun request() {
-                againRequestListener?.request()
+            override fun request(view: View) {
+                againRequestListener?.request(view)
             }
         })
         if (mStateView.isStateViewShow()) {
@@ -146,9 +162,9 @@ open class StateViewHelper {
     @Synchronized
     open fun showProgressDialog(
         mContext: Context?,
-        mLoadingImage: Int = R.drawable.loading1,
-        mLoadingText: String? = "加载中...",
-        layoutRes: Int = R.layout.layout_dialog_progress
+        mLoadingImage: Int = loadingImage,
+        mLoadingText: String? = loadingText,
+        layoutRes: Int = loadingLayout
     ) {
         if (mContext == null) {
             return
@@ -171,7 +187,7 @@ open class StateViewHelper {
             mProgressDialog?.setCancelable(true)
             mProgressDialog?.setCanceledOnTouchOutside(false)
             mProgressDialog?.setOnDismissListener {
-                cancelRequestListener?.cancel()
+                cancelRequestListener?.cancel(it)
             }
             val activity = findActivity(mContext)
             if (activity == null || activity.isDestroyed || activity.isFinishing) {
@@ -233,10 +249,45 @@ open class StateViewHelper {
     }
 
     interface CancelRequestListener {
-        fun cancel()
+        fun cancel(dialog: DialogInterface)
     }
 
     interface AgainRequestListener {
-        fun request()
+        fun request(view: View)
+    }
+
+    companion object {
+        //状态View图标
+        var defaultIcon: Int = R.mipmap.icon_default
+        var noNetIcon: Int = R.mipmap.icon_default_nonet
+        var timeOutIcon: Int = R.mipmap.icon_default_timeout
+        var emptyIcon: Int = R.mipmap.icon_default_empty
+        var unknownIcon: Int = R.mipmap.icon_default_unknown
+        var noLoginIcon: Int = R.mipmap.icon_default_nologin
+
+        //状态View提示文本
+        var defaultText: String = ""
+        var noNetText: String = "无网络"
+        var timeOutText: String = "请求超时"
+        var emptyText: String = "暂无内容~"
+        var unknownText: String = "数据错误"
+        var noLoginText: String = "未登录"
+
+        //状态View重试文本
+        var defaultAgainText: String = ""
+        var noNetAgainText: String = "点击重试"
+        var timeOutAgainText: String = "点击重试"
+        var emptyAgainText: String = ""
+        var unknownAgainText: String = ""
+        var noLoginAgainText: String = "去登录"
+
+        //加载中图标
+        var loadingImage: Int = R.drawable.loading1
+
+        //加载中文本
+        var loadingText: String = "加载中..."
+
+        //加载中布局
+        var loadingLayout: Int = R.layout.layout_dialog_progress
     }
 }
