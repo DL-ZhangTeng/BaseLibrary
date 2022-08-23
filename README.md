@@ -26,7 +26,7 @@ aspectjx {
 }
 
 //使用单个库
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.6'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.4.0'
     //base使用的三方库
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
@@ -34,9 +34,9 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.3.6'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.alibaba:fastjson:1.2.70'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.3.6'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.3.6'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.6'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.4.0'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.4.0'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.4.0'
     //mvvm使用的三方库
     //lifecycle
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -48,7 +48,7 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.3.6'
     //liveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.6'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.4.0'
     //aop使用的三方库
     implementation 'org.aspectj:aspectjrt:1.9.9.1'
     //PermissionsAspect类使用(不使用Permissions注解可不导入)
@@ -56,9 +56,9 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.3.6'
     compileOnly 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
 
 //使用全部库
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.3.6'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.4.0'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:1.3.6") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:1.4.0") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -85,7 +85,7 @@ IView| V层接口
 IPresenter| P层接口
 BaseModel| M层空实现
 BaseLoadingView| V层带加载中方法的接口
-BaseNoNetworkView|V层带网络状态方法的接口，继承自BaseLoadingView
+BaseStateView|V层带网络状态方法的接口，继承自BaseLoadingView
 BaseRefreshView| V层带刷新方法的接口，继承自BaseNoNetworkView
 BasePresenter| P层实现，实现了attachView、detachView、onDestroy等方法
 BaseLoadingPresenter| P层加载中动画实现，增加了getBaseLoadingView()方法
@@ -102,7 +102,7 @@ BaseListMvpActivity| 使用Mvp模式列表Activity基类
 --- | ---
 BaseViewModel| VM层基类，内置了协程请求网络数据
 BaseLoadingViewModel| VM层带加载中状态基类，内置了协程请求网络数据
-BaseNoNetworkViewModel| VM层带网络状态基类
+BaseStateViewModel| VM层带网络状态基类
 BaseRefreshViewModel| VM层带刷新状态基类
 NetState| 网络是否可以状态
 NetworkStateManager|可观测的网络可以状态
@@ -180,6 +180,8 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
+v1.4.0| LoadViewHelper更名StateViewHelper| 2022/8/11 at 11:49
+v1.3.8| DataStore<Preferences>工具类| 2022/8/5 at 16:44
 v1.3.7| 增加网络检测注解&权限申请注解&防重复点击注解| 2022/7/22 at 15:08
 v1.3.6| 部分工具类更新优化（主要是ActivityHelper.kt）&mvvm库中异常处理使用com.zhangteng.utils.IException| 2022/7/4 at 11:50
 v1.3.5| 自动设置BaseViewModel| 2022/6/25 at 10:12
