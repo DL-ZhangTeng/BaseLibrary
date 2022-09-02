@@ -42,11 +42,13 @@ dependencies {
     implementation "androidx.core:core-ktx:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation project(":utils")
     implementation 'com.alibaba:fastjson:1.2.70'
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
+
+    //noinspection GradleDynamicVersion
+    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
 }

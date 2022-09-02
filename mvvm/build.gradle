@@ -55,6 +55,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
 
-    implementation project(":utils")
     implementation project(":base")
+
+    //noinspection GradleDynamicVersion
+    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
 }
