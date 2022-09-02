@@ -26,7 +26,7 @@ aspectjx {
 }
 
 //使用单个库
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.4.0'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.5.0'
     //base使用的三方库
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
     implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
@@ -34,8 +34,10 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.4.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.alibaba:fastjson:1.2.70'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.4.0'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.4.0'
+    //noinspection GradleDynamicVersion
+    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.5.0'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.5.0'
     //mvvm使用的三方库
     //lifecycle
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -47,17 +49,21 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.4.0'
     //liveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.4.0'
+    //noinspection GradleDynamicVersion
+    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
+implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.5.0'
     //aop使用的三方库
     implementation 'org.aspectj:aspectjrt:1.9.9.1'
     //PermissionsAspect类使用(不使用Permissions注解可不导入)
     //noinspection GradleDynamicVersion
     compileOnly 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
+    //noinspection GradleDynamicVersion
+    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
 
 //使用全部库
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.4.0'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.5.0'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:1.4.0") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:1.5.0") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -179,6 +185,7 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
+v1.5.0| 分离出Utils库| 2022/9/2 at 20:28
 v1.4.0| LoadViewHelper更名StateViewHelper| 2022/8/11 at 11:49
 v1.3.8| DataStore<Preferences>工具类| 2022/8/5 at 16:44
 v1.3.7| 增加网络检测注解&权限申请注解&防重复点击注解| 2022/7/22 at 15:08
