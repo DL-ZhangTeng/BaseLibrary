@@ -34,7 +34,6 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.4.0'
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.alibaba:fastjson:1.2.70'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:utils:1.4.0'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.4.0'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.4.0'
     //mvvm使用的三方库
