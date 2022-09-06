@@ -20,5 +20,10 @@ abstract class TitleBarActivity : BaseActivity() {
                 }
             }
         })
+        if (isImmersionBarEnabled()) {
+            //使用titleBar后不需要在layout_toolbar布局中添加statusBar节点
+            //设置标题栏View，如果设置了statusBarView则不需要设置标题栏View（设置标题栏View会自动在顶部给titleBar增加一个状态栏的高度Padding、Height）
+            mImmersionBar.titleBar(mTitleBar)
+        }
     }
 }

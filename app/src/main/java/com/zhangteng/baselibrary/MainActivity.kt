@@ -105,22 +105,23 @@ class MainActivity : BaseMvpActivity<IMainView, IMainModel, IMainPresenter>(), I
         jumpToActivity<BaseListMvvmDbDemoDbActivity>()
     }
 
-    override fun showProgressDialog(mLoadingText: String?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
+    override fun createStateViewHelper(): StateViewHelper {
+        return StateViewHelper().apply {
+            againRequestListener = object : StateViewHelper.AgainRequestListener {
+                override fun request(view: View) {
+                    againRequestByStateViewHelper(view)
                 }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
+            }
+            cancelRequestListener = object : StateViewHelper.CancelRequestListener {
+                override fun cancel(dialog: DialogInterface) {
+                    cancelRequestByStateViewHelper(dialog)
                 }
             }
         }
-        mStateViewHelper?.showProgressDialog(this, R.drawable.loading5, mLoadingText)
+    }
+
+    override fun showProgressDialog(mLoadingText: String?) {
+        mStateViewHelper.showProgressDialog(this, R.drawable.loading5, mLoadingText)
     }
 
     override fun againRequestByStateViewHelper(view: View) {

@@ -15,18 +15,24 @@ import com.zhangteng.utils.showShortToast
  * Created by swing on 2017/11/23.
  */
 abstract class BaseActivity : AppCompatActivity() {
-    /** 状态栏沉浸  */
+
     protected val mImmersionBar by lazy { createStatusBarConfig() }
-    protected var mStateViewHelper: StateViewHelper? = null
+    protected val mStateViewHelper by lazy { createStateViewHelper() }
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
+        if (isImmersionBarEnabled()) {
+            mImmersionBar.init()
+        }
         initView()
         initData()
     }
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
+        if (isImmersionBarEnabled()) {
+            mImmersionBar.init()
+        }
         initView()
         initData()
     }
@@ -44,21 +50,35 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun initData()
 
     /**
-     * 是否使用沉浸式状态栏
+     * description 是否使用沉浸式状态栏
      */
     protected open fun isImmersionBarEnabled(): Boolean {
         return true
     }
 
     /**
-     * 状态栏字体深色模式
+     * description 状态栏字体深色模式
      */
     protected open fun isStatusBarDarkFont(): Boolean {
         return true
     }
 
     /**
-     * 初始化沉浸式状态栏,隐藏状态栏与导航条重写此方法super.createStatusBarConfig().hideBar(BarHide.FLAG_HIDE_BAR)
+     * description 初始化沉浸式状态栏
+     * ImmersionBar.with(this)
+     * //设置状态栏View
+     * .statusBarView(statusBar)
+     * //使用titleBar后不需要在layout_toolbar布局中添加statusBar节点
+     * //设置标题栏View，如果设置了statusBarView则不需要设置标题栏View（设置标题栏View会自动在顶部给titleBar增加一个状态栏的高度Padding、Height）
+     * .titleBar(titleBar)
+     * //深色状态栏字体
+     * .statusBarDarkFont(true)
+     * //导航栏白色
+     * .navigationBarColor(R.color.white)
+     * //自动改吧状态栏导航栏颜色
+     * .autoDarkModeEnable(true, 0.2f)
+     * //隐藏状态栏与标题栏
+     * .hideBar(BarHide.FLAG_HIDE_BAR)
      */
     protected open fun createStatusBarConfig(): ImmersionBar {
         return ImmersionBar.with(this)
@@ -67,120 +87,85 @@ abstract class BaseActivity : AppCompatActivity() {
             .autoDarkModeEnable(true, 0.2f)
     }
 
+    /**
+     * description 创建 StateViewHelper类，并回调重试请求、取消请求监听
+     */
+    protected open fun createStateViewHelper(): StateViewHelper {
+        return StateViewHelper().apply {
+            againRequestListener = object : StateViewHelper.AgainRequestListener {
+                override fun request(view: View) {
+                    againRequestByStateViewHelper(view)
+                }
+            }
+            cancelRequestListener = object : StateViewHelper.CancelRequestListener {
+                override fun cancel(dialog: DialogInterface) {
+                    cancelRequestByStateViewHelper(dialog)
+                }
+            }
+        }
+    }
+
+    /**
+     * description 无网络视图
+     * @param contentView 被替换的View
+     */
     protected open fun showNoNetView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showNoNetView(contentView)
+        mStateViewHelper.showNoNetView(contentView)
     }
 
+    /**
+     * description 超时视图
+     * @param contentView 被替换的View
+     */
     protected open fun showTimeOutView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showTimeOutView(contentView)
+        mStateViewHelper.showTimeOutView(contentView)
     }
 
+    /**
+     * description 无数据视图
+     * @param contentView 被替换的View
+     */
     protected open fun showEmptyView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showEmptyView(contentView)
+        mStateViewHelper.showEmptyView(contentView)
     }
 
+    /**
+     * description 错误视图
+     * @param contentView 被替换的View
+     */
     protected open fun showErrorView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showErrorView(contentView)
+        mStateViewHelper.showErrorView(contentView)
     }
 
+    /**
+     * description 未登录视图
+     * @param contentView 被替换的View
+     */
     protected open fun showNoLoginView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showNoLoginView(contentView)
+        mStateViewHelper.showNoLoginView(contentView)
     }
 
+    /**
+     * description 业务视图
+     * @param contentView 要展示的View
+     */
     protected open fun showContentView(contentView: View?) {
-        mStateViewHelper?.showContentView(contentView)
+        mStateViewHelper.showContentView(contentView)
     }
 
+    /**
+     * description 加载中弹窗
+     * @param mLoadingText 加载中...
+     */
     protected open fun showProgressDialog(mLoadingText: String? = StateViewHelper.loadingText) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showProgressDialog(this, mLoadingText = mLoadingText)
+        mStateViewHelper.showProgressDialog(this, mLoadingText = mLoadingText)
     }
 
+    /**
+     * description 关闭加载中弹窗
+     */
     protected open fun dismissProgressDialog() {
-        mStateViewHelper?.dismissProgressDialog()
+        mStateViewHelper.dismissProgressDialog()
     }
 
     /**

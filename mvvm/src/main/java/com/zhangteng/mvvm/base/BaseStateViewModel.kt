@@ -40,7 +40,7 @@ open class BaseStateViewModel : BaseLoadingViewModel() {
         //显示（View是将要被未登录视图替换的视图）
         val showNoLoginView by lazy { SingleLiveData<View>() }
 
-        //隐藏（View是将要被替换的视图）
+        //隐藏（View是将要展示的View）
         val showContentView by lazy { SingleLiveData<View>() }
     }
 

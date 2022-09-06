@@ -23,7 +23,7 @@ abstract class BaseFragment : Fragment() {
 
     private val handler = Handler(Looper.getMainLooper())
 
-    protected var mStateViewHelper: StateViewHelper? = null
+    protected val mStateViewHelper by lazy { createStateViewHelper() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,120 +74,85 @@ abstract class BaseFragment : Fragment() {
         return 300
     }
 
+    /**
+     * description 创建 StateViewHelper类，并回调重试请求、取消请求监听
+     */
+    protected open fun createStateViewHelper(): StateViewHelper {
+        return StateViewHelper().apply {
+            againRequestListener = object : StateViewHelper.AgainRequestListener {
+                override fun request(view: View) {
+                    againRequestByStateViewHelper(view)
+                }
+            }
+            cancelRequestListener = object : StateViewHelper.CancelRequestListener {
+                override fun cancel(dialog: DialogInterface) {
+                    cancelRequestByStateViewHelper(dialog)
+                }
+            }
+        }
+    }
+
+    /**
+     * description 无网络视图
+     * @param contentView 被替换的View
+     */
     protected open fun showNoNetView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showNoNetView(contentView)
+        mStateViewHelper.showNoNetView(contentView)
     }
 
+    /**
+     * description 超时视图
+     * @param contentView 被替换的View
+     */
     protected open fun showTimeOutView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showTimeOutView(contentView)
+        mStateViewHelper.showTimeOutView(contentView)
     }
 
+    /**
+     * description 无数据视图
+     * @param contentView 被替换的View
+     */
     protected open fun showEmptyView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showEmptyView(contentView)
+        mStateViewHelper.showEmptyView(contentView)
     }
 
+    /**
+     * description 错误视图
+     * @param contentView 被替换的View
+     */
     protected open fun showErrorView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showErrorView(contentView)
+        mStateViewHelper.showErrorView(contentView)
     }
 
+    /**
+     * description 未登录视图
+     * @param contentView 被替换的View
+     */
     protected open fun showNoLoginView(contentView: View?) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showNoLoginView(contentView)
+        mStateViewHelper.showNoLoginView(contentView)
     }
 
+    /**
+     * description 业务视图
+     * @param contentView 要展示的View
+     */
     protected open fun showContentView(contentView: View?) {
-        mStateViewHelper?.showContentView(contentView)
+        mStateViewHelper.showContentView(contentView)
     }
 
+    /**
+     * description 加载中弹窗
+     * @param mLoadingText 加载中...
+     */
     protected open fun showProgressDialog(mLoadingText: String? = StateViewHelper.loadingText) {
-        if (mStateViewHelper == null) {
-            mStateViewHelper = StateViewHelper().apply {
-                againRequestListener = object : StateViewHelper.AgainRequestListener {
-                    override fun request(view: View) {
-                        againRequestByStateViewHelper(view)
-                    }
-                }
-                cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                    override fun cancel(dialog: DialogInterface) {
-                        cancelRequestByStateViewHelper(dialog)
-                    }
-                }
-            }
-        }
-        mStateViewHelper?.showProgressDialog(context, mLoadingText = mLoadingText)
+        mStateViewHelper.showProgressDialog(context, mLoadingText = mLoadingText)
     }
 
+    /**
+     * description 关闭加载中弹窗
+     */
     protected open fun dismissProgressDialog() {
-        mStateViewHelper?.dismissProgressDialog()
+        mStateViewHelper.dismissProgressDialog()
     }
 
     /**
