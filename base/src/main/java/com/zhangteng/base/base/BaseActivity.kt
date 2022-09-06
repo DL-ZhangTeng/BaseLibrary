@@ -1,11 +1,13 @@
 package com.zhangteng.base.base
 
+import android.R
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.gyf.immersionbar.ImmersionBar
 import com.zhangteng.utils.StateViewHelper
 import com.zhangteng.utils.showShortToast
 
@@ -13,7 +15,8 @@ import com.zhangteng.utils.showShortToast
  * Created by swing on 2017/11/23.
  */
 abstract class BaseActivity : AppCompatActivity() {
-
+    /** 状态栏沉浸  */
+    protected val mImmersionBar by lazy { createStatusBarConfig() }
     protected var mStateViewHelper: StateViewHelper? = null
 
     override fun setContentView(layoutResID: Int) {
@@ -30,12 +33,39 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         super.setContentView(view, params)
+        if (isImmersionBarEnabled()) {
+            mImmersionBar.init()
+        }
         initView()
         initData()
     }
 
     protected abstract fun initView()
     protected abstract fun initData()
+
+    /**
+     * 是否使用沉浸式状态栏
+     */
+    protected open fun isImmersionBarEnabled(): Boolean {
+        return true
+    }
+
+    /**
+     * 状态栏字体深色模式
+     */
+    protected open fun isStatusBarDarkFont(): Boolean {
+        return true
+    }
+
+    /**
+     * 初始化沉浸式状态栏,隐藏状态栏与导航条重写此方法super.createStatusBarConfig().hideBar(BarHide.FLAG_HIDE_BAR)
+     */
+    protected open fun createStatusBarConfig(): ImmersionBar {
+        return ImmersionBar.with(this)
+            .statusBarDarkFont(isStatusBarDarkFont())
+            .navigationBarColor(R.color.white)
+            .autoDarkModeEnable(true, 0.2f)
+    }
 
     protected open fun showNoNetView(contentView: View?) {
         if (mStateViewHelper == null) {

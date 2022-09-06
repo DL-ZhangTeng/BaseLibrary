@@ -8,12 +8,12 @@ import com.zhangteng.base.widget.CommonTitleBar.OnTitleBarListener
 /**
  * Created by swing on 2017/11/23.
  */
-abstract class TitlebarActivity : BaseActivity() {
-    protected var mTitlebar: CommonTitleBar? = null
+abstract class TitleBarActivity : BaseActivity() {
+    protected var mTitleBar: CommonTitleBar? = null
     override fun initView() {
-        mTitlebar = findViewById(R.id.titlebar)
-        checkNotNull(mTitlebar) { "The subclass of TitlebarActivity must contain a titlebar." }
-        mTitlebar?.setListener(object : OnTitleBarListener {
+        mTitleBar = findViewById(R.id.title_bar)
+        checkNotNull(mTitleBar) { "The subclass of TitleBarActivity must contain a TitleBar." }
+        mTitleBar?.setListener(object : OnTitleBarListener {
             override fun onClicked(v: View?, action: Int, extra: String?) {
                 if (action == CommonTitleBar.ACTION_LEFT_BUTTON || action == CommonTitleBar.ACTION_LEFT_TEXT) {
                     finish()

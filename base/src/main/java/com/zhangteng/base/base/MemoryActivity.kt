@@ -19,7 +19,7 @@ import java.util.*
  * @Author: Swing 763263311@qq.com
  * @Date: 2020/10/28 0028 下午 14:02
  */
-abstract class MemoryActivity : TitlebarActivity() {
+abstract class MemoryActivity : TitleBarActivity() {
     /**
      * 是否永久缓存页面数据
      * false 页面不缓存数据
@@ -33,7 +33,7 @@ abstract class MemoryActivity : TitlebarActivity() {
     private var outState: MutableMap<String?, Any?>? = null
     override fun initView() {
         super.initView()
-        mTitlebar?.setListener(object : CommonTitleBar.OnTitleBarListener {
+        mTitleBar?.setListener(object : CommonTitleBar.OnTitleBarListener {
             override fun onClicked(v: View?, action: Int, extra: String?) {
                 if (action == CommonTitleBar.ACTION_LEFT_BUTTON || action == CommonTitleBar.ACTION_LEFT_TEXT) {
                     if (isSaveStateForEver()) {

@@ -59,11 +59,11 @@ dependencies {
     implementation "androidx.core:core-ktx:$kotlin_version"
     //noinspection GradleDependency
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'androidx.annotation:annotation:1.3.0'
 
     //base
     implementation(project(":base"))
@@ -81,7 +81,7 @@ dependencies {
     implementation project(":mvvm")
     //lifecycle
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     //viewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
@@ -102,7 +102,7 @@ dependencies {
     implementation('com.github.DL-ZhangTeng:RxHttpUtils:1.2.+') {
         exclude group: "com.github.DL-ZhangTeng.BaseLibrary", module: "utils"
     }
-    implementation 'androidx.lifecycle:lifecycle-common:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-common:2.4.0'
     //mvvm库已经导入lifecycle
     //implementation 'androidx.lifecycle:lifecycle-runtime:2.3.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'

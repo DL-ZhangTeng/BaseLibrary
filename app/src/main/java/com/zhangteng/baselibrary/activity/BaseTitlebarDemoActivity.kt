@@ -1,10 +1,10 @@
 package com.zhangteng.baselibrary.activity
 
 import android.os.Bundle
-import com.zhangteng.base.base.TitlebarActivity
+import com.zhangteng.base.base.TitleBarActivity
 import com.zhangteng.baselibrary.R
 
-class BaseTitlebarDemoActivity : TitlebarActivity() {
+class BaseTitlebarDemoActivity : TitleBarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
