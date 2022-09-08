@@ -131,7 +131,7 @@ abstract class SuperTextWatcher<T : AtUser?>(
     open fun onActivityResult(requestCode: Int, data: Intent?) {
         if (1100 == requestCode) {
             //艾特人员选择回调
-            onAtActivityResult(data, true)
+            onAtActivityResult(data, false)
         } else if (requestCode == 1101) {
             //跳转主页后光标至于结尾
             editText.setSelection(editText.text.toString().length)
