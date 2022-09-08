@@ -85,10 +85,9 @@ abstract class SuperTextWatcher<T : AtUser?>(
                             atUsers.remove(aUser)
                             break
                         } else {//非删除：判断futureStr区间内是否有多个@人员，光标在@人员中间则移动到结尾
-                            val endIndex1 = futureStr.indexOf(endDivider)
-                            val startIndex2 = futureStr.lastIndexOf(startDivider)
-                            val selection = editText.selectionStart
-                            if (selection <= endIndex1 || selection >= startIndex2) {
+                            val startIndex = futureStr.lastIndexOf(startDivider)
+                            val endIndex = futureStr.indexOf(endDivider)
+                            if (startIndex < endIndex) {
                                 editText.removeTextChangedListener(this)
                                 editText.setText(charSequence)
                                 editText.setSelection(charSequence.length)
