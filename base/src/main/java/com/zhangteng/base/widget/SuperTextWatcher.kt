@@ -131,7 +131,7 @@ abstract class SuperTextWatcher<T : AtUser?>(
     open fun onActivityResult(requestCode: Int, data: Intent?) {
         if (1100 == requestCode) {
             //艾特人员选择回调
-            onAtActivityResult(data, false)
+            onAtActivityResult(data)
         } else if (requestCode == 1101) {
             //跳转主页后光标至于结尾
             editText.setSelection(editText.text.toString().length)
@@ -142,9 +142,8 @@ abstract class SuperTextWatcher<T : AtUser?>(
      * 艾特列表页回退响应结果
      *
      * @param data         回调艾特的人名与id
-     * @param isRepetition 是否可重复艾特同一个人
      */
-    protected open fun onAtActivityResult(data: Intent?, isRepetition: Boolean) {
+    protected open fun onAtActivityResult(data: Intent?) {
         if (data == null) return
         var name: String? = ""
         var id: String? = ""
@@ -152,18 +151,16 @@ abstract class SuperTextWatcher<T : AtUser?>(
         if (data.hasExtra(ID)) id = data.getStringExtra(ID)
         var content = editText!!.text.toString()
         //避免同人多选
-        if (!isRepetition) {
-            for (aUser in atUsers) {
-                if (TextUtils.equals(aUser!!.atUserId, id)) {
-                    if (content.endsWith(at) || content.endsWith(superAt)) {
-                        content = content.substring(0, content.length - 1)
-                    }
-                    editText.removeTextChangedListener(this)
-                    editText.setText(content)
-                    editText.setSelection(content.length)
-                    editText.addTextChangedListener(this)
-                    return
+        for (aUser in atUsers) {
+            if (TextUtils.equals(aUser!!.atUserId, id)) {
+                if (content.endsWith(at) || content.endsWith(superAt)) {
+                    content = content.substring(0, content.length - 1)
                 }
+                editText.removeTextChangedListener(this)
+                editText.setText(content)
+                editText.setSelection(content.length)
+                editText.addTextChangedListener(this)
+                return
             }
         }
         val userInfo = createBrandNewAUser()
