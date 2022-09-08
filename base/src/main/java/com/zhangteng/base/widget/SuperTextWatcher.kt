@@ -74,7 +74,7 @@ abstract class SuperTextWatcher<T : AtUser?>(
                             aUser.atUserName!!.replace(endDivider, backupSymbol)
                         )
                     ) {
-                        if (count > 0 && after == 0) {
+                        if (count > 0 && after == 0) {//删除
                             editText.removeTextChangedListener(this)
                             val content: CharSequence = charSequence.toString().replace(
                                 startDivider + aUser.atUserName + endDivider, ""
@@ -84,11 +84,16 @@ abstract class SuperTextWatcher<T : AtUser?>(
                             editText.addTextChangedListener(this)
                             atUsers.remove(aUser)
                             break
-                        } else {
-                            editText.removeTextChangedListener(this)
-                            editText.setText(charSequence)
-                            editText.setSelection(charSequence.length)
-                            editText.addTextChangedListener(this)
+                        } else {//非删除：判断futureStr区间内是否有多个@人员，光标在@人员中间则移动到结尾
+                            val endIndex1 = futureStr.indexOf(endDivider)
+                            val startIndex2 = futureStr.lastIndexOf(startDivider)
+                            val selection = editText.selectionStart
+                            if (selection <= endIndex1 || selection >= startIndex2) {
+                                editText.removeTextChangedListener(this)
+                                editText.setText(charSequence)
+                                editText.setSelection(charSequence.length)
+                                editText.addTextChangedListener(this)
+                            }
                         }
                     }
                 }
