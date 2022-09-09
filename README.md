@@ -35,7 +35,7 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.5.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'com.alibaba:fastjson:1.2.70'
     //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.+'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.5.0'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.5.0'
     //mvvm使用的三方库
@@ -50,7 +50,7 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.5.0'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
     //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.+'
 implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.5.0'
     //aop使用的三方库
     implementation 'org.aspectj:aspectjrt:1.9.9.1'
@@ -58,7 +58,7 @@ implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.5.0'
     //noinspection GradleDynamicVersion
     compileOnly 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
     //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.+'
 
 //使用全部库
 implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.5.0'

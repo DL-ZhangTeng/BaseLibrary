@@ -2,6 +2,7 @@ package com.zhangteng.mvvm.base
 
 import com.zhangteng.mvvm.livedata.SingleLiveData
 import com.zhangteng.utils.IException
+import com.zhangteng.utils.IResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope

@@ -1,5 +1,7 @@
 package com.zhangteng.mvvm.base
 
+import com.zhangteng.utils.IResponse
+
 /**
  * 带统一响应的数据仓库（建议定义*RemoteDataSource和*LocalDataSource区分网络数据源和本地数据源）
  *

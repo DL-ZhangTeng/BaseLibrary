@@ -58,5 +58,5 @@ dependencies {
     implementation project(":base")
 
     //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:Utils:1.0.+'
+    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.+'
 }
