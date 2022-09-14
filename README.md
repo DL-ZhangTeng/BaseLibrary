@@ -11,56 +11,6 @@ allprojects {
     }
 }
 
-//如果使用aop，项目的build.gradle添加以下代码
-dependencies {
-    classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
-}
-//如果使用aop，app的build.gradle添加插件android-aspectjx
-apply plugin: 'android-aspectjx'
-// AOP 配置
-// AspectJX默认会处理所有的二进制代码文件和库，为了提升编译效率及规避部分第三方库出现的编译兼容性问题，
-// AspectJX提供include,exclude命令来过滤需要处理的文件及排除某些文件(包括class文件及jar文件)。
-aspectjx {
-     //只导入需要AspectJX处理的包com.zhangteng.aop必须添加
-    include 'com.zhangteng.aop', '应用包名'
-}
-
-//使用单个库
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:base:1.5.0'
-    //base使用的三方库
-    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
-    implementation 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
-    implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
-    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.alibaba:fastjson:1.2.70'
-    //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.+'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvp:1.5.0'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:mvvm:1.5.0'
-    //mvvm使用的三方库
-    //lifecycle
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    //viewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
-    implementation "androidx.fragment:fragment-ktx:1.3.6"
-    //liveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
-    implementation 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
-    //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.+'
-implementation 'com.github.DL-ZhangTeng.BaseLibrary:aop:1.5.0'
-    //aop使用的三方库
-    implementation 'org.aspectj:aspectjrt:1.9.9.1'
-    //PermissionsAspect类使用(不使用Permissions注解可不导入)
-    //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
-    //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.+'
-
-//使用全部库
 implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.5.0'
 或排除图片库
 implementation("com.github.DL-ZhangTeng:BaseLibrary:1.5.0") {
@@ -69,56 +19,6 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:1.5.0") {
 ```
 
 ## 部分工具功能(安装配套插件快速创建模板文件BaseLibraryTemplatePlugin-1.3.0.jar)
-### aop工具包（com/zhangteng/aop）
-工具包名/类名| 描述
---- | ---
-TimeLog| 在需要打印耗时时间的方法添加此注解
-TimeLogAspect| 耗时时间方法切入点处理逻辑
-CheckNet| 在需要网络检测的方法添加此注解
-CheckNetAspect| 网络检测方法切入点处理逻辑
-Permissions| 在需要权限申请的方法添加此注解
-PermissionsAspect| 权限申请方法切入点处理逻辑
-SingleClick| 在需要防重复点击的方法添加此注解
-SingleClickAspect| 防重复点击方法切入点处理逻辑
-
-### MVP工具包（com/zhangteng/mvp）
-
-工具包名/类名| 描述
---- | ---
-IModel| M层接口
-IView| V层接口
-IPresenter| P层接口
-BaseModel| M层空实现
-BaseLoadingView| V层带加载中方法的接口
-BaseStateView|V层带网络状态方法的接口，继承自BaseLoadingView
-BaseRefreshView| V层带刷新方法的接口，继承自BaseNoNetworkView
-BasePresenter| P层实现，实现了attachView、detachView、onDestroy等方法
-BaseLoadingPresenter| P层加载中动画实现，增加了getBaseLoadingView()方法
-BaseHttpEntity| model到presenter的回调
-LoadingPresenterHandler| 使用代理的方式自动调用加载动画开启与关闭方法，同步执行方法时才有意义(好像没啥用...)
-BaseMvpFragment| 使用Mvp模式Fragment基类（可使用插件自动创建Fragment。[插件仓库地址](https://github.com/DL-ZhangTeng/BaseLibraryTemplatePlugin)）
-BaseListMvpFragment| 使用Mvp模式列表Fragment基类
-BaseMvpActivity| 使用Mvp模式Activity基类（可使用插件自动创建Activity。[插件仓库地址](https://github.com/DL-ZhangTeng/BaseLibraryTemplatePlugin)）
-BaseListMvpActivity| 使用Mvp模式列表Activity基类
-
-### MVVM工具包（com/zhangteng/mvvm）
-
-工具包名/类名| 描述
---- | ---
-BaseViewModel| VM层基类，内置了协程请求网络数据
-BaseLoadingViewModel| VM层带加载中状态基类，内置了协程请求网络数据
-BaseStateViewModel| VM层带网络状态基类
-BaseRefreshViewModel| VM层带刷新状态基类
-NetState| 网络是否可以状态
-NetworkStateManager|可观测的网络可以状态
-NetworkStateReceive| 网络状态广播接收器
-MvvmUtils| 获取当前类绑定的泛型ViewModel-clazz
-databind包| databind基本数据类型提供了默认值，避免取值的时候还要判空
-livedata包| livedata基本数据类型提供了默认值，避免取值的时候还要判空
-BaseMvvmActivity| 使用MVVM模式Activity基类
-BaseMvvmDbActivity| 使用MVVM模式使用DataBinding的Activity基类
-BaseMvvmFragment| 使用MVVM模式Fragment基类
-BaseMvvmDbFragment| 使用MVVM模式使用DataBinding的Fragment基类
 
 ### 九宫格图片工具包（com/zhangteng/base/adapter、com/zhangteng/base/widget）
 
@@ -185,6 +85,7 @@ tabMyTabViewSelf| TabView自定义时宽度自适应
 
 版本| 更新| 更新时间
 --- | --- | ---
+v2.0.0| 增加SuperTextWatcher用于支持EditText对@的支持，独立出aop、mvp、mvvm| 2022/9/14 at 22:18
 v1.5.0| 分离出Utils库| 2022/9/2 at 20:28
 v1.4.0| LoadViewHelper更名StateViewHelper| 2022/8/11 at 11:49
 v1.3.8| DataStore<Preferences>工具类| 2022/8/5 at 16:44
