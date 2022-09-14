@@ -8,13 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.gyf.immersionbar.ImmersionBar
+import com.zhangteng.utils.IStateView
 import com.zhangteng.utils.StateViewHelper
 import com.zhangteng.utils.showShortToast
 
 /**
  * Created by swing on 2017/11/23.
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), IStateView {
 
     protected val mImmersionBar by lazy { createStatusBarConfig() }
     protected val mStateViewHelper by lazy { createStateViewHelper() }
@@ -90,7 +91,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * description 创建 StateViewHelper类，并回调重试请求、取消请求监听
      */
-    protected open fun createStateViewHelper(): StateViewHelper {
+    override fun createStateViewHelper(): StateViewHelper {
         return StateViewHelper().apply {
             againRequestListener = object : StateViewHelper.AgainRequestListener {
                 override fun request(view: View) {
@@ -109,7 +110,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 无网络视图
      * @param contentView 被替换的View
      */
-    protected open fun showNoNetView(contentView: View?) {
+    override fun showNoNetView(contentView: View?) {
         mStateViewHelper.showNoNetView(contentView)
     }
 
@@ -117,7 +118,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 超时视图
      * @param contentView 被替换的View
      */
-    protected open fun showTimeOutView(contentView: View?) {
+    override fun showTimeOutView(contentView: View?) {
         mStateViewHelper.showTimeOutView(contentView)
     }
 
@@ -125,7 +126,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 无数据视图
      * @param contentView 被替换的View
      */
-    protected open fun showEmptyView(contentView: View?) {
+    override fun showEmptyView(contentView: View?) {
         mStateViewHelper.showEmptyView(contentView)
     }
 
@@ -133,7 +134,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 错误视图
      * @param contentView 被替换的View
      */
-    protected open fun showErrorView(contentView: View?) {
+    override fun showErrorView(contentView: View?) {
         mStateViewHelper.showErrorView(contentView)
     }
 
@@ -141,7 +142,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 未登录视图
      * @param contentView 被替换的View
      */
-    protected open fun showNoLoginView(contentView: View?) {
+    override fun showNoLoginView(contentView: View?) {
         mStateViewHelper.showNoLoginView(contentView)
     }
 
@@ -149,7 +150,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 业务视图
      * @param contentView 要展示的View
      */
-    protected open fun showContentView(contentView: View?) {
+    override fun showContentView(contentView: View?) {
         mStateViewHelper.showContentView(contentView)
     }
 
@@ -157,14 +158,14 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 加载中弹窗
      * @param mLoadingText 加载中...
      */
-    protected open fun showProgressDialog(mLoadingText: String? = StateViewHelper.loadingText) {
+    override fun showProgressDialog(mLoadingText: String?) {
         mStateViewHelper.showProgressDialog(this, mLoadingText = mLoadingText)
     }
 
     /**
      * description 关闭加载中弹窗
      */
-    protected open fun dismissProgressDialog() {
+    override fun dismissProgressDialog() {
         mStateViewHelper.dismissProgressDialog()
     }
 
@@ -172,7 +173,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 状态View重新请求回调
      * @param view 重试按钮
      */
-    protected open fun againRequestByStateViewHelper(view: View) {
+    override fun againRequestByStateViewHelper(view: View) {
 
     }
 
@@ -180,7 +181,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * description 加载中取消回调
      * @param dialog 加载中弹窗
      */
-    protected open fun cancelRequestByStateViewHelper(dialog: DialogInterface) {
+    override fun cancelRequestByStateViewHelper(dialog: DialogInterface) {
 
     }
 

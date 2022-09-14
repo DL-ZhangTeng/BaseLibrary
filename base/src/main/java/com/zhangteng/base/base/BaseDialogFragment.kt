@@ -4,13 +4,14 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
+import com.zhangteng.utils.IStateView
 import com.zhangteng.utils.StateViewHelper
 import com.zhangteng.utils.showShortToast
 
 /**
  * Created by swing on 2017/11/30.
  */
-abstract class BaseDialogFragment : DialogFragment() {
+abstract class BaseDialogFragment : DialogFragment(), IStateView {
 
     protected val mStateViewHelper by lazy { createStateViewHelper() }
 
@@ -30,7 +31,7 @@ abstract class BaseDialogFragment : DialogFragment() {
     /**
      * description 创建 StateViewHelper类，并回调重试请求、取消请求监听
      */
-    protected open fun createStateViewHelper(): StateViewHelper {
+    override fun createStateViewHelper(): StateViewHelper {
         return StateViewHelper().apply {
             againRequestListener = object : StateViewHelper.AgainRequestListener {
                 override fun request(view: View) {
@@ -49,7 +50,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 无网络视图
      * @param contentView 被替换的View
      */
-    protected open fun showNoNetView(contentView: View?) {
+    override fun showNoNetView(contentView: View?) {
         mStateViewHelper.showNoNetView(contentView)
     }
 
@@ -57,7 +58,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 超时视图
      * @param contentView 被替换的View
      */
-    protected open fun showTimeOutView(contentView: View?) {
+    override fun showTimeOutView(contentView: View?) {
         mStateViewHelper.showTimeOutView(contentView)
     }
 
@@ -65,7 +66,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 无数据视图
      * @param contentView 被替换的View
      */
-    protected open fun showEmptyView(contentView: View?) {
+    override fun showEmptyView(contentView: View?) {
         mStateViewHelper.showEmptyView(contentView)
     }
 
@@ -73,7 +74,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 错误视图
      * @param contentView 被替换的View
      */
-    protected open fun showErrorView(contentView: View?) {
+    override fun showErrorView(contentView: View?) {
         mStateViewHelper.showErrorView(contentView)
     }
 
@@ -81,7 +82,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 未登录视图
      * @param contentView 被替换的View
      */
-    protected open fun showNoLoginView(contentView: View?) {
+    override fun showNoLoginView(contentView: View?) {
         mStateViewHelper.showNoLoginView(contentView)
     }
 
@@ -89,7 +90,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 业务视图
      * @param contentView 要展示的View
      */
-    protected open fun showContentView(contentView: View?) {
+    override fun showContentView(contentView: View?) {
         mStateViewHelper.showContentView(contentView)
     }
 
@@ -97,14 +98,14 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 加载中弹窗
      * @param mLoadingText 加载中...
      */
-    protected open fun showProgressDialog(mLoadingText: String? = StateViewHelper.loadingText) {
+    override fun showProgressDialog(mLoadingText: String?) {
         mStateViewHelper.showProgressDialog(context, mLoadingText = mLoadingText)
     }
 
     /**
      * description 关闭加载中弹窗
      */
-    protected open fun dismissProgressDialog() {
+    override fun dismissProgressDialog() {
         mStateViewHelper.dismissProgressDialog()
     }
 
@@ -112,7 +113,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 状态View重新请求回调
      * @param view 重试按钮
      */
-    protected open fun againRequestByStateViewHelper(view: View) {
+    override fun againRequestByStateViewHelper(view: View) {
 
     }
 
@@ -120,7 +121,7 @@ abstract class BaseDialogFragment : DialogFragment() {
      * description 加载中取消回调
      * @param dialog 加载中弹窗
      */
-    protected open fun cancelRequestByStateViewHelper(dialog: DialogInterface) {
+    override fun cancelRequestByStateViewHelper(dialog: DialogInterface) {
 
     }
 

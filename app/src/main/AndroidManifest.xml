@@ -22,19 +22,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.BaseMvvmDbDemoDbActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.BaseMvvmDemoActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.BaseTitlebarDemoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.BaseMvpDemoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.BaseListMvpDemoActivity"
             android:exported="false" />
         <activity
             android:name=".activity.BaseListDemoActivity"
@@ -59,18 +47,6 @@
             android:exported="false" />
         <activity
             android:name=".activity.NineImageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.mvvmdb.MvvmDbActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.mvvm.MvvmActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.BaseListMvvmDemoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.BaseListMvvmDbDemoDbActivity"
             android:exported="false" />
     </application>
 

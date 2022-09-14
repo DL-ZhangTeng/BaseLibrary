@@ -8,13 +8,6 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/tv_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickBaseLayout"
-        android:text="Hello World!" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClickTabLayout"
@@ -31,28 +24,4 @@
         android:layout_height="wrap_content"
         android:onClick="onClickNineImage"
         android:text="onClickNineImage" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickMvvm"
-        android:text="onClickMvvm" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickMvvmDb"
-        android:text="onClickMvvmDb" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickListMvvm"
-        android:text="onClickListMvvm" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickListMvvmDb"
-        android:text="onClickListMvvmDb" />
 </LinearLayout>
