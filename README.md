@@ -11,9 +11,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:1.5.0'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.0.0'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:1.5.0") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.0.0") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
