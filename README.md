@@ -1,9 +1,12 @@
-
 # BaseLibrary
+
 根模块，包含一些常用工具类与基类
 [GitHub仓库地址](https://github.com/DL-ZhangTeng/BaseLibrary)
+
 ## 引入
+
 ### gradle
+
 ```groovy
 allprojects {
     repositories {
@@ -11,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.0.0'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.0.1'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.0.0") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.0.1") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -45,6 +48,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.0.0") {
 | TreeNodeParent          | 父节点注解                              |
 
 ### 顶部导航/选项卡控件（com/zhangteng/base/widget/MyTabLayout）
+
 | MyTabLayout属性名                    | 描述：可参考原生控件TabLayout                          |
 |-----------------------------------|----------------------------------------------|
 | tabMyGravity                      | GRAVITY_FILL充满屏幕、GRAVITY_CENTER居中            |
@@ -80,11 +84,14 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.0.0") {
 | tabMyTabViewSelf                  | TabView自定义时宽度自适应                             |
 
 ## 混淆
+
 -keep public class com.zhangteng.**.*{ *; }
+
 ## 历史版本
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.0.1  | 增加FlowRadioGroup                                                           | 2022/10/26 at 10:41 |
 | v2.0.0  | 增加SuperTextWatcher用于支持EditText对@的支持，独立出aop、mvp、mvvm                        | 2022/9/14 at 22:18  |
 | v1.5.0  | 分离出Utils库                                                                  | 2022/9/2 at 20:28   |
 | v1.4.0  | LoadViewHelper更名StateViewHelper                                            | 2022/8/11 at 11:49  |
@@ -134,12 +141,15 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.0.0") {
 | v1.0.0  | 初版                                                                         | 2020/6/4 at 18:05   |
 
 ## 赞赏
+
 如果您喜欢BaseLibrary，或感觉BaseLibrary帮助到了您，可以点右上角“Star”支持一下，您的支持就是我的动力，谢谢
 
 ## 联系我
+
 邮箱：763263311@qq.com/ztxiaoran@foxmail.com
 
 ## License
+
 Copyright (c) [2020] [Swing]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
