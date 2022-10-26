@@ -60,10 +60,10 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.70'
     //Utils
     //noinspection GradleDynamicVersion
-    implementation 'com.github.DL-ZhangTeng:Utils:2.0.+'
+    implementation 'com.github.DL-ZhangTeng:Utils:2.0.0'
     //PublishAdapter类demo使用
     //noinspection GradleDynamicVersion
-    implementation 'com.github.DL-ZhangTeng:ImagePicker:1.4.+'
+    implementation 'com.github.DL-ZhangTeng:ImagePicker:1.4.0'
     //noinspection GradleDynamicVersion
-    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.+'
+    implementation 'com.github.DL-ZhangTeng:RequestPermission:1.2.0'
 }

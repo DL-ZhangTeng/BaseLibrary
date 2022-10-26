@@ -51,5 +51,5 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
 
     //noinspection GradleDynamicVersion
-    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.+'
+    compileOnly 'com.github.DL-ZhangTeng:Utils:2.0.0'
 }
