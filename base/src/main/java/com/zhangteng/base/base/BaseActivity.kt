@@ -1,6 +1,5 @@
 package com.zhangteng.base.base
 
-import android.R
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
@@ -84,7 +83,7 @@ abstract class BaseActivity : AppCompatActivity(), IStateView {
     protected open fun createStatusBarConfig(): ImmersionBar {
         return ImmersionBar.with(this)
             .statusBarDarkFont(isStatusBarDarkFont())
-            .navigationBarColor(R.color.white)
+            .navigationBarColor(android.R.color.white)
             .autoDarkModeEnable(true, 0.2f)
     }
 
