@@ -1,4 +1,4 @@
-package com.zhangteng.base.widget
+package com.zhangteng.base.recyclerview.decoration
 
 import android.graphics.Rect
 import android.view.View

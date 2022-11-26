@@ -138,7 +138,7 @@ class NineGridView @JvmOverloads constructor(
         //修改最后一个条目，决定是否显示更多
         if (adapter.imageInfo.size > maxSize) {
             val child = getChildAt(maxSize - 1)
-            if (child is NineGridViewWrapper) {
+            if (child is NineGridImageView) {
                 child.setMoreNum(adapter.imageInfo.size - maxSize)
             }
         }

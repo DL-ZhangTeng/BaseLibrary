@@ -1,4 +1,4 @@
-package com.zhangteng.base.widget
+package com.zhangteng.base.recyclerview.widget
 
 import android.graphics.Color
 import androidx.recyclerview.widget.GridLayoutManager

@@ -1,4 +1,4 @@
-package com.zhangteng.base.widget
+package com.zhangteng.base.recyclerview.decoration
 
 import android.graphics.Canvas
 import android.graphics.Color
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.zhangteng.base.bean.GroupInfo
 
 /**
+ * 顶部悬停分割线
  * Created by swing on 2018/4/12.
  */
 open class ItemStickyDecoration(private val groupInfoInterface: GroupInfoInterface?) :

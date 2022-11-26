@@ -16,7 +16,7 @@ import androidx.core.view.ViewCompat
  * @author: Swing
  * @date: 2021/9/5
  */
-class NineGridViewWrapper @JvmOverloads constructor(
+class NineGridImageView @JvmOverloads constructor(
     context: Context?,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

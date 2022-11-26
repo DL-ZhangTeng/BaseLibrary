@@ -5,7 +5,7 @@ import android.widget.ImageView
 import com.zhangteng.base.R
 import com.zhangteng.base.bean.PreviewImageInfo
 import com.zhangteng.base.widget.NineGridView
-import com.zhangteng.base.widget.NineGridViewWrapper
+import com.zhangteng.base.widget.NineGridImageView
 import java.io.Serializable
 
 /**
@@ -41,7 +41,7 @@ abstract class NineGridViewAdapter(
      * @return 生成的 ImageView
      */
     fun generateImageView(context: Context?): ImageView {
-        val imageView = NineGridViewWrapper(context)
+        val imageView = NineGridImageView(context)
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         imageView.setImageResource(R.drawable.ic_default_color)
         return imageView
