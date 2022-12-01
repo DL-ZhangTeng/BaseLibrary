@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.0.1'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.1.0'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.0.1") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.1.0") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -91,6 +91,8 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.0.1") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.1.0  | 增加自定义LayoutManager                                                         | 2022/11/26 at 14:57 |
+| v2.0.2  | 沉浸式最新版本                                                                    | 2022/11/25 at 0:03  |
 | v2.0.1  | 增加FlowRadioGroup                                                           | 2022/10/26 at 10:41 |
 | v2.0.0  | 增加SuperTextWatcher用于支持EditText对@的支持，独立出aop、mvp、mvvm                        | 2022/9/14 at 22:18  |
 | v1.5.0  | 分离出Utils库                                                                  | 2022/9/2 at 20:28   |
