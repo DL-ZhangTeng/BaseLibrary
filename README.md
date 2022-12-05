@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.1.0'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.2.0'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.1.0") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.2.0") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -91,6 +91,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.1.0") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.2.0  | List模板增加VH泛型，与之前版本不兼容                                                      | 2022/12/5 at 22:57  |
 | v2.1.0  | 增加自定义LayoutManager                                                         | 2022/11/26 at 14:57 |
 | v2.0.2  | 沉浸式最新版本                                                                    | 2022/11/25 at 0:03  |
 | v2.0.1  | 增加FlowRadioGroup                                                           | 2022/10/26 at 10:41 |
