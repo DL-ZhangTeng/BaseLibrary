@@ -15,7 +15,8 @@ import com.zhangteng.utils.dp2px
  *
  * @since Swing
  */
-abstract class BaseListActivity<D, A : BaseAdapter<D, DefaultViewHolder>> : BaseActivity() {
+abstract class BaseListActivity<D, VH : DefaultViewHolder, A : BaseAdapter<D, VH>> :
+    BaseActivity() {
     protected var mRecyclerView: RecyclerView? = null
     protected var mRefreshLayout: SmartRefreshLayout? = null
 

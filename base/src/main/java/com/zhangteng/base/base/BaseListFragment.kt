@@ -18,7 +18,8 @@ import java.util.*
  * @author: Swing
  * @date: 2021/8/17
  */
-abstract class BaseListFragment<D, A : BaseAdapter<D, DefaultViewHolder>> : BaseFragment() {
+abstract class BaseListFragment<D, VH : DefaultViewHolder, A : BaseAdapter<D, VH>> :
+    BaseFragment() {
     protected var mRecyclerView: RecyclerView? = null
     protected var mRefreshLayout: SmartRefreshLayout? = null
 

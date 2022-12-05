@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zhangteng.base.base.BaseActivity
-import com.zhangteng.base.widget.GridSpacingItemDecoration
+import com.zhangteng.base.recyclerview.decoration.GridSpacingItemDecoration
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.adapter.ImageSelectorAdapter
 import com.zhangteng.imagepicker.bean.ImageInfo

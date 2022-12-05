@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.zhangteng.base.base.BaseAdapter
 import com.zhangteng.base.base.BaseListActivity
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.adapter.BaseListDemoAdapter
 import com.zhangteng.baselibrary.bean.BaseListDemoBean
 
-class BaseListDemoActivity : BaseListActivity<BaseListDemoBean, BaseListDemoAdapter>() {
+class BaseListDemoActivity :
+    BaseListActivity<BaseListDemoBean, BaseAdapter.DefaultViewHolder, BaseListDemoAdapter>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_list_demo)

@@ -24,7 +24,7 @@ import com.zhangteng.base.base.BaseAdapter.DefaultViewHolder
  * RecyclerView 自定义的适配器
  * Created by Swing on 2018/5/7.
  */
-abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH?> {
+abstract class BaseAdapter<T, VH : DefaultViewHolder> : RecyclerView.Adapter<VH> {
     constructor()
     constructor(data: MutableList<T?>?) : super() {
         this.data = data
