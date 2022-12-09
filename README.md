@@ -55,8 +55,6 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.2.0") {
 | tabMyMode                         | MODE_SCROLLABLE可滚动tab、MODE_FIXED固定tab        |
 | tabMyTypeface                     | 未被选中tab文本样式                                  |
 | tabMySelectedTypeface             | 被选中tab文本样式                                   |
-| tabMyIndicatorColor               | 指示器颜色                                        |
-| tabMyIndicatorHeight              | 指示器高度                                        |
 | tabMyPaddingStart                 | 居左Padding                                    |
 | tabMyTextColor                    | 未选中文本颜色                                      |
 | tabMyPaddingEnd                   | 居右Padding                                    |
@@ -64,14 +62,6 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.2.0") {
 | tabMyMaxWidth                     | 最大宽度                                         |
 | tabMyBackground                   | 背景色                                          |
 | tabMyTextAppearance               | 文本样式                                         |
-| tabMyIndicatorPaddingLeft         | 指示器居左Padding                                 |
-| tabMyIndicatorPaddingRight        | 指示器居右Padding                                 |
-| tabMyIndicatorMarginBottom        | 指示器居底部Margin                                 |
-| tabMyIndicatorMarginTop           | 指示器居顶部Margin                                 |
-| tabMyIndicatorSelfFit             | 指示器宽度自适应文本宽度                                 |
-| tabMyIndicatorMarginBottomSelfFit | 指示器自适应文本底部的距离（tabMyIndicatorSelfFit为true时生效） |
-| tabMyIndicatorBottomLayer         | 指示器置于文本底部                                    |
-| tabMyIndicatorRoundRadius         | 指示器圆角                                        |
 | tabMyContentStart                 | tabs距TabLayout开始位置的偏移量，只有tabMyMode           |=MODE_SCROLLABLE时有效
 | tabMyMinWidth                     | 最小宽度                                         |
 | tabMyPaddingBottom                | 距底部Padding                                   |
@@ -82,6 +72,18 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.2.0") {
 | tabMySelectedTextSize             | 被选中文字大小                                      |
 | tabMyTextSize                     | 未选中文字大小                                      |
 | tabMyTabViewSelf                  | TabView自定义时宽度自适应                             |
+| tabMyIndicatorWidth               | 指示器宽度（设置宽度后指示器Margin失效）                      |
+| tabMyIndicatorHeight              | 指示器高度                                        |
+| tabMyIndicatorMarginLeft          | 指示器居左Margin                                  |
+| tabMyIndicatorMarginTop           | 指示器居顶部Margin                                 |
+| tabMyIndicatorMarginRight         | 指示器居右Margin                                  |
+| tabMyIndicatorMarginBottom        | 指示器居底部Margin                                 |
+| tabMyIndicatorSelfFit             | 指示器宽度自适应文本宽度                                 |
+| tabMyIndicatorMarginBottomSelfFit | 指示器自适应文本底部的距离（tabMyIndicatorSelfFit为true时生效） |
+| tabMyIndicatorBottomLayer         | 指示器置于文本底部                                    |
+| tabMyIndicatorColor               | 指示器颜色                                        |
+| tabMyIndicatorRoundRadius         | 指示器圆角                                        |
+| tabMyIndicatorDrawable            | 图片指示器，支持drawable与mipmap                      |
 
 ## 混淆
 

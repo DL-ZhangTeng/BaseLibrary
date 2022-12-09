@@ -1678,12 +1678,6 @@ open class MyTabLayout @JvmOverloads constructor(
         private var mTabIndicatorSelfFit = false
         private var mTabIndicatorMarginBottomSelfFit = false
         private var mIndicatorAnimator: ValueAnimator? = null
-        open fun setSelectedIndicatorColor(color: Int) {
-            if (mSelectedIndicatorPaint?.color != color) {
-                mSelectedIndicatorPaint?.color = color
-                ViewCompat.postInvalidateOnAnimation(this)
-            }
-        }
 
         open fun setSelectedIndicatorWidth(width: Int) {
             if (mSelectedIndicatorWidth != width) {
@@ -1699,23 +1693,9 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        open fun setSelectedIndicatorMarginRight(right: Int) {
-            if (mIndicatorMarginRight != right) {
-                mIndicatorMarginRight = right
-                ViewCompat.postInvalidateOnAnimation(this)
-            }
-        }
-
         open fun setSelectedIndicatorMarginLeft(left: Int) {
             if (mIndicatorMarginLeft != left) {
                 mIndicatorMarginLeft = left
-                ViewCompat.postInvalidateOnAnimation(this)
-            }
-        }
-
-        open fun setSelectedIndicatorMarginBottom(bottom: Int) {
-            if (mIndicatorMarginBottom != bottom) {
-                mIndicatorMarginBottom = bottom
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
@@ -1727,16 +1707,16 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        open fun setSelectedIndicatorRoundRadius(roundRadius: Int) {
-            if (mIndicatorRoundRadius != roundRadius) {
-                mIndicatorRoundRadius = roundRadius
+        open fun setSelectedIndicatorMarginRight(right: Int) {
+            if (mIndicatorMarginRight != right) {
+                mIndicatorMarginRight = right
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorBottomLayer(bottomLayer: Boolean) {
-            if (mTabIndicatorBottomLayer != bottomLayer) {
-                mTabIndicatorBottomLayer = bottomLayer
+        open fun setSelectedIndicatorMarginBottom(bottom: Int) {
+            if (mIndicatorMarginBottom != bottom) {
+                mIndicatorMarginBottom = bottom
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
@@ -1751,6 +1731,27 @@ open class MyTabLayout @JvmOverloads constructor(
         open fun setSelectedIndicatorMarginBottomSelfFit(marginBottomSelfFit: Boolean) {
             if (mTabIndicatorMarginBottomSelfFit != marginBottomSelfFit) {
                 mTabIndicatorMarginBottomSelfFit = marginBottomSelfFit
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
+        }
+
+        open fun setSelectedIndicatorBottomLayer(bottomLayer: Boolean) {
+            if (mTabIndicatorBottomLayer != bottomLayer) {
+                mTabIndicatorBottomLayer = bottomLayer
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
+        }
+
+        open fun setSelectedIndicatorRoundRadius(roundRadius: Int) {
+            if (mIndicatorRoundRadius != roundRadius) {
+                mIndicatorRoundRadius = roundRadius
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
+        }
+
+        open fun setSelectedIndicatorColor(color: Int) {
+            if (mSelectedIndicatorPaint?.color != color) {
+                mSelectedIndicatorPaint?.color = color
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
@@ -2008,15 +2009,15 @@ open class MyTabLayout @JvmOverloads constructor(
                 val top: Float
                 val right: Float
                 val bottom: Float
-                if (mSelectedIndicatorWidth >= 0) {
+                if (mSelectedIndicatorWidth > 0) {
                     val offset = (mIndicatorRight - mIndicatorLeft - mSelectedIndicatorWidth) / 2
-                    if (mIndicatorMarginBottom >= 0) {
+                    if (mIndicatorMarginBottom > 0) {
                         left = mIndicatorLeft.toFloat() + offset
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorMarginBottom).toFloat()
                         right = mIndicatorRight.toFloat() - offset
                         bottom = (height - mIndicatorMarginBottom).toFloat()
-                    } else if (mIndicatorMarginTop >= 0) {
+                    } else if (mIndicatorMarginTop > 0) {
                         left = mIndicatorLeft.toFloat() + offset
                         top = mIndicatorMarginTop.toFloat()
                         right = mIndicatorRight.toFloat() - offset
@@ -2027,14 +2028,18 @@ open class MyTabLayout @JvmOverloads constructor(
                         right = mIndicatorRight.toFloat() - offset
                         bottom = height.toFloat()
                     }
-                } else if (mIndicatorMarginLeft >= 0 && mIndicatorMarginRight >= 0 && mIndicatorRight - mIndicatorMarginRight > mIndicatorLeft + mIndicatorMarginLeft) {
-                    if (mIndicatorMarginBottom >= 0) {
+                } else if (
+                    (mIndicatorMarginLeft > 0 || mIndicatorMarginRight > 0)
+                    &&
+                    mIndicatorRight - mIndicatorMarginRight > mIndicatorLeft + mIndicatorMarginLeft
+                ) {
+                    if (mIndicatorMarginBottom > 0) {
                         left = (mIndicatorLeft + mIndicatorMarginLeft).toFloat()
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorMarginBottom).toFloat()
                         right = (mIndicatorRight - mIndicatorMarginRight).toFloat()
                         bottom = (height - mIndicatorMarginBottom).toFloat()
-                    } else if (mIndicatorMarginTop >= 0) {
+                    } else if (mIndicatorMarginTop > 0) {
                         left = (mIndicatorLeft + mIndicatorMarginLeft).toFloat()
                         top = mIndicatorMarginTop.toFloat()
                         right = (mIndicatorRight - mIndicatorMarginRight).toFloat()
@@ -2046,13 +2051,13 @@ open class MyTabLayout @JvmOverloads constructor(
                         bottom = height.toFloat()
                     }
                 } else {
-                    if (mIndicatorMarginBottom >= 0) {
+                    if (mIndicatorMarginBottom > 0) {
                         left = mIndicatorLeft.toFloat()
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorMarginBottom).toFloat()
                         right = mIndicatorRight.toFloat()
                         bottom = (height - mIndicatorMarginBottom).toFloat()
-                    } else if (mIndicatorMarginTop >= 0) {
+                    } else if (mIndicatorMarginTop > 0) {
                         left = mIndicatorLeft.toFloat()
                         top = mIndicatorMarginTop.toFloat()
                         right = mIndicatorRight.toFloat()
@@ -2211,26 +2216,26 @@ open class MyTabLayout @JvmOverloads constructor(
         mTabStrip.setSelectedIndicatorMarginLeft(
             a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyIndicatorMarginLeft, 0)
         )
+        mTabStrip.setSelectedIndicatorMarginTop(
+            a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyIndicatorMarginTop, 0)
+        )
         mTabStrip.setSelectedIndicatorMarginRight(
             a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyIndicatorMarginRight, 0)
         )
         mTabStrip.setSelectedIndicatorMarginBottom(
             a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyIndicatorMarginBottom, 0)
         )
-        mTabStrip.setSelectedIndicatorMarginTop(
-            a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyIndicatorMarginTop, 0)
-        )
-        mTabStrip.setSelectedIndicatorRoundRadius(
-            a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyIndicatorRoundRadius, 0)
-        )
-        val mTabIndicatorBottomLayer =
-            a.getBoolean(R.styleable.MyTabLayout_tabMyIndicatorBottomLayer, false)
-        mTabStrip.setSelectedIndicatorBottomLayer(mTabIndicatorBottomLayer)
         mTabStrip.setSelectedIndicatorSelfFit(
             a.getBoolean(R.styleable.MyTabLayout_tabMyIndicatorSelfFit, false)
         )
         mTabStrip.setSelectedIndicatorMarginBottomSelfFit(
             a.getBoolean(R.styleable.MyTabLayout_tabMyIndicatorMarginBottomSelfFit, false)
+        )
+        val mTabIndicatorBottomLayer =
+            a.getBoolean(R.styleable.MyTabLayout_tabMyIndicatorBottomLayer, false)
+        mTabStrip.setSelectedIndicatorBottomLayer(mTabIndicatorBottomLayer)
+        mTabStrip.setSelectedIndicatorRoundRadius(
+            a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyIndicatorRoundRadius, 0)
         )
         mTabStrip.setSelectedIndicatorColor(
             a.getColor(
