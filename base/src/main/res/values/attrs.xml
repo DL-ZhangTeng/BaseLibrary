@@ -106,8 +106,6 @@
             <enum name="ITALIC" value="2" />
             <enum name="BOLD_ITALIC" value="3" />
         </attr>
-        <attr name="tabMyIndicatorColor" format="color" />
-        <attr name="tabMyIndicatorHeight" format="dimension" />
         <attr name="tabMyPaddingStart" format="dimension" />
         <attr name="tabMyTextColor" format="color" />
         <attr name="tabMyPaddingEnd" format="dimension" />
@@ -115,14 +113,6 @@
         <attr name="tabMyMaxWidth" format="dimension" />
         <attr name="tabMyBackground" format="reference" />
         <attr name="tabMyTextAppearance" format="reference" />
-        <attr name="tabMyIndicatorPaddingLeft" format="dimension" />
-        <attr name="tabMyIndicatorPaddingRight" format="dimension" />
-        <attr name="tabMyIndicatorMarginBottom" format="dimension" />
-        <attr name="tabMyIndicatorMarginTop" format="dimension" />
-        <attr name="tabMyIndicatorSelfFit" format="boolean" />
-        <attr name="tabMyIndicatorMarginBottomSelfFit" format="boolean" />
-        <attr name="tabMyIndicatorBottomLayer" format="boolean" />
-        <attr name="tabMyIndicatorRoundRadius" format="dimension" />
         <attr name="tabMyContentStart" format="dimension" />
         <attr name="tabMyMinWidth" format="dimension" />
         <attr name="tabMyPaddingBottom" format="dimension" />
@@ -133,6 +123,19 @@
         <attr name="tabMySelectedTextSize" format="dimension" />
         <attr name="tabMyTextSize" format="dimension" />
         <attr name="tabMyTabViewSelf" format="boolean" />
+        <attr name="tabMyIndicatorColor" format="color" />
+        <attr name="tabMyIndicatorWidth" format="dimension" />
+        <attr name="tabMyIndicatorHeight" format="dimension" />
+        <attr name="tabMyIndicatorMarginLeft" format="dimension" />
+        <attr name="tabMyIndicatorMarginTop" format="dimension" />
+        <attr name="tabMyIndicatorMarginRight" format="dimension" />
+        <attr name="tabMyIndicatorMarginBottom" format="dimension" />
+        <attr name="tabMyIndicatorSelfFit" format="boolean" />
+        <attr name="tabMyIndicatorMarginBottomSelfFit" format="boolean" />
+        <attr name="tabMyIndicatorBottomLayer" format="boolean" />
+        <attr name="tabMyIndicatorRoundRadius" format="dimension" />
+        <attr name="tabMyIndicatorDrawable" format="reference" />
+        <attr name="tabMyIndicatorMipmap" format="reference" />
     </declare-styleable>
     <declare-styleable name="MyTabItem">
         <attr name="myText" format="string" />
@@ -225,13 +228,13 @@
         </attr>
     </declare-styleable>
     <declare-styleable name="NineGridView">
-        <attr name="ngv_singleImageSize" format="dimension"/>
-        <attr name="ngv_singleImageRatio" format="float"/>
-        <attr name="ngv_gridSpacing" format="dimension"/>
-        <attr name="ngv_maxSize" format="integer"/>
+        <attr name="ngv_singleImageSize" format="dimension" />
+        <attr name="ngv_singleImageRatio" format="float" />
+        <attr name="ngv_gridSpacing" format="dimension" />
+        <attr name="ngv_maxSize" format="integer" />
         <attr name="ngv_mode" format="enum">
-            <enum name="fill" value="0"/>
-            <enum name="grid" value="1"/>
+            <enum name="fill" value="0" />
+            <enum name="grid" value="1" />
         </attr>
     </declare-styleable>
 </resources>

@@ -48,8 +48,8 @@
     </style>
 
     <style name="MyTabLayout">
-        <item name="tabMyIndicatorPaddingLeft">0dp</item>
-        <item name="tabMyIndicatorPaddingRight">0dp</item>
+        <item name="tabMyIndicatorMarginLeft">0dp</item>
+        <item name="tabMyIndicatorMarginRight">0dp</item>
         <item name="tabMyGravity">GRAVITY_FILL</item>
         <item name="tabMyMode">MODE_FIXED</item>
         <item name="tabMyMaxWidth">@dimen/design_tab_max_width</item>
