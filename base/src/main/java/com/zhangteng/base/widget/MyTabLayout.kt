@@ -228,20 +228,6 @@ open class MyTabLayout @JvmOverloads constructor(
         addTab(tab)
     }
 
-    @Deprecated(
-        """Use {@link #addOnTabSelectedListener(MyTabLayout.OnTabSelectedListener)} and
-      {@link #removeOnTabSelectedListener(MyTabLayout.OnTabSelectedListener)}."""
-    )
-    open fun setOnTabSelectedListener(listener: OnTabSelectedListener?) {
-        // The logic in this method emulates what we had before support for multiple
-        // registered listeners.
-        mSelectedListener?.let { removeOnTabSelectedListener(it) }
-        // Update the deprecated field so that we can remove the passed listener the next
-        // time we're called
-        mSelectedListener = listener
-        listener?.let { addOnTabSelectedListener(it) }
-    }
-
     /**
      * Add a [MyTabLayout.OnTabSelectedListener] that will be invoked when tab selection
      * changes.
@@ -545,15 +531,6 @@ open class MyTabLayout @JvmOverloads constructor(
             setPagerAdapter(null, false)
         }
         mSetupViewPagerImplicitly = implicitSetup
-    }
-
-    @Deprecated(
-        """Use {@link #setupWithViewPager(ViewPager)} to link a TabLayout with a ViewPager
-      together. When that method is used, the TabLayout will be automatically updated
-      when the {@link PagerAdapter} is changed."""
-    )
-    open fun setTabsFromPagerAdapter(adapter: PagerAdapter?) {
-        setPagerAdapter(adapter, false)
     }
 
     override fun shouldDelayChildPressedState(): Boolean {
@@ -2129,41 +2106,10 @@ open class MyTabLayout @JvmOverloads constructor(
     }
 
     companion object {
-        /**
-         * Scrollable tabs display a subset of tabs at any given moment, and can contain longer tab
-         * labels and a larger number of tabs. They are best used for browsing contexts in touch
-         * interfaces when users don’t need to directly compare the tab labels.
-         *
-         * @see .setTabMode
-         * @see .getTabMode
-         */
+
         const val MODE_SCROLLABLE = 0
-
-        /**
-         * Fixed tabs display all tabs concurrently and are best used with content that benefits from
-         * quick pivots between tabs. The maximum number of tabs is limited by the view’s width.
-         * Fixed tabs have equal width, based on the widest tab label.
-         *
-         * @see .setTabMode
-         * @see .getTabMode
-         */
         const val MODE_FIXED = 1
-
-        /**
-         * Gravity used to fill the [MyTabLayout] as much as possible. This option only takes effect
-         * when used with [.MODE_FIXED].
-         *
-         * @see .setTabGravity
-         * @see .getTabGravity
-         */
         const val GRAVITY_FILL = 0
-
-        /**
-         * Gravity used to lay out the tabs in the center of the [MyTabLayout].
-         *
-         * @see .setTabGravity
-         * @see .getTabGravity
-         */
         const val GRAVITY_CENTER = 1
         const val DEFAULT_GAP_TEXT_ICON = 8 // dps
         const val FIXED_WRAP_GUTTER_MIN = 16 //dps
@@ -2247,21 +2193,18 @@ open class MyTabLayout @JvmOverloads constructor(
                 R.styleable.MyTabLayout_tabMyIndicatorDrawable, 0
             )
         )
-        mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyPadding, 0)
-        mTabPaddingEnd = mTabPaddingBottom
-        mTabPaddingTop = mTabPaddingEnd
-        mTabPaddingStart = mTabPaddingTop
+        val mTabPadding = a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyPadding, 0)
         mTabPaddingStart = a.getDimensionPixelSize(
-            R.styleable.MyTabLayout_tabMyPaddingStart, mTabPaddingStart
+            R.styleable.MyTabLayout_tabMyPaddingStart, mTabPadding
         )
         mTabPaddingTop = a.getDimensionPixelSize(
-            R.styleable.MyTabLayout_tabMyPaddingTop, mTabPaddingTop
+            R.styleable.MyTabLayout_tabMyPaddingTop, mTabPadding
         )
         mTabPaddingEnd = a.getDimensionPixelSize(
-            R.styleable.MyTabLayout_tabMyPaddingEnd, mTabPaddingEnd
+            R.styleable.MyTabLayout_tabMyPaddingEnd, mTabPadding
         )
         mTabPaddingBottom = a.getDimensionPixelSize(
-            R.styleable.MyTabLayout_tabMyPaddingBottom, mTabPaddingBottom
+            R.styleable.MyTabLayout_tabMyPaddingBottom, mTabPadding
         )
         mTabTextAppearance = a.getResourceId(
             R.styleable.MyTabLayout_tabMyTextAppearance, R.style.TextAppearance_Design_Tab

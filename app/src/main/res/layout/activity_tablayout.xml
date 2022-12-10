@@ -118,6 +118,7 @@
         app:tabMyTextColor="#999999"
         app:tabMyTextSize="14sp"
         app:tabMyTypeface="NORMAL" />
+
     <com.zhangteng.base.widget.MyTabLayout
         android:id="@+id/tab_layout5"
         android:layout_width="match_parent"
@@ -137,6 +138,7 @@
         app:tabMyTextColor="#999999"
         app:tabMyTextSize="14sp"
         app:tabMyTypeface="NORMAL" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"

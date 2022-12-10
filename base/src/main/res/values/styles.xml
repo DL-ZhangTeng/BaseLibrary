@@ -50,9 +50,9 @@
     <style name="MyTabLayout">
         <item name="tabMyGravity">GRAVITY_FILL</item>
         <item name="tabMyMode">MODE_FIXED</item>
-        <item name="tabMyMaxWidth">@dimen/design_tab_max_width</item>
-        <item name="tabMyPaddingStart">12dp</item>
-        <item name="tabMyPaddingEnd">12dp</item>
+        <item name="tabMyMaxWidth" tools:ignore="PrivateResource">@dimen/design_tab_max_width</item>
+        <item name="tabMyPaddingStart">0dp</item>
+        <item name="tabMyPaddingEnd">0dp</item>
         <item name="tabMyBackground">?attr/selectableItemBackground</item>
         <item name="tabMyTextAppearance">@style/TextAppearance.Design.Tab</item>
         <item name="tabMySelectedTextColor">?android:textColorPrimary</item>
