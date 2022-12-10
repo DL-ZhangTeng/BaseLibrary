@@ -1893,44 +1893,18 @@ open class MyTabLayout @JvmOverloads constructor(
             if (mIndicatorAnimator != null && mIndicatorAnimator!!.isRunning) {
                 mIndicatorAnimator!!.cancel()
             }
-            val isRtl = (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL)
             val targetView = getChildAt(position)
             if (targetView == null) {
                 // If we don't have a view, just update the position now and return
                 updateIndicatorPosition()
                 return
             }
+
             val targetLeft = targetView.left
             val targetRight = targetView.right
-            val startLeft: Int
-            val startRight: Int
-            if (Math.abs(position - mSelectedPosition) <= 1) {
-                // If the views are adjacent, we'll animate from edge-to-edge
-                startLeft = mIndicatorLeft
-                startRight = mIndicatorRight
-            } else {
-                // Else, we'll just grow from the nearest edge
-                val offset = dpToPx(MOTION_NON_ADJACENT_OFFSET)
-                if (position < mSelectedPosition) {
-                    // We're going end-to-start
-                    if (isRtl) {
-                        startRight = targetLeft - offset
-                        startLeft = startRight
-                    } else {
-                        startRight = targetRight + offset
-                        startLeft = startRight
-                    }
-                } else {
-                    // We're going start-to-end
-                    if (isRtl) {
-                        startRight = targetRight + offset
-                        startLeft = startRight
-                    } else {
-                        startRight = targetLeft - offset
-                        startLeft = startRight
-                    }
-                }
-            }
+            val startLeft = mIndicatorLeft
+            val startRight = mIndicatorRight
+
             if (startLeft != targetLeft || startRight != targetRight) {
                 mIndicatorAnimator = ValueAnimator()
                 val animator = mIndicatorAnimator
