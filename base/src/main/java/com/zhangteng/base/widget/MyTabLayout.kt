@@ -2151,7 +2151,7 @@ open class MyTabLayout @JvmOverloads constructor(
             )
         )
         val a = context.obtainStyledAttributes(
-            attrs, R.styleable.MyTabLayout, defStyleAttr, R.style.MyTabLayout
+            attrs, R.styleable.MyTabLayout, defStyleAttr, 0
         )
         mTabStrip.setSelectedIndicatorWidth(
             a.getDimensionPixelSize(R.styleable.MyTabLayout_tabMyIndicatorWidth, 0)

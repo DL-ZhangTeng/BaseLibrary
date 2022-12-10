@@ -67,7 +67,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.2.0") {
 | tabMyPaddingBottom                | 距底部Padding                                           |
 | tabMyPaddingTop                   | 距顶部Padding                                           |
 | tabMyPadding                      | Padding                                              |
-| tabMyTextIconGap                  | 父节点注解                                                |
+| tabMyTextIconGap                  | Text与Icon之间的margin                                   |
 | tabMyViewNumber                   | tab数量                                                |
 | tabMySelectedTextSize             | 被选中文字大小                                              |
 | tabMyTextSize                     | 未选中文字大小                                              |
