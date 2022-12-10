@@ -1370,7 +1370,7 @@ open class MyTabLayout @JvmOverloads constructor(
         private var mCustomView: View? = null
         private var mCustomTextView: TextView? = null
         private var mCustomIconView: ImageView? = null
-        private var mDefaultMaxLines = 2
+        private var mDefaultMaxLines = 1
         override fun performClick(): Boolean {
             val handled = super.performClick()
             return if (mTab != null) {
@@ -1551,13 +1551,13 @@ open class MyTabLayout @JvmOverloads constructor(
                 // If there isn't a custom view, we'll us our own in-built layouts
                 if (mIconView == null) {
                     val iconView = LayoutInflater.from(context)
-                        .inflate(R.layout.design_layout_tab_icon, this, false) as ImageView
+                        .inflate(R.layout.layout_tab_icon, this, false) as ImageView
                     addView(iconView, 0)
                     mIconView = iconView
                 }
                 if (mTextView == null) {
                     val textView = LayoutInflater.from(context)
-                        .inflate(R.layout.design_layout_tab_text, this, false) as TextView
+                        .inflate(R.layout.layout_tab_text, this, false) as TextView
                     addView(textView)
                     mTextView = textView
                     mDefaultMaxLines = TextViewCompat.getMaxLines(mTextView!!)
