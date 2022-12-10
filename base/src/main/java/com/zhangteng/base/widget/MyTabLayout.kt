@@ -1760,10 +1760,17 @@ open class MyTabLayout @JvmOverloads constructor(
         open fun setIndicatorPositionFromTabPosition(position: Int, positionOffset: Float) {
             if (mIndicatorAnimator != null && mIndicatorAnimator!!.isRunning) {
                 mIndicatorAnimator!!.cancel()
+                val duration = mIndicatorAnimator!!.duration
+                animateIndicatorToPosition(
+                    mSelectedPosition,
+                    ((1f - mIndicatorAnimator!!.animatedFraction) * duration).roundToInt()
+                )
+            } else {
+                mSelectedPosition = position
+
+                mSelectionOffset = positionOffset
+                updateIndicatorPosition()
             }
-            mSelectedPosition = position
-            mSelectionOffset = positionOffset
-            updateIndicatorPosition()
         }
 
         open fun getIndicatorPosition(): Float {
