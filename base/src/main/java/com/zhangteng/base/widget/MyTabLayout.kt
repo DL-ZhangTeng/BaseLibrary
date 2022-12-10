@@ -3,7 +3,7 @@ package com.zhangteng.base.widget
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
+import android.annotation.SuppressLint
 import android.content.*
 import android.content.res.ColorStateList
 import android.database.DataSetObserver
@@ -37,50 +37,34 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.*
 import com.zhangteng.base.R
+import com.zhangteng.utils.dp2px
 import com.zhangteng.utils.getTextHeight
 import com.zhangteng.utils.getTextWidth
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 
 /**
  * Created by swing on 2018/7/19.
  */
+@SuppressLint("CustomViewStyleable")
 @DecorView
-open class MyTabLayout @JvmOverloads constructor(
+class MyTabLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : HorizontalScrollView(context, attrs, defStyleAttr) {
-    var mTabBackgroundResId = 0
     private val mTabs: ArrayList<Tab?> = ArrayList()
     private val mTabStrip: SlidingTabStrip?
     private var mRequestedTabMinWidth: Int
     private val mRequestedTabMaxWidth: Int
     private val mScrollableTabMinWidth: Int
     private val mSelectedListeners: ArrayList<OnTabSelectedListener?> = ArrayList()
-
-    // Pool we use as a simple RecyclerBin
     private val mTabViewPool: Pools.Pool<TabView?> = Pools.SimplePool(12)
-    var mTabPaddingStart: Int
-    var mTabPaddingTop: Int
-    var mTabPaddingEnd: Int
-    var mTabPaddingBottom: Int
-    var mTabViewSelf = false
-    var mTabTextAppearance: Int
-    var mTabTypeface: Int
-    var mTabSelectedTypeface: Int
-    var mTabTextColors: ColorStateList? = null
-    var mTabTextSize: Float
-    var mTabSelectedTextSize: Float
-    var mTabTextMultiLineSize: Float
-    var mTabMaxWidth = Int.MAX_VALUE
-    var mTabGravity: Int
-    var mMode: Int
-    var mViewPager: ViewPager? = null
+
     private var mSelectedTab: Tab? = null
     private val mContentInsetStart: Int
-    private var mSelectedListener: OnTabSelectedListener? = null
     private var mCurrentVpSelectedListener: OnTabSelectedListener? = null
     private var mScrollAnimator: ValueAnimator? = null
     private var mPagerAdapter: PagerAdapter? = null
@@ -89,15 +73,24 @@ open class MyTabLayout @JvmOverloads constructor(
     private var mAdapterChangeListener: AdapterChangeListener? = null
     private var mSetupViewPagerImplicitly = false
 
-    /**
-     * Sets the tab indicator's color for the currently selected tab.
-     *
-     * @param color color to use for the indicator
-     * @attr ref android.support.design.R.styleable#TabLayout_tabIndicatorColor
-     */
-    open fun setSelectedTabIndicatorColor(@ColorInt color: Int) {
-        mTabStrip?.setSelectedIndicatorColor(color)
-    }
+    var mTabBackgroundResId = 0
+    var mTabViewSelf = false
+    var mTabPaddingStart: Int
+    var mTabPaddingTop: Int
+    var mTabPaddingEnd: Int
+    var mTabPaddingBottom: Int
+    var mTabTextAppearance: Int
+    var mTabTypeface: Int
+    var mTabTextColors: ColorStateList? = null
+    var mTabTextSize: Float
+    var mTabSelectedTypeface: Int
+    var mTabSelectedTextSize: Float
+    var mTabTextMultiLineSize: Float
+    var mTabMaxWidth = Int.MAX_VALUE
+    var mTabGravity: Int
+    var mMode: Int
+    var mViewPager: ViewPager? = null
+    var mScrollAnimatorInterpolator: Interpolator? = AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR
 
     /**
      * Sets the tab indicator's width for the currently selected tab.
@@ -105,7 +98,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @param width width to use for the indicator in pixels
      * @attr ref android.support.design.R.styleable#TabLayout_tabIndicatorWidth
      */
-    open fun setSelectedTabIndicatorWidth(width: Int) {
+    fun setSelectedIndicatorWidth(width: Int) {
         mTabStrip?.setSelectedIndicatorWidth(width)
     }
 
@@ -115,16 +108,58 @@ open class MyTabLayout @JvmOverloads constructor(
      * @param height height to use for the indicator in pixels
      * @attr ref android.support.design.R.styleable#TabLayout_tabIndicatorHeight
      */
-    open fun setSelectedTabIndicatorHeight(height: Int) {
+    fun setSelectedIndicatorHeight(height: Int) {
         mTabStrip?.setSelectedIndicatorHeight(height)
     }
 
-    open fun setSelectedIndicatorMarginRight(right: Int) {
+    fun setSelectedIndicatorMarginLeft(left: Int) {
+        mTabStrip?.setSelectedIndicatorMarginLeft(left)
+    }
+
+    fun setSelectedIndicatorMarginTop(top: Int) {
+        mTabStrip?.setSelectedIndicatorMarginTop(top)
+    }
+
+    fun setSelectedIndicatorMarginRight(right: Int) {
         mTabStrip?.setSelectedIndicatorMarginRight(right)
     }
 
-    open fun setSelectedIndicatorMarginLeft(left: Int) {
-        mTabStrip?.setSelectedIndicatorMarginLeft(left)
+    fun setSelectedIndicatorMarginBottom(bottom: Int) {
+        mTabStrip?.setSelectedIndicatorMarginBottom(bottom)
+    }
+
+    fun setSelectedIndicatorSelfFit(selfFit: Boolean) {
+        mTabStrip?.setSelectedIndicatorSelfFit(selfFit)
+    }
+
+    fun setSelectedIndicatorMarginBottomSelfFit(marginBottomSelfFit: Boolean) {
+        mTabStrip?.setSelectedIndicatorMarginBottomSelfFit(marginBottomSelfFit)
+    }
+
+    fun setSelectedIndicatorBottomLayer(bottomLayer: Boolean) {
+        mTabStrip?.setSelectedIndicatorBottomLayer(bottomLayer)
+    }
+
+    fun setSelectedIndicatorRoundRadius(roundRadius: Int) {
+        mTabStrip?.setSelectedIndicatorRoundRadius(roundRadius)
+    }
+
+    /**
+     * Sets the tab indicator's color for the currently selected tab.
+     *
+     * @param color color to use for the indicator
+     * @attr ref android.support.design.R.styleable#TabLayout_tabIndicatorColor
+     */
+    fun setSelectedIndicatorColor(@ColorInt color: Int) {
+        mTabStrip?.setSelectedIndicatorColor(color)
+    }
+
+    fun setSelectedIndicatorDrawableResId(drawableResId: Int) {
+        mTabStrip?.setSelectedIndicatorDrawableResId(drawableResId)
+    }
+
+    fun setIndicatorAnimatorInterpolator(interpolator: Interpolator) {
+        mTabStrip?.setIndicatorAnimatorInterpolator(interpolator)
     }
 
     /**
@@ -138,11 +173,11 @@ open class MyTabLayout @JvmOverloads constructor(
      * @param positionOffset     Value from [0, 1) indicating the offset from `position`.
      * @param updateSelectedText Whether to update the text's selected state.
      */
-    open fun setScrollPosition(position: Int, positionOffset: Float, updateSelectedText: Boolean) {
+    fun setScrollPosition(position: Int, positionOffset: Float, updateSelectedText: Boolean) {
         setScrollPosition(position, positionOffset, updateSelectedText, true)
     }
 
-    open fun setScrollPosition(
+    fun setScrollPosition(
         position: Int, positionOffset: Float, updateSelectedText: Boolean,
         updateIndicatorPosition: Boolean,
     ) {
@@ -184,7 +219,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @param tab Tab to add
      */
     @JvmOverloads
-    open fun addTab(tab: Tab, setSelected: Boolean = mTabs.isEmpty()) {
+    fun addTab(tab: Tab, setSelected: Boolean = mTabs.isEmpty()) {
         addTab(tab, mTabs.size, setSelected)
     }
     /**
@@ -202,7 +237,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @param position The new position of the tab
      */
     @JvmOverloads
-    open fun addTab(tab: Tab, position: Int, setSelected: Boolean = mTabs.isEmpty()) {
+    fun addTab(tab: Tab, position: Int, setSelected: Boolean = mTabs.isEmpty()) {
         require(!(tab.mParent !== this)) { "Tab belongs to a different TabLayout." }
         configureTab(tab, position)
         addTabView(tab)
@@ -239,7 +274,7 @@ open class MyTabLayout @JvmOverloads constructor(
      *
      * @param listener listener to add
      */
-    open fun addOnTabSelectedListener(listener: OnTabSelectedListener) {
+    fun addOnTabSelectedListener(listener: OnTabSelectedListener) {
         if (!mSelectedListeners.contains(listener)) {
             mSelectedListeners.add(listener)
         }
@@ -251,14 +286,14 @@ open class MyTabLayout @JvmOverloads constructor(
      *
      * @param listener listener to remove
      */
-    open fun removeOnTabSelectedListener(listener: OnTabSelectedListener) {
+    fun removeOnTabSelectedListener(listener: OnTabSelectedListener) {
         mSelectedListeners.remove(listener)
     }
 
     /**
      * Remove all previously added [MyTabLayout.OnTabSelectedListener]s.
      */
-    open fun clearOnTabSelectedListeners() {
+    fun clearOnTabSelectedListeners() {
         mSelectedListeners.clear()
     }
 
@@ -269,7 +304,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @return A new Tab
      * @see .addTab
      */
-    open fun newTab(): Tab {
+    fun newTab(): Tab {
         var tab = sTabPool?.acquire()
         if (tab == null) {
             tab = Tab()
@@ -284,14 +319,14 @@ open class MyTabLayout @JvmOverloads constructor(
      *
      * @return Tab count
      */
-    open fun getTabCount(): Int {
+    fun getTabCount(): Int {
         return mTabs.size
     }
 
     /**
      * Returns the tab at the specified index.
      */
-    open fun getTabAt(index: Int): Tab? {
+    fun getTabAt(index: Int): Tab? {
         return if (index < 0 || index >= getTabCount()) null else mTabs.get(index)
     }
 
@@ -300,7 +335,7 @@ open class MyTabLayout @JvmOverloads constructor(
      *
      * @return selected tab position, or `-1` if there isn't a selected tab.
      */
-    open fun getSelectedTabPosition(): Int {
+    fun getSelectedTabPosition(): Int {
         return mSelectedTab?.getPosition() ?: -1
     }
 
@@ -310,7 +345,7 @@ open class MyTabLayout @JvmOverloads constructor(
      *
      * @param tab The tab to remove
      */
-    open fun removeTab(tab: Tab?) {
+    fun removeTab(tab: Tab?) {
         require(!(tab?.mParent !== this)) { "Tab does not belong to this TabLayout." }
         if (tab != null) {
             removeTabAt(tab.getPosition())
@@ -323,13 +358,13 @@ open class MyTabLayout @JvmOverloads constructor(
      *
      * @param position Position of the tab to remove
      */
-    open fun removeTabAt(position: Int) {
+    fun removeTabAt(position: Int) {
         val selectedTabPosition = mSelectedTab?.getPosition() ?: 0
         removeTabViewAt(position)
         val removedTab = mTabs.removeAt(position)
         if (removedTab != null) {
             removedTab.reset()
-            sTabPool?.release(removedTab)
+            sTabPool.release(removedTab)
         }
         val newTabCount = mTabs.size
         for (i in position until newTabCount) {
@@ -343,7 +378,7 @@ open class MyTabLayout @JvmOverloads constructor(
     /**
      * Remove all tabs from the action bar and deselect the current tab.
      */
-    open fun removeAllTabs() {
+    fun removeAllTabs() {
         // Remove all the views
         if (mTabStrip != null) for (i in mTabStrip.childCount - 1 downTo 0) {
             removeTabViewAt(i)
@@ -354,7 +389,7 @@ open class MyTabLayout @JvmOverloads constructor(
             i.remove()
             tab?.let {
                 it.reset()
-                sTabPool?.release(it)
+                sTabPool.release(it)
             }
         }
         mSelectedTab = null
@@ -366,7 +401,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @see .setTabMode
      */
     @Mode
-    open fun getTabMode(): Int {
+    fun getTabMode(): Int {
         return mMode
     }
 
@@ -384,7 +419,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @param mode one of [.MODE_FIXED] or [.MODE_SCROLLABLE].
      * @attr ref android.support.design.R.styleable#TabLayout_tabMode
      */
-    open fun setTabMode(@Mode mode: Int) {
+    fun setTabMode(@Mode mode: Int) {
         if (mode != mMode) {
             mMode = mode
             applyModeAndGravity()
@@ -397,7 +432,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @return one of [.GRAVITY_CENTER] or [.GRAVITY_FILL].
      */
     @TabGravity
-    open fun getTabGravity(): Int {
+    fun getTabGravity(): Int {
         return mTabGravity
     }
 
@@ -407,7 +442,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @param gravity one of [.GRAVITY_CENTER] or [.GRAVITY_FILL].
      * @attr ref android.support.design.R.styleable#TabLayout_tabGravity
      */
-    open fun setTabGravity(@TabGravity gravity: Int) {
+    fun setTabGravity(@TabGravity gravity: Int) {
         if (mTabGravity != gravity) {
             mTabGravity = gravity
             applyModeAndGravity()
@@ -417,7 +452,7 @@ open class MyTabLayout @JvmOverloads constructor(
     /**
      * Gets the text colors for the different states (normal, selected) used for the tabs.
      */
-    open fun getTabTextColors(): ColorStateList? {
+    fun getTabTextColors(): ColorStateList? {
         return mTabTextColors
     }
 
@@ -426,7 +461,7 @@ open class MyTabLayout @JvmOverloads constructor(
      *
      * @see .getTabTextColors
      */
-    open fun setTabTextColors(textColor: ColorStateList?) {
+    fun setTabTextColors(textColor: ColorStateList?) {
         if (mTabTextColors !== textColor) {
             mTabTextColors = textColor
             updateAllTabs()
@@ -439,7 +474,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @attr ref android.support.design.R.styleable#TabLayout_tabTextColor
      * @attr ref android.support.design.R.styleable#TabLayout_tabSelectedTextColor
      */
-    open fun setTabTextColors(normalColor: Int, selectedColor: Int) {
+    fun setTabTextColors(normalColor: Int, selectedColor: Int) {
         setTabTextColors(createColorStateList(normalColor, selectedColor))
     }
     /**
@@ -477,7 +512,7 @@ open class MyTabLayout @JvmOverloads constructor(
      * @param viewPager the ViewPager to link to, or `null` to clear any previous link
      */
     @JvmOverloads
-    open fun setupWithViewPager(viewPager: ViewPager?, autoRefresh: Boolean = true) {
+    fun setupWithViewPager(viewPager: ViewPager?, autoRefresh: Boolean = true) {
         setupWithViewPager(viewPager, autoRefresh, false)
     }
 
@@ -567,7 +602,7 @@ open class MyTabLayout @JvmOverloads constructor(
         )
     }
 
-    open fun setPagerAdapter(adapter: PagerAdapter?, addObserver: Boolean) {
+    fun setPagerAdapter(adapter: PagerAdapter?, addObserver: Boolean) {
         if (mPagerAdapter != null && mPagerAdapterObserver != null) {
             // If we already have a PagerAdapter, unregister our observer
             mPagerAdapter!!.unregisterDataSetObserver(mPagerAdapterObserver!!)
@@ -585,7 +620,7 @@ open class MyTabLayout @JvmOverloads constructor(
         populateFromPagerAdapter()
     }
 
-    open fun populateFromPagerAdapter() {
+    fun populateFromPagerAdapter() {
         removeAllTabs()
         if (mPagerAdapter != null) {
             val adapterCount = mPagerAdapter!!.count
@@ -663,7 +698,7 @@ open class MyTabLayout @JvmOverloads constructor(
         }
     }
 
-    private fun createLayoutParamsForTabs(): LinearLayout.LayoutParams? {
+    private fun createLayoutParamsForTabs(): LinearLayout.LayoutParams {
         val lp = LinearLayout.LayoutParams(
             LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT
         )
@@ -683,34 +718,33 @@ open class MyTabLayout @JvmOverloads constructor(
         }
     }
 
-    open fun dpToPx(dps: Int): Int {
-        return Math.round(resources.displayMetrics.density * dps)
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // If we have a MeasureSpec which allows us to decide our height, try and use the default
         // height
-        var heightMeasureSpec = heightMeasureSpec
-        val idealHeight = dpToPx(getDefaultHeight()) + paddingTop + paddingBottom
-        when (MeasureSpec.getMode(heightMeasureSpec)) {
-            MeasureSpec.AT_MOST -> heightMeasureSpec = MeasureSpec.makeMeasureSpec(
-                Math.min(idealHeight, MeasureSpec.getSize(heightMeasureSpec)), MeasureSpec.EXACTLY
+        var heightMeasureSpecVar = heightMeasureSpec
+        val idealHeight = context.dp2px(getDefaultHeight().toFloat()) + paddingTop + paddingBottom
+        if (MeasureSpec.getMode(heightMeasureSpecVar) == MeasureSpec.AT_MOST) {
+            heightMeasureSpecVar = MeasureSpec.makeMeasureSpec(
+                min(
+                    idealHeight,
+                    MeasureSpec.getSize(heightMeasureSpecVar)
+                ), MeasureSpec.EXACTLY
             )
-            MeasureSpec.UNSPECIFIED -> heightMeasureSpec =
-                MeasureSpec.makeMeasureSpec(idealHeight, MeasureSpec.EXACTLY)
+        } else if (MeasureSpec.getMode(heightMeasureSpecVar) == MeasureSpec.UNSPECIFIED) {
+            heightMeasureSpecVar = MeasureSpec.makeMeasureSpec(idealHeight, MeasureSpec.EXACTLY)
         }
         val specWidth = MeasureSpec.getSize(widthMeasureSpec)
         if (MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.UNSPECIFIED) {
             // If we don't have an unspecified width spec, use the given size to calculate
             // the max tab width
             mTabMaxWidth =
-                if (mRequestedTabMaxWidth > 0) mRequestedTabMaxWidth else specWidth - dpToPx(
-                    TAB_MIN_WIDTH_MARGIN
+                if (mRequestedTabMaxWidth > 0) mRequestedTabMaxWidth else specWidth - context.dp2px(
+                    TAB_MIN_WIDTH_MARGIN.toFloat()
                 )
         }
 
         // Now super measure itself using the (possibly) modified height spec
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        super.onMeasure(widthMeasureSpec, heightMeasureSpecVar)
         if (childCount == 1) {
             // If we're in fixed mode then we need to make the tab strip is the same width as us
             // so we don't scroll
@@ -726,7 +760,7 @@ open class MyTabLayout @JvmOverloads constructor(
             if (remeasure) {
                 // Re-measure the child with a widthSpec set to be exactly our measure width
                 val childHeightMeasureSpec = getChildMeasureSpec(
-                    heightMeasureSpec, paddingTop + paddingBottom, child.layoutParams.height
+                    heightMeasureSpecVar, paddingTop + paddingBottom, child.layoutParams.height
                 )
                 val childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(
                     measuredWidth, MeasureSpec.EXACTLY
@@ -772,17 +806,15 @@ open class MyTabLayout @JvmOverloads constructor(
     private fun ensureScrollAnimator() {
         if (mScrollAnimator == null) {
             mScrollAnimator = ValueAnimator()
-            mScrollAnimator!!.interpolator = AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR
+            mScrollAnimator!!.interpolator = mScrollAnimatorInterpolator
             mScrollAnimator!!.duration = ANIMATION_DURATION.toLong()
             mScrollAnimator!!.addUpdateListener { animator ->
-                scrollTo(
-                    animator.animatedValue as Int, 0
-                )
+                scrollTo(animator.animatedValue as Int, 0)
             }
         }
     }
 
-    open fun setScrollAnimatorListener(listener: Animator.AnimatorListener?) {
+    fun setScrollAnimatorListener(listener: Animator.AnimatorListener?) {
         ensureScrollAnimator()
         mScrollAnimator?.addListener(listener)
     }
@@ -798,7 +830,7 @@ open class MyTabLayout @JvmOverloads constructor(
     }
 
     @JvmOverloads
-    open fun selectTab(tab: Tab?, updateIndicator: Boolean = true) {
+    fun selectTab(tab: Tab?, updateIndicator: Boolean = true) {
         val currentTab = mSelectedTab
         if (currentTab == tab) {
             if (currentTab != null && tab != null) {
@@ -864,13 +896,14 @@ open class MyTabLayout @JvmOverloads constructor(
     private fun calculateScrollXForTab(position: Int, positionOffset: Float): Int {
         if (mMode == MODE_SCROLLABLE) {
             val selectedChild = mTabStrip?.getChildAt(position)
-            val nextChild =
-                if (position + 1 < mTabStrip?.childCount ?: 0) mTabStrip?.getChildAt(position + 1) else null
+            val nextChild = if (position + 1 < (mTabStrip?.childCount ?: 0)) mTabStrip?.getChildAt(
+                position + 1
+            ) else null
             val selectedWidth = selectedChild?.width ?: 0
             val nextWidth = nextChild?.width ?: 0
 
             // base scroll amount: places center of tab in center of parent
-            val scrollBase = selectedChild?.left ?: 0 + selectedWidth / 2 - width / 2
+            val scrollBase = (selectedChild?.left ?: 0) + selectedWidth / 2 - width / 2
             // offset amount: fraction of the distance between centers of tabs
             val scrollOffset = ((selectedWidth + nextWidth) * 0.5f * positionOffset).toInt()
             return if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_LTR) scrollBase + scrollOffset else scrollBase - scrollOffset
@@ -892,7 +925,7 @@ open class MyTabLayout @JvmOverloads constructor(
         updateTabViews(true)
     }
 
-    open fun updateTabViews(requestLayout: Boolean) {
+    fun updateTabViews(requestLayout: Boolean) {
         for (i in 0 until (mTabStrip?.childCount ?: 0)) {
             val child = mTabStrip?.getChildAt(i)
             child?.let {
@@ -937,7 +970,7 @@ open class MyTabLayout @JvmOverloads constructor(
         return generateDefaultLayoutParams()
     }
 
-    open fun getTabMaxWidth(): Int {
+    fun getTabMaxWidth(): Int {
         return mTabMaxWidth
     }
 
@@ -1000,7 +1033,7 @@ open class MyTabLayout @JvmOverloads constructor(
         /**
          * @return This Tab's tag object.
          */
-        open fun getTag(): Any? {
+        fun getTag(): Any? {
             return mTag
         }
 
@@ -1010,7 +1043,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @param tag Object to store
          * @return The current instance for call chaining
          */
-        open fun setTag(tag: Any?): Tab {
+        fun setTag(tag: Any?): Tab {
             mTag = tag
             return this
         }
@@ -1021,7 +1054,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @see .setCustomView
          * @see .setCustomView
          */
-        open fun getCustomView(): View? {
+        fun getCustomView(): View? {
             return mCustomView
         }
 
@@ -1039,7 +1072,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @param resId A layout resource to inflate and use as a custom tab view
          * @return The current instance for call chaining
          */
-        open fun setCustomView(@LayoutRes resId: Int): Tab {
+        fun setCustomView(@LayoutRes resId: Int): Tab {
             val inflater = LayoutInflater.from(mView?.context)
             return setCustomView(inflater.inflate(resId, mView, false))
         }
@@ -1058,7 +1091,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @param view Custom view to be used as a tab.
          * @return The current instance for call chaining
          */
-        open fun setCustomView(view: View?): Tab {
+        fun setCustomView(view: View?): Tab {
             mCustomView = view
             updateView()
             return this
@@ -1069,7 +1102,7 @@ open class MyTabLayout @JvmOverloads constructor(
          *
          * @return The tab's icon
          */
-        open fun getIcon(): Drawable? {
+        fun getIcon(): Drawable? {
             return mIcon
         }
 
@@ -1079,7 +1112,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @param resId A resource ID referring to the icon that should be displayed
          * @return The current instance for call chaining
          */
-        open fun setIcon(@DrawableRes resId: Int): Tab {
+        fun setIcon(@DrawableRes resId: Int): Tab {
             requireNotNull(mParent) { "Tab not attached to a TabLayout" }
             return setIcon(AppCompatResources.getDrawable(mParent!!.context, resId))
         }
@@ -1090,7 +1123,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @param icon The drawable to use as an icon
          * @return The current instance for call chaining
          */
-        open fun setIcon(icon: Drawable?): Tab {
+        fun setIcon(icon: Drawable?): Tab {
             mIcon = icon
             updateView()
             return this
@@ -1102,11 +1135,11 @@ open class MyTabLayout @JvmOverloads constructor(
          * @return Current position, or [.INVALID_POSITION] if this tab is not currently in
          * the action bar.
          */
-        open fun getPosition(): Int {
+        fun getPosition(): Int {
             return mPosition
         }
 
-        open fun setPosition(position: Int) {
+        fun setPosition(position: Int) {
             mPosition = position
         }
 
@@ -1115,7 +1148,7 @@ open class MyTabLayout @JvmOverloads constructor(
          *
          * @return The tab's text
          */
-        open fun getText(): CharSequence? {
+        fun getText(): CharSequence? {
             return mText
         }
 
@@ -1126,7 +1159,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @param resId A resource ID referring to the text that should be displayed
          * @return The current instance for call chaining
          */
-        open fun setText(@StringRes resId: Int): Tab {
+        fun setText(@StringRes resId: Int): Tab {
             requireNotNull(mParent) { "Tab not attached to a TabLayout" }
             return setText(mParent!!.resources.getText(resId))
         }
@@ -1138,7 +1171,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @param text The text to display
          * @return The current instance for call chaining
          */
-        open fun setText(text: CharSequence?): Tab {
+        fun setText(text: CharSequence?): Tab {
             mText = text
             updateView()
             return this
@@ -1147,7 +1180,7 @@ open class MyTabLayout @JvmOverloads constructor(
         /**
          * Select this tab. Only valid if the tab has been added to the action bar.
          */
-        open fun select() {
+        fun select() {
             requireNotNull(mParent) { "Tab not attached to a TabLayout" }
             mParent!!.selectTab(this)
         }
@@ -1155,7 +1188,7 @@ open class MyTabLayout @JvmOverloads constructor(
         /**
          * Returns true if this tab is currently selected.
          */
-        open fun isSelected(): Boolean {
+        fun isSelected(): Boolean {
             requireNotNull(mParent) { "Tab not attached to a TabLayout" }
             return mParent!!.getSelectedTabPosition() == mPosition
         }
@@ -1167,7 +1200,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @see .setContentDescription
          * @see .setContentDescription
          */
-        open fun getContentDescription(): CharSequence? {
+        fun getContentDescription(): CharSequence? {
             return mContentDesc
         }
 
@@ -1180,7 +1213,7 @@ open class MyTabLayout @JvmOverloads constructor(
          * @see .setContentDescription
          * @see .getContentDescription
          */
-        open fun setContentDescription(@StringRes resId: Int): Tab {
+        fun setContentDescription(@StringRes resId: Int): Tab {
             requireNotNull(mParent) { "Tab not attached to a TabLayout" }
             return setContentDescription(mParent!!.resources.getText(resId))
         }
@@ -1194,17 +1227,17 @@ open class MyTabLayout @JvmOverloads constructor(
          * @see .setContentDescription
          * @see .getContentDescription
          */
-        open fun setContentDescription(contentDesc: CharSequence?): Tab {
+        fun setContentDescription(contentDesc: CharSequence?): Tab {
             mContentDesc = contentDesc
             updateView()
             return this
         }
 
-        open fun updateView() {
+        fun updateView() {
             mView?.update()
         }
 
-        open fun reset() {
+        fun reset() {
             mParent = null
             mView = null
             mTag = null
@@ -1275,7 +1308,7 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        open fun reset() {
+        fun reset() {
             mScrollState = SCROLL_STATE_IDLE
             mPreviousScrollState = mScrollState
         }
@@ -1304,31 +1337,22 @@ open class MyTabLayout @JvmOverloads constructor(
         }
     }
 
-    internal object AnimationUtils {
+    object AnimationUtils {
         val LINEAR_INTERPOLATOR: Interpolator = LinearInterpolator()
         val FAST_OUT_SLOW_IN_INTERPOLATOR: Interpolator = FastOutSlowInInterpolator()
         val FAST_OUT_LINEAR_IN_INTERPOLATOR: Interpolator = FastOutLinearInInterpolator()
         val LINEAR_OUT_SLOW_IN_INTERPOLATOR: Interpolator = LinearOutSlowInInterpolator()
         val DECELERATE_INTERPOLATOR: Interpolator = DecelerateInterpolator()
 
-        /**
-         * Linear interpolation between `startValue` and `endValue` by `fraction`.
-         */
-        open fun lerp(startValue: Float, endValue: Float, fraction: Float): Float {
-            return startValue + fraction * (endValue - startValue)
-        }
-
-        open fun lerp(startValue: Int, endValue: Int, fraction: Float): Int {
-            return startValue + Math.round(fraction * (endValue - startValue))
+        fun linearInterpolation(startValue: Int, endValue: Int, fraction: Float): Int {
+            return startValue + (fraction * (endValue - startValue)).roundToInt()
         }
     }
 
     internal object ThemeUtils {
-        private val APPCOMPAT_CHECK_ATTRS: IntArray = intArrayOf(
-            R.attr.colorPrimary
-        )
+        private val APPCOMPAT_CHECK_ATTRS: IntArray = intArrayOf(R.attr.colorPrimary)
 
-        open fun checkAppCompatTheme(context: Context?) {
+        fun checkAppCompatTheme(context: Context?) {
             context?.let {
                 val a = context.obtainStyledAttributes(APPCOMPAT_CHECK_ATTRS)
                 val failed = !a.hasValue(0)
@@ -1361,6 +1385,7 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
+        @SuppressLint("ObsoleteSdkInt")
         override fun setSelected(selected: Boolean) {
             val changed = isSelected != selected
             super.setSelected(selected)
@@ -1488,12 +1513,12 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        open fun reset() {
+        fun reset() {
             setTab(null)
             isSelected = false
         }
 
-        open fun update() {
+        fun update() {
             val tab = mTab
             val custom = tab?.getCustomView()
             if (custom != null) {
@@ -1590,7 +1615,7 @@ open class MyTabLayout @JvmOverloads constructor(
                 var bottomMargin = 0
                 if (hasText && iconView.visibility == VISIBLE) {
                     // If we're showing both text and icon, add some margin bottom to the icon
-                    bottomMargin = gapTextIcon ?: dpToPx(DEFAULT_GAP_TEXT_ICON)
+                    bottomMargin = gapTextIcon ?: context.dp2px(DEFAULT_GAP_TEXT_ICON.toFloat())
                 }
                 if (bottomMargin != lp.bottomMargin) {
                     lp.bottomMargin = bottomMargin
@@ -1600,11 +1625,11 @@ open class MyTabLayout @JvmOverloads constructor(
             TooltipCompat.setTooltipText(this, if (hasText) null else contentDesc)
         }
 
-        open fun getTab(): Tab? {
+        fun getTab(): Tab? {
             return mTab
         }
 
-        open fun setTab(tab: Tab?) {
+        fun setTab(tab: Tab?) {
             if (tab != mTab) {
                 mTab = tab
                 update()
@@ -1655,85 +1680,87 @@ open class MyTabLayout @JvmOverloads constructor(
         private var mTabIndicatorSelfFit = false
         private var mTabIndicatorMarginBottomSelfFit = false
         private var mIndicatorAnimator: ValueAnimator? = null
+        private var mIndicatorAnimatorInterpolator: Interpolator =
+            AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR
 
-        open fun setSelectedIndicatorWidth(width: Int) {
+        fun setSelectedIndicatorWidth(width: Int) {
             if (mSelectedIndicatorWidth != width) {
                 mSelectedIndicatorWidth = width
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorHeight(height: Int) {
+        fun setSelectedIndicatorHeight(height: Int) {
             if (mSelectedIndicatorHeight != height) {
                 mSelectedIndicatorHeight = height
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorMarginLeft(left: Int) {
+        fun setSelectedIndicatorMarginLeft(left: Int) {
             if (mIndicatorMarginLeft != left) {
                 mIndicatorMarginLeft = left
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorMarginTop(top: Int) {
+        fun setSelectedIndicatorMarginTop(top: Int) {
             if (mIndicatorMarginTop != top) {
                 mIndicatorMarginTop = top
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorMarginRight(right: Int) {
+        fun setSelectedIndicatorMarginRight(right: Int) {
             if (mIndicatorMarginRight != right) {
                 mIndicatorMarginRight = right
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorMarginBottom(bottom: Int) {
+        fun setSelectedIndicatorMarginBottom(bottom: Int) {
             if (mIndicatorMarginBottom != bottom) {
                 mIndicatorMarginBottom = bottom
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorSelfFit(selfFit: Boolean) {
+        fun setSelectedIndicatorSelfFit(selfFit: Boolean) {
             if (mTabIndicatorSelfFit != selfFit) {
                 mTabIndicatorSelfFit = selfFit
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorMarginBottomSelfFit(marginBottomSelfFit: Boolean) {
+        fun setSelectedIndicatorMarginBottomSelfFit(marginBottomSelfFit: Boolean) {
             if (mTabIndicatorMarginBottomSelfFit != marginBottomSelfFit) {
                 mTabIndicatorMarginBottomSelfFit = marginBottomSelfFit
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorBottomLayer(bottomLayer: Boolean) {
+        fun setSelectedIndicatorBottomLayer(bottomLayer: Boolean) {
             if (mTabIndicatorBottomLayer != bottomLayer) {
                 mTabIndicatorBottomLayer = bottomLayer
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorRoundRadius(roundRadius: Int) {
+        fun setSelectedIndicatorRoundRadius(roundRadius: Int) {
             if (mIndicatorRoundRadius != roundRadius) {
                 mIndicatorRoundRadius = roundRadius
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorColor(color: Int) {
+        fun setSelectedIndicatorColor(color: Int) {
             if (mSelectedIndicatorPaint?.color != color) {
                 mSelectedIndicatorPaint?.color = color
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
 
-        open fun setSelectedIndicatorDrawableResId(drawableResId: Int) {
+        fun setSelectedIndicatorDrawableResId(drawableResId: Int) {
             if (drawableResId != 0) {
                 mTabIndicatorDrawable = AppCompatResources.getDrawable(context, drawableResId)
                 if (mTabIndicatorDrawable == null) {
@@ -1744,7 +1771,13 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        open fun childrenNeedLayout(): Boolean {
+        fun setIndicatorAnimatorInterpolator(interpolator: Interpolator) {
+            if (mIndicatorAnimatorInterpolator != interpolator) {
+                mIndicatorAnimatorInterpolator = interpolator
+            }
+        }
+
+        fun childrenNeedLayout(): Boolean {
             var i = 0
             val z = childCount
             while (i < z) {
@@ -1757,7 +1790,7 @@ open class MyTabLayout @JvmOverloads constructor(
             return false
         }
 
-        open fun setIndicatorPositionFromTabPosition(position: Int, positionOffset: Float) {
+        fun setIndicatorPositionFromTabPosition(position: Int, positionOffset: Float) {
             if (mIndicatorAnimator != null && mIndicatorAnimator!!.isRunning) {
                 mIndicatorAnimator!!.cancel()
                 val duration = mIndicatorAnimator!!.duration
@@ -1773,7 +1806,7 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        open fun getIndicatorPosition(): Float {
+        fun getIndicatorPosition(): Float {
             return mSelectedPosition + mSelectionOffset
         }
 
@@ -1814,7 +1847,7 @@ open class MyTabLayout @JvmOverloads constructor(
                     // If we don't have a largest child yet, skip until the next measure pass
                     return
                 }
-                val gutter = dpToPx(FIXED_WRAP_GUTTER_MIN)
+                val gutter = context.dp2px(FIXED_WRAP_GUTTER_MIN.toFloat())
                 var remeasure = false
                 if (largestTabWidth * count <= measuredWidth - gutter * 2) {
                     // If the tabs fit within our width minus gutters, we will set all tabs to have
@@ -1880,7 +1913,7 @@ open class MyTabLayout @JvmOverloads constructor(
             setIndicatorPosition(left, right)
         }
 
-        open fun setIndicatorPosition(left: Int, right: Int) {
+        fun setIndicatorPosition(left: Int, right: Int) {
             if (left != mIndicatorLeft || right != mIndicatorRight) {
                 // If the indicator's left/right has changed, invalidate
                 mIndicatorLeft = left
@@ -1889,7 +1922,7 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        open fun animateIndicatorToPosition(position: Int, duration: Int) {
+        fun animateIndicatorToPosition(position: Int, duration: Int) {
             if (mIndicatorAnimator != null && mIndicatorAnimator!!.isRunning) {
                 mIndicatorAnimator!!.cancel()
             }
@@ -1906,27 +1939,29 @@ open class MyTabLayout @JvmOverloads constructor(
             val startRight = mIndicatorRight
 
             if (startLeft != targetLeft || startRight != targetRight) {
-                mIndicatorAnimator = ValueAnimator()
-                val animator = mIndicatorAnimator
-                animator?.let {
-                    it.interpolator = AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR
-                    it.duration = duration.toLong()
-                    it.setFloatValues(0f, 1f)
-                    it.addUpdateListener(AnimatorUpdateListener { animator ->
+                mIndicatorAnimator = ValueAnimator().apply {
+                    interpolator = mIndicatorAnimatorInterpolator
+                    this.duration = duration.toLong()
+                    setFloatValues(0f, 1f)
+                    addUpdateListener { animator ->
                         val fraction = animator.animatedFraction
                         setIndicatorPosition(
-                            AnimationUtils.lerp(startLeft, targetLeft, fraction),
-                            AnimationUtils.lerp(startRight, targetRight, fraction)
+                            AnimationUtils.linearInterpolation(startLeft, targetLeft, fraction),
+                            AnimationUtils.linearInterpolation(
+                                startRight,
+                                targetRight,
+                                fraction
+                            )
                         )
-                    })
-                    it.addListener(object : AnimatorListenerAdapter() {
+                    }
+                    addListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animator: Animator?) {
                             mSelectedPosition = position
                             mSelectionOffset = 0f
                         }
                     })
-                    it.start()
                 }
+                mIndicatorAnimator?.start()
             }
         }
 
@@ -2081,28 +2116,26 @@ open class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        open fun setAutoRefresh(autoRefresh: Boolean) {
+        fun setAutoRefresh(autoRefresh: Boolean) {
             mAutoRefresh = autoRefresh
         }
     }
 
     companion object {
-
         const val MODE_SCROLLABLE = 0
         const val MODE_FIXED = 1
         const val GRAVITY_FILL = 0
         const val GRAVITY_CENTER = 1
         const val DEFAULT_GAP_TEXT_ICON = 8 // dps
         const val FIXED_WRAP_GUTTER_MIN = 16 //dps
-        const val MOTION_NON_ADJACENT_OFFSET = 24
         private const val DEFAULT_HEIGHT_WITH_TEXT_ICON = 72 // dps
         private const val INVALID_WIDTH = -1
         private const val DEFAULT_HEIGHT = 48 // dps
         private const val TAB_MIN_WIDTH_MARGIN = 56 //dps
         private const val ANIMATION_DURATION = 300
-        private val sTabPool: Pools.Pool<Tab?>? = SynchronizedPool(16)
+        private val sTabPool: Pools.Pool<Tab?> = SynchronizedPool(16)
         private var gapTextIcon: Int? = null
-        private fun createColorStateList(defaultColor: Int, selectedColor: Int): ColorStateList? {
+        private fun createColorStateList(defaultColor: Int, selectedColor: Int): ColorStateList {
             val states = arrayOfNulls<IntArray?>(2)
             val colors = IntArray(2)
             var i = 0
@@ -2113,7 +2146,6 @@ open class MyTabLayout @JvmOverloads constructor(
             // Default enabled state
             states[i] = EMPTY_STATE_SET
             colors[i] = defaultColor
-            i++
             return ColorStateList(states, colors)
         }
     }
@@ -2188,15 +2220,15 @@ open class MyTabLayout @JvmOverloads constructor(
             R.styleable.MyTabLayout_tabMyPaddingBottom, mTabPadding
         )
         mTabTextAppearance = a.getResourceId(
-            R.styleable.MyTabLayout_tabMyTextAppearance, R.style.TextAppearance_Design_Tab
+            R.styleable.MyTabLayout_tabMyTextAppearance, R.style.MyTabLayout_Tab
         )
         gapTextIcon = a.getDimensionPixelSize(
-            R.styleable.MyTabLayout_tabMyTextIconGap, dpToPx(DEFAULT_GAP_TEXT_ICON)
+            R.styleable.MyTabLayout_tabMyTextIconGap, context.dp2px(DEFAULT_GAP_TEXT_ICON.toFloat())
         )
 
         // Text colors/sizes come from the text appearance first
         val ta = context.obtainStyledAttributes(
-            mTabTextAppearance, R.styleable.TextAppearance
+            mTabTextAppearance, R.styleable.MyTabLayout_TextAppearance
         )
         try {
             mTabTextSize = ta.getDimensionPixelSize(
@@ -2258,8 +2290,8 @@ open class MyTabLayout @JvmOverloads constructor(
         a.recycle()
         val res = resources
         mTabTextMultiLineSize =
-            res.getDimensionPixelSize(R.dimen.design_tab_text_size_2line).toFloat()
-        mScrollableTabMinWidth = res.getDimensionPixelSize(R.dimen.design_tab_scrollable_min_width)
+            res.getDimensionPixelSize(R.dimen.tab_multi_line_text_size).toFloat()
+        mScrollableTabMinWidth = res.getDimensionPixelSize(R.dimen.tab_scrollable_min_width)
 
         // Now apply the tab mode and gravity
         applyModeAndGravity()

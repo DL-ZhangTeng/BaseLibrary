@@ -45,7 +45,11 @@ class TabLayoutActivity : BaseActivity() {
         fragments.add(BaseDemoFragment())
         fragments.add(BaseDemoFragment())
         vp?.adapter =
-            CommonFragmentAdapter(supportFragmentManager, arrayOf("111111", "111111", "111111", "111111", "111111"), fragments)
+            CommonFragmentAdapter(
+                supportFragmentManager,
+                arrayOf("111111", "111111", "111111", "111111", "111111"),
+                fragments
+            )
     }
 
     override fun initData() {

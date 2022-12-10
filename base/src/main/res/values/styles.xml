@@ -46,4 +46,10 @@
         <item name="android:windowEnterAnimation">@anim/self_show_dropright_open</item>
         <item name="android:windowExitAnimation">@anim/self_show_dropright_close</item>
     </style>
+
+    <style name="MyTabLayout.Tab" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">@dimen/tab_text_size</item>
+        <item name="android:textColor">@color/tabs_text_color_selector</item>
+        <item name="textAllCaps">true</item>
+    </style>
 </resources>

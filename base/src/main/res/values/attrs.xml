@@ -142,6 +142,30 @@
         <attr name="myIcon" format="reference" />
         <attr name="myLayout" format="reference" />
     </declare-styleable>
+    <declare-styleable name="MyTabLayout.TextAppearance">
+        <attr name="android:textSize"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textColorHint"/>
+        <attr name="android:textColorLink"/>
+        <attr name="android:textStyle"/>
+        <attr name="android:textFontWeight"/>
+        <attr name="android:typeface"/>
+        <attr name="android:fontFamily"/>
+        <attr name="fontFamily"/>
+        <attr name="textAllCaps"/>
+        <!-- Set the textLocale by a comma-separated language tag string,
+             for example "ja-JP,zh-CN". This attribute only takes effect on API 21 and above.
+             Before API 24, only the first language tag is used. Starting from API 24,
+             the string will be converted into a {@link android.os.LocaleList} and then used by
+             {@link android.widget.TextView} -->
+        <attr name="textLocale"/>
+        <attr name="android:shadowColor"/>
+        <attr name="android:shadowDy"/>
+        <attr name="android:shadowDx"/>
+        <attr name="android:shadowRadius"/>
+        <!-- OpenType font variation settings, available aftear api 26. -->
+        <attr name="fontVariationSettings"/>
+    </declare-styleable>
     <declare-styleable name="ExpandableTextView">
         <attr name="maxCollapsedLines" format="integer" />
         <attr name="animDuration" format="integer" />
