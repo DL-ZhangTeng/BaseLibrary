@@ -17,6 +17,7 @@ class TabLayoutActivity : BaseActivity() {
     private var tab_layout3: MyTabLayout? = null
     private var tab_layout4: MyTabLayout? = null
     private var tab_layout5: MyTabLayout? = null
+    private var tab_layout6: MyTabLayout? = null
     private var vp: ViewPager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +32,7 @@ class TabLayoutActivity : BaseActivity() {
         tab_layout3 = findViewById(R.id.tab_layout3)
         tab_layout4 = findViewById(R.id.tab_layout4)
         tab_layout5 = findViewById(R.id.tab_layout5)
+        tab_layout6 = findViewById(R.id.tab_layout6)
         vp = findViewById(R.id.vp)
         tab_layout?.setupWithViewPager(vp)
         tab_layout1?.setupWithViewPager(vp)
@@ -38,6 +40,7 @@ class TabLayoutActivity : BaseActivity() {
         tab_layout3?.setupWithViewPager(vp)
         tab_layout4?.setupWithViewPager(vp)
         tab_layout5?.setupWithViewPager(vp)
+        tab_layout6?.setupWithViewPager(vp)
         val fragments = ArrayList<Fragment>()
         fragments.add(BaseDemoFragment())
         fragments.add(BaseDemoFragment())
