@@ -1,14 +1,17 @@
 package com.zhangteng.baselibrary.activity
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.zhangteng.base.adapter.CommonFragmentAdapter
-
 import com.zhangteng.base.base.BaseActivity
 import com.zhangteng.base.widget.MyTabLayout
+import com.zhangteng.base.widget.MyTabLayoutMediator
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.fragment.BaseDemoFragment
+
 
 class TabLayoutActivity : BaseActivity() {
     private var tab_layout: MyTabLayout? = null
@@ -19,6 +22,8 @@ class TabLayoutActivity : BaseActivity() {
     private var tab_layout5: MyTabLayout? = null
     private var tab_layout6: MyTabLayout? = null
     private var vp: ViewPager? = null
+    private val titleList: Array<String?> =
+        arrayOf("111111", "111111", "111111", "111111", "111111")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +39,7 @@ class TabLayoutActivity : BaseActivity() {
         tab_layout5 = findViewById(R.id.tab_layout5)
         tab_layout6 = findViewById(R.id.tab_layout6)
         vp = findViewById(R.id.vp)
-        tab_layout?.setupWithViewPager(vp)
-        tab_layout1?.setupWithViewPager(vp)
-        tab_layout2?.setupWithViewPager(vp)
-        tab_layout3?.setupWithViewPager(vp)
-        tab_layout4?.setupWithViewPager(vp)
-        tab_layout5?.setupWithViewPager(vp)
-        tab_layout6?.setupWithViewPager(vp)
+
         val fragments = ArrayList<Fragment>()
         fragments.add(BaseDemoFragment())
         fragments.add(BaseDemoFragment())
@@ -50,12 +49,74 @@ class TabLayoutActivity : BaseActivity() {
         vp?.adapter =
             CommonFragmentAdapter(
                 supportFragmentManager,
-                arrayOf("111111", "111111", "111111", "111111", "111111"),
+                titleList,
                 fragments
             )
+
+        tab_layout?.setupWithViewPager(vp)
+        tab_layout1?.setupWithViewPager(vp)
+        tab_layout2?.setupWithViewPager(vp)
+        tab_layout3?.setupWithViewPager(vp)
+        tab_layout4?.setupWithViewPager(vp)
+        tab_layout5?.setupWithViewPager(vp)
+
+        tab_layout6?.addOnTabSelectedListener(object : MyTabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: MyTabLayout.Tab?) {
+                tab?.let {
+                    val animationDrawable =
+                        (tab.getCustomView() as ImageView).drawable as AnimationDrawable?
+                    if (animationDrawable != null && !animationDrawable.isRunning) {
+                        animationDrawable.start()
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: MyTabLayout.Tab?) {
+                tab?.let {
+                    setAnimation(tab.getCustomView() as ImageView, tab.getPosition())
+                }
+            }
+
+            override fun onTabReselected(tab: MyTabLayout.Tab?) {
+                tab?.let {
+                    setAnimation(tab.getCustomView() as ImageView, tab.getPosition())
+                }
+            }
+        })
+        MyTabLayoutMediator(
+            tab_layout6!!,
+            vp!!,
+            object : MyTabLayoutMediator.TabConfigurationStrategy {
+                override fun onConfigureTab(tab: MyTabLayout.Tab, position: Int) {
+                    val imageView = ImageView(this@TabLayoutActivity)
+                    setAnimation(imageView, position)
+                    tab.setCustomView(imageView)
+                }
+            })
+            .attach()
     }
 
     override fun initData() {
 
+    }
+
+    private fun setAnimation(imageView: ImageView, position: Int) {
+        when (position) {
+            0 -> {
+                imageView.setImageResource(R.drawable.tab_animation_1)
+            }
+            1 -> {
+                imageView.setImageResource(R.drawable.tab_animation_2)
+            }
+            2 -> {
+                imageView.setImageResource(R.drawable.tab_animation_3)
+            }
+            3 -> {
+                imageView.setImageResource(R.drawable.tab_animation_4)
+            }
+            4 -> {
+                imageView.setImageResource(R.drawable.tab_animation_5)
+            }
+        }
     }
 }

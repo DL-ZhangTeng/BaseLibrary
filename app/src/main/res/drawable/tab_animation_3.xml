@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <!-- animation-list 帧动画 -->
+    <!-- android:oneshot的值为 false代表播放多次，true代表只播放一次 -->
+    <!-- duration代表每张图片的播放时间 ,定义一个持续时间为50毫秒的动画帧 -->
+    <item
+        android:drawable="@mipmap/icon_info_1"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/icon_info_2"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/icon_info_3"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/icon_info_4"
+        android:duration="50" />
+</animation-list>
