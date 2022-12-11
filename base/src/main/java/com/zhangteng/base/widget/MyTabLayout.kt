@@ -2395,7 +2395,7 @@ class MyTabLayout @JvmOverloads constructor(
         mTabStrip.setSelectedIndicatorVerticalOffsets(
             resources.getStringArray(
                 a.getResourceId(
-                    R.styleable.MyTabLayout_tabMyIndicatorVerticalOffset,
+                    R.styleable.MyTabLayout_tabMyIndicatorVerticalOffsets,
                     R.array.MyTabLayout_Indicator_VerticalOffset
                 )
             )
@@ -2403,7 +2403,7 @@ class MyTabLayout @JvmOverloads constructor(
         mTabStrip.setSelectedIndicatorHorizontalOffsets(
             resources.getStringArray(
                 a.getResourceId(
-                    R.styleable.MyTabLayout_tabMyIndicatorHorizontalOffset,
+                    R.styleable.MyTabLayout_tabMyIndicatorHorizontalOffsets,
                     R.array.MyTabLayout_Indicator_HorizontalOffset
                 )
             )
