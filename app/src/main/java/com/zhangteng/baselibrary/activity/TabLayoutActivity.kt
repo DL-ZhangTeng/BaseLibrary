@@ -70,6 +70,13 @@ class TabLayoutActivity : BaseActivity() {
                 setAnimation(imageView, position)
                 tab.setCustomView(imageView)
                 tab_layout6?.addTab(tab)
+                if (position == 0) {
+                    val animationDrawable =
+                        (tab.getCustomView() as ImageView).drawable as AnimationDrawable?
+                    if (animationDrawable != null && !animationDrawable.isRunning) {
+                        animationDrawable.start()
+                    }
+                }
             }
         }
         vp?.addOnPageChangeListener(MyTabLayout.TabLayoutOnPageChangeListener(tab_layout6))
@@ -109,6 +116,13 @@ class TabLayoutActivity : BaseActivity() {
                     val imageView = ImageView(this@TabLayoutActivity)
                     setAnimation(imageView, position)
                     tab.setCustomView(imageView)
+                    if (position == 0) {
+                        val animationDrawable =
+                            (tab.getCustomView() as ImageView).drawable as AnimationDrawable?
+                        if (animationDrawable != null && !animationDrawable.isRunning) {
+                            animationDrawable.start()
+                        }
+                    }
                 }
             })
             .attach()
