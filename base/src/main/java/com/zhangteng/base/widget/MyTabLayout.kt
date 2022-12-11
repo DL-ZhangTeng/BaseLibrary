@@ -1946,7 +1946,7 @@ class MyTabLayout @JvmOverloads constructor(
             }
             setIndicatorPosition(left, right)
 
-            if (mSelectionOffset > 0f && mSelectedPosition < childCount - 1) {
+            if (mSelectionOffset >= 0f && mSelectedPosition < childCount - 1) {
                 val fraction: Float
                 val startVerticalOffset: Int
                 val startHorizontalOffset: Int
