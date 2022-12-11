@@ -6,10 +6,10 @@
     <!-- duration代表每张图片的播放时间 ,定义一个持续时间为50毫秒的动画帧 -->
     <item
         android:drawable="@mipmap/icon_find_1"
-        android:duration="50" />
+        android:duration="150" />
     <item
         android:drawable="@mipmap/icon_find_2"
-        android:duration="50" />
+        android:duration="150" />
     <item
         android:drawable="@mipmap/icon_find_3"
         android:duration="50" />
