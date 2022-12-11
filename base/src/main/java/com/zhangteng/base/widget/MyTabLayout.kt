@@ -1277,6 +1277,7 @@ class MyTabLayout @JvmOverloads constructor(
         private val mTabLayoutRef: WeakReference<MyTabLayout?>?
         private var mPreviousScrollState = 0
         private var mScrollState = 0
+
         override fun onPageScrollStateChanged(state: Int) {
             mPreviousScrollState = mScrollState
             mScrollState = state
@@ -1319,6 +1320,7 @@ class MyTabLayout @JvmOverloads constructor(
 
         init {
             mTabLayoutRef = WeakReference(myTabLayout)
+            reset()
         }
     }
 
@@ -1326,10 +1328,13 @@ class MyTabLayout @JvmOverloads constructor(
      * A [MyTabLayout.OnTabSelectedListener] class which contains the necessary calls back
      * to the provided [ViewPager] so that the tab position is kept in sync.
      */
-    class ViewPagerOnTabSelectedListener(private val mViewPager: ViewPager?) :
+    class ViewPagerOnTabSelectedListener(
+        private val mViewPager: ViewPager?,
+        private val smoothScroll: Boolean = false
+    ) :
         OnTabSelectedListener {
         override fun onTabSelected(tab: Tab?) {
-            tab?.getPosition()?.let { mViewPager?.setCurrentItem(it, false) }
+            tab?.getPosition()?.let { mViewPager?.setCurrentItem(it, smoothScroll) }
         }
 
         override fun onTabUnselected(tab: Tab?) {

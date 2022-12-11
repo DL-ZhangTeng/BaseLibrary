@@ -21,6 +21,7 @@ class TabLayoutActivity : BaseActivity() {
     private var tab_layout4: MyTabLayout? = null
     private var tab_layout5: MyTabLayout? = null
     private var tab_layout6: MyTabLayout? = null
+    private var tab_layout7: MyTabLayout? = null
     private var vp: ViewPager? = null
     private val titleList: Array<String?> =
         arrayOf("111111", "111111", "111111", "111111", "111111")
@@ -38,6 +39,7 @@ class TabLayoutActivity : BaseActivity() {
         tab_layout4 = findViewById(R.id.tab_layout4)
         tab_layout5 = findViewById(R.id.tab_layout5)
         tab_layout6 = findViewById(R.id.tab_layout6)
+        tab_layout7 = findViewById(R.id.tab_layout7)
         vp = findViewById(R.id.vp)
 
         val fragments = ArrayList<Fragment>()
@@ -60,7 +62,58 @@ class TabLayoutActivity : BaseActivity() {
         tab_layout4?.setupWithViewPager(vp)
         tab_layout5?.setupWithViewPager(vp)
 
+        //使用newTab()自定义Tab
+        for (position in titleList.indices) {
+            val tab = tab_layout6?.newTab()
+            tab?.let {
+                val imageView = ImageView(this@TabLayoutActivity)
+                setAnimation(imageView, position)
+                tab.setCustomView(imageView)
+                tab_layout6?.addTab(tab)
+            }
+        }
+        vp?.addOnPageChangeListener(MyTabLayout.TabLayoutOnPageChangeListener(tab_layout6))
+
         tab_layout6?.addOnTabSelectedListener(object : MyTabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: MyTabLayout.Tab?) {
+                tab?.let {
+                    vp?.currentItem = tab.getPosition()
+
+                    val animationDrawable =
+                        (tab.getCustomView() as ImageView).drawable as AnimationDrawable?
+                    if (animationDrawable != null && !animationDrawable.isRunning) {
+                        animationDrawable.start()
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: MyTabLayout.Tab?) {
+                tab?.let {
+                    setAnimation(tab.getCustomView() as ImageView, tab.getPosition())
+                }
+            }
+
+            override fun onTabReselected(tab: MyTabLayout.Tab?) {
+                tab?.let {
+                    setAnimation(tab.getCustomView() as ImageView, tab.getPosition())
+                }
+            }
+        })
+
+        //使用MyTabLayoutMediator自定义Tab
+        MyTabLayoutMediator(
+            tab_layout7!!,
+            vp!!,
+            object : MyTabLayoutMediator.TabConfigurationStrategy {
+                override fun onConfigureTab(tab: MyTabLayout.Tab, position: Int) {
+                    val imageView = ImageView(this@TabLayoutActivity)
+                    setAnimation(imageView, position)
+                    tab.setCustomView(imageView)
+                }
+            })
+            .attach()
+
+        tab_layout7?.addOnTabSelectedListener(object : MyTabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: MyTabLayout.Tab?) {
                 tab?.let {
                     val animationDrawable =
@@ -83,17 +136,6 @@ class TabLayoutActivity : BaseActivity() {
                 }
             }
         })
-        MyTabLayoutMediator(
-            tab_layout6!!,
-            vp!!,
-            object : MyTabLayoutMediator.TabConfigurationStrategy {
-                override fun onConfigureTab(tab: MyTabLayout.Tab, position: Int) {
-                    val imageView = ImageView(this@TabLayoutActivity)
-                    setAnimation(imageView, position)
-                    tab.setCustomView(imageView)
-                }
-            })
-            .attach()
     }
 
     override fun initData() {
