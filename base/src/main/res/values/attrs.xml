@@ -136,6 +136,7 @@
         <attr name="tabMyIndicatorRoundRadius" format="dimension" />
         <attr name="tabMyIndicatorDrawable" format="reference" />
         <attr name="tabMyIndicatorVerticalOffset" format="reference" />
+        <attr name="tabMyIndicatorHorizontalOffset" format="reference" />
     </declare-styleable>
     <declare-styleable name="MyTabItem">
         <attr name="myText" format="string" />

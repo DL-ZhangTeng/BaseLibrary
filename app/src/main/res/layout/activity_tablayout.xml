@@ -140,6 +140,7 @@
         app:tabMyTextSize="14sp"
         app:tabMyTypeface="NORMAL"
         app:tabMyViewNumber="5" />
+
     <com.zhangteng.base.widget.MyTabLayout
         android:id="@+id/tab_layout6"
         android:layout_width="match_parent"
@@ -149,6 +150,7 @@
         app:tabMyIndicatorColor="#00000000"
         app:tabMyIndicatorDrawable="@mipmap/icon_match_event_goal_mini"
         app:tabMyIndicatorHeight="10dp"
+        app:tabMyIndicatorHorizontalOffset="@array/HorizontalOffset"
         app:tabMyIndicatorMarginBottomSelfFit="false"
         app:tabMyIndicatorRoundRadius="2dp"
         app:tabMyIndicatorSelfFit="false"
@@ -165,6 +167,7 @@
         app:tabMyTextSize="14sp"
         app:tabMyTypeface="NORMAL"
         app:tabMyViewNumber="5" />
+
     <com.zhangteng.base.widget.MyTabLayout
         android:id="@+id/tab_layout7"
         android:layout_width="match_parent"
@@ -174,6 +177,7 @@
         app:tabMyIndicatorColor="#00000000"
         app:tabMyIndicatorDrawable="@mipmap/icon_match_event_goal_mini"
         app:tabMyIndicatorHeight="10dp"
+        app:tabMyIndicatorHorizontalOffset="@array/HorizontalOffset"
         app:tabMyIndicatorMarginBottomSelfFit="false"
         app:tabMyIndicatorRoundRadius="2dp"
         app:tabMyIndicatorSelfFit="false"

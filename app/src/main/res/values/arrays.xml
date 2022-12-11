@@ -3,8 +3,15 @@
     <string-array name="VerticalOffset">
         <item>0.258</item>
         <item>0.258</item>
-        <item>0.258</item>
+        <item>0.254</item>
         <item>0.760</item>
         <item>0.258</item>
+    </string-array>
+    <string-array name="HorizontalOffset">
+        <item>-0.058</item>
+        <item>-0.058</item>
+        <item>0.054</item>
+        <item>0.064</item>
+        <item>0.062</item>
     </string-array>
 </resources>

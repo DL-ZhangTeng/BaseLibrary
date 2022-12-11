@@ -85,6 +85,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.3.0") {
 | tabMyIndicatorRoundRadius         | 指示器圆角                                                                    |
 | tabMyIndicatorDrawable            | 图片指示器，支持drawable与mipmap                                                  |
 | tabMyIndicatorVerticalOffset      | 指示器垂直滚动，String数组对应每一个tab的垂直偏移量（0.0：不进行垂直偏移；1.0：垂直偏移tab高度-指示器高度-垂直Margin） |
+| tabMyIndicatorHorizontalOffset    | 指示器水平滚动，String数组对应每一个tab的水平偏移量（0.0：不进行水平偏移；1.0：水平移tab宽度-指示器宽度-水平Margin）  |
 
 ## 混淆
 

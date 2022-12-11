@@ -162,6 +162,10 @@ class MyTabLayout @JvmOverloads constructor(
         mTabStrip?.setSelectedIndicatorVerticalOffsets(verticalOffsets)
     }
 
+    fun setSelectedIndicatorHorizontalOffsets(horizontalOffsets: Array<String>) {
+        mTabStrip?.setSelectedIndicatorHorizontalOffsets(horizontalOffsets)
+    }
+
     fun setIndicatorAnimatorInterpolator(interpolator: Interpolator) {
         mTabStrip?.setIndicatorAnimatorInterpolator(interpolator)
     }
@@ -1685,7 +1689,9 @@ class MyTabLayout @JvmOverloads constructor(
         private var mIndicatorMarginTop = 0
         private var mIndicatorMarginBottom = 0
         private var mIndicatorVerticalOffset = 0
+        private var mIndicatorHorizontalOffset = 0
         private var mIndicatorVerticalOffsets: Array<String>? = null
+        private var mIndicatorHorizontalOffsets: Array<String>? = null
         private var mIndicatorRoundRadius = 0
         private var mTabIndicatorDrawable: Drawable? = null
         private var mTabIndicatorBottomLayer = false
@@ -1786,6 +1792,13 @@ class MyTabLayout @JvmOverloads constructor(
         fun setSelectedIndicatorVerticalOffsets(verticalOffsets: Array<String>) {
             if (!mIndicatorVerticalOffsets.contentEquals(verticalOffsets)) {
                 mIndicatorVerticalOffsets = verticalOffsets
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
+        }
+
+        fun setSelectedIndicatorHorizontalOffsets(horizontalOffsets: Array<String>) {
+            if (!mIndicatorHorizontalOffsets.contentEquals(horizontalOffsets)) {
+                mIndicatorHorizontalOffsets = horizontalOffsets
                 ViewCompat.postInvalidateOnAnimation(this)
             }
         }
@@ -1936,11 +1949,13 @@ class MyTabLayout @JvmOverloads constructor(
             if (mSelectionOffset > 0f && mSelectedPosition < childCount - 1) {
                 val fraction: Float
                 val startVerticalOffset: Int
+                val startHorizontalOffset: Int
                 //控制指示器垂直移动起始与结束位置
                 val position = if (mLastSelectionOffset <= mSelectionOffset) {
                     //左滑
                     fraction = mSelectionOffset
                     startVerticalOffset = calculateIndicatorVerticalOffset(mSelectedPosition)
+                    startHorizontalOffset = calculateIndicatorHorizontalOffset(mSelectedPosition)
                     if ((mSelectedPosition + 1) >= 0) {
                         mSelectedPosition + 1
                     } else {
@@ -1954,13 +1969,27 @@ class MyTabLayout @JvmOverloads constructor(
                     } else {
                         mIndicatorVerticalOffset
                     }
+                    startHorizontalOffset = if ((mSelectedPosition + 1) >= 0) {
+                        calculateIndicatorHorizontalOffset(mSelectedPosition + 1)
+                    } else {
+                        mIndicatorVerticalOffset
+                    }
                     mSelectedPosition
                 }
                 val targetVerticalOffset = calculateIndicatorVerticalOffset(position)
+                val targetHorizontalOffset = calculateIndicatorHorizontalOffset(position)
+
                 setIndicatorPositionVerticalOffset(
                     AnimationUtils.linearInterpolation(
                         startVerticalOffset,
                         targetVerticalOffset,
+                        fraction
+                    )
+                )
+                setIndicatorPositionHorizontalOffset(
+                    AnimationUtils.linearInterpolation(
+                        startHorizontalOffset,
+                        targetHorizontalOffset,
                         fraction
                     )
                 )
@@ -1984,8 +2013,16 @@ class MyTabLayout @JvmOverloads constructor(
             }
         }
 
+        fun setIndicatorPositionHorizontalOffset(verticalOffset: Int) {
+            if (mIndicatorHorizontalOffset != verticalOffset) {
+                // If the indicator's verticalOffset has changed, invalidate
+                mIndicatorHorizontalOffset = verticalOffset
+                ViewCompat.postInvalidateOnAnimation(this)
+            }
+        }
+
         /**
-         * description 计算指示器垂直偏移量，最大偏移量为TabLayout高度-上下Margin
+         * description 计算指示器垂直偏移量，最大偏移量为TabLayout高度-上下Margin-指示器高度
          */
         private fun calculateIndicatorVerticalOffset(position: Int): Int {
             //控制指示器垂直移动结束位置
@@ -2003,6 +2040,36 @@ class MyTabLayout @JvmOverloads constructor(
                     height - mSelectedIndicatorHeight
                 }
             return (targetMaxVerticalOffset * targetVerticalOffsetRate).toInt()
+        }
+
+        /**
+         * description 计算指示器水平偏移量，最大偏移量为TabView宽度-左右Margin-指示器宽度
+         */
+        private fun calculateIndicatorHorizontalOffset(position: Int): Int {
+            //控制指示器水平移动结束位置
+            //水平移动比例
+            val targetHorizontalOffsetRate =
+                mIndicatorHorizontalOffsets?.get(position)?.toFloatOrNull()
+                    ?: mIndicatorHorizontalOffset.toFloat()
+
+            //控制指示器水平移动起始与结束位置
+            val targetView = getChildAt(position)
+            //水平移动最大偏移
+            val targetMaxHorizontalOffset =
+                if (targetView == null) {
+                    0
+                } else if (mSelectedIndicatorWidth > 0) {
+                    targetView.width - mSelectedIndicatorWidth
+                } else if (
+                    (mIndicatorMarginLeft > 0 || mIndicatorMarginRight > 0)
+                    &&
+                    mIndicatorRight - mIndicatorMarginRight > mIndicatorLeft + mIndicatorMarginLeft
+                ) {
+                    targetView.width - (mIndicatorRight - mIndicatorMarginRight - mIndicatorLeft - mIndicatorMarginLeft)
+                } else {
+                    targetView.width - (mIndicatorRight - mIndicatorLeft)
+                }
+            return (targetMaxHorizontalOffset * targetHorizontalOffsetRate).toInt()
         }
 
         fun animateIndicatorToPosition(position: Int, duration: Int) {
@@ -2026,6 +2093,9 @@ class MyTabLayout @JvmOverloads constructor(
             val startVerticalOffset = mIndicatorVerticalOffset
             val targetVerticalOffset = calculateIndicatorVerticalOffset(position)
 
+            val starHorizontalOffset = mIndicatorHorizontalOffset
+            val targetHorizontalOffset = calculateIndicatorHorizontalOffset(position)
+
             if (startLeft != targetLeft || startRight != targetRight) {
                 mIndicatorAnimator = ValueAnimator().apply {
                     interpolator = mIndicatorAnimatorInterpolator
@@ -2045,6 +2115,14 @@ class MyTabLayout @JvmOverloads constructor(
                             AnimationUtils.linearInterpolation(
                                 startVerticalOffset,
                                 targetVerticalOffset,
+                                fraction
+                            )
+                        )
+
+                        setIndicatorPositionHorizontalOffset(
+                            AnimationUtils.linearInterpolation(
+                                starHorizontalOffset,
+                                targetHorizontalOffset,
                                 fraction
                             )
                         )
@@ -2101,22 +2179,22 @@ class MyTabLayout @JvmOverloads constructor(
                 if (mSelectedIndicatorWidth > 0) {
                     val offset = (mIndicatorRight - mIndicatorLeft - mSelectedIndicatorWidth) / 2
                     if (mIndicatorMarginBottom > 0) {
-                        left = mIndicatorLeft.toFloat() + offset
+                        left = mIndicatorLeft.toFloat() + offset - mIndicatorHorizontalOffset
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorMarginBottom - mIndicatorVerticalOffset).toFloat()
-                        right = mIndicatorRight.toFloat() - offset
+                        right = mIndicatorRight.toFloat() - offset - mIndicatorHorizontalOffset
                         bottom =
                             (height - mIndicatorMarginBottom - mIndicatorVerticalOffset).toFloat()
                     } else if (mIndicatorMarginTop > 0) {
-                        left = mIndicatorLeft.toFloat() + offset
+                        left = mIndicatorLeft.toFloat() + offset - mIndicatorHorizontalOffset
                         top = (mIndicatorMarginTop + mIndicatorVerticalOffset).toFloat()
-                        right = mIndicatorRight.toFloat() - offset
+                        right = mIndicatorRight.toFloat() - offset - mIndicatorHorizontalOffset
                         bottom = (mSelectedIndicatorHeight + mIndicatorVerticalOffset).toFloat()
                     } else {
-                        left = mIndicatorLeft.toFloat() + offset
+                        left = mIndicatorLeft.toFloat() + offset - mIndicatorHorizontalOffset
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorVerticalOffset).toFloat()
-                        right = mIndicatorRight.toFloat() - offset
+                        right = mIndicatorRight.toFloat() - offset - mIndicatorHorizontalOffset
                         bottom = (height - mIndicatorVerticalOffset).toFloat()
                     }
                 } else if (
@@ -2125,42 +2203,48 @@ class MyTabLayout @JvmOverloads constructor(
                     mIndicatorRight - mIndicatorMarginRight > mIndicatorLeft + mIndicatorMarginLeft
                 ) {
                     if (mIndicatorMarginBottom > 0) {
-                        left = (mIndicatorLeft + mIndicatorMarginLeft).toFloat()
+                        left =
+                            (mIndicatorLeft + mIndicatorMarginLeft).toFloat() - mIndicatorHorizontalOffset
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorMarginBottom - mIndicatorVerticalOffset).toFloat()
-                        right = (mIndicatorRight - mIndicatorMarginRight).toFloat()
+                        right =
+                            (mIndicatorRight - mIndicatorMarginRight).toFloat() - mIndicatorHorizontalOffset
                         bottom =
                             (height - mIndicatorMarginBottom - mIndicatorVerticalOffset).toFloat()
                     } else if (mIndicatorMarginTop > 0) {
-                        left = (mIndicatorLeft + mIndicatorMarginLeft).toFloat()
+                        left =
+                            (mIndicatorLeft + mIndicatorMarginLeft).toFloat() - mIndicatorHorizontalOffset
                         top = (mIndicatorMarginTop + mIndicatorVerticalOffset).toFloat()
-                        right = (mIndicatorRight - mIndicatorMarginRight).toFloat()
+                        right =
+                            (mIndicatorRight - mIndicatorMarginRight).toFloat() - mIndicatorHorizontalOffset
                         bottom = (mSelectedIndicatorHeight + mIndicatorVerticalOffset).toFloat()
                     } else {
-                        left = (mIndicatorLeft + mIndicatorMarginLeft).toFloat()
+                        left =
+                            (mIndicatorLeft + mIndicatorMarginLeft).toFloat() - mIndicatorHorizontalOffset
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorVerticalOffset).toFloat()
-                        right = (mIndicatorRight - mIndicatorMarginRight).toFloat()
+                        right =
+                            (mIndicatorRight - mIndicatorMarginRight).toFloat() - mIndicatorHorizontalOffset
                         bottom = (height - mIndicatorVerticalOffset).toFloat()
                     }
                 } else {
                     if (mIndicatorMarginBottom > 0) {
-                        left = mIndicatorLeft.toFloat()
+                        left = mIndicatorLeft.toFloat() - mIndicatorHorizontalOffset
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorMarginBottom - mIndicatorVerticalOffset).toFloat()
-                        right = mIndicatorRight.toFloat()
+                        right = mIndicatorRight.toFloat() - mIndicatorHorizontalOffset
                         bottom =
                             (height - mIndicatorMarginBottom - mIndicatorVerticalOffset).toFloat()
                     } else if (mIndicatorMarginTop > 0) {
-                        left = mIndicatorLeft.toFloat()
+                        left = mIndicatorLeft.toFloat() - mIndicatorHorizontalOffset
                         top = (mIndicatorMarginTop + mIndicatorVerticalOffset).toFloat()
-                        right = mIndicatorRight.toFloat()
+                        right = mIndicatorRight.toFloat() - mIndicatorHorizontalOffset
                         bottom = (mSelectedIndicatorHeight + mIndicatorVerticalOffset).toFloat()
                     } else {
-                        left = mIndicatorLeft.toFloat()
+                        left = mIndicatorLeft.toFloat() - mIndicatorHorizontalOffset
                         top =
                             (height - mSelectedIndicatorHeight - mIndicatorVerticalOffset).toFloat()
-                        right = mIndicatorRight.toFloat()
+                        right = mIndicatorRight.toFloat() - mIndicatorHorizontalOffset
                         bottom = (height - mIndicatorVerticalOffset).toFloat()
                     }
                 }
@@ -2313,6 +2397,14 @@ class MyTabLayout @JvmOverloads constructor(
                 a.getResourceId(
                     R.styleable.MyTabLayout_tabMyIndicatorVerticalOffset,
                     R.array.MyTabLayout_Indicator_VerticalOffset
+                )
+            )
+        )
+        mTabStrip.setSelectedIndicatorHorizontalOffsets(
+            resources.getStringArray(
+                a.getResourceId(
+                    R.styleable.MyTabLayout_tabMyIndicatorHorizontalOffset,
+                    R.array.MyTabLayout_Indicator_HorizontalOffset
                 )
             )
         )
