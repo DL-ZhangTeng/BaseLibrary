@@ -101,9 +101,7 @@ class TabLayoutActivity : BaseActivity() {
             }
 
             override fun onTabReselected(tab: MyTabLayout.Tab?) {
-                tab?.let {
-                    setAnimation(tab.getCustomView() as ImageView, tab.getPosition())
-                }
+
             }
         })
 
@@ -145,9 +143,7 @@ class TabLayoutActivity : BaseActivity() {
             }
 
             override fun onTabReselected(tab: MyTabLayout.Tab?) {
-                tab?.let {
-                    setAnimation(tab.getCustomView() as ImageView, tab.getPosition())
-                }
+
             }
         })
     }
