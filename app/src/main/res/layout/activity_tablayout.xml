@@ -6,9 +6,10 @@
     android:orientation="vertical">
 
     <com.zhangteng.base.widget.MyTabLayout
-        android:id="@+id/tab_layout"
+        android:id="@+id/tab_layout1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginTop="25dp"
         app:tabMyBackground="@color/colorWhite"
         app:tabMyIndicatorBottomLayer="false"
         app:tabMyIndicatorColor="#ff000000"
@@ -28,7 +29,7 @@
         app:tabMyTypeface="NORMAL" />
 
     <com.zhangteng.base.widget.MyTabLayout
-        android:id="@+id/tab_layout1"
+        android:id="@+id/tab_layout2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         app:tabMyBackground="@color/colorWhite"
@@ -52,76 +53,7 @@
         app:tabMyTypeface="NORMAL" />
 
     <com.zhangteng.base.widget.MyTabLayout
-        android:id="@+id/tab_layout2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tabMyBackground="@color/colorWhite"
-        app:tabMyIndicatorBottomLayer="false"
-        app:tabMyIndicatorColor="#ff000000"
-        app:tabMyIndicatorHeight="2dp"
-        app:tabMyIndicatorMarginBottomSelfFit="false"
-        app:tabMyIndicatorMarginLeft="5dp"
-        app:tabMyIndicatorMarginRight="5dp"
-        app:tabMyIndicatorRoundRadius="2dp"
-        app:tabMyIndicatorSelfFit="false"
-        app:tabMyMode="MODE_SCROLLABLE"
-        app:tabMyPaddingEnd="18dp"
-        app:tabMyPaddingStart="18dp"
-        app:tabMySelectedTextColor="#222222"
-        app:tabMySelectedTextSize="16sp"
-        app:tabMySelectedTypeface="NORMAL"
-        app:tabMyTabViewSelf="true"
-        app:tabMyTextColor="#999999"
-        app:tabMyTextSize="14sp"
-        app:tabMyTypeface="NORMAL" />
-
-    <com.zhangteng.base.widget.MyTabLayout
         android:id="@+id/tab_layout3"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tabMyBackground="@color/colorWhite"
-        app:tabMyIndicatorBottomLayer="true"
-        app:tabMyIndicatorColor="#ff000000"
-        app:tabMyIndicatorHeight="2dp"
-        app:tabMyIndicatorMarginBottomSelfFit="true"
-        app:tabMyIndicatorRoundRadius="2dp"
-        app:tabMyIndicatorSelfFit="true"
-        app:tabMyMode="MODE_SCROLLABLE"
-        app:tabMyPaddingEnd="18dp"
-        app:tabMyPaddingStart="18dp"
-        app:tabMySelectedTextColor="#222222"
-        app:tabMySelectedTextSize="16sp"
-        app:tabMySelectedTypeface="NORMAL"
-        app:tabMyTabViewSelf="true"
-        app:tabMyTextColor="#999999"
-        app:tabMyTextSize="14sp"
-        app:tabMyTypeface="NORMAL" />
-
-    <com.zhangteng.base.widget.MyTabLayout
-        android:id="@+id/tab_layout4"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tabMyBackground="@color/colorWhite"
-        app:tabMyIndicatorBottomLayer="true"
-        app:tabMyIndicatorColor="#ff000000"
-        app:tabMyIndicatorHeight="2dp"
-        app:tabMyIndicatorMarginBottomSelfFit="true"
-        app:tabMyIndicatorRoundRadius="2dp"
-        app:tabMyIndicatorSelfFit="true"
-        app:tabMyMode="MODE_FIXED"
-        app:tabMyPaddingEnd="18dp"
-        app:tabMyPaddingStart="18dp"
-        app:tabMySelectedTextColor="#222222"
-        app:tabMySelectedTextSize="16sp"
-        app:tabMySelectedTypeface="NORMAL"
-        app:tabMyTabViewSelf="true"
-        app:tabMyTextColor="#999999"
-        app:tabMyTextSize="14sp"
-        app:tabMyTypeface="NORMAL"
-        app:tabMyViewNumber="5" />
-
-    <com.zhangteng.base.widget.MyTabLayout
-        android:id="@+id/tab_layout5"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         app:tabMyBackground="@color/colorWhite"
@@ -142,34 +74,7 @@
         app:tabMyViewNumber="5" />
 
     <com.zhangteng.base.widget.MyTabLayout
-        android:id="@+id/tab_layout6"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        app:tabMyBackground="@color/colorWhite"
-        app:tabMyIndicatorBottomLayer="false"
-        app:tabMyIndicatorColor="#00000000"
-        app:tabMyIndicatorDrawable="@mipmap/icon_match_event_goal_mini"
-        app:tabMyIndicatorHeight="10dp"
-        app:tabMyIndicatorHorizontalOffsets="@array/HorizontalOffset"
-        app:tabMyIndicatorMarginBottomSelfFit="false"
-        app:tabMyIndicatorRoundRadius="2dp"
-        app:tabMyIndicatorSelfFit="false"
-        app:tabMyIndicatorVerticalOffsets="@array/VerticalOffset"
-        app:tabMyIndicatorWidth="10dp"
-        app:tabMyMode="MODE_FIXED"
-        app:tabMyPaddingEnd="18dp"
-        app:tabMyPaddingStart="18dp"
-        app:tabMySelectedTextColor="#222222"
-        app:tabMySelectedTextSize="16sp"
-        app:tabMySelectedTypeface="NORMAL"
-        app:tabMyTabViewSelf="true"
-        app:tabMyTextColor="#999999"
-        app:tabMyTextSize="14sp"
-        app:tabMyTypeface="NORMAL"
-        app:tabMyViewNumber="5" />
-
-    <com.zhangteng.base.widget.MyTabLayout
-        android:id="@+id/tab_layout7"
+        android:id="@+id/tab_layout4"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         app:tabMyBackground="@color/colorWhite"

@@ -36,13 +36,13 @@ class TreeActivity : BaseListActivity<TreeBean, BaseAdapter.DefaultViewHolder, T
     override fun createAdapter(): TreeAdapter {
         val rootTree = TreeBean().apply {
             id = "1"
-            label = "1"
+            label = "11111111111级"
             children = ArrayList()
             parent = null
         }
         val oneTree = TreeBean().apply {
             id = "2"
-            label = "2"
+            label = "   22222222222级"
             children = ArrayList()
             parent = null
         }
@@ -50,7 +50,7 @@ class TreeActivity : BaseListActivity<TreeBean, BaseAdapter.DefaultViewHolder, T
 
         val twoTree = TreeBean().apply {
             id = "3"
-            label = "3"
+            label = "       33333333333级"
             children = ArrayList()
             parent = null
         }
