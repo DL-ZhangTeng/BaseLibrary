@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.3.0'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.3.1'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.3.0") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.3.1") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -95,6 +95,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.3.0") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.3.1  | 修复ShapedImageView无法预览&无法提示自定义属性                                            | 2023/1/18 at 1:46   |
 | v2.3.0  | 指示器全程滑动从源position到目标position；指示器垂直滚动；指示器支持图片；TabView文本默认单行末尾省略显            | 2022/12/11 at 1:46  |
 | v2.2.0  | List模板增加VH泛型，与之前版本不兼容                                                      | 2022/12/5 at 22:57  |
 | v2.1.0  | 增加自定义LayoutManager                                                         | 2022/11/26 at 14:57 |
