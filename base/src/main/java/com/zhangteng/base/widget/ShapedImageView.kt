@@ -9,84 +9,75 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.zhangteng.base.R
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Created by Swing on 2019/6/05.
  */
 open class ShapedImageView : AppCompatImageView {
-
-
-    private val mShaderMatrix: Matrix = Matrix()
+    private lateinit var mShaderMatrix: Matrix
+    private lateinit var mViewRect: RectF // ImageView的矩形区域
+    private lateinit var mBorderRect: RectF  // 边框的矩形区域
+    private lateinit var mBorderPaint: Paint
+    private lateinit var mBitmapPaint: Paint
+    private lateinit var mPath: Path
+    private var isInit: Boolean = false
     private var mBorderSize = 0f // 边框大小,默认为0，即无边框
     private var mBorderColor = Color.WHITE // 边框颜色，默认为白色
-    private var mShape = ShapeType.SHAPE_CIRCLE.type // 形状，默认为直接矩形
+    private var mShape = ShapeType.SHAPE_REC.type // 形状，默认为直接矩形
     private var mRoundRadius = 0f // 矩形的圆角半径,默认为0，即直角矩形
     private var mRoundRadiusLeftTop = 0f
     private var mRoundRadiusLeftBottom = 0f
     private var mRoundRadiusRightTop = 0f
     private var mRoundRadiusRightBottom = 0f
-    private val mBorderPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val mViewRect: RectF = RectF() // ImageView的矩形区域
-    private val mBorderRect: RectF = RectF() // 边框的矩形区域
-    private val mBitmapPaint: Paint = Paint()
     private var mBitmapShader: BitmapShader? = null
     private var mBitmap: Bitmap? = null
-    private val mPath: Path = Path()
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
     ) {
-        init(attrs)
-        mBorderPaint.style = Paint.Style.STROKE
-        mBorderPaint.strokeWidth = mBorderSize
-        mBorderPaint.color = mBorderColor
-        mBorderPaint.isAntiAlias = true
-        mBitmapPaint.isAntiAlias = true
-        super.setScaleType(ScaleType.CENTER_CROP) // 固定为CENTER_CROP，其他不生效
-    }
+        val a = context.obtainStyledAttributes(attrs, R.styleable.ShapedImageView, defStyleAttr, 0)
 
-    override fun setImageResource(resId: Int) {
-        super.setImageResource(resId)
-        mBitmap = getBitmapFromDrawable(drawable)
-        setupBitmapShader()
-    }
-
-    override fun setImageDrawable(drawable: Drawable?) {
-        super.setImageDrawable(drawable)
-        mBitmap = getBitmapFromDrawable(drawable)
-        setupBitmapShader()
-    }
-
-    override fun setScaleType(scaleType: ScaleType?) {
-        var scaleType = scaleType
-        if (scaleType != ScaleType.CENTER_CROP) {
-            scaleType = ScaleType.CENTER_CROP
-        }
-        super.setScaleType(scaleType)
-    }
-
-    private fun init(attrs: AttributeSet?) {
-        @SuppressLint("CustomViewStyleable") val a = context.obtainStyledAttributes(
-            attrs,
-            R.styleable.ShapeImageView
-        )
-        mShape = a.getInt(R.styleable.ShapeImageView_siv_shape, mShape)
-        mRoundRadius = a.getDimension(R.styleable.ShapeImageView_siv_corner_radius, mRoundRadius)
-        mBorderSize = a.getDimension(R.styleable.ShapeImageView_siv_border_size, mBorderSize)
-        mBorderColor = a.getColor(R.styleable.ShapeImageView_siv_border_color, mBorderColor)
+        mShape = a.getInt(R.styleable.ShapedImageView_siv_shape, ShapeType.SHAPE_REC.type)
+        mRoundRadius = a.getDimension(R.styleable.ShapedImageView_siv_corner_radius, 0f)
         mRoundRadiusLeftBottom =
-            a.getDimension(R.styleable.ShapeImageView_siv_round_radius_leftBottom, mRoundRadius)
+            a.getDimension(R.styleable.ShapedImageView_siv_round_radius_leftBottom, mRoundRadius)
         mRoundRadiusLeftTop =
-            a.getDimension(R.styleable.ShapeImageView_siv_round_radius_leftTop, mRoundRadius)
+            a.getDimension(R.styleable.ShapedImageView_siv_round_radius_leftTop, mRoundRadius)
         mRoundRadiusRightBottom =
-            a.getDimension(R.styleable.ShapeImageView_siv_round_radius_rightBottom, mRoundRadius)
+            a.getDimension(R.styleable.ShapedImageView_siv_round_radius_rightBottom, mRoundRadius)
         mRoundRadiusRightTop =
-            a.getDimension(R.styleable.ShapeImageView_siv_round_radius_rightTop, mRoundRadius)
+            a.getDimension(R.styleable.ShapedImageView_siv_round_radius_rightTop, mRoundRadius)
+        mBorderSize = a.getDimension(R.styleable.ShapedImageView_siv_border_size, 0f)
+        mBorderColor = a.getColor(R.styleable.ShapedImageView_siv_border_color, Color.WHITE)
         a.recycle()
+
+        init()
+    }
+
+    private fun init() {
+        if (!isInit) {
+            isInit = true
+            mShaderMatrix = Matrix()
+            // ImageView的矩形区域
+            mViewRect = RectF()
+            // 边框的矩形区域
+            mBorderRect = RectF()
+            mBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+            mBitmapPaint = Paint()
+            mPath = Path()
+            mBorderPaint.style = Paint.Style.STROKE
+            mBorderPaint.strokeWidth = mBorderSize
+            mBorderPaint.color = mBorderColor
+            mBorderPaint.isAntiAlias = true
+            mBitmapPaint.isAntiAlias = true
+        }
     }
 
     /**
@@ -96,50 +87,68 @@ open class ShapedImageView : AppCompatImageView {
      * 对于ViewGroup,当它没有背景时直接调用的是dispatchDraw()方法, 而绕过了draw()方法，
      * 当它有背景的时候就调用draw()方法，而draw()方法里包含了dispatchDraw()方法的调用，
      */
-    @SuppressLint("DrawAllocation")
+    @SuppressLint("DrawAllocation", "UseCompatLoadingForDrawables")
     public override fun onDraw(canvas: Canvas?) {
+        if (isInEditMode) {
+            if (mBitmap == null) {
+                mBitmap =
+                    getBitmapFromDrawable(
+                        resources.getDrawable(
+                            R.drawable.self_dialog_round_bg,
+                            null
+                        )
+                    )
+            }
+        }
+
         if (mBitmap != null) {
-            if (mShape == ShapeType.SHAPE_CIRCLE.type) {
-                canvas?.drawCircle(
-                    mViewRect.right / 2, mViewRect.bottom / 2,
-                    Math.min(mViewRect.right, mViewRect.bottom) / 2, mBitmapPaint
-                )
-            } else if (mShape == ShapeType.SHAPE_OVAL.type) {
-                canvas?.drawOval(mViewRect, mBitmapPaint)
-            } else {
-//                canvas.drawRoundRect(mViewRect, mRoundRadius, mRoundRadius, mBitmapPaint);
-                mPath.reset()
-                mPath.addRoundRect(
-                    mViewRect, floatArrayOf(
-                        mRoundRadiusLeftTop, mRoundRadiusLeftTop,
-                        mRoundRadiusRightTop, mRoundRadiusRightTop,
-                        mRoundRadiusRightBottom, mRoundRadiusRightBottom,
-                        mRoundRadiusLeftBottom, mRoundRadiusLeftBottom
-                    ), Path.Direction.CW
-                )
-                canvas?.drawPath(mPath, mBitmapPaint)
+            when (mShape) {
+                ShapeType.SHAPE_CIRCLE.type -> {
+                    canvas?.drawCircle(
+                        mViewRect.right / 2, mViewRect.bottom / 2,
+                        min(mViewRect.right, mViewRect.bottom) / 2, mBitmapPaint
+                    )
+                }
+                ShapeType.SHAPE_OVAL.type -> {
+                    canvas?.drawOval(mViewRect, mBitmapPaint)
+                }
+                else -> {
+                    mPath.reset()
+                    mPath.addRoundRect(
+                        mViewRect, floatArrayOf(
+                            mRoundRadiusLeftTop, mRoundRadiusLeftTop,
+                            mRoundRadiusRightTop, mRoundRadiusRightTop,
+                            mRoundRadiusRightBottom, mRoundRadiusRightBottom,
+                            mRoundRadiusLeftBottom, mRoundRadiusLeftBottom
+                        ), Path.Direction.CW
+                    )
+                    canvas?.drawPath(mPath, mBitmapPaint)
+                }
             }
         }
         if (mBorderSize > 0) { // 绘制边框
-            if (mShape == ShapeType.SHAPE_CIRCLE.type) {
-                canvas?.drawCircle(
-                    mViewRect.right / 2, mViewRect.bottom / 2,
-                    Math.min(mViewRect.right, mViewRect.bottom) / 2 - mBorderSize / 2, mBorderPaint
-                )
-            } else if (mShape == ShapeType.SHAPE_OVAL.type) {
-                canvas?.drawOval(mBorderRect, mBorderPaint)
-            } else {
-//                canvas.drawRoundRect(mBorderRect, mRoundRadius, mRoundRadius, mBorderPaint);
-                mPath.reset()
-                mPath.addRoundRect(
-                    mBorderRect, floatArrayOf(
-                        mRoundRadiusLeftTop, mRoundRadiusLeftTop,
-                        mRoundRadiusRightTop, mRoundRadiusRightTop,
-                        mRoundRadiusRightBottom, mRoundRadiusRightBottom,
-                        mRoundRadiusLeftBottom, mRoundRadiusLeftBottom
-                    ), Path.Direction.CW
-                )
-                canvas?.drawPath(mPath, mBorderPaint)
+            when (mShape) {
+                ShapeType.SHAPE_CIRCLE.type -> {
+                    canvas?.drawCircle(
+                        mViewRect.right / 2, mViewRect.bottom / 2,
+                        min(mViewRect.right, mViewRect.bottom) / 2 - mBorderSize / 2, mBorderPaint
+                    )
+                }
+                ShapeType.SHAPE_OVAL.type -> {
+                    canvas?.drawOval(mBorderRect, mBorderPaint)
+                }
+                else -> {
+                    mPath.reset()
+                    mPath.addRoundRect(
+                        mBorderRect, floatArrayOf(
+                            mRoundRadiusLeftTop, mRoundRadiusLeftTop,
+                            mRoundRadiusRightTop, mRoundRadiusRightTop,
+                            mRoundRadiusRightBottom, mRoundRadiusRightBottom,
+                            mRoundRadiusLeftBottom, mRoundRadiusLeftBottom
+                        ), Path.Direction.CW
+                    )
+                    canvas?.drawPath(mPath, mBorderPaint)
+                }
             }
         }
     }
@@ -150,40 +159,22 @@ open class ShapedImageView : AppCompatImageView {
         setupBitmapShader()
     }
 
-    private fun setupBitmapShader() {
-        // super(context, attrs, defStyle)调用setImageDrawable时,成员变量还未被正确初始化
-        if (mBitmap == null) {
-            invalidate()
-            return
-        }
-        mBitmapShader = BitmapShader(mBitmap!!, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        mBitmapPaint.shader = mBitmapShader
-
-        // 固定为CENTER_CROP,使图片在view中居中并裁剪
-        mShaderMatrix.set(null)
-        // 缩放到高或宽　与view的高或宽　匹配
-        val scale = Math.max(width * 1f / mBitmap!!.width, height * 1f / mBitmap!!.height)
-        // 由于BitmapShader默认是从画布的左上角开始绘制，所以把其平移到画布中间，即居中
-        val dx = (width - mBitmap!!.width * scale) / 2
-        val dy = (height - mBitmap!!.height * scale) / 2
-        mShaderMatrix.setScale(scale, scale)
-        mShaderMatrix.postTranslate(dx, dy)
-        mBitmapShader?.setLocalMatrix(mShaderMatrix)
-        invalidate()
+    override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
+        super.setPadding(left, top, right, bottom)
+        initRect()
+        setupBitmapShader()
     }
 
-    //　设置图片的绘制区域
-    private fun initRect() {
-        mViewRect.top = 0f
-        mViewRect.left = 0f
-        mViewRect.right = width.toFloat() // 宽度
-        mViewRect.bottom = height.toFloat() // 高度
+    override fun setPaddingRelative(start: Int, top: Int, end: Int, bottom: Int) {
+        super.setPaddingRelative(start, top, end, bottom)
+        initRect()
+        setupBitmapShader()
+    }
 
-        // 边框的矩形区域不能等于ImageView的矩形区域，否则边框的宽度只显示了一半
-        mBorderRect.top = mBorderSize / 2
-        mBorderRect.left = mBorderSize / 2
-        mBorderRect.right = width - mBorderSize / 2
-        mBorderRect.bottom = height - mBorderSize / 2
+    override fun setImageDrawable(drawable: Drawable?) {
+        super.setImageDrawable(drawable)
+        mBitmap = getBitmapFromDrawable(drawable)
+        setupBitmapShader()
     }
 
     open fun getShape(): Int {
@@ -224,7 +215,7 @@ open class ShapedImageView : AppCompatImageView {
         invalidate()
     }
 
-    open fun setRoundRadiis(
+    open fun setRoundRadius(
         roundRadiusLeftBottom: Float,
         roundRadiusLeftTop: Float,
         roundRadiusRightBottom: Float,
@@ -237,7 +228,7 @@ open class ShapedImageView : AppCompatImageView {
         invalidate()
     }
 
-    open fun getRoundRadiis(): FloatArray {
+    open fun getRoundRadiusArray(): FloatArray {
         return floatArrayOf(
             mRoundRadiusLeftBottom,
             mRoundRadiusLeftTop,
@@ -270,6 +261,45 @@ open class ShapedImageView : AppCompatImageView {
             e.printStackTrace()
             null
         }
+    }
+
+    private fun setupBitmapShader() {
+        // super(context, attrs, defStyle)调用setImageDrawable时,成员变量还未被正确初始化
+        if (mBitmap == null) {
+            invalidate()
+            return
+        }
+        if (!isInit) {
+            init()
+        }
+        mBitmapShader = BitmapShader(mBitmap!!, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+        mBitmapPaint.shader = mBitmapShader
+
+        // 固定为CENTER_CROP,使图片在view中居中并裁剪
+        mShaderMatrix.set(null)
+        // 缩放到高或宽　与view的高或宽　匹配
+        val scale = max(width * 1f / mBitmap!!.width, height * 1f / mBitmap!!.height)
+        // 由于BitmapShader默认是从画布的左上角开始绘制，所以把其平移到画布中间，即居中
+        val dx = (width - mBitmap!!.width * scale) / 2
+        val dy = (height - mBitmap!!.height * scale) / 2
+        mShaderMatrix.setScale(scale, scale)
+        mShaderMatrix.postTranslate(dx, dy)
+        mBitmapShader?.setLocalMatrix(mShaderMatrix)
+        invalidate()
+    }
+
+    //　设置图片的绘制区域
+    private fun initRect() {
+        mViewRect.top = 0f
+        mViewRect.left = 0f
+        mViewRect.right = width.toFloat() // 宽度
+        mViewRect.bottom = height.toFloat() // 高度
+
+        // 边框的矩形区域不能等于ImageView的矩形区域，否则边框的宽度只显示了一半
+        mBorderRect.top = mBorderSize / 2
+        mBorderRect.left = mBorderSize / 2
+        mBorderRect.right = width - mBorderSize / 2
+        mBorderRect.bottom = height - mBorderSize / 2
     }
 
     enum class ShapeType(val type: Int) {
