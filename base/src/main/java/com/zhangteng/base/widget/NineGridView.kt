@@ -87,6 +87,7 @@ class NineGridView @JvmOverloads constructor(
                     context,
                     childrenView,
                     mImageInfo!![i]!!.thumbnailUrl,
+                    null,
                     null
                 )
             }
@@ -199,19 +200,33 @@ class NineGridView @JvmOverloads constructor(
          * @param imageView 需要展示图片的ImageView
          * @param thumbnailUrl       缩略图片地址
          * @param bigImageUrl       大图图片地址,九宫格显示时为null
+         * @param onProgressListener 进度回调
          */
         fun onDisplayImage(
             context: Context?,
             imageView: ImageView?,
             thumbnailUrl: String?,
-            bigImageUrl: String?
+            bigImageUrl: String?,
+            onProgressListener: OnProgressListener?,
         )
 
         /**
          * @param url       图片地址:先获取大图的缓存图片;如果大图的缓存不存在,在获取小图的缓存
          * @return 当前框架的本地缓存图片
          */
-        fun getCacheImage(url: String?): Bitmap?
+        fun getCacheImage(context: Context?, url: String?): Bitmap?
+    }
+
+    interface OnProgressListener {
+        /**
+         * 图片加载进度
+         *
+         * @param isComplete 是否完成
+         * @param percentage 加载百分比
+         * @param bytesRead 已加载大小
+         * @param totalBytes 总大小
+         */
+        fun onProgress(isComplete: Boolean, percentage: Int, bytesRead: Long, totalBytes: Long)
     }
 
     companion object {

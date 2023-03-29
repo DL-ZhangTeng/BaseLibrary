@@ -56,7 +56,22 @@ class ImagePreviewAdapter(
             view.context,
             imageView,
             info.thumbnailUrl,
-            info.bigImageUrl
+            info.bigImageUrl,
+            object : NineGridView.OnProgressListener {
+                override fun onProgress(
+                    isComplete: Boolean,
+                    percentage: Int,
+                    bytesRead: Long,
+                    totalBytes: Long
+                ) {
+                    if (isComplete) {
+                        pb.visibility = View.GONE
+                    } else {
+                        pb.visibility = View.VISIBLE
+                        pb.progress = percentage
+                    }
+                }
+            }
         )
 
         container.addView(view)
@@ -68,10 +83,11 @@ class ImagePreviewAdapter(
      */
     private fun showExcessPic(imageInfo: PreviewImageInfo, imageView: PhotoView) {
         //先获取大图的缓存图片
-        var cacheImage: Bitmap? = NineGridView.imageLoader?.getCacheImage(imageInfo.bigImageUrl)
+        var cacheImage: Bitmap? =
+            NineGridView.imageLoader?.getCacheImage(imageView.context, imageInfo.bigImageUrl)
         //如果大图的缓存不存在,在获取小图的缓存
         if (cacheImage == null) cacheImage =
-            NineGridView.imageLoader?.getCacheImage(imageInfo.thumbnailUrl)
+            NineGridView.imageLoader?.getCacheImage(imageView.context, imageInfo.thumbnailUrl)
         //如果没有任何缓存,使用默认图片,否者使用缓存
         if (cacheImage == null) {
             imageView.setImageResource(R.drawable.ic_default_color)

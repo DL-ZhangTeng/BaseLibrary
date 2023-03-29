@@ -117,19 +117,19 @@ class ImagePreviewActivity : Activity(), ViewTreeObserver.OnPreDrawListener {
             val playTime = animation.currentPlayTime
             var fraction = if (duration > 0) playTime.toFloat() / duration else 1f
             if (fraction > 1) fraction = 1f
-            view!!.translationX = evaluateInt(
+            view?.translationX = evaluateInt(
                 fraction,
                 0,
                 imageData.imageViewX + imageData.imageViewWidth / 2 - imageView!!.width / 2
             ).toFloat()
-            view.translationY = evaluateInt(
+            view?.translationY = evaluateInt(
                 fraction,
                 0,
                 imageData.imageViewY + imageData.imageViewHeight / 2 - imageView!!.height / 2
             ).toFloat()
-            view.scaleX = evaluateFloat(fraction, 1, vx)
-            view.scaleY = evaluateFloat(fraction, 1, vy)
-            view!!.alpha = 1 - fraction
+            view?.scaleX = evaluateFloat(fraction, 1, vx)
+            view?.scaleY = evaluateFloat(fraction, 1, vy)
+            view?.alpha = 1 - fraction
             rootView!!.setBackgroundColor(evaluateArgb(fraction, Color.BLACK, Color.TRANSPARENT))
         }
         addOutListener(valueAnimator)
@@ -143,9 +143,9 @@ class ImagePreviewActivity : Activity(), ViewTreeObserver.OnPreDrawListener {
     private fun computeImageWidthAndHeight(imageView: ImageView?) {
 
         // 获取真实大小
-        val drawable = imageView!!.drawable
-        val intrinsicHeight = drawable.intrinsicHeight
-        val intrinsicWidth = drawable.intrinsicWidth
+        val drawable = imageView?.drawable
+        val intrinsicHeight = drawable?.intrinsicHeight ?: 1
+        val intrinsicWidth = drawable?.intrinsicWidth ?: 1
         // 计算出与屏幕的比例，用于比较以宽的比例为准还是高的比例为准，因为很多时候不是高度没充满，就是宽度没充满
         var h = screenHeight * 1.0f / intrinsicHeight
         var w = screenWidth * 1.0f / intrinsicWidth

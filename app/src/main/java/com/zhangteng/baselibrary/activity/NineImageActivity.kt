@@ -2,11 +2,16 @@ package com.zhangteng.baselibrary.activity
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.zhangteng.base.adapter.NineGridViewClickAdapter
 import com.zhangteng.base.base.BaseActivity
 import com.zhangteng.base.bean.PreviewImageInfo
@@ -27,7 +32,8 @@ class NineImageActivity : BaseActivity() {
                 context: Context?,
                 imageView: ImageView?,
                 thumbnailUrl: String?,
-                bigImageUrl: String?
+                bigImageUrl: String?,
+                onProgressListener: NineGridView.OnProgressListener?,
             ) {
                 context?.let {
                     imageView?.let { it1 ->
@@ -40,6 +46,28 @@ class NineImageActivity : BaseActivity() {
                                         .placeholder(R.mipmap.ic_launcher)
                                         .centerCrop()
                                 )
+                                .listener(object : RequestListener<Drawable> {
+                                    override fun onLoadFailed(
+                                        e: GlideException?,
+                                        model: Any?,
+                                        target: Target<Drawable>?,
+                                        isFirstResource: Boolean
+                                    ): Boolean {
+                                        onProgressListener?.onProgress(false, 1, 0, 0)
+                                        return false
+                                    }
+
+                                    override fun onResourceReady(
+                                        resource: Drawable?,
+                                        model: Any?,
+                                        target: Target<Drawable>?,
+                                        dataSource: DataSource?,
+                                        isFirstResource: Boolean
+                                    ): Boolean {
+                                        onProgressListener?.onProgress(true, 100, 0, 0)
+                                        return false
+                                    }
+                                })
                                 .into(it1)
                         } else {
                             //预览时先加载缩略图在加载大图
@@ -55,7 +83,7 @@ class NineImageActivity : BaseActivity() {
                 }
             }
 
-            override fun getCacheImage(url: String?): Bitmap? {
+            override fun getCacheImage(context: Context?, url: String?): Bitmap? {
                 return null
             }
 
