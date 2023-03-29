@@ -49,7 +49,10 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.annotation:annotation:1.3.0'
-
+    //glide okhttp
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.12.0'
+    //自定义AppGlideModule
+    kapt "com.github.bumptech.glide:compiler:4.12.0"
     //base
     implementation(project(":base"))
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖

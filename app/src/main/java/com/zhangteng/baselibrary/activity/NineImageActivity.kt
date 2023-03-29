@@ -17,6 +17,7 @@ import com.zhangteng.base.base.BaseActivity
 import com.zhangteng.base.bean.PreviewImageInfo
 import com.zhangteng.base.widget.NineGridView
 import com.zhangteng.baselibrary.R
+import com.zhangteng.baselibrary.utils.ProgressManager
 
 
 class NineImageActivity : BaseActivity() {
@@ -46,6 +47,17 @@ class NineImageActivity : BaseActivity() {
                                         .placeholder(R.mipmap.ic_launcher)
                                         .centerCrop()
                                 )
+                                .into(it1)
+                        } else {
+                            //监听OkHttp下载进度
+                            ProgressManager.addListener(bigImageUrl, onProgressListener)
+                            //预览时先加载缩略图在加载大图
+                            Glide.with(context)
+                                .load(bigImageUrl)
+                                .thumbnail(
+                                    Glide.with(context)
+                                        .load(thumbnailUrl)
+                                )
                                 .listener(object : RequestListener<Drawable> {
                                     override fun onLoadFailed(
                                         e: GlideException?,
@@ -68,15 +80,6 @@ class NineImageActivity : BaseActivity() {
                                         return false
                                     }
                                 })
-                                .into(it1)
-                        } else {
-                            //预览时先加载缩略图在加载大图
-                            Glide.with(context)
-                                .load(bigImageUrl)
-                                .thumbnail(
-                                    Glide.with(context)
-                                        .load(thumbnailUrl)
-                                )
                                 .into(it1)
                         }
                     }
