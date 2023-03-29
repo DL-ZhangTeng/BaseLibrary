@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.3.1'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.3.2'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.3.1") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.3.2") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -30,10 +30,10 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.3.1") {
 | PublishAdapter           | 发布九宫格选择图片视频文件；已实现拖曳；已实现的默认图片视频逻辑，需要配合ImagePicker使用；请配合 [com.zhangteng.base.widget.GridSpacingItemDecoration][com.zhangteng.base.widget.LinearSpacingItemDecoration]调整间距 |
 | NineGridViewAdapter      | 九宫格图片展示                                                                                                                                                                 |
 | NineGridViewClickAdapter | 实现点击事件的九宫格图片预览                                                                                                                                                          |
-| ImagePreviewAdapter      | 图片预览                                                                                                                                                                    |
+| ImagePreviewAdapter      | 大图预览适配器                                                                                                                                                                 |
 | ImagePreviewActivity     | 大图预览页面                                                                                                                                                                  |
 | NineGridView             | 九宫格view（使用方式参照demo中NineImageActivity）                                                                                                                                   |
-| NineGridViewWrapper      | 九宫格ImageView                                                                                                                                                            |
+| NineGridImageView        | 九宫格ImageView                                                                                                                                                            |
 
 ### 多级展开树形列表（com/zhangteng/base/tree、com/zhangteng/base/adapter）
 
@@ -95,6 +95,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.3.1") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.3.2  | 九宫格图片预览增加缩略图预览；增加图片加载进度回调                                                  | 2023/3/29 at 14:23  |
 | v2.3.1  | 修复ShapedImageView无法预览&无法提示自定义属性                                            | 2023/1/18 at 1:46   |
 | v2.3.0  | 指示器全程滑动从源position到目标position；指示器垂直滚动；指示器支持图片；TabView文本默认单行末尾省略显            | 2022/12/11 at 1:46  |
 | v2.2.0  | List模板增加VH泛型，与之前版本不兼容                                                      | 2022/12/5 at 22:57  |
