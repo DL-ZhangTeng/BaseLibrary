@@ -52,7 +52,12 @@ class ImagePreviewAdapter(
         showExcessPic(info, imageView)
 
         //如果需要加载的loading,需要自己改写,不能使用这个方法
-        NineGridView.imageLoader?.onDisplayImage(view.context, imageView, info.bigImageUrl)
+        NineGridView.imageLoader?.onDisplayImage(
+            view.context,
+            imageView,
+            info.thumbnailUrl,
+            info.bigImageUrl
+        )
 
         container.addView(view)
         return view

@@ -3,6 +3,7 @@ package com.zhangteng.baselibrary.activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -22,17 +23,34 @@ class NineImageActivity : BaseActivity() {
 
     override fun initView() {
         NineGridView.imageLoader = object : NineGridView.ImageLoader {
-            override fun onDisplayImage(context: Context?, imageView: ImageView?, url: String?) {
+            override fun onDisplayImage(
+                context: Context?,
+                imageView: ImageView?,
+                thumbnailUrl: String?,
+                bigImageUrl: String?
+            ) {
                 context?.let {
                     imageView?.let { it1 ->
-                        Glide.with(it)
-                            .load(url)
-                            .apply(
-                                RequestOptions()
-                                    .placeholder(R.mipmap.ic_launcher)
-                                    .centerCrop()
-                            )
-                            .into(it1)
+                        if (TextUtils.isEmpty(bigImageUrl)) {
+                            //大图图片地址,九宫格显示时为null
+                            Glide.with(it)
+                                .load(thumbnailUrl)
+                                .apply(
+                                    RequestOptions()
+                                        .placeholder(R.mipmap.ic_launcher)
+                                        .centerCrop()
+                                )
+                                .into(it1)
+                        } else {
+                            //预览时先加载缩略图在加载大图
+                            Glide.with(context)
+                                .load(bigImageUrl)
+                                .thumbnail(
+                                    Glide.with(context)
+                                        .load(thumbnailUrl)
+                                )
+                                .into(it1)
+                        }
                     }
                 }
             }

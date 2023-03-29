@@ -10,7 +10,7 @@ import android.widget.ImageView
 import com.zhangteng.base.R
 import com.zhangteng.base.adapter.NineGridViewAdapter
 import com.zhangteng.base.bean.PreviewImageInfo
-import java.util.*
+
 /**
  * @description: 九宫格view
  * @author: Swing
@@ -83,7 +83,12 @@ class NineGridView @JvmOverloads constructor(
             val bottom = top + gridHeight
             childrenView.layout(left, top, right, bottom)
             if (imageLoader != null) {
-                imageLoader!!.onDisplayImage(context, childrenView, mImageInfo!![i]!!.thumbnailUrl)
+                imageLoader!!.onDisplayImage(
+                    context,
+                    childrenView,
+                    mImageInfo!![i]!!.thumbnailUrl,
+                    null
+                )
             }
         }
     }
@@ -192,12 +197,18 @@ class NineGridView @JvmOverloads constructor(
          *
          * @param context   上下文
          * @param imageView 需要展示图片的ImageView
-         * @param url       图片地址
+         * @param thumbnailUrl       缩略图片地址
+         * @param bigImageUrl       大图图片地址,九宫格显示时为null
          */
-        fun onDisplayImage(context: Context?, imageView: ImageView?, url: String?)
+        fun onDisplayImage(
+            context: Context?,
+            imageView: ImageView?,
+            thumbnailUrl: String?,
+            bigImageUrl: String?
+        )
 
         /**
-         * @param url 图片的地址
+         * @param url       图片地址:先获取大图的缓存图片;如果大图的缓存不存在,在获取小图的缓存
          * @return 当前框架的本地缓存图片
          */
         fun getCacheImage(url: String?): Bitmap?
