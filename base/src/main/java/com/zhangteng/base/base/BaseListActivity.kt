@@ -131,7 +131,7 @@ abstract class BaseListActivity<D, VH : DefaultViewHolder, A : BaseAdapter<D, VH
      * @param data  数据
      */
     @SuppressLint("NotifyDataSetChanged")
-    protected fun showDataSuccess(total: Int, data: List<D?>?) {
+    protected fun <T> showDataSuccess(total: Int, data: List<T?>?) {
         mRefreshLayout?.finishRefresh()
         mTotal = 0
         if (mPage == 1) {
@@ -139,7 +139,7 @@ abstract class BaseListActivity<D, VH : DefaultViewHolder, A : BaseAdapter<D, VH
         }
         if (data != null) {
             mTotal = total
-            mList.addAll(data)
+            mList.addAll(data as List<D?>)
         }
         if (mList.isEmpty()) {
             showEmptyView(mRecyclerView)
