@@ -9,8 +9,14 @@ import com.zhangteng.baselibrary.activity.TabLayoutActivity
 import com.zhangteng.baselibrary.activity.TreeActivity
 import com.zhangteng.utils.StateViewHelper
 import com.zhangteng.utils.jumpToActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
+
+    @Inject
+    lateinit var stateViewHelper: StateViewHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +44,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun createStateViewHelper(): StateViewHelper {
-        return StateViewHelper().apply {
+        return stateViewHelper.apply {
             againRequestListener = object : StateViewHelper.AgainRequestListener {
                 override fun request(view: View) {
                     againRequestByStateViewHelper(view)
