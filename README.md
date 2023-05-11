@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.4.0'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.0'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.4.0") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.0") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -95,6 +95,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.4.0") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.5.0  | Fragment使用Activity的mStateViewHelper                                        | 2023/5/11 at 11:15  |
 | v2.4.0  | showDataSuccess重定义                                                         | 2023/5/2 at 21:42   |
 | v2.3.2  | 九宫格图片预览增加缩略图预览；增加图片加载进度回调                                                  | 2023/3/29 at 14:23  |
 | v2.3.1  | 修复ShapedImageView无法预览&无法提示自定义属性                                            | 2023/1/18 at 1:46   |
