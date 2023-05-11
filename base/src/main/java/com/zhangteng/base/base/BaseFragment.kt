@@ -76,19 +76,34 @@ abstract class BaseFragment : Fragment(), IStateView {
     }
 
     /**
-     * description 创建 StateViewHelper类，并回调重试请求、取消请求监听
+     * description 创建 StateViewHelper类，并回调重试请求、取消请求监听，默认使用Activity的mStateViewHelper
      */
     override fun createStateViewHelper(): StateViewHelper {
-        return StateViewHelper().apply {
-            againRequestListener = object : StateViewHelper.AgainRequestListener {
-                override fun request(view: View) {
-                    againRequestByStateViewHelper(view)
-                }
+        if (requireActivity() is BaseActivity) {
+            return (requireActivity() as BaseActivity).mStateViewHelper.apply {
+                againRequestListeners.add(object : StateViewHelper.AgainRequestListener {
+                    override fun request(view: View) {
+                        againRequestByStateViewHelper(view)
+                    }
+                })
+                cancelRequestListeners.add(object : StateViewHelper.CancelRequestListener {
+                    override fun cancel(dialog: DialogInterface) {
+                        cancelRequestByStateViewHelper(dialog)
+                    }
+                })
             }
-            cancelRequestListener = object : StateViewHelper.CancelRequestListener {
-                override fun cancel(dialog: DialogInterface) {
-                    cancelRequestByStateViewHelper(dialog)
-                }
+        } else {
+            return StateViewHelper().apply {
+                againRequestListeners.add(object : StateViewHelper.AgainRequestListener {
+                    override fun request(view: View) {
+                        againRequestByStateViewHelper(view)
+                    }
+                })
+                cancelRequestListeners.add(object : StateViewHelper.CancelRequestListener {
+                    override fun cancel(dialog: DialogInterface) {
+                        cancelRequestByStateViewHelper(dialog)
+                    }
+                })
             }
         }
     }

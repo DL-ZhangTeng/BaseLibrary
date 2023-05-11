@@ -16,7 +16,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity() {
 
     @Inject
-    lateinit var stateViewHelper: StateViewHelper
+    lateinit var mInjectStateViewHelper: StateViewHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,17 +44,17 @@ class MainActivity : BaseActivity() {
     }
 
     override fun createStateViewHelper(): StateViewHelper {
-        return stateViewHelper.apply {
-            againRequestListener = object : StateViewHelper.AgainRequestListener {
+        return mInjectStateViewHelper.apply {
+            againRequestListeners.add(object : StateViewHelper.AgainRequestListener {
                 override fun request(view: View) {
                     againRequestByStateViewHelper(view)
                 }
-            }
-            cancelRequestListener = object : StateViewHelper.CancelRequestListener {
+            })
+            cancelRequestListeners.add(object : StateViewHelper.CancelRequestListener {
                 override fun cancel(dialog: DialogInterface) {
                     cancelRequestByStateViewHelper(dialog)
                 }
-            }
+            })
         }
     }
 

@@ -17,7 +17,7 @@ import com.zhangteng.utils.showShortToast
 abstract class BaseActivity : AppCompatActivity(), IStateView {
 
     protected val mImmersionBar by lazy { createStatusBarConfig() }
-    protected val mStateViewHelper by lazy { createStateViewHelper() }
+    val mStateViewHelper by lazy { createStateViewHelper() }
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
@@ -92,16 +92,16 @@ abstract class BaseActivity : AppCompatActivity(), IStateView {
      */
     override fun createStateViewHelper(): StateViewHelper {
         return StateViewHelper().apply {
-            againRequestListener = object : StateViewHelper.AgainRequestListener {
+            againRequestListeners.add(object : StateViewHelper.AgainRequestListener {
                 override fun request(view: View) {
                     againRequestByStateViewHelper(view)
                 }
-            }
-            cancelRequestListener = object : StateViewHelper.CancelRequestListener {
+            })
+            cancelRequestListeners.add(object : StateViewHelper.CancelRequestListener {
                 override fun cancel(dialog: DialogInterface) {
                     cancelRequestByStateViewHelper(dialog)
                 }
-            }
+            })
         }
     }
 

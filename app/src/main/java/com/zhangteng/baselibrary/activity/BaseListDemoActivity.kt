@@ -12,6 +12,7 @@ import com.zhangteng.baselibrary.bean.BaseListDemoBean
 
 class BaseListDemoActivity :
     BaseListActivity<BaseListDemoBean, BaseAdapter.DefaultViewHolder, BaseListDemoAdapter>() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_list_demo)
