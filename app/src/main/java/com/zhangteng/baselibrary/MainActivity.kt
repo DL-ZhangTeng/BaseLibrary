@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import com.zhangteng.base.base.BaseActivity
+import com.zhangteng.base.widget.ImageRatingBar
 import com.zhangteng.baselibrary.activity.NineImageActivity
 import com.zhangteng.baselibrary.activity.TabLayoutActivity
 import com.zhangteng.baselibrary.activity.TreeActivity
@@ -24,7 +25,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initView() {
-
+        findViewById<ImageRatingBar>(R.id.imageRatingBar).setRating(2)
     }
 
     override fun initData() {

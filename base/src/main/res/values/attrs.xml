@@ -210,22 +210,25 @@
         <attr name="siv_border_size" format="dimension" />
         <attr name="siv_border_color" format="color" />
     </declare-styleable>
-    <declare-styleable name="emoRate">
-        <attr name="smileWidth" format="dimension" />
-        <attr name="smileHeight" format="dimension" />
-        <attr name="horizontalSpace" format="dimension" />
-        <attr name="enabled" format="boolean" />
-        <attr name="rating" format="integer" />
-        <attr name="Default1" format="reference" />
-        <attr name="Default2" format="reference" />
-        <attr name="Default3" format="reference" />
-        <attr name="Default4" format="reference" />
-        <attr name="Default5" format="reference" />
-        <attr name="Rate1" format="reference" />
-        <attr name="Rate2" format="reference" />
-        <attr name="Rate3" format="reference" />
-        <attr name="Rate4" format="reference" />
-        <attr name="Rate5" format="reference" />
+    <declare-styleable name="ImageRatingBar">
+        <attr name="irb_starWidth" format="dimension" />
+        <attr name="irb_starHeight" format="dimension" />
+        <attr name="irb_horizontalSpace" format="dimension" />
+        <attr name="irb_isIndicator" format="boolean" />
+        <attr name="irb_rating" format="integer" />
+        <attr name="irb_maxRate" format="integer" />
+        <attr name="irb_star" format="reference" />
+        <attr name="irb_star1" format="reference" />
+        <attr name="irb_star2" format="reference" />
+        <attr name="irb_star3" format="reference" />
+        <attr name="irb_star4" format="reference" />
+        <attr name="irb_star5" format="reference" />
+        <attr name="irb_starBackground" format="reference" />
+        <attr name="irb_starBackground1" format="reference" />
+        <attr name="irb_starBackground2" format="reference" />
+        <attr name="irb_starBackground3" format="reference" />
+        <attr name="irb_starBackground4" format="reference" />
+        <attr name="irb_starBackground5" format="reference" />
     </declare-styleable>
     <declare-styleable name="SimpleRatingBar">
         <attr name="srb_borderColor" format="color" />

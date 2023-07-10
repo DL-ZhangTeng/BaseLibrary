@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,4 +25,17 @@
         android:layout_height="wrap_content"
         android:onClick="onClickNineImage"
         android:text="onClickNineImage" />
+
+    <com.zhangteng.base.widget.ImageRatingBar
+        android:id="@+id/imageRatingBar"
+        android:layout_width="88dp"
+        android:layout_height="16dp"
+        app:irb_horizontalSpace="5dp"
+        app:irb_isIndicator="false"
+        app:irb_maxRate="10"
+        app:irb_rating="10"
+        app:irb_star="@drawable/default_star_yellow"
+        app:irb_starBackground="@drawable/default_star_grey"
+        app:irb_starHeight="16dp"
+        app:irb_starWidth="16dp" />
 </LinearLayout>

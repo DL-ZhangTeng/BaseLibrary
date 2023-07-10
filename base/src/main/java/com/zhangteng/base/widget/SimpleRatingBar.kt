@@ -21,7 +21,7 @@ import androidx.annotation.Dimension
 import com.zhangteng.base.R
 
 /**
- * A simple RatingBar for Android.(不支持自定义星型样式需要自定义可使用EmoRatingView)
+ * A simple RatingBar for Android.(不支持自定义星型样式需要自定义可使用ImageRatingBar)
  */
 class SimpleRatingBar : View {
     /**
