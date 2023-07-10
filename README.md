@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.0'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.1'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.0") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.1") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -95,6 +95,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.0") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.5.1  | 星型进度条重构                                                                    | 2023/7/10 at 14:51  |
 | v2.5.0  | Fragment使用Activity的mStateViewHelper                                        | 2023/5/11 at 11:15  |
 | v2.4.0  | showDataSuccess重定义                                                         | 2023/5/2 at 21:42   |
 | v2.3.2  | 九宫格图片预览增加缩略图预览；增加图片加载进度回调                                                  | 2023/3/29 at 14:23  |
