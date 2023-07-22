@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.2'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.3'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.2") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.3") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -95,6 +95,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.2") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.5.3  | MyTabLayoutMediator增加ViewPager2支持                                          | 2023/7/22 at 15:15  |
 | v2.5.2  | SmallestWidth适配dp                                                          | 2023/7/13 at 14:15  |
 | v2.5.1  | 星型进度条重构                                                                    | 2023/7/10 at 14:51  |
 | v2.5.0  | Fragment使用Activity的mStateViewHelper                                        | 2023/5/11 at 11:15  |
