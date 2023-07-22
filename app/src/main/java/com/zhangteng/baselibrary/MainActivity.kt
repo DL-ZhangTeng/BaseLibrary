@@ -6,6 +6,7 @@ import android.view.View
 import com.zhangteng.base.base.BaseActivity
 import com.zhangteng.base.widget.ImageRatingBar
 import com.zhangteng.baselibrary.activity.NineImageActivity
+import com.zhangteng.baselibrary.activity.TabLayout2Activity
 import com.zhangteng.baselibrary.activity.TabLayoutActivity
 import com.zhangteng.baselibrary.activity.TreeActivity
 import com.zhangteng.utils.StateViewHelper
@@ -34,6 +35,10 @@ class MainActivity : BaseActivity() {
 
     fun onClickTabLayout(v: View) {
         jumpToActivity<TabLayoutActivity>()
+    }
+
+    fun onClickTabLayout2(v: View) {
+        jumpToActivity<TabLayout2Activity>()
     }
 
     fun onClickTree(v: View) {

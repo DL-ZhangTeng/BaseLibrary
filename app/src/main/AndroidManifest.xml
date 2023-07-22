@@ -43,6 +43,9 @@
             android:name=".activity.TabLayoutActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.TabLayout2Activity"
+            android:exported="false" />
+        <activity
             android:name=".activity.TreeActivity"
             android:exported="false" />
         <activity

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="25dp">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.zhangteng.base.widget.MyTabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:tabMyBackground="@color/colorWhite"
+        app:tabMyIndicatorBottomLayer="false"
+        app:tabMyIndicatorColor="#00000000"
+        app:tabMyIndicatorDrawable="@mipmap/icon_match_event_goal_mini"
+        app:tabMyIndicatorHeight="10dp"
+        app:tabMyIndicatorHorizontalOffsets="@array/HorizontalOffset"
+        app:tabMyIndicatorMarginBottomSelfFit="false"
+        app:tabMyIndicatorRoundRadius="2dp"
+        app:tabMyIndicatorSelfFit="false"
+        app:tabMyIndicatorVerticalOffsets="@array/VerticalOffset"
+        app:tabMyIndicatorWidth="10dp"
+        app:tabMyMode="MODE_FIXED"
+        app:tabMyPaddingEnd="18dp"
+        app:tabMyPaddingStart="18dp"
+        app:tabMySelectedTextColor="#222222"
+        app:tabMySelectedTextSize="16sp"
+        app:tabMySelectedTypeface="NORMAL"
+        app:tabMyTabViewSelf="true"
+        app:tabMyTextColor="#999999"
+        app:tabMyTextSize="14sp"
+        app:tabMyTypeface="NORMAL"
+        app:tabMyViewNumber="5" />
+</LinearLayout>
