@@ -8,7 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.zhangteng.base.base.BaseActivity
 import com.zhangteng.base.widget.MyTabLayout
-import com.zhangteng.base.widget.MyTabLayoutMediator2
+import com.zhangteng.base.widget.MyTabLayoutMediator
 import com.zhangteng.baselibrary.R
 import com.zhangteng.baselibrary.fragment.BaseDemoFragment
 
@@ -37,20 +37,23 @@ class TabLayout2Activity : BaseActivity() {
                 return BaseDemoFragment()
             }
         }
-        
+
         //使用MyTabLayoutMediator自定义Tab
-        MyTabLayoutMediator2(tab_layout!!, vp!!) { tab, position ->
-            val imageView = ImageView(this@TabLayout2Activity)
-            setAnimation(imageView, position)
-            tab.setCustomView(imageView)
-            if (position == 0) {
-                val animationDrawable =
-                    (tab.getCustomView() as ImageView).drawable as AnimationDrawable?
-                if (animationDrawable != null && !animationDrawable.isRunning) {
-                    animationDrawable.start()
+        MyTabLayoutMediator(tab_layout!!, vp!!,
+            object : MyTabLayoutMediator.TabConfigurationStrategy {
+                override fun onConfigureTab(tab: MyTabLayout.Tab, position: Int) {
+                    val imageView = ImageView(this@TabLayout2Activity)
+                    setAnimation(imageView, position)
+                    tab.setCustomView(imageView)
+                    if (position == 0) {
+                        val animationDrawable =
+                            (tab.getCustomView() as ImageView).drawable as AnimationDrawable?
+                        if (animationDrawable != null && !animationDrawable.isRunning) {
+                            animationDrawable.start()
+                        }
+                    }
                 }
-            }
-        }.attach()
+            }).attach2()
         tab_layout?.addOnTabSelectedListener(object : MyTabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: MyTabLayout.Tab?) {
                 tab?.let {

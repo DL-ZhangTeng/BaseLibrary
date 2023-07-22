@@ -36,6 +36,7 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.*
+import androidx.viewpager2.widget.ViewPager2
 import com.zhangteng.base.R
 import com.zhangteng.utils.dp2px
 import com.zhangteng.utils.getTextHeight
@@ -313,7 +314,7 @@ class MyTabLayout @JvmOverloads constructor(
      * @see .addTab
      */
     fun newTab(): Tab {
-        var tab = sTabPool?.acquire()
+        var tab = sTabPool.acquire()
         if (tab == null) {
             tab = Tab()
         }
@@ -762,6 +763,7 @@ class MyTabLayout @JvmOverloads constructor(
                 MODE_SCROLLABLE ->                     // We only need to resize the child if it's smaller than us. This is similar
                     // to fillViewport
                     remeasure = child.measuredWidth < measuredWidth
+
                 MODE_FIXED ->                     // Resize the child so that it doesn't scroll
                     remeasure = child.measuredWidth != measuredWidth
             }
@@ -1329,6 +1331,68 @@ class MyTabLayout @JvmOverloads constructor(
     }
 
     /**
+     * A [ViewPager2.OnPageChangeCallback] class which contains the necessary calls back to the
+     * provided [MyTabLayout] so that the tab position is kept in sync.
+     *
+     *
+     * This class stores the provided MyTabLayout weakly, meaning that you can use [ ][ViewPager2.registerOnPageChangeCallback] without removing the
+     * callback and not cause a leak.
+     */
+    class TabLayoutOnPageChangeCallback(tabLayout: MyTabLayout) :
+        ViewPager2.OnPageChangeCallback() {
+        private val tabLayoutRef: WeakReference<MyTabLayout>
+        private var previousScrollState = 0
+        private var scrollState = 0
+
+        init {
+            tabLayoutRef = WeakReference(tabLayout)
+            reset()
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            previousScrollState = scrollState
+            scrollState = state
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            val tabLayout = tabLayoutRef.get()
+            if (tabLayout != null) {
+                // Only update the text selection if we're not settling, or we are settling after
+                // being dragged
+                val updateText =
+                    scrollState != ViewPager2.SCROLL_STATE_SETTLING || previousScrollState == ViewPager2.SCROLL_STATE_DRAGGING
+                // Update the indicator if we're not settling after being idle. This is caused
+                // from a setCurrentItem() call and will be handled by an animation from
+                // onPageSelected() instead.
+                val updateIndicator =
+                    !(scrollState == ViewPager2.SCROLL_STATE_SETTLING && previousScrollState == ViewPager2.SCROLL_STATE_IDLE)
+                tabLayout.setScrollPosition(position, positionOffset, updateText, updateIndicator)
+            }
+        }
+
+        override fun onPageSelected(position: Int) {
+            val tabLayout = tabLayoutRef.get()
+            if (tabLayout != null && tabLayout.getSelectedTabPosition() != position && position < tabLayout.getTabCount()) {
+                // Select the tab, only updating the indicator if we're not being dragged/settled
+                // (since onPageScrolled will handle that).
+                val updateIndicator = (scrollState == ViewPager2.SCROLL_STATE_IDLE
+                        || (scrollState == ViewPager2.SCROLL_STATE_SETTLING
+                        && previousScrollState == ViewPager2.SCROLL_STATE_IDLE))
+                tabLayout.selectTab(tabLayout.getTabAt(position), updateIndicator)
+            }
+        }
+
+        fun reset() {
+            scrollState = ViewPager2.SCROLL_STATE_IDLE
+            previousScrollState = scrollState
+        }
+    }
+
+    /**
      * A [MyTabLayout.OnTabSelectedListener] class which contains the necessary calls back
      * to the provided [ViewPager] so that the tab position is kept in sync.
      */
@@ -1339,6 +1403,27 @@ class MyTabLayout @JvmOverloads constructor(
         OnTabSelectedListener {
         override fun onTabSelected(tab: Tab?) {
             tab?.getPosition()?.let { mViewPager?.setCurrentItem(it, smoothScroll) }
+        }
+
+        override fun onTabUnselected(tab: Tab?) {
+            // No-op
+        }
+
+        override fun onTabReselected(tab: Tab?) {
+            // No-op
+        }
+    }
+
+    /**
+     * A [MyTabLayout.OnTabSelectedListener] class which contains the necessary calls back to the
+     * provided [ViewPager2] so that the tab position is kept in sync.
+     */
+    class ViewPager2OnTabSelectedListener(
+        private val mViewPager: ViewPager2?,
+        private val smoothScroll: Boolean = false
+    ) : OnTabSelectedListener {
+        override fun onTabSelected(tab: Tab?) {
+            tab?.let { mViewPager?.setCurrentItem(it.getPosition(), smoothScroll) }
         }
 
         override fun onTabUnselected(tab: Tab?) {
