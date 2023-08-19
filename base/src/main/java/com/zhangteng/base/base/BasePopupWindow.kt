@@ -1,5 +1,6 @@
 package com.zhangteng.base.base
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.*
 import android.graphics.drawable.ColorDrawable
@@ -7,7 +8,6 @@ import android.graphics.drawable.Drawable
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.zhangteng.base.R
 
 /**
@@ -15,15 +15,15 @@ import com.zhangteng.base.R
  */
 abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
     protected lateinit var parent: View
-    protected var clTitle: LinearLayout? = null
-    protected var clContent: ConstraintLayout? = null
-    protected var clButton: LinearLayout? = null
+    protected var mTitle: LinearLayout? = null
+    protected var mContent: LinearLayout? = null
+    protected var mButton: LinearLayout? = null
     var onCancelClickListener: OnCancelClickListener? = null
         set(value) {
             field = value
-            if (clButton != null && clButton!!.childCount > 0 && clButton!!.getChildAt(0) is ViewGroup) {
-                if ((clButton?.getChildAt(0) as ViewGroup).getChildAt(0) != null) {
-                    (clButton?.getChildAt(0) as ViewGroup).getChildAt(0).setOnClickListener { v ->
+            if (mButton != null && mButton!!.childCount > 0 && mButton!!.getChildAt(0) is ViewGroup) {
+                if ((mButton?.getChildAt(0) as ViewGroup).getChildAt(0) != null) {
+                    (mButton?.getChildAt(0) as ViewGroup).getChildAt(0).setOnClickListener { v ->
                         if (this@BasePopupWindow.onCancelClickListener != null) {
                             this@BasePopupWindow.onCancelClickListener!!.onCancel(v)
                         }
@@ -34,9 +34,9 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
     var onConfirmClickListener: OnConfirmClickListener? = null
         set(value) {
             field = value
-            if (clButton != null && clButton!!.childCount > 0 && clButton!!.getChildAt(0) is ViewGroup) {
-                if ((clButton!!.getChildAt(0) as ViewGroup).getChildAt((clButton!!.getChildAt(0) as ViewGroup).childCount - 1) != null) {
-                    (clButton!!.getChildAt(0) as ViewGroup).getChildAt((clButton!!.getChildAt(0) as ViewGroup).childCount - 1)
+            if (mButton != null && mButton!!.childCount > 0 && mButton!!.getChildAt(0) is ViewGroup) {
+                if ((mButton!!.getChildAt(0) as ViewGroup).getChildAt((mButton!!.getChildAt(0) as ViewGroup).childCount - 1) != null) {
+                    (mButton!!.getChildAt(0) as ViewGroup).getChildAt((mButton!!.getChildAt(0) as ViewGroup).childCount - 1)
                         .setOnClickListener { v ->
                             if (this@BasePopupWindow.onConfirmClickListener != null) {
                                 this@BasePopupWindow.onConfirmClickListener!!.onConfirm(v)
@@ -46,19 +46,20 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
             }
         }
 
+    @SuppressLint("InflateParams")
     protected fun initView(context: Context?) {
-        parent = LayoutInflater.from(context).inflate(R.layout.self_base_popupwindow, null)
-        clTitle = parent.findViewById(R.id.self_base_popupwindow_title)
-        clContent = parent.findViewById(R.id.self_base_popupwindow_content)
-        clButton = parent.findViewById(R.id.self_base_popupwindow_button)
+        parent = LayoutInflater.from(context).inflate(R.layout.self_base_popup, null)
+        mTitle = parent.findViewById(R.id.self_base_popup_title)
+        mContent = parent.findViewById(R.id.self_base_popup_content)
+        mButton = parent.findViewById(R.id.self_base_popup_button)
         if (getSelfTitleView() != 0) {
-            LayoutInflater.from(context).inflate(getSelfTitleView(), clTitle, true)
+            LayoutInflater.from(context).inflate(getSelfTitleView(), mTitle, true)
         }
         if (getSelfContentView() != 0) {
-            LayoutInflater.from(context).inflate(getSelfContentView(), clContent, true)
+            LayoutInflater.from(context).inflate(getSelfContentView(), mContent, true)
         }
         if (getSelfButtonView() != 0) {
-            LayoutInflater.from(context).inflate(getSelfButtonView(), clButton, true)
+            LayoutInflater.from(context).inflate(getSelfButtonView(), mButton, true)
         }
         this.contentView = parent
 
@@ -84,9 +85,16 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
         initView(parent)
     }
 
-    abstract fun getSelfTitleView(): Int
+    open fun getSelfTitleView(): Int {
+        return 0
+    }
+
     abstract fun getSelfContentView(): Int
-    abstract fun getSelfButtonView(): Int
+
+    open fun getSelfButtonView(): Int {
+        return 0
+    }
+
     abstract fun initView(parent: View)
 
     /**
@@ -94,24 +102,24 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
      */
     abstract fun initData()
 
-    open fun setClTitle(view: View?) {
-        clTitle?.removeAllViews()
+    open fun setTitle(view: View?) {
+        mTitle?.removeAllViews()
         if (view != null) {
-            clTitle?.addView(view)
+            mTitle?.addView(view)
         }
     }
 
-    open fun setClContent(view: View?) {
-        clContent?.removeAllViews()
+    open fun setContent(view: View?) {
+        mContent?.removeAllViews()
         if (view != null) {
-            clContent?.addView(view)
+            mContent?.addView(view)
         }
     }
 
-    open fun setClButton(view: View?) {
-        clButton?.removeAllViews()
+    open fun setButton(view: View?) {
+        mButton?.removeAllViews()
         if (view != null) {
-            clButton?.addView(view)
+            mButton?.addView(view)
         }
     }
 
@@ -193,14 +201,14 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
      * 取消监听器
      */
     interface OnCancelClickListener {
-        open fun onCancel(view: View?)
+        fun onCancel(view: View?)
     }
 
     /**
      * 确定监听器
      */
     interface OnConfirmClickListener {
-        open fun onConfirm(view: View?)
+        fun onConfirm(view: View?)
     }
 
     init {
