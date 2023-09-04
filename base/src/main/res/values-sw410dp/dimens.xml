@@ -9,6 +9,9 @@
 	<dimen name="tab_text_size">15.9444sp</dimen>
 	<dimen name="tab_multi_line_text_size">13.6667sp</dimen>
 	<dimen name="tab_scrollable_min_width">82.0000dp</dimen>
+	<dimen name="cardview_compat_inset_shadow">1.1389dp</dimen>
+	<dimen name="cardview_default_elevation">2.2778dp</dimen>
+	<dimen name="cardview_default_radius">2.2778dp</dimen>
 	<dimen name="dp_m_60">-68.3333dp</dimen>
 	<dimen name="dp_m_50">-56.9444dp</dimen>
 	<dimen name="dp_m_40">-45.5556dp</dimen>

@@ -44,4 +44,14 @@
         app:irb_starBackground="@drawable/default_star_grey"
         app:irb_starHeight="16dp"
         app:irb_starWidth="16dp" />
+
+    <com.zhangteng.base.cardview.CardView
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        app:cardBackgroundColor="#FDC338"
+        app:cardElevation="8dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardShadowColorEnd="#00FDC338"
+        app:cardShadowColorStart="#ffFDC338"
+        app:cardUseCompatPadding="true" />
 </LinearLayout>

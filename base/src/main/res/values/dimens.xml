@@ -5,11 +5,17 @@
     <dimen name="titlebar_text_size">14sp</dimen>
     <dimen name="titlebar_text_size_16">16sp</dimen>
     <dimen name="titlebar_title_size">17sp</dimen>
+
     <dimen name="default_divider_size">0.5dp</dimen>
     <dimen name="default_list_left_right">14dp</dimen>
+
     <dimen name="tab_text_size">14sp</dimen>
     <dimen name="tab_multi_line_text_size">12sp</dimen>
     <dimen name="tab_scrollable_min_width">72dp</dimen>
+
+    <dimen name="cardview_compat_inset_shadow">1dp</dimen>
+    <dimen name="cardview_default_elevation">2dp</dimen>
+    <dimen name="cardview_default_radius">2dp</dimen>
 
     <dimen name="dp_m_60">-60dp</dimen>
     <dimen name="dp_m_50">-50dp</dimen>
