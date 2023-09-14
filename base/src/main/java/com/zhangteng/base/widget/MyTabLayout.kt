@@ -1044,7 +1044,7 @@ class MyTabLayout @JvmOverloads constructor(
          * Returns the view used for this tab.
          *
          */
-        fun getTabView(): View? {
+        fun getTabView(): TabView? {
             return mView
         }
 
@@ -1470,7 +1470,7 @@ class MyTabLayout @JvmOverloads constructor(
         }
     }
 
-    internal inner class TabView(context: Context) : LinearLayout(context) {
+    inner class TabView(context: Context) : LinearLayout(context) {
         private var mTab: Tab? = null
         internal var mTextView: TextView? = null
         private var mIconView: ImageView? = null
