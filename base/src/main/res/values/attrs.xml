@@ -152,20 +152,19 @@
         <attr name="android:textFontWeight" />
         <attr name="android:typeface" />
         <attr name="android:fontFamily" />
-        <attr name="fontFamily" />
-        <attr name="textAllCaps" />
+        <attr name="android:textAllCaps" />
         <!-- Set the textLocale by a comma-separated language tag string,
              for example "ja-JP,zh-CN". This attribute only takes effect on API 21 and above.
              Before API 24, only the first language tag is used. Starting from API 24,
              the string will be converted into a {@link android.os.LocaleList} and then used by
              {@link android.widget.TextView} -->
-        <attr name="textLocale" />
+        <attr name="android:textLocale" />
         <attr name="android:shadowColor" />
         <attr name="android:shadowDy" />
         <attr name="android:shadowDx" />
         <attr name="android:shadowRadius" />
         <!-- OpenType font variation settings, available aftear api 26. -->
-        <attr name="fontVariationSettings" />
+        <attr name="android:fontVariationSettings" />
     </declare-styleable>
     <declare-styleable name="ExpandableTextView">
         <attr name="maxCollapsedLines" format="integer" />

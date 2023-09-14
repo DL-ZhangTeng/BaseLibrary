@@ -1041,6 +1041,14 @@ class MyTabLayout @JvmOverloads constructor(
         private var mCustomView: View? = null
 
         /**
+         * Returns the view used for this tab.
+         *
+         */
+        fun getTabView(): View? {
+            return mView
+        }
+
+        /**
          * @return This Tab's tag object.
          */
         fun getTag(): Any? {
@@ -1448,7 +1456,7 @@ class MyTabLayout @JvmOverloads constructor(
     }
 
     internal object ThemeUtils {
-        private val APPCOMPAT_CHECK_ATTRS: IntArray = intArrayOf(R.attr.colorPrimary)
+        private val APPCOMPAT_CHECK_ATTRS: IntArray = intArrayOf(android.R.attr.colorPrimary)
 
         fun checkAppCompatTheme(context: Context?) {
             context?.let {
@@ -1723,6 +1731,13 @@ class MyTabLayout @JvmOverloads constructor(
             TooltipCompat.setTooltipText(this, if (hasText) null else contentDesc)
         }
 
+        /**
+         * Approximates a given lines width with the new provided text size.
+         */
+        private fun approximateLineWidth(layout: Layout, line: Int, textSize: Float): Float {
+            return layout.getLineWidth(line) * (textSize / layout.paint.textSize)
+        }
+
         fun getTab(): Tab? {
             return mTab
         }
@@ -1734,11 +1749,24 @@ class MyTabLayout @JvmOverloads constructor(
             }
         }
 
-        /**
-         * Approximates a given lines width with the new provided text size.
-         */
-        private fun approximateLineWidth(layout: Layout, line: Int, textSize: Float): Float {
-            return layout.getLineWidth(line) * (textSize / layout.paint.textSize)
+        fun getTextView(): TextView? {
+            return mTextView
+        }
+
+        fun getIconView(): ImageView? {
+            return mIconView
+        }
+
+        fun getCustomView(): View? {
+            return mCustomView
+        }
+
+        fun getCustomTextView(): TextView? {
+            return mCustomTextView
+        }
+
+        fun getCustomIconView(): ImageView? {
+            return mCustomIconView
         }
 
         init {
@@ -2519,10 +2547,10 @@ class MyTabLayout @JvmOverloads constructor(
         )
         try {
             mTabTextSize = ta.getDimensionPixelSize(
-                R.styleable.TextAppearance_android_textSize, 0
+                R.styleable.MyTabLayout_TextAppearance_android_textSize, 0
             ).toFloat()
             mTabTextColors = ta.getColorStateList(
-                R.styleable.TextAppearance_android_textColor
+                R.styleable.MyTabLayout_TextAppearance_android_textColor
             )
         } finally {
             ta.recycle()
