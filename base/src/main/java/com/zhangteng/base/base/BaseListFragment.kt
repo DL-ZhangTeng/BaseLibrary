@@ -55,9 +55,13 @@ abstract class BaseListFragment<D, VH : DefaultViewHolder, A : BaseAdapter<D, VH
         //设置空布局
         showEmptyView(mRecyclerView)
         // 设置上拉刷新、下拉加载更多
-        mRefreshLayout?.setOnRefreshListener { refreshLayout: RefreshLayout? -> refreshData(true) }
-        mRefreshLayout?.setOnLoadMoreListener { refreshLayout: RefreshLayout? ->
-            //加载更多
+        mRefreshLayout?.setOnRefreshListener { _: RefreshLayout? ->
+            //允许加载更多
+            mRefreshLayout?.setNoMoreData(false)
+            refreshData(true)
+        }
+        mRefreshLayout?.setOnLoadMoreListener { _: RefreshLayout? ->
+            //允许加载更多
             mRefreshLayout?.setNoMoreData(false)
             refreshData(false)
         }
