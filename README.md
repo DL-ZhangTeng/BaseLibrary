@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.5'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.6'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.5") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.6") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -95,6 +95,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.5") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.5.6  | 状态筛选后无法加载更多问题修复                                                            | 2024/4/9 at 14:14   |
 | v2.5.5  | MyTabLayout开放tab控件获取                                                       | 2023/9/14 at 10:34  |
 | v2.5.4  | CardView阴影颜色自定义                                                            | 2023/9/4 at 15:20   |
 | v2.5.3  | MyTabLayoutMediator增加ViewPager2支持                                          | 2023/7/22 at 15:15  |
