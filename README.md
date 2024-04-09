@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.6'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.8'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.6") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.8") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -95,6 +95,8 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.6") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.5.8  | 移除SmallestWidth适配dp                                                        | 2024/4/9 at 16:29   |
+| v2.5.7  | 状态筛选后无法加载更多问题修复                                                            | 2024/4/9 at 14:14   |
 | v2.5.6  | 状态筛选后无法加载更多问题修复                                                            | 2024/4/9 at 14:14   |
 | v2.5.5  | MyTabLayout开放tab控件获取                                                       | 2023/9/14 at 10:34  |
 | v2.5.4  | CardView阴影颜色自定义                                                            | 2023/9/4 at 15:20   |
