@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.8'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.9'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.8") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.9") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -95,6 +95,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.8") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.5.9  | 树形结构Adapter增加显示的节点获取方法                                                     | 2024/5/21 at 16:39  |
 | v2.5.8  | 移除SmallestWidth适配dp                                                        | 2024/4/9 at 16:29   |
 | v2.5.7  | 状态筛选后无法加载更多问题修复                                                            | 2024/4/9 at 14:14   |
 | v2.5.6  | 状态筛选后无法加载更多问题修复                                                            | 2024/4/9 at 14:14   |
