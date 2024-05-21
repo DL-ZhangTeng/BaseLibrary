@@ -9,8 +9,9 @@ import com.zhangteng.base.tree.*
  * 树结构的列表适配器
  * Created by swing on 2018/6/29.
  */
-abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandLevel: Int) :
+abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandLevel: Int = 1) :
     BaseAdapter<T, BaseAdapter.DefaultViewHolder>() {
+
     /**
      * 存储所有可见的Node
      */
@@ -24,28 +25,7 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
     /**
      * 点击的回调接口
      */
-    private var onTreeNodeClickListener: OnTreeNodeClickListener? = null
-
-    open fun setOnTreeNodeClickListener(onTreeNodeClickListener: OnTreeNodeClickListener?) {
-        this.onTreeNodeClickListener = onTreeNodeClickListener
-    }
-
-    /**
-     * 相应ListView的点击事件 展开或关闭某节点
-     *
-     * @param position
-     */
-    @SuppressLint("NotifyDataSetChanged")
-    open fun expandOrCollapse(position: Int) {
-        val n = mNodes?.get(position)
-        if (n != null) { // 排除传入参数错误异常
-            if (!n.isLeaf()) {
-                n.setExpand(!n.isExpand())
-                mNodes = TreeHelper.filterVisibleNode(mAllNodes)
-                notifyDataSetChanged() // 刷新视图
-            }
-        }
-    }
+    var onTreeNodeClickListener: OnTreeNodeClickListener? = null
 
     override fun onBindViewHolder(holder: DefaultViewHolder, item: T?, position: Int) {
         val node = mNodes?.get(position)
@@ -71,6 +51,32 @@ abstract class TreeRecyclerViewAdapter<T>(data: MutableList<T?>?, defaultExpandL
         node: Node<T?>?,
         position: Int
     )
+
+    /**
+     * 相应ListView的点击事件 展开或关闭某节点
+     *
+     * @param position
+     */
+    @SuppressLint("NotifyDataSetChanged")
+    open fun expandOrCollapse(position: Int) {
+        val n = mNodes?.get(position)
+        if (n != null) { // 排除传入参数错误异常
+            if (!n.isLeaf()) {
+                n.setExpand(!n.isExpand())
+                mNodes = TreeHelper.filterVisibleNode(mAllNodes)
+                notifyDataSetChanged() // 刷新视图
+            }
+        }
+    }
+
+    /**
+     * 获取显示的节点
+     *
+     * @param position
+     */
+    fun getVisibleNode(position: Int): Node<T?>? {
+        return mNodes?.get(position)
+    }
 
     interface OnTreeNodeClickListener {
         open fun <T> onClick(node: Node<T?>?, position: Int)
