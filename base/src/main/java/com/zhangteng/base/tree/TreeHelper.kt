@@ -228,15 +228,16 @@ object TreeHelper {
     ) {
         nodes?.add(node)
         //设置默认展开
-        /*if (defaultExpandLevel >= currentLevel) {
-            node.setExpand(true);
-        }*/if (node == null || node.isLeaf()) {
+        if (defaultExpandLevel >= currentLevel) {
+            node?.setExpand(true)
+        }
+        if (node == null || node.isLeaf()) {
             return
         }
         if (node.getChildren() != null) {
             for (i in node.getChildren()!!.indices) {
                 addNode(
-                    nodes, node.getChildren()!![i] as Node<T?>?, defaultExpandLevel,
+                    nodes, node.getChildren()!![i], defaultExpandLevel,
                     currentLevel + 1
                 )
             }
