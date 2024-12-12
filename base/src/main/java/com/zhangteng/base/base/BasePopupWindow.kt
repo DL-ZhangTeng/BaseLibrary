@@ -192,7 +192,7 @@ abstract class BasePopupWindow(context: Context?) : PopupWindow(context) {
         activity?.let {
             val lp = activity.window.attributes
             lp.alpha = 1f
-            activity.window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            activity.window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             activity.window.attributes = lp
         }
     }
