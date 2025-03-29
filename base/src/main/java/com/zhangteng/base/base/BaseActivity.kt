@@ -204,7 +204,7 @@ abstract class BaseActivity : AppCompatActivity(), IStateView {
         message = "use {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)} passing in a {@link StartActivityForResult} object for the {@link ActivityResultContract}.",
         level = DeprecationLevel.WARNING
     )
-    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+    override fun startActivityForResult(intent: Intent, requestCode: Int) {
         try {
             super.startActivityForResult(intent, requestCode)
         } catch (e: ActivityNotFoundException) {
