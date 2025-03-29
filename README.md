@@ -14,9 +14,9 @@ allprojects {
     }
 }
 
-implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.11'
+implementation 'com.github.DL-ZhangTeng:BaseLibrary:2.5.12'
 或排除图片库
-implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.11") {
+implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.12") {
     exclude group: "com.github.bumptech.glide", module: "glide"
 }
 ```
@@ -95,6 +95,7 @@ implementation("com.github.DL-ZhangTeng:BaseLibrary:2.5.11") {
 
 | 版本      | 更新                                                                         | 更新时间                |
 |---------|----------------------------------------------------------------------------|---------------------|
+| v2.5.12 | BaseActivity                                                               | 2025/03/30 at 0:49  |
 | v2.5.11 | BasePopupWindow不移除该Flag的话,可能出现黑屏的bug                                       | 2024/12/12 at 16:49 |
 | v2.5.10 | 树形结构Adapter默认展开设置：0不展开；1-n默认展开第1-n级                                        | 2024/5/27 at 15:34  |
 | v2.5.9  | 树形结构Adapter增加显示的节点获取方法                                                     | 2024/5/21 at 16:39  |
